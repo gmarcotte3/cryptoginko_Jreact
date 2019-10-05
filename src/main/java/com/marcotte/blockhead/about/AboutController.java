@@ -14,11 +14,10 @@ public class AboutController {
 
     private static final Logger log = LoggerFactory.getLogger(AboutController.class);
 
-    // TODO use maven build plugin - git Info plugin
     public static final String applicationName = "BlockHead";
-    public static final String version = "2019.10.3.1";
+    public static final String version = "2019.10.5.1";
     @GetMapping("")
-    public AboutInfo getQuoteDefault()
+    public AboutInfo aboutInfo()
     {
         AboutInfo appinfo = new AboutInfo().setApplicationName(applicationName).setVersion(version);
         return appinfo;
