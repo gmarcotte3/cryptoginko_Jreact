@@ -33,11 +33,35 @@ public class BlockchainAddressStoreController
 
     @PutMapping("/address")
     public @ResponseBody
-    ResponseEntity<BlockchainAddressStore> putCryptoAddressesById(
+    ResponseEntity<BlockchainAddressStore> putCryptoAddress(
             @RequestBody BlockchainAddressStore cryptoAddress) throws Exception
     {
         blockchainAddressStoreService.save(cryptoAddress);
         return new ResponseEntity<BlockchainAddressStore>(cryptoAddress, HttpStatus.OK);
+    }
+
+    @PutMapping("/address/{cryptoName}")
+    public @ResponseBody
+    ResponseEntity<List<BlockchainAddressStore>> putCryptoAddressList(
+
+            @PathVariable String cryptoName,
+            @RequestParam String addressList) throws Exception
+    {
+        String[] addresses = addressList.split(",");
+        BlockchainAddressStore cryptoAddress;
+        List<BlockchainAddressStore> addressStores = new ArrayList<>();
+
+        for (String address : addresses )
+        {
+            cryptoAddress = new BlockchainAddressStore();
+            cryptoAddress.setAddress( address);
+            cryptoAddress.setCurrency(cryptoName);
+            cryptoAddress.setLastBalance(0.0);
+            blockchainAddressStoreService.save(cryptoAddress);
+            addressStores.add(cryptoAddress);
+        }
+
+        return new ResponseEntity<List<BlockchainAddressStore>>(addressStores, HttpStatus.OK);
     }
 
     @DeleteMapping("/address")

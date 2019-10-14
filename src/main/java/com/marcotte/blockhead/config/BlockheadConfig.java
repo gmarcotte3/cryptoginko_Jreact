@@ -2,6 +2,7 @@ package com.marcotte.blockhead.config;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -26,6 +27,11 @@ public class BlockheadConfig //extends WebMvcConfigurerAdapter
 {
     @Autowired
     private ApplicationContext context;
+
+    @Value("${cryptocompare.currency.list}")
+    private String cryptoCompareCurrencyList;
+
+
 
     /**
      * Setting ignore resource not found, avoiding exceptions to be raised and then the default value
@@ -53,5 +59,9 @@ public class BlockheadConfig //extends WebMvcConfigurerAdapter
         FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
         bean.setOrder(0);
         return bean;
+    }
+
+    public String getCryptoCompareCurrencyList() {
+        return cryptoCompareCurrencyList;
     }
 }

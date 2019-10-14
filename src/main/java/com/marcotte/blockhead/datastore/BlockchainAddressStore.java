@@ -20,6 +20,7 @@ public class BlockchainAddressStore
     private Integer numTransactions;
     private Timestamp lastUpdated;
     private String message;
+    private Boolean updatedViaBlockChainExplorer;
 
     public BlockchainAddressStore()
     {
@@ -89,5 +90,13 @@ public class BlockchainAddressStore
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public Boolean getUpdatedViaBlockChainExplorer() {
+        return updatedViaBlockChainExplorer;
+    }
+
+    public void setUpdatedViaBlockChainExplorer(Boolean updatedViaBlockChainExplorer) {
+        this.updatedViaBlockChainExplorer = updatedViaBlockChainExplorer;
     }
 }
