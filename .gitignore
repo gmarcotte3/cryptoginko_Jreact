@@ -3,6 +3,9 @@ target/
 !**/src/main/**
 !**/src/test/**
 
+### run time
+log/*
+
 ### STS ###
 .apt_generated
 .classpath

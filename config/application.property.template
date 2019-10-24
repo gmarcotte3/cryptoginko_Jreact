@@ -1,0 +1,30 @@
+spring.application.name=Blockhead on georges computer
+
+server.servlet.context-path=/blockhead
+server.port=8082
+server.ajp.port=8009
+
+logging.file=log/blockhead.log
+logging.level=INFO
+logging.level.org.springframework=INFO
+
+log4j.logger.org.hibernate=info
+
+
+H2 - database setup ----------------------------------------------------
+spring.aop.auto=true
+spring.jpa.generate-ddl=true
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2
+
+# Datasource
+spring.datasource.url=jdbc:h2:file:~/.blockhead/blockhead;DB_CLOSE_ON_EXIT=FALSE
+spring.datasource.username=jamieD
+spring.datasource.password=
+spring.datasource.driver-class-name=org.h2.Driver
+
+
+cryptocompare.currency.list=USD,JPY

@@ -21,7 +21,7 @@ public class BitcoinCashComExplorerController
     @Autowired
     private BitcoinCashComExplorerService bitcoinCashComExplorerService;
 
-    @GetMapping("/BitcoinCacheComExplorer/bitcoincach")
+    @GetMapping("/bitcoincash")
     public @ResponseBody
     ResponseEntity<BlockchainAddressStore> getBitcoinCachAddressInfo(
             @RequestParam(value = "address", required = true) final String address
@@ -36,7 +36,7 @@ public class BitcoinCashComExplorerController
         return new ResponseEntity<BlockchainAddressStore>(blockchainAddressStore, HttpStatus.OK);
     }
 
-    @GetMapping("/BitcoinCacheComExplorer/bitcoincach/transactions")
+    @GetMapping("/bitcoincash/transactions")
     public @ResponseBody
     ResponseEntity<BlockchainTransactionList> getBitcoinCashTransactions(
             @RequestParam(value = "address", required = false) final String address

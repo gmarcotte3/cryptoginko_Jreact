@@ -8,9 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +22,7 @@ public class PortfolioController
 
     @Autowired PortfolioService portfolioService;
 
-    @GetMapping("")
+    @PutMapping("")
     public ResponseEntity<List<CoinList>> portfolio()
     {
         List<CoinList> portfolioResult = portfolioService.portfolioCheck(false);
@@ -32,11 +30,18 @@ public class PortfolioController
         return new ResponseEntity<List<CoinList>>(portfolioResult, HttpStatus.OK);
     }
 
-    @GetMapping("/refreshcache")
+    @PutMapping("/refreshcache")
     public ResponseEntity<List<CoinList>> portfolio_refresh_cache()
     {
         List<CoinList> portfolioResult = portfolioService.portfolioCheck(true);
 
+        return new ResponseEntity<List<CoinList>>(portfolioResult, HttpStatus.OK);
+    }
+
+    @PutMapping("/refreshcache/{cryptoname}")
+    public ResponseEntity<List<CoinList>> portfolio_refresh_cache(@PathVariable String cryptoname)
+    {
+        List<CoinList> portfolioResult = portfolioService.portfolioCheck(true, cryptoname);
         return new ResponseEntity<List<CoinList>>(portfolioResult, HttpStatus.OK);
     }
 }

@@ -42,6 +42,7 @@ public class BlockchainAddressStoreServiceTest
         assertEquals("Test balance", savedBlock.get(0).getMessage() );
         assertEquals((Integer) 42, (Integer) savedBlock.get(0).getNumTransactions() );
         assertEquals(new Timestamp(rightNow.getTime()), savedBlock.get(0).getLastUpdated() );
+        assertEquals("memo1", savedBlock.get(0).getMemo());
         assertTrue(savedBlock.get(0).getId() != null &&  savedBlock.get(0).getId() > 0);
 
         addressStoreRepository.deleteAll();
@@ -84,6 +85,7 @@ public class BlockchainAddressStoreServiceTest
         addressStore.setLastBalance( 123456.4323);
         addressStore.setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStore.setMessage("Test balance");
+        addressStore.setMemo("memo1");
         addressStore.setNumTransactions(42);
         return addressStore;
     }
@@ -97,6 +99,7 @@ public class BlockchainAddressStoreServiceTest
         addressStore.setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStore.setMessage("Test balance 2");
         addressStore.setNumTransactions(88);
+        addressStore.setMemo("memo2");
         return addressStore;
     }
 
@@ -108,6 +111,7 @@ public class BlockchainAddressStoreServiceTest
         addressStore.setLastBalance( 99229956.4323);
         addressStore.setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStore.setMessage("Test balance 3");
+        addressStore.setMemo("memo3");
         addressStore.setNumTransactions(98);
         return addressStore;
     }
