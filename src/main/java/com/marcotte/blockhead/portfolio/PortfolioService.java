@@ -59,7 +59,7 @@ public class PortfolioService
      * @param refresh
      * @return
      */
-    public List<CoinList> portfolioCheck(boolean refresh)
+    public List<PortfolioTracker> portfolioCheck(boolean refresh)
     {
         List<CoinList> portfolioList = new ArrayList<>();
         updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CryptoNames.BITCOIN, refresh);
@@ -74,16 +74,16 @@ public class PortfolioService
         // save copy of the portflio here
         List<PortfolioTracker> portfollioSummary = calculatePortfolioSummary(portfolioList);
         savePortfoloioSummary( portfollioSummary);
-        return portfolioList;
+        return portfollioSummary;
     }
 
 
-    public List<CoinList> portfolioCheck(boolean refresh, String cryptoName)
+    public List<PortfolioTracker> portfolioCheck(boolean refresh, String cryptoName)
     {
         List<CoinList> portfolioList = new ArrayList<>();
         updateCoinBalanceCacheCalculateFiatBalance( portfolioList, cryptoName, refresh);
         List<PortfolioTracker> portfollioSummary = calculatePortfolioSummary(portfolioList);
-        return portfolioList;
+        return portfollioSummary;
     }
 
 

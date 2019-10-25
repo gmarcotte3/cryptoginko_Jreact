@@ -2,6 +2,7 @@ package com.marcotte.blockhead.portfolio;
 
 
 import com.marcotte.blockhead.datastore.CoinList;
+import com.marcotte.blockhead.datastore.PortfolioTracker;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,25 +24,25 @@ public class PortfolioController
     @Autowired PortfolioService portfolioService;
 
     @PutMapping("")
-    public ResponseEntity<List<CoinList>> portfolio()
+    public ResponseEntity<List<PortfolioTracker>> portfolio()
     {
-        List<CoinList> portfolioResult = portfolioService.portfolioCheck(false);
+        List<PortfolioTracker> portfolioTrackerList = portfolioService.portfolioCheck(false);
 
-        return new ResponseEntity<List<CoinList>>(portfolioResult, HttpStatus.OK);
+        return new ResponseEntity<List<PortfolioTracker>>(portfolioTrackerList, HttpStatus.OK);
     }
 
     @PutMapping("/refreshcache")
-    public ResponseEntity<List<CoinList>> portfolio_refresh_cache()
+    public ResponseEntity<List<PortfolioTracker>> portfolio_refresh_cache()
     {
-        List<CoinList> portfolioResult = portfolioService.portfolioCheck(true);
+        List<PortfolioTracker> portfolioResult = portfolioService.portfolioCheck(true);
 
-        return new ResponseEntity<List<CoinList>>(portfolioResult, HttpStatus.OK);
+        return new ResponseEntity<List<PortfolioTracker>>(portfolioResult, HttpStatus.OK);
     }
 
     @PutMapping("/refreshcache/{cryptoname}")
-    public ResponseEntity<List<CoinList>> portfolio_refresh_cache(@PathVariable String cryptoname)
+    public ResponseEntity<List<PortfolioTracker>> portfolio_refresh_cache(@PathVariable String cryptoname)
     {
-        List<CoinList> portfolioResult = portfolioService.portfolioCheck(true, cryptoname);
-        return new ResponseEntity<List<CoinList>>(portfolioResult, HttpStatus.OK);
+        List<PortfolioTracker> portfolioResult = portfolioService.portfolioCheck(true, cryptoname);
+        return new ResponseEntity<List<PortfolioTracker>>(portfolioResult, HttpStatus.OK);
     }
 }
