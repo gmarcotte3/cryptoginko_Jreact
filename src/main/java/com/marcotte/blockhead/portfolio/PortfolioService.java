@@ -54,15 +54,22 @@ public class PortfolioService
     private PortfolioTrackerService portfolioTrackerService;
 
 
-
+    /**
+     * support for BIC, BCH, DASH, EOS, ETH, ADA, LTE, ZEC
+     * @param refresh
+     * @return
+     */
     public List<CoinList> portfolioCheck(boolean refresh)
     {
         List<CoinList> portfolioList = new ArrayList<>();
         updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CryptoNames.BITCOIN, refresh);
         updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CryptoNames.BITCOIN_CASH, refresh);
         updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CryptoNames.DASH, refresh);
-
-        // TODO do the rest
+        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CryptoNames.ETHEREUM, refresh);
+        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CryptoNames.CARDANO_ADA, refresh);
+        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CryptoNames.EOS, refresh);
+        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CryptoNames.LITE_COIN, refresh);
+        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CryptoNames.ZCASH, refresh);
 
         // save copy of the portflio here
         List<PortfolioTracker> portfollioSummary = calculatePortfolioSummary(portfolioList);

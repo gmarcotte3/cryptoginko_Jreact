@@ -111,6 +111,16 @@ public class CoinGeckoService
         return parseJsonRawQuote(coin, theRawJsonQuote);
     }
 
+    /**
+     * takes the raw currnecy list and picks out the top ones used. see currently supported currencies.
+     *
+     * supported currency: USD, NZD, AUD, JPY, EUR, GBP, RMB, IND, KRW
+     * special case JPM which is JPY/10,000 or 万 ( expressed in units of 10k yen)
+     *
+     * @param coin
+     * @param theRawJsonQuote
+     * @return
+     */
     private List<Currency> parseJsonRawQuote(String coin, String theRawJsonQuote )
     {
         JSONObject jsonObj;
@@ -139,12 +149,23 @@ public class CoinGeckoService
 
         Float jpy_price = getDoubleFromJsonObject(current_price_DataObj, "jpy");
         currencyList.add(new Currency().setCode("JPY").setRate(jpy_price).setDescription("Japanese yen").setSymbol("¥"));
+        currencyList.add(new Currency().setCode("JPM").setRate(jpy_price/10000).setDescription("Japanese 万 (10,000 Yen)").setSymbol("万"));
 
         Float eur_price = getDoubleFromJsonObject(current_price_DataObj, "eur");
         currencyList.add(new Currency().setCode("EUR").setRate(eur_price).setDescription("Euros").setSymbol("€"));
 
         Float gbp_price = getDoubleFromJsonObject(current_price_DataObj, "gbp");
         currencyList.add(new Currency().setCode("GBP").setRate(gbp_price).setDescription("Pound sterling").setSymbol("£"));
+
+        Float rmb_price = getDoubleFromJsonObject(current_price_DataObj, "rmb");
+        currencyList.add(new Currency().setCode("RMB").setRate(rmb_price).setDescription("Chinese Renminbi").setSymbol("元"));
+
+        Float krw_price = getDoubleFromJsonObject(current_price_DataObj, "krw");
+        currencyList.add(new Currency().setCode("KRW").setRate(krw_price).setDescription("South Koria won").setSymbol("₩"));
+
+        Float inr_price = getDoubleFromJsonObject(current_price_DataObj, "inr");
+        currencyList.add(new Currency().setCode("INR").setRate(inr_price).setDescription("Indian Rupee").setSymbol("₹"));
+
 
         return currencyList;
     }
@@ -198,6 +219,8 @@ public class CoinGeckoService
         List<Currency> currencyList_raw = getPriceByCoinAndDate(crypto, null);
 
         List<Currency> currencyList = new ArrayList<Currency>();
+
+        // usa dollar
         if ( currencies.contains("USD"))
         {
             Currency usd = findCurrencyByName(currencyList_raw, "USD");
@@ -207,6 +230,7 @@ public class CoinGeckoService
             }
         }
 
+        // euro
         if ( currencies.contains("EUR"))
         {
             Currency eur = findCurrencyByName(currencyList_raw, "EUR");
@@ -216,7 +240,7 @@ public class CoinGeckoService
             }
         }
 
-
+        // kiwi dollar
         if ( currencies.contains("NZD"))
         {
             Currency nzd = findCurrencyByName(currencyList_raw, "NZD");
@@ -226,6 +250,7 @@ public class CoinGeckoService
             }
         }
 
+        // aussie dollar
         if ( currencies.contains("AUD"))
         {
             Currency aud = findCurrencyByName(currencyList_raw, "AUD");
@@ -235,10 +260,47 @@ public class CoinGeckoService
             }
         }
 
-        //TODO british pound
-        //TODO chinese
-        //TODO korian
+        // british pound
+        if ( currencies.contains("GRP"))
+        {
+            Currency gbp = findCurrencyByName(currencyList_raw, "GRP");
+            if ( gbp != null )
+            {
+                currencyList.add(gbp);
+            }
+        }
 
+        // chinese
+        if ( currencies.contains("RMB"))
+        {
+            Currency rmb = findCurrencyByName(currencyList_raw, "RMB");
+            if ( rmb != null )
+            {
+                currencyList.add(rmb);
+            }
+        }
+
+        // korian won
+        if ( currencies.contains("KRW"))
+        {
+            Currency krw = findCurrencyByName(currencyList_raw, "KRW");
+            if ( krw != null )
+            {
+                currencyList.add(krw);
+            }
+        }
+
+        // Indian Rupee
+        if ( currencies.contains("INR"))
+        {
+            Currency inr = findCurrencyByName(currencyList_raw, "INR");
+            if ( inr != null )
+            {
+                currencyList.add(inr);
+            }
+        }
+
+        // Japanese Yen
         if ( currencies.contains("JPY")) {
             Currency jpy = findCurrencyByName(currencyList_raw, "JPY");
             if ( jpy != null )
@@ -247,6 +309,13 @@ public class CoinGeckoService
             }
         }
 
+        if ( currencies.contains("JPM")) {
+            Currency jpm = findCurrencyByName(currencyList_raw, "JPM");
+            if ( jpm != null )
+            {
+                currencyList.add(jpm);
+            }
+        }
         quote.setCurrency(currencyList);
 
         return quote;
