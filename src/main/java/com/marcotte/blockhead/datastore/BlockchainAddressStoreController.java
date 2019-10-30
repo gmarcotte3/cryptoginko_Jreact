@@ -9,6 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +25,8 @@ public class BlockchainAddressStoreController
     private static final Logger log = LoggerFactory.getLogger(BlockchainAddressStoreController.class);
     @Autowired
     private BlockchainAddressStoreService blockchainAddressStoreService;
+    @Autowired
+    private BlockchainAddressCsvService blockchainAddressCsvService;
 
     @GetMapping("")
     public ResponseEntity<List<BlockchainAddressStore>> findAll()
@@ -29,6 +34,14 @@ public class BlockchainAddressStoreController
         List<BlockchainAddressStore> blockchainAddressStores = new ArrayList<>();
         blockchainAddressStores = blockchainAddressStoreService.findAll();
         return new ResponseEntity<List<BlockchainAddressStore>>(blockchainAddressStores, HttpStatus.OK);
+    }
+
+    @GetMapping( value = "/csv", produces = "text/csv")
+    public void dumpAddresses(HttpServletResponse response ) throws IOException
+    {
+        List<BlockchainAddressStore> blockchainAddressStores = new ArrayList<>();
+        blockchainAddressStores = blockchainAddressStoreService.findAll();
+        blockchainAddressCsvService.writeAddressesToCSVStream(response.getWriter(), blockchainAddressStores);
     }
 
     @PutMapping("/address")
