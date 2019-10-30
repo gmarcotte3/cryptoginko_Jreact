@@ -15,7 +15,7 @@ public class AboutController {
     private static final Logger log = LoggerFactory.getLogger(AboutController.class);
 
     public static final String applicationName = "BlockHead";
-    public static final String version = "2019.10.25";
+    public static final String version = "2019.10.29.1";
     @GetMapping("")
     public AboutInfo aboutInfo()
     {

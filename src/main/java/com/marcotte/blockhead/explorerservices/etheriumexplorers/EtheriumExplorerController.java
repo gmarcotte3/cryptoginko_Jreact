@@ -35,7 +35,7 @@ public class EtheriumExplorerController
 
         BlockchainAddressStore blockchainAddressStore = new BlockchainAddressStore();
         blockchainAddressStore.setAddress(address);
-        blockchainAddressStore.setCurrency(CryptoNames.ETHEREUM);
+        blockchainAddressStore.setCurrency(CryptoNames.ETHEREUM.code);
 
         etheriumExplorerServices.addressInfo(blockchainAddressStore);
 

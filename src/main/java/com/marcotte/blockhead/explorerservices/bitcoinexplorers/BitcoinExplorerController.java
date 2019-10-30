@@ -32,7 +32,7 @@ public class BitcoinExplorerController
     {
         BlockchainAddressStore blockchainAddressStore = new BlockchainAddressStore();
         blockchainAddressStore.setAddress(address);
-        blockchainAddressStore.setCurrency(CryptoNames.BITCOIN);
+        blockchainAddressStore.setCurrency(CryptoNames.BITCOIN.code);
 
         bitcoinExplorerServices.addressInfo(blockchainAddressStore);
 

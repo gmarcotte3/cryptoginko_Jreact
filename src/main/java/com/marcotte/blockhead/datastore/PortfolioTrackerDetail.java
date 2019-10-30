@@ -3,9 +3,8 @@ package com.marcotte.blockhead.datastore;
 import javax.persistence.*;
 import java.time.Instant;
 
-
 @Entity
-public class PortfolioTracker
+public class PortfolioTrackerDetail
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,7 +22,13 @@ public class PortfolioTracker
     @Column(name = "CoinValue", nullable = false)
     private double coinValue;
 
-    public PortfolioTracker()
+    @Column(name = "CoinName", nullable = false)
+    private String coinName;
+
+    @Column(name = "CoinBalance", nullable = false)
+    private double coinBalance;
+
+    public PortfolioTrackerDetail()
     {
         rightNow();
     }
@@ -71,5 +76,21 @@ public class PortfolioTracker
 
     public void setCoinValue(double coinValue) {
         this.coinValue = coinValue;
+    }
+
+    public String getCoinName() {
+        return coinName;
+    }
+
+    public void setCoinName(String coinName) {
+        this.coinName = coinName;
+    }
+
+    public double getCoinBalance() {
+        return coinBalance;
+    }
+
+    public void setCoinBalance(double coinBalance) {
+        this.coinBalance = coinBalance;
     }
 }

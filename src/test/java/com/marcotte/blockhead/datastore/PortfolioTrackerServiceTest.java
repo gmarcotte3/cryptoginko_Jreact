@@ -73,7 +73,7 @@ public class PortfolioTrackerServiceTest
             portfolioTracker2.setFiatCurrency("NZD");
 
             portfolioTrackerService.save(portfolioTracker2);
-            assertTrue(portfolioTracker.getId() > 0 );
+            assertTrue(portfolioTracker2.getId() > 0 );
 
             List<PortfolioTracker> foundallDetails = portfolioTrackerService.findAll();
             assertTrue(foundallDetails != null);

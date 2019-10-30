@@ -30,7 +30,7 @@ public class CardanoAdaController
     {
         BlockchainAddressStore blockchainAddressStore = new BlockchainAddressStore();
         blockchainAddressStore.setAddress(address);
-        blockchainAddressStore.setCurrency(CryptoNames.CARDANO_ADA);
+        blockchainAddressStore.setCurrency(CryptoNames.CARDANO_ADA.code);
 
         cardanoAdaService.addressInfo(blockchainAddressStore);
 

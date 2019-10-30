@@ -37,7 +37,7 @@ public class DashExplorerController
 
         BlockchainAddressStore blockchainAddressStore = new BlockchainAddressStore();
         blockchainAddressStore.setAddress(address);
-        blockchainAddressStore.setCurrency(CryptoNames.DASH);
+        blockchainAddressStore.setCurrency(CryptoNames.DASH.code);
 
         dashExplorerServices.addressInfo(blockchainAddressStore);
 

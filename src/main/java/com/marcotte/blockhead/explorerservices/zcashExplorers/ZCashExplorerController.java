@@ -35,7 +35,7 @@ public class ZCashExplorerController
 
         BlockchainAddressStore blockchainAddressStore = new BlockchainAddressStore();
         blockchainAddressStore.setAddress(address);
-        blockchainAddressStore.setCurrency(CryptoNames.ZCASH);
+        blockchainAddressStore.setCurrency(CryptoNames.ZCASH.code);
 
         zCashExplorerServices.addressInfo(blockchainAddressStore);
 

@@ -2,6 +2,7 @@ package com.marcotte.blockhead.explorerservices.pricequote;
 
 import com.marcotte.blockhead.config.BlockheadConfig;
 import com.marcotte.blockhead.datastore.Currency;
+import com.marcotte.blockhead.datastore.FiatNames;
 import com.marcotte.blockhead.datastore.QuoteGeneric;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -221,9 +222,9 @@ public class CoinGeckoService
         List<Currency> currencyList = new ArrayList<Currency>();
 
         // usa dollar
-        if ( currencies.contains("USD"))
+        if ( currencies.contains(FiatNames.USD.code))
         {
-            Currency usd = findCurrencyByName(currencyList_raw, "USD");
+            Currency usd = findCurrencyByName(currencyList_raw, FiatNames.USD.code);
             if ( usd != null )
             {
                 currencyList.add(usd);
@@ -231,9 +232,9 @@ public class CoinGeckoService
         }
 
         // euro
-        if ( currencies.contains("EUR"))
+        if ( currencies.contains(FiatNames.EUR.code))
         {
-            Currency eur = findCurrencyByName(currencyList_raw, "EUR");
+            Currency eur = findCurrencyByName(currencyList_raw, FiatNames.EUR.code);
             if ( eur != null )
             {
                 currencyList.add(eur);
@@ -241,9 +242,9 @@ public class CoinGeckoService
         }
 
         // kiwi dollar
-        if ( currencies.contains("NZD"))
+        if ( currencies.contains(FiatNames.NZD.code))
         {
-            Currency nzd = findCurrencyByName(currencyList_raw, "NZD");
+            Currency nzd = findCurrencyByName(currencyList_raw, FiatNames.NZD.code);
             if ( nzd != null )
             {
                 currencyList.add(nzd);
@@ -251,9 +252,9 @@ public class CoinGeckoService
         }
 
         // aussie dollar
-        if ( currencies.contains("AUD"))
+        if ( currencies.contains(FiatNames.AUD.code))
         {
-            Currency aud = findCurrencyByName(currencyList_raw, "AUD");
+            Currency aud = findCurrencyByName(currencyList_raw, FiatNames.AUD.code);
             if ( aud != null )
             {
                 currencyList.add(aud);
@@ -261,9 +262,9 @@ public class CoinGeckoService
         }
 
         // british pound
-        if ( currencies.contains("GRP"))
+        if ( currencies.contains(FiatNames.GRP.code))
         {
-            Currency gbp = findCurrencyByName(currencyList_raw, "GRP");
+            Currency gbp = findCurrencyByName(currencyList_raw, FiatNames.GRP.code);
             if ( gbp != null )
             {
                 currencyList.add(gbp);
@@ -271,9 +272,9 @@ public class CoinGeckoService
         }
 
         // chinese
-        if ( currencies.contains("RMB"))
+        if ( currencies.contains(FiatNames.RMB.code))
         {
-            Currency rmb = findCurrencyByName(currencyList_raw, "RMB");
+            Currency rmb = findCurrencyByName(currencyList_raw, FiatNames.RMB.code);
             if ( rmb != null )
             {
                 currencyList.add(rmb);
@@ -281,9 +282,9 @@ public class CoinGeckoService
         }
 
         // korian won
-        if ( currencies.contains("KRW"))
+        if ( currencies.contains(FiatNames.KRW.code))
         {
-            Currency krw = findCurrencyByName(currencyList_raw, "KRW");
+            Currency krw = findCurrencyByName(currencyList_raw, FiatNames.KRW.code);
             if ( krw != null )
             {
                 currencyList.add(krw);
@@ -291,9 +292,9 @@ public class CoinGeckoService
         }
 
         // Indian Rupee
-        if ( currencies.contains("INR"))
+        if ( currencies.contains(FiatNames.INR.code))
         {
-            Currency inr = findCurrencyByName(currencyList_raw, "INR");
+            Currency inr = findCurrencyByName(currencyList_raw, FiatNames.INR.code);
             if ( inr != null )
             {
                 currencyList.add(inr);
@@ -301,16 +302,16 @@ public class CoinGeckoService
         }
 
         // Japanese Yen
-        if ( currencies.contains("JPY")) {
-            Currency jpy = findCurrencyByName(currencyList_raw, "JPY");
+        if ( currencies.contains(FiatNames.JPY.code)) {
+            Currency jpy = findCurrencyByName(currencyList_raw, FiatNames.JPY.code);
             if ( jpy != null )
             {
                 currencyList.add(jpy);
             }
         }
 
-        if ( currencies.contains("JPM")) {
-            Currency jpm = findCurrencyByName(currencyList_raw, "JPM");
+        if ( currencies.contains(FiatNames.JPM.code)) {
+            Currency jpm = findCurrencyByName(currencyList_raw, FiatNames.JPM.code);
             if ( jpm != null )
             {
                 currencyList.add(jpm);
