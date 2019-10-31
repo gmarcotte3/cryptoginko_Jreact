@@ -13,10 +13,24 @@ public class EtheriumExplorerServices
     @Autowired
     private BlockCypherComService blockCypherComService;
 
+    @Autowired
+    private EtherscanExplorerService etherscanExplorerService;
 
+
+    /**
+     * get address info from block explorers. if the first one fails try the next one.
+     *
+     * @param blockchainAddressStores
+     * @return
+     */
     public boolean addressInfo( List<BlockchainAddressStore> blockchainAddressStores)
     {
-        return blockCypherComService.addressInfo(blockchainAddressStores);
+        Boolean result = etherscanExplorerService.addressInfo(blockchainAddressStores);
+
+        if ( !result ) {
+            result = blockCypherComService.addressInfo(blockchainAddressStores);
+        }
+        return result;
     }
 
     public boolean addressInfo( BlockchainAddressStore blockchainAddressStore)

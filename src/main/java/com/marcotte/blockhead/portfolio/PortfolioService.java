@@ -145,49 +145,49 @@ public class PortfolioService
      */
     public void updateCurrentCoinBalancesViaBlockExplorers(CoinList coinList)
     {
-        if ( coinList.getCoinName().equals(CryptoNames.BITCOIN))
+        if ( coinList.getCoinName().equals(CryptoNames.BITCOIN.code))
         {
             updateCurrentBalancesForBitcoin( coinList.getCoins());
             return;
         }
 
-        if ( coinList.getCoinName().equals(CryptoNames.BITCOIN_CASH))
+        if ( coinList.getCoinName().equals(CryptoNames.BITCOIN_CASH.code))
         {
             updateCurrentBalanceForBitcoinCash(coinList.getCoins());
             return;
         }
 
-        if ( coinList.getCoinName().equals(CryptoNames.DASH))
+        if ( coinList.getCoinName().equals(CryptoNames.DASH.code))
         {
             updateCurrentBalanceForDash(coinList.getCoins());
             return;
         }
 
-        if ( coinList.getCoinName().equals(CryptoNames.ETHEREUM))
+        if ( coinList.getCoinName().equals(CryptoNames.ETHEREUM.code))
         {
             updateCurrentBalancesForEtherium(coinList.getCoins() );
             return;
         }
 
-        if (coinList.getCoinName().equals(CryptoNames.CARDANO_ADA))
+        if (coinList.getCoinName().equals(CryptoNames.CARDANO_ADA.code))
         {
             updateCurrentBalancesForCardano(coinList.getCoins()  );
             return;
         }
 
-        if (coinList.getCoinName().equals(CryptoNames.LITE_COIN))
+        if (coinList.getCoinName().equals(CryptoNames.LITE_COIN.code))
         {
             updateCurrentBalancesForLiteCoin(coinList.getCoins() );
             return;
         }
 
-        if (coinList.getCoinName().equals(CryptoNames.EOS))
+        if (coinList.getCoinName().equals(CryptoNames.EOS.code))
         {
             updateCurrentBalancesForEOS_Coin(coinList.getCoins() );
             return;
         }
 
-        if (coinList.getCoinName().equals(CryptoNames.ZCASH))
+        if (coinList.getCoinName().equals(CryptoNames.ZCASH.code))
         {
             updateCurrentBalancesForZCashCoin(coinList.getCoins() );
             return;

@@ -1,10 +1,12 @@
 package com.marcotte.blockhead.explorerservices.blockcypher;
 
+import com.marcotte.blockhead.config.BlockheadConfig;
 import com.marcotte.blockhead.datastore.BlockchainAddressStore;
 import com.marcotte.blockhead.datastore.CryptoNames;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,8 @@ import java.util.List;
 
 /**
  * This service supports BTC, BCH,  ETH and ?
+ *
+ * this service has a stuppidly low limit for requests
  */
 @Service
 public class BlockCypherComService
@@ -24,6 +28,10 @@ public class BlockCypherComService
     private static final Logger log = LoggerFactory.getLogger(BlockCypherComService.class);
     public  final String BLOCKCYPHER_SERVICE = "blockCypherCom";
 
+
+    //TODO use the blockcyper api key
+    @Autowired
+    private BlockheadConfig blockheadConfig;
 
     public boolean addressInfo( List<BlockchainAddressStore> blockchainAddressStores)
     {
@@ -37,34 +45,26 @@ public class BlockCypherComService
     }
 
     /**
+     * API docks at blockcypher:
+     * https://www.blockcypher.com/dev/bitcoin/
+     * https://www.blockcypher.com/dev/bitcoin/#address-api
+     *
      * curl https://api.blockcypher.com/v1/btc/main/addrs/1DEP8i3QJCsomS4BSMY2RpU1upv62aGvhD/balance
      *
      * {
-     *    "address": "1DEP8i3QJCsomS4BSMY2RpU1upv62aGvhD",
-     *    "total_received": 4433416,
-     *     "total_sent": 0,
-     *     "balance": 4433416,
-     *     "unconfirmed_balance": 0,
-     *     "final_balance": 4433416,
-     *     "n_tx": 7,
-     *     "unconfirmed_n_tx": 0,
-     *     "final_n_tx": 7
+     * "address": "1DEP8i3QJCsomS4BSMY2RpU1upv62aGvhD",
+     * "total_received": 4433416,
+     * "total_sent": 0,
+     * "balance": 4433416,
+     * "unconfirmed_balance": 0,
+     * "final_balance": 4433416,
+     * "n_tx": 7,
+     * "unconfirmed_n_tx": 0,
+     * "final_n_tx": 7
      * }
      *
-     * https://api.blockcypher.com/v1/eth/main/addrs/0xfc53xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx4/balance
-     * {
-     *   address: "fc53xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx4",
-     *   total_received: 1018261504747991300,
-     *   total_sent: 5441000000000000,
-     *   balance: 1012820504747991300,
-     *   unconfirmed_balance: 0,
-     *   final_balance: 1012820504747991300,
-     *   n_tx: 3,
-     *   unconfirmed_n_tx: 0,
-     *   final_n_tx: 3,
-     *   nonce: 1,
-     *   pool_nonce: 1,
-     * }
+     * API key not need for GET
+     *
      */
     public boolean addressInfo(BlockchainAddressStore blockchainAddressStore)
     {
@@ -94,6 +94,7 @@ public class BlockCypherComService
 
 
         restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+
         String url = "https://api.blockcypher.com/v1/"
                 + crypto.toLowerCase() + "/main/addrs/"
                 + address

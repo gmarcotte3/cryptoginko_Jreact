@@ -12,7 +12,6 @@ public enum FiatNames
     GRP("GRP"),   // British pound
     JPY("JPY"),   // Japanese yen
     JPM("JPM"),   // Japanese yen (10,000) 万
-    RMB("RMB"),   // chinese RMB
     KRW("KRW"),   // Korian won
     INR("INR");   // Indian ruppee
 

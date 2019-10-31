@@ -115,7 +115,7 @@ public class CoinGeckoService
     /**
      * takes the raw currnecy list and picks out the top ones used. see currently supported currencies.
      *
-     * supported currency: USD, NZD, AUD, JPY, EUR, GBP, RMB, IND, KRW
+     * supported currency: USD, NZD, AUD, JPY, EUR, GBP, IND, KRW
      * special case JPM which is JPY/10,000 or 万 ( expressed in units of 10k yen)
      *
      * @param coin
@@ -157,9 +157,6 @@ public class CoinGeckoService
 
         Float gbp_price = getDoubleFromJsonObject(current_price_DataObj, "gbp");
         currencyList.add(new Currency().setCode("GBP").setRate(gbp_price).setDescription("Pound sterling").setSymbol("£"));
-
-        Float rmb_price = getDoubleFromJsonObject(current_price_DataObj, "rmb");
-        currencyList.add(new Currency().setCode("RMB").setRate(rmb_price).setDescription("Chinese Renminbi").setSymbol("元"));
 
         Float krw_price = getDoubleFromJsonObject(current_price_DataObj, "krw");
         currencyList.add(new Currency().setCode("KRW").setRate(krw_price).setDescription("South Koria won").setSymbol("₩"));
@@ -268,16 +265,6 @@ public class CoinGeckoService
             if ( gbp != null )
             {
                 currencyList.add(gbp);
-            }
-        }
-
-        // chinese
-        if ( currencies.contains(FiatNames.RMB.code))
-        {
-            Currency rmb = findCurrencyByName(currencyList_raw, FiatNames.RMB.code);
-            if ( rmb != null )
-            {
-                currencyList.add(rmb);
             }
         }
 

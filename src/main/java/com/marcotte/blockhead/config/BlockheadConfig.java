@@ -31,7 +31,11 @@ public class BlockheadConfig //extends WebMvcConfigurerAdapter
     @Value("${cryptocompare.currency.list}")
     private String cryptoCompareCurrencyList;
 
+    @Value("${restapikeys.etherscan}")
+    private String etherscanApiToken;
 
+    @Value("${restapikeys.blockcypher}")
+    private String blockCypherApiToken;
 
     /**
      * Setting ignore resource not found, avoiding exceptions to be raised and then the default value
@@ -63,5 +67,13 @@ public class BlockheadConfig //extends WebMvcConfigurerAdapter
 
     public String getCryptoCompareCurrencyList() {
         return cryptoCompareCurrencyList;
+    }
+
+    public String getEtherscanApiToken() {
+        return etherscanApiToken;
+    }
+
+    public String getBlockCypherApiToken() {
+        return blockCypherApiToken;
     }
 }
