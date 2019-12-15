@@ -31,7 +31,7 @@ public class BlockchainAddressStoreController
     @GetMapping("")
     public ResponseEntity<List<BlockchainAddressStore>> findAll()
     {
-        List<BlockchainAddressStore> blockchainAddressStores = new ArrayList<>();
+        List<BlockchainAddressStore> blockchainAddressStores;
         blockchainAddressStores = blockchainAddressStoreService.findAll();
         return new ResponseEntity<List<BlockchainAddressStore>>(blockchainAddressStores, HttpStatus.OK);
     }
@@ -43,6 +43,15 @@ public class BlockchainAddressStoreController
         blockchainAddressStores = blockchainAddressStoreService.findAll();
         blockchainAddressCsvService.writeAddressesToCSVStream(response.getWriter(), blockchainAddressStores);
     }
+
+    @GetMapping( value = "/crypto/{cryptoName}")
+    public ResponseEntity<List<BlockchainAddressStore>> getLatestAddresses( @PathVariable String cryptoName)
+    {
+        List<BlockchainAddressStore> blockchainAddressStores;
+        blockchainAddressStores = blockchainAddressStoreService.findAllByCoinName(cryptoName);
+        return new ResponseEntity<List<BlockchainAddressStore>>(blockchainAddressStores, HttpStatus.OK);
+    }
+
 
     @PutMapping("/address")
     public @ResponseBody

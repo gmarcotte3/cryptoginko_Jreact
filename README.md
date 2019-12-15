@@ -89,6 +89,11 @@ results in:
 ```
 
 # Updates
+##2019.12.15
+added history tracking balances of coin address to the blockstore. when updating the balance of a coin address if the balance changes
+a new record will be crated, old record update to point to the new record. 
+
+if the balance does not change but the blockchain has been checked the date will be updated
 ##2019.10.25
 Initial version. 
 At this point we only have the back-end started. Back enbd is accessable via Swagger interface to REST API

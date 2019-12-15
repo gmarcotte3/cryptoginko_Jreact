@@ -1,5 +1,6 @@
 package com.marcotte.blockhead.datastore;
 
+import com.marcotte.blockhead.util.Utils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -48,16 +50,121 @@ public class BlockchainAddressStoreServiceTest
         addressStoreRepository.deleteAll();
     }
 
+    /**
+     * test the condition where the balance changes. it should create two records with the older one pointing to the newer one.
+     */
+    @Test
+    public void saveWithHistory()
+    {
+        Date rightNow = new Date();
+        BlockchainAddressStore addressStore = getAddress1(rightNow);
+        addressStoreService.saveWithHistory(addressStore);
+        assertTrue(addressStore.getId() != null &&  addressStore.getId() > 0);
+
+        List<BlockchainAddressStore> savedBlock = addressStoreService.findByAddress("1234567890");
+        assertEquals(1, savedBlock.size());
+
+        assertEquals("1234567890", savedBlock.get(0).getAddress() );
+        assertEquals("JPYT", savedBlock.get(0).getCurrency() );
+        assertEquals("Test balance", savedBlock.get(0).getMessage() );
+        assertEquals((Integer) 42, (Integer) savedBlock.get(0).getNumTransactions() );
+        assertEquals(new Timestamp(rightNow.getTime()), savedBlock.get(0).getLastUpdated() );
+        assertEquals("memo1", savedBlock.get(0).getMemo());
+        assertTrue(savedBlock.get(0).getId() != null &&  savedBlock.get(0).getId() > 0);
+
+
+        BlockchainAddressStore addressStore2 = new BlockchainAddressStore(addressStore);
+        addressStore2.setLastBalance(addressStore.getLastBalance() * 1.5);
+        addressStore2.setLastUpdated( new Timestamp(rightNow.getTime()));
+        addressStoreService.saveWithHistory(addressStore2);
+        List<BlockchainAddressStore> savedBlock2 = addressStoreService.findByAddress("1234567890");
+        assertEquals(2, savedBlock2.size());
+        assertEquals( savedBlock2.get(0).getNextId(), savedBlock2.get(1).getId());
+        assertEquals( savedBlock2.get(0).getNextId(), addressStore2.getId() );
+
+        BlockchainAddressStore latestSavedBlock = addressStoreService.findLatestByAddress("1234567890");
+        assertEquals("1234567890", latestSavedBlock.getAddress() );
+        assertEquals("JPYT", latestSavedBlock.getCurrency() );
+        assertEquals("Test balance", latestSavedBlock.getMessage() );
+        assertEquals((Integer) 42, (Integer) latestSavedBlock.getNumTransactions() );
+        assertEquals(new Timestamp(rightNow.getTime()), latestSavedBlock.getLastUpdated() );
+        assertEquals("memo1", latestSavedBlock.getMemo());
+        assertEquals(addressStore2.getId(), latestSavedBlock.getId());
+        assertTrue(Utils.almostEqual(addressStore2.getLastBalance(), latestSavedBlock.getLastBalance()));
+
+        addressStoreRepository.deleteAll();
+    }
+
+    /**
+     * test save where no change in balance happens so its just an update.
+     */
+    @Test
+    public void saveWithHistory2()
+    {
+        Date rightNow = new Date();
+        BlockchainAddressStore addressStore = getAddress1(rightNow);
+        addressStoreService.saveWithHistory(addressStore);
+        assertTrue(addressStore.getId() != null &&  addressStore.getId() > 0);
+
+        List<BlockchainAddressStore> savedBlock = addressStoreService.findByAddress("1234567890");
+        assertEquals(1, savedBlock.size());
+
+        assertEquals("1234567890", savedBlock.get(0).getAddress() );
+        assertEquals("JPYT", savedBlock.get(0).getCurrency() );
+        assertEquals("Test balance", savedBlock.get(0).getMessage() );
+        assertEquals((Integer) 42, (Integer) savedBlock.get(0).getNumTransactions() );
+        assertEquals(new Timestamp(rightNow.getTime()), savedBlock.get(0).getLastUpdated() );
+        assertEquals("memo1", savedBlock.get(0).getMemo());
+        assertTrue(savedBlock.get(0).getId() != null &&  savedBlock.get(0).getId() > 0);
+
+        addressStore.setMemo("memo2");
+        addressStore.setMessage("Test balance2");
+        Date moreRightNow = new Date();
+        addressStore.setLastUpdated(new Timestamp(moreRightNow.getTime()));
+        addressStoreService.saveWithHistory(addressStore);
+
+        List<BlockchainAddressStore> savedBlock2 = addressStoreService.findByAddress("1234567890");
+        assertEquals(1, savedBlock2.size());
+
+        BlockchainAddressStore latestSavedBlock = addressStoreService.findLatestByAddress("1234567890");
+        assertEquals( addressStore.getId(),                           latestSavedBlock.getId());
+        assertEquals("1234567890",                          latestSavedBlock.getAddress() );
+        assertEquals("JPYT",                                latestSavedBlock.getCurrency() );
+        assertEquals("Test balance2",                       latestSavedBlock.getMessage() );
+        assertEquals((Integer) 42, (Integer)                          latestSavedBlock.getNumTransactions() );
+        assertEquals(new Timestamp(moreRightNow.getTime()),           latestSavedBlock.getLastUpdated() );
+        assertEquals("memo2",                               latestSavedBlock.getMemo());
+        assertTrue(Utils.almostEqual(addressStore.getLastBalance(),   latestSavedBlock.getLastBalance()));
+
+        addressStoreRepository.deleteAll();
+    }
+
+    @Test
+    public void findAllByCoinName()
+    {
+        List<BlockchainAddressStore> listOfAddresses = getAddresses5();
+        for (BlockchainAddressStore addressStore : listOfAddresses ) {
+            addressStoreService.saveWithHistory(addressStore);
+        }
+
+        List<BlockchainAddressStore> dashList = addressStoreService.findAllByCoinName("DASH");
+
+        assertEquals(2, dashList.size());
+        assertEquals("X023232333332223j43jj3", dashList.get(0).getAddress());
+        assertEquals("X024443w33323j43jj3", dashList.get(1).getAddress());
+        addressStoreRepository.deleteAll();
+    }
+
     @Test
     public void findAll()
     {
         Date rightNow = new Date();
         BlockchainAddressStore addressStore = getAddress1(rightNow);
-        addressStoreService.save(addressStore);
+        addressStoreRepository.save(addressStore);
 
         rightNow = new Date();
         addressStore = getAddress2(rightNow);
-        addressStoreService.save(addressStore);
+        addressStoreRepository.save(addressStore);
 
         List<BlockchainAddressStore> foundAddress = addressStoreService.findAll();
         assertEquals(2, foundAddress.size());
@@ -70,11 +177,40 @@ public class BlockchainAddressStoreServiceTest
     {
         Date rightNow = new Date();
         BlockchainAddressStore addressStore = getAddress3(rightNow);
-        addressStoreService.save(addressStore);
+        addressStoreRepository.save(addressStore);
 
         List<BlockchainAddressStore> foundAddres = addressStoreService.findByAddress("9876HomerWasHere543210");
         assertEquals(1, foundAddres.size());
         assertEquals("Test balance 3", foundAddres.get(0).getMessage() );
+        addressStoreRepository.deleteAll();
+    }
+
+    @Test
+    public void findByAddressAndNextID()
+    {
+        Date rightNow = new Date();
+        BlockchainAddressStore addressStore = getAddress4(rightNow);
+        addressStoreRepository.save(addressStore);
+
+        BlockchainAddressStore addressStore3b = new BlockchainAddressStore( addressStore );
+        addressStore3b.setLastBalance(addressStore.getLastBalance() * 1.1F);
+        addressStoreRepository.save(addressStore3b);
+
+        addressStore.setNextId(addressStore3b.getId());
+        addressStoreRepository.save(addressStore);
+
+        List<BlockchainAddressStore> foundAddres = addressStoreService.findByAddress(addressStore.getAddress());
+        assertEquals(2,foundAddres.size());
+
+        BlockchainAddressStore foundAddres1 = addressStoreService.findLatestByAddress(addressStore.getAddress());
+        assertEquals( addressStore3b.getId() , foundAddres1.getId());
+
+
+        List<BlockchainAddressStore> foundAddres2 = addressStoreService.findByAddressAndNextId(addressStore.getAddress(), addressStore.getNextId());
+        assertEquals(1, foundAddres2.size() );
+        assertEquals( addressStore.getId() , foundAddres2.get(0).getId());
+
+        addressStoreRepository.deleteAll();
     }
 
     private BlockchainAddressStore getAddress1(Date rightNow)
@@ -87,6 +223,7 @@ public class BlockchainAddressStoreServiceTest
         addressStore.setMessage("Test balance");
         addressStore.setMemo("memo1");
         addressStore.setNumTransactions(42);
+        addressStore.setNextId( null );
         return addressStore;
     }
 
@@ -100,6 +237,7 @@ public class BlockchainAddressStoreServiceTest
         addressStore.setMessage("Test balance 2");
         addressStore.setNumTransactions(88);
         addressStore.setMemo("memo2");
+        addressStore.setNextId( null );
         return addressStore;
     }
 
@@ -113,6 +251,88 @@ public class BlockchainAddressStoreServiceTest
         addressStore.setMessage("Test balance 3");
         addressStore.setMemo("memo3");
         addressStore.setNumTransactions(98);
+        addressStore.setNextId( null );
         return addressStore;
+    }
+
+    private BlockchainAddressStore getAddress4(Date rightNow)
+    {
+        BlockchainAddressStore addressStore = new BlockchainAddressStore();
+        addressStore.setAddress("X023sdh23kjh2323j43jj3");
+        addressStore.setCurrency("JPYT");
+        addressStore.setLastBalance( 9956.23);
+        addressStore.setLastUpdated( new Timestamp(rightNow.getTime()));
+        addressStore.setMessage("Test balance 4");
+        addressStore.setMemo("memo4");
+        addressStore.setNumTransactions(3);
+        addressStore.setNextId( null );
+        return addressStore;
+    }
+
+    private List<BlockchainAddressStore> getAddresses5()
+    {
+        Date rightNow = new Date();
+        List<BlockchainAddressStore> addressList = new ArrayList<>();
+
+        BlockchainAddressStore addressStore = new BlockchainAddressStore();
+        addressStore.setAddress("X023232333332223j43jj3");
+        addressStore.setCurrency("DASH");
+        addressStore.setLastBalance( 1.0);
+        addressStore.setLastUpdated( new Timestamp(rightNow.getTime()));
+        addressStore.setMessage("Dash test");
+        addressStore.setMemo("memo dash1");
+        addressStore.setNumTransactions(1);
+        addressStore.setNextId( null );
+        addressList.add(addressStore);
+
+        Date rightNow2 = new Date();
+        BlockchainAddressStore addressStore2 = new BlockchainAddressStore(addressStore);
+
+        addressStore2.setLastBalance( 10.0);
+        addressStore2.setLastUpdated( new Timestamp(rightNow2.getTime()));
+        addressList.add(addressStore2);
+
+
+        BlockchainAddressStore addressStore3 = new BlockchainAddressStore();
+        addressStore3.setAddress("0b1234sdsds2325456");
+        addressStore3.setCurrency("BTC");
+        addressStore3.setLastBalance( 2.0);
+        addressStore3.setLastUpdated( new Timestamp(rightNow.getTime()));
+        addressStore3.setMessage("Bitcoin test");
+        addressStore3.setMemo("memo BTC");
+        addressStore3.setNumTransactions(1);
+        addressStore3.setNextId( null );
+        addressList.add(addressStore3);
+
+        Date rightNow3 = new Date();
+        BlockchainAddressStore addressStore4 = new BlockchainAddressStore();
+        addressStore4.setAddress("0b1223232345355466");
+        addressStore4.setCurrency("BTC");
+        addressStore4.setLastBalance( 0.001200);
+        addressStore4.setLastUpdated( new Timestamp(rightNow3.getTime()));
+        addressStore4.setMessage("Bitcoin test2");
+        addressStore4.setMemo("memo BTC");
+        addressStore4.setNumTransactions(5);
+        addressStore4.setNextId( null );
+        addressList.add(addressStore4);
+
+        Date rightNow4 = new Date();
+        BlockchainAddressStore addressStore5 = new BlockchainAddressStore(addressStore4);
+        addressStore5.setLastUpdated( new Timestamp(rightNow4.getTime()));
+        addressStore5.setLastBalance( 100.120);
+        addressList.add(addressStore5);
+
+        BlockchainAddressStore addressStore6 = new BlockchainAddressStore();
+        addressStore6.setAddress("X024443w33323j43jj3");
+        addressStore6.setCurrency("DASH");
+        addressStore6.setLastBalance( 1000.0);
+        addressStore6.setLastUpdated( new Timestamp(rightNow4.getTime()));
+        addressStore6.setMessage("Dash big test");
+        addressStore6.setMemo("memo dash2");
+        addressStore6.setNumTransactions(5);
+        addressStore6.setNextId( null );
+        addressList.add(addressStore6);
+
+        return addressList;
     }
 }

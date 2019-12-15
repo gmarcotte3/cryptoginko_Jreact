@@ -116,7 +116,7 @@ public class PortfolioService
     {
         for (BlockchainAddressStore addressStore: coinList.getCoins())
         {
-            this.blockchainAddressStoreService.save(addressStore);
+            this.blockchainAddressStoreService.saveWithHistory(addressStore);
         }
     }
 

@@ -1,5 +1,6 @@
 package com.marcotte.blockhead.datastore;
 
+import com.marcotte.blockhead.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,33 @@ public class BlockchainAddressStoreService
         blockchainAddressStoreRepository.save(blockchainAddressStore);
     }
 
+    public void saveWithHistory( BlockchainAddressStore blockchainAddressStore)
+    {
+        BlockchainAddressStore lastAddressStore = hasCoinBalanceChangedSinceLastSave( blockchainAddressStore );
+        if ( lastAddressStore != null ) {
+            blockchainAddressStore.setId(null);
+            blockchainAddressStore.setNextId(null);
+            blockchainAddressStoreRepository.save(blockchainAddressStore);
+
+            lastAddressStore.setNextId(blockchainAddressStore.getId() );
+            blockchainAddressStoreRepository.save(lastAddressStore);
+        } else {
+            blockchainAddressStoreRepository.save(blockchainAddressStore);
+        }
+    }
+
+    private BlockchainAddressStore hasCoinBalanceChangedSinceLastSave(BlockchainAddressStore newAddressStore )
+    {
+        BlockchainAddressStore lastAddressStore = findLatestByAddress( newAddressStore.getAddress() );
+        if ( lastAddressStore != null )
+        {
+            if (!Utils.almostEqual(lastAddressStore.getLastBalance(), newAddressStore.getLastBalance())) {
+                return lastAddressStore;
+            }
+        }
+        return null;
+    }
+
     public List<BlockchainAddressStore> findAll()
     {
         List<BlockchainAddressStore> results = new ArrayList<>();
@@ -33,14 +61,11 @@ public class BlockchainAddressStoreService
 
     public List<BlockchainAddressStore> findAllByCoinName( String coinname)
     {
-        List<BlockchainAddressStore> results = new ArrayList<>();
-        for (BlockchainAddressStore blockchainAddressStore : blockchainAddressStoreRepository.findAll())
-        {
-            if ( blockchainAddressStore.getCurrency().equals(coinname)) {
-                results.add(blockchainAddressStore);
-            }
+        List<BlockchainAddressStore> results = blockchainAddressStoreRepository.findBlockchainAddressStoreBycurrencyAndNextId(coinname, null);
+        if ( results != null) {
+            return results;
         }
-        return results;
+        return  new ArrayList<BlockchainAddressStore>();
     }
 
     public List<BlockchainAddressStore> findByAddress(String address)
@@ -51,5 +76,25 @@ public class BlockchainAddressStoreService
     public void delete( BlockchainAddressStore blockchainAddressStore)
     {
         blockchainAddressStoreRepository.delete(blockchainAddressStore);
+    }
+
+    public BlockchainAddressStore findLatestByAddress( String address )
+    {
+        List<BlockchainAddressStore> latestList =  blockchainAddressStoreRepository.findBlockchainAddressStoreByAddressAndNextId(address, null);
+        if (latestList != null && !latestList.isEmpty())
+        {
+            return latestList.get(0);
+        }
+        return null;
+    }
+
+    public List<BlockchainAddressStore> findByAddressAndNextId( String address, Long nextId )
+    {
+        return blockchainAddressStoreRepository.findBlockchainAddressStoreByAddressAndNextId(address, nextId);
+    }
+
+    public List<BlockchainAddressStore> findAllLatest( String address, Long nextId )
+    {
+        return blockchainAddressStoreRepository.findBlockchainAddressStoreByNextId(null);
     }
 }

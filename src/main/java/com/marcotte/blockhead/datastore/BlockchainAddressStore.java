@@ -1,7 +1,7 @@
 package com.marcotte.blockhead.datastore;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
+import javax.persistence.GeneratedValue;src/main/java/com/marcotte/blockhead/datastore/BlockchainAddressStoreRepository.java
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.sql.Timestamp;
@@ -23,18 +23,21 @@ public class BlockchainAddressStore
     private String memo;
     private Boolean updatedViaBlockChainExplorer;
 
+    private Long nextId;
+
     public BlockchainAddressStore()
     {
     }
 
-    public BlockchainAddressStore(String address, String currency, Double lastBalance, Integer numTransactions, Timestamp lastUpdated, String message)
+    public BlockchainAddressStore( BlockchainAddressStore old)
     {
-        this.address = address;
-        this.currency = currency;
-        this.lastBalance = lastBalance;
-        this.numTransactions = numTransactions;
-        this.lastUpdated = lastUpdated;
-        this.message = message;
+        this.address = old.getAddress();
+        this.currency = old.getCurrency();
+        this.lastBalance = old.getLastBalance();
+        this.numTransactions = old.getNumTransactions();
+        this.lastUpdated = old.getLastUpdated();
+        this.message = old.getMessage();
+        this.memo = old.getMemo();
     }
 
     public Long getId() {
@@ -107,5 +110,13 @@ public class BlockchainAddressStore
 
     public void setMemo(String memo) {
         this.memo = memo;
+    }
+
+    public Long getNextId() {
+        return nextId;
+    }
+
+    public void setNextId(Long nextId) {
+        this.nextId = nextId;
     }
 }
