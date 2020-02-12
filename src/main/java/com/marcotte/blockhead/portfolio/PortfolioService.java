@@ -89,14 +89,14 @@ public class PortfolioService
         return dateTracker;
     }
 
-    public List<PortfolioTracker> portfolioCheck(boolean refresh, String cryptoName)
+    public PortfolioCheckResults portfolioCheck(boolean refresh, String cryptoName)
     {
         List<CoinList> portfolioList = new ArrayList<>();
         updateCoinBalanceCacheCalculateFiatBalance( portfolioList, cryptoName, refresh);
 
         DateTracker dateTracker = createAndSaveDateTracker();
         List<PortfolioTracker> portfollioSummary = calculatePortfolioSummary(portfolioList, dateTracker);
-        return portfollioSummary;
+        return new PortfolioCheckResults( portfollioSummary, portfolioList);
     }
 
 

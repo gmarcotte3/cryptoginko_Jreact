@@ -40,9 +40,9 @@ public class PortfolioController
     }
 
     @PutMapping("/refreshcache/{cryptoname}")
-    public ResponseEntity<List<PortfolioTracker>> portfolio_refresh_cache(@PathVariable String cryptoname)
+    public ResponseEntity<PortfolioCheckResults> portfolio_refresh_cache(@PathVariable String cryptoname)
     {
-        List<PortfolioTracker> portfolioResult = portfolioService.portfolioCheck(true, cryptoname);
-        return new ResponseEntity<List<PortfolioTracker>>(portfolioResult, HttpStatus.OK);
+        PortfolioCheckResults results =  portfolioService.portfolioCheck(true, cryptoname);
+        return new ResponseEntity<PortfolioCheckResults>(results, HttpStatus.OK);
     }
 }
