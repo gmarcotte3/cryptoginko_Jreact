@@ -42,7 +42,14 @@ public class PortfolioController
     @PutMapping("/refreshcache/{cryptoname}")
     public ResponseEntity<PortfolioCheckResults> portfolio_refresh_cache(@PathVariable String cryptoname)
     {
-        PortfolioCheckResults results =  portfolioService.portfolioCheck(true, cryptoname);
+        PortfolioCheckResults results =  portfolioService.portfolioCheck(true, cryptoname.toUpperCase());
+        return new ResponseEntity<PortfolioCheckResults>(results, HttpStatus.OK);
+    }
+
+    @PutMapping("/refreshcache/{cryptoname}/{walletName}")
+    public ResponseEntity<PortfolioCheckResults> portfolio_refresh_cache(@PathVariable String cryptoname, @PathVariable String walletName)
+    {
+        PortfolioCheckResults results =  portfolioService.portfolioCheck(true, cryptoname.toUpperCase(), walletName.toUpperCase());
         return new ResponseEntity<PortfolioCheckResults>(results, HttpStatus.OK);
     }
 }

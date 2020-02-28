@@ -24,6 +24,7 @@ public class BlockchainAddressStore
     private Boolean updatedViaBlockChainExplorer;
 
     private Long nextId;
+    private String walletName;
 
     public BlockchainAddressStore()
     {
@@ -61,7 +62,7 @@ public class BlockchainAddressStore
     }
 
     public void setCurrency(String currency) {
-        this.currency = currency;
+        this.currency = currency.toUpperCase();
     }
 
     public Double getLastBalance() {
@@ -118,5 +119,15 @@ public class BlockchainAddressStore
 
     public void setNextId(Long nextId) {
         this.nextId = nextId;
+    }
+
+    public String getWalletName()
+    {
+        return walletName;
+    }
+
+    public void setWalletName(String walletName)
+    {
+        this.walletName = walletName.toUpperCase();
     }
 }

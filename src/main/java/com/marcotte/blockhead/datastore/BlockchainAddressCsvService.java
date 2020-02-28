@@ -16,6 +16,7 @@ import java.util.List;
 @Service
 public class BlockchainAddressCsvService
 {
+
     private static final Logger logger = LoggerFactory.getLogger(BlockchainAddressCsvService.class);
     public void writeAddressesToCSVStream(PrintWriter writer, List<BlockchainAddressStore> addresses)
     {

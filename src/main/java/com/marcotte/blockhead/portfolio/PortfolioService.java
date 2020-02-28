@@ -99,6 +99,28 @@ public class PortfolioService
         return new PortfolioCheckResults( portfollioSummary, portfolioList);
     }
 
+    public PortfolioCheckResults portfolioCheck(boolean refresh, String cryptoName, String walletName)
+    {
+        List<CoinList> portfolioList = new ArrayList<>();
+        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, cryptoName, refresh, walletName);
+
+        DateTracker dateTracker = createAndSaveDateTracker();
+        List<PortfolioTracker> portfollioSummary = calculatePortfolioSummary(portfolioList, dateTracker);
+        return new PortfolioCheckResults( portfollioSummary, portfolioList);
+    }
+
+    private void updateCoinBalanceCacheCalculateFiatBalance(List<CoinList> portfolioList, String cryptoName, boolean refresh, String walletName)
+    {
+        CoinList coinList;
+        coinList = getCoinBalancesForCoin(cryptoName, walletName);
+        if ( refresh) {
+            updateCurrentCoinBalancesViaBlockExplorers(coinList);
+            updateAddressStoreBalance(coinList);
+        }
+        calculateFiatBalance(coinList);
+        portfolioList.add(coinList);
+    }
+
 
     private void updateCoinBalanceCacheCalculateFiatBalance(List<CoinList> portfolioList, String cryptoName, boolean refresh)
     {
@@ -125,6 +147,16 @@ public class PortfolioService
         QuoteGeneric quoteGeneric = coinGeckoService.getQuote(coinList.getCoinName());
         coinList.calculateCoinBalance();
         coinList.calculateFietBalances(quoteGeneric);
+    }
+
+    public CoinList getCoinBalancesForCoin(String coinName, String walletName )
+    {
+        CoinList coinList = new CoinList();
+        coinList.setCoinName(coinName);
+
+        List<BlockchainAddressStore>  blockchainAddressStores = blockchainAddressStoreService.findAllByCoinNameAndWalletName(coinName, walletName);
+        coinList.setCoins(blockchainAddressStores);
+        return coinList;
     }
 
     public CoinList getCoinBalancesForCoin(String coinName )

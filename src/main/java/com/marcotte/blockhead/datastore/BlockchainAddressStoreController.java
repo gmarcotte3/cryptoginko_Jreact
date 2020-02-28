@@ -48,7 +48,15 @@ public class BlockchainAddressStoreController
     public ResponseEntity<List<BlockchainAddressStore>> getLatestAddresses( @PathVariable String cryptoName)
     {
         List<BlockchainAddressStore> blockchainAddressStores;
-        blockchainAddressStores = blockchainAddressStoreService.findAllByCoinName(cryptoName);
+        blockchainAddressStores = blockchainAddressStoreService.findAllByCoinName(cryptoName.toUpperCase());
+        return new ResponseEntity<List<BlockchainAddressStore>>(blockchainAddressStores, HttpStatus.OK);
+    }
+
+    @GetMapping( value = "/crypto/{cryptoName}/{walletName}")
+    public ResponseEntity<List<BlockchainAddressStore>> getLatestAddresses( @PathVariable String cryptoName, @PathVariable String walletName)
+    {
+        List<BlockchainAddressStore> blockchainAddressStores;
+        blockchainAddressStores = blockchainAddressStoreService.findAllByCoinNameAndWalletName(cryptoName.toUpperCase(), walletName.toUpperCase());
         return new ResponseEntity<List<BlockchainAddressStore>>(blockchainAddressStores, HttpStatus.OK);
     }
 
@@ -77,7 +85,7 @@ public class BlockchainAddressStoreController
         {
             cryptoAddress = new BlockchainAddressStore();
             cryptoAddress.setAddress( address);
-            cryptoAddress.setCurrency(cryptoName);
+            cryptoAddress.setCurrency(cryptoName.toUpperCase());
             cryptoAddress.setLastBalance(0.0);
             blockchainAddressStoreService.save(cryptoAddress);
             addressStores.add(cryptoAddress);

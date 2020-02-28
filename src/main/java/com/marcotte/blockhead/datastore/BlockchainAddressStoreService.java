@@ -68,6 +68,16 @@ public class BlockchainAddressStoreService
         return  new ArrayList<BlockchainAddressStore>();
     }
 
+    public List<BlockchainAddressStore> findAllByCoinNameAndWalletName( String coinname, String walletName)
+    {
+        List<BlockchainAddressStore> results = blockchainAddressStoreRepository
+            .findBlockchainAddressStoreBycurrencyAndWalletNameAndNextId(coinname, walletName, null);
+        if ( results != null) {
+            return results;
+        }
+        return  new ArrayList<BlockchainAddressStore>();
+    }
+
     public List<BlockchainAddressStore> findByAddress(String address)
     {
         return blockchainAddressStoreRepository.findBlockchainAddressStoreByAddress(address);
