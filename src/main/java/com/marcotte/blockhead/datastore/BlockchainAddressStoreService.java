@@ -107,4 +107,16 @@ public class BlockchainAddressStoreService
     {
         return blockchainAddressStoreRepository.findBlockchainAddressStoreByNextId(null);
     }
+
+    public CoinList findAllByCoinNameAndWalletNameAndSummerize(String cryptoName, String walletName)
+    {
+        List<BlockchainAddressStore> blockchainAddressStores;
+        blockchainAddressStores = findAllByCoinNameAndWalletName(cryptoName.toUpperCase(), walletName.toUpperCase());
+
+        CoinList coinlist = new CoinList();
+        coinlist.setCoinName(cryptoName);
+        coinlist.setCoins(blockchainAddressStores);
+        coinlist.calculateCoinBalance();
+        return coinlist;
+    }
 }
