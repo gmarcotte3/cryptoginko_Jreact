@@ -89,6 +89,9 @@ results in:
 ```
 
 # Updates
+##2020.04.18
+fixed bug with wallet management. added summary of blockstoreaddress by wallet balances
+
 ##2020.02.29
 added support for exodus address csv dump input. can now read a csv file of exodus wallet addresses and import them into
 the database. new addresses are added, existing address are updated.

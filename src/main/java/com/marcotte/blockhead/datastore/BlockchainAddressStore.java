@@ -28,6 +28,8 @@ public class BlockchainAddressStore
 
     public BlockchainAddressStore()
     {
+        this.walletName = "";
+        this.currency = "";
     }
 
     public BlockchainAddressStore( BlockchainAddressStore old)
@@ -39,6 +41,7 @@ public class BlockchainAddressStore
         this.lastUpdated = old.getLastUpdated();
         this.message = old.getMessage();
         this.memo = old.getMemo();
+        this.walletName = old.getWalletName();
     }
 
     public Long getId() {
@@ -123,6 +126,10 @@ public class BlockchainAddressStore
 
     public String getWalletName()
     {
+        if ( this.walletName == null )
+        {
+            return "";
+        }
         return walletName;
     }
 
