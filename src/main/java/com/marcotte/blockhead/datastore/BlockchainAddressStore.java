@@ -76,6 +76,12 @@ public class BlockchainAddressStore
         this.lastBalance = lastBalance;
     }
 
+    public Double addToLastBalance(Double newamount)
+    {
+        this.lastBalance += newamount;
+        return this.lastBalance;
+    }
+
     public Integer getNumTransactions() {
         return numTransactions;
     }

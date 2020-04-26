@@ -39,7 +39,7 @@ public class ExodusCsvController
    * @param filename
    * @return
    */
-  @GetMapping("/csvfrile")
+  @GetMapping("/csvfile")
   public ResponseEntity<List<List<String>>> readAddressesFromCSVfile(String filename)
   {
     List<List<String>> csvFileArray;

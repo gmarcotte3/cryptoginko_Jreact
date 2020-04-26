@@ -11,12 +11,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * handles all the report/csv exports
+ */
 @Service
 public class BlockchainAddressCsvService
 {
 
+    /**
+     * list of address ordered by crypto,walletName.  contains most the info on each address
+     */
     private static final Logger logger = LoggerFactory.getLogger(BlockchainAddressCsvService.class);
     public void writeAddressesToCSVStream(PrintWriter writer, List<BlockchainAddressStore> addresses)
     {
@@ -51,4 +58,6 @@ public class BlockchainAddressCsvService
         }
 
     }
+
+
 }
