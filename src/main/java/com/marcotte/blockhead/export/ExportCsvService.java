@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -36,6 +37,7 @@ public class ExportCsvService
   public void writeAddressesByCurencyWalletDetailToCSVStream(String fileName, List<BlockchainAddressStore> addresses) throws BlockHeadException
   {
     PrintWriter printWriter;
+    List<BlockchainAddressStore> sortedAddresses = sortAddressByCurrencyAndWallet( addresses);
     try {
       printWriter = new PrintWriter(new File(fileName));
     } catch (FileNotFoundException e) {
@@ -64,7 +66,7 @@ public class ExportCsvService
           .withMappingStrategy(mappingStrategy)
           .withSeparator(',')
           .build();
-      btcsv.write(addresses);
+      btcsv.write(sortedAddresses);
 
       printWriter.close();
 
@@ -88,6 +90,8 @@ public class ExportCsvService
   public List<BlockchainAddressStore> writeAddressesByCurencyWalletSummaryToCSVStream(String fileName, List<BlockchainAddressStore> addresses) throws BlockHeadException
   {
     PrintWriter printWriter;
+    List<BlockchainAddressStore> sortedAddresses = sortAddressByCurrencyAndWallet( addresses);
+
     try {
       printWriter = new PrintWriter(new File(fileName));
     } catch (FileNotFoundException e) {
@@ -101,7 +105,7 @@ public class ExportCsvService
 
     BlockchainAddressStore currentAddr = null;
 
-    for ( BlockchainAddressStore addr : addresses )
+    for ( BlockchainAddressStore addr : sortedAddresses )
     {
       // only happens the first time though
       if ( currentAddr == null ) {
@@ -156,5 +160,23 @@ public class ExportCsvService
     }
 
     return summary;
+  }
+
+  public List<BlockchainAddressStore> sortAddressByCurrencyAndWallet(List<BlockchainAddressStore> addressStores)
+  {
+
+    addressStores.sort( new Comparator<BlockchainAddressStore>() {
+      @Override
+      public int compare(BlockchainAddressStore lhs, BlockchainAddressStore rhs) {
+        // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
+        int compareResult = lhs.getCurrency().compareToIgnoreCase(rhs.getCurrency());
+        if ( compareResult == 0 )
+        {
+          compareResult = lhs.getWalletName().compareToIgnoreCase(rhs.getWalletName());
+        }
+        return compareResult;
+      }
+    });
+    return addressStores;
   }
 }

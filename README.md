@@ -89,6 +89,10 @@ results in:
 ```
 
 # Updates
+##2020.04.27
+added Csv report output. all addresses sorted by currency, walletname
+      csv report output. summary of address grouped by currency, walletname
+
 ##2020.04.18
 fixed bug with wallet management. added summary of blockstoreaddress by wallet balances
 
