@@ -1,17 +1,15 @@
 package com.marcotte.blockhead.portfolio;
 
 import com.marcotte.blockhead.datastore.*;
-import com.marcotte.blockhead.explorerservices.bitcoincash.BitcoinCashComExplorerService;
-import com.marcotte.blockhead.explorerservices.bitcoinexplorers.BitcoinExplorerServices;
-import com.marcotte.blockhead.explorerservices.blockcypher.BlockCypherComService;
-import com.marcotte.blockhead.explorerservices.cardanoexplorers.CardanoAdaService;
-import com.marcotte.blockhead.explorerservices.dashExplorers.DashExplorerServices;
-import com.marcotte.blockhead.explorerservices.dashExplorers.ExplorerDashOrg;
-import com.marcotte.blockhead.explorerservices.eosexplorers.EOS_ExplorerServices;
-import com.marcotte.blockhead.explorerservices.etheriumexplorers.EtheriumExplorerServices;
-import com.marcotte.blockhead.explorerservices.litecoinexplorers.LiteCoinExplorerServices;
-import com.marcotte.blockhead.explorerservices.pricequote.CoinGeckoService;
-import com.marcotte.blockhead.explorerservices.zcashExplorers.ZCashExplorerServices;
+import com.marcotte.blockhead.explorerServices.bitcoincash.BitcoinCashComExplorerService;
+import com.marcotte.blockhead.explorerServices.bitcoinexplorers.BitcoinExplorerServices;
+import com.marcotte.blockhead.explorerServices.cardanoexplorers.CardanoAdaService;
+import com.marcotte.blockhead.explorerServices.dashExplorers.DashExplorerServices;
+import com.marcotte.blockhead.explorerServices.eosexplorers.EOS_ExplorerServices;
+import com.marcotte.blockhead.explorerServices.etheriumexplorers.EtheriumExplorerServices;
+import com.marcotte.blockhead.explorerServices.litecoinexplorers.LiteCoinExplorerServices;
+import com.marcotte.blockhead.explorerServices.pricequote.CoinGeckoService;
+import com.marcotte.blockhead.explorerServices.zcashExplorers.ZCashExplorerServices;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,6 +70,7 @@ public class PortfolioService
         updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CryptoNames.EOS.code, refresh);
         updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CryptoNames.LITE_COIN.code, refresh);
         updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CryptoNames.ZCASH.code, refresh);
+        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CryptoNames.MONERO.code, refresh);
 
         // save copy of the portflio here
         DateTracker dateTracker = createAndSaveDateTracker();
@@ -222,6 +221,12 @@ public class PortfolioService
         if (coinList.getCoinName().equals(CryptoNames.ZCASH.code))
         {
             updateCurrentBalancesForZCashCoin(coinList.getCoins() );
+            return;
+        }
+
+        if (coinList.getCoinName().equals(CryptoNames.MONERO.code))
+        {
+            //TODO implement an exporor service call here.
             return;
         }
 

@@ -22,9 +22,9 @@ import java.util.List;
 import static com.marcotte.blockhead.util.ReadCSV.readCsv;
 
 
-@Api(value = "CSV file", tags = "csvfile")
+@Api(value = "Import CSV file", tags = "Import")
 @RestController
-@RequestMapping("/readcsv")
+@RequestMapping("/import")
 public class ExodusCsvController
 {
   private static final Logger log = LoggerFactory.getLogger(ExodusCsvController.class);
@@ -32,28 +32,6 @@ public class ExodusCsvController
   @Autowired
   ExodosCsvService exodosCsvService;
 
-  /**
-   * This reads a csv file and dumps it in json format. used for testing and development
-   * for looking at a csv file export from wallet software.
-   *
-   * @param filename
-   * @return
-   */
-  @GetMapping("/csvfile")
-  public ResponseEntity<List<List<String>>> readAddressesFromCSVfile(String filename)
-  {
-    List<List<String>> csvFileArray;
-
-    try
-    {
-      csvFileArray = readCsv(filename);
-    } catch (FileNotFoundException e) {
-      return new ResponseEntity(null, HttpStatus.NOT_FOUND);
-    } catch (IOException e2) {
-      return new ResponseEntity(null, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-    return new ResponseEntity<List<List<String>>> (csvFileArray, HttpStatus.OK);
-  }
 
   /**
    * controller to handle the reading and processing of an Exodus wallet address csv file

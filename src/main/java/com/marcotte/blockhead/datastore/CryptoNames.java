@@ -12,7 +12,8 @@ public enum CryptoNames
     STELLAR_LUMENS_XLM("XLM"),
     IOTA("IOT"),
     EOS("EOS"),
-    ZCASH("ZEC");
+    ZCASH("ZEC"),
+    MONERO( "XMR");
 
     public final String code;
 
@@ -32,4 +33,7 @@ public enum CryptoNames
         }
         return null;
     }
+
+    public final String getCode()
+    { return code; }
 }
