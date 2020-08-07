@@ -86,7 +86,7 @@ public class CsvImportService
       String currency = row.get(COL_CURRENCY);
       String walletname = row.get(COL_WALLET_NAME);
 
-      BlockchainAddressStore lastAddress = blockchainAddressStoreService.findLatestByAddress( address );
+      BlockchainAddressStore lastAddress = blockchainAddressStoreService.findLatestByAddressAndCurrency( address, currency );
       if (lastAddress == null )
       {
         BlockchainAddressStore newAddress = new BlockchainAddressStore();

@@ -13,7 +13,9 @@ public enum CryptoNames
     IOTA("IOT"),
     EOS("EOS"),
     ZCASH("ZEC"),
-    MONERO( "XMR");
+    MONERO( "XMR"),
+    LINK("LINK"),
+    MKR("MKR");
 
     public final String code;
 

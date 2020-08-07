@@ -40,7 +40,7 @@ public class BlockchainAddressStoreService
 
     private BlockchainAddressStore hasCoinBalanceChangedSinceLastSave(BlockchainAddressStore newAddressStore )
     {
-        BlockchainAddressStore lastAddressStore = findLatestByAddress( newAddressStore.getAddress() );
+        BlockchainAddressStore lastAddressStore = findLatestByAddressAndCurrency( newAddressStore.getAddress(), newAddressStore.getCurrency() );
         if ( lastAddressStore != null )
         {
             if (!Utils.almostEqual(lastAddressStore.getLastBalance(), newAddressStore.getLastBalance())) {
@@ -128,9 +128,9 @@ public class BlockchainAddressStoreService
         return  new ArrayList<BlockchainAddressStore>();
     }
 
-    public List<BlockchainAddressStore> findByAddress(String address)
+    public List<BlockchainAddressStore> findByAddressAndCurrency(String address, String currency)
     {
-        return blockchainAddressStoreRepository.findBlockchainAddressStoreByAddress(address);
+        return blockchainAddressStoreRepository.findBlockchainAddressStoreByAddressAndCurrency(address, currency);
     }
 
     public void delete( BlockchainAddressStore blockchainAddressStore)
@@ -138,9 +138,9 @@ public class BlockchainAddressStoreService
         blockchainAddressStoreRepository.delete(blockchainAddressStore);
     }
 
-    public BlockchainAddressStore findLatestByAddress( String address )
+    public BlockchainAddressStore findLatestByAddressAndCurrency( String address, String currency )
     {
-        List<BlockchainAddressStore> latestList =  blockchainAddressStoreRepository.findBlockchainAddressStoreByAddressAndNextId(address, null);
+        List<BlockchainAddressStore> latestList =  blockchainAddressStoreRepository.findBlockchainAddressStoreByAddressAndCurrencyAndNextId(address, currency, null);
         if (latestList != null && !latestList.isEmpty())
         {
             return latestList.get(0);
@@ -148,9 +148,9 @@ public class BlockchainAddressStoreService
         return null;
     }
 
-    public List<BlockchainAddressStore> findByAddressAndNextId( String address, Long nextId )
+    public List<BlockchainAddressStore> findByAddressAndNextId( String address, String currency, Long nextId )
     {
-        return blockchainAddressStoreRepository.findBlockchainAddressStoreByAddressAndNextId(address, nextId);
+        return blockchainAddressStoreRepository.findBlockchainAddressStoreByAddressAndCurrencyAndNextId(address,currency, nextId);
     }
 
     public List<BlockchainAddressStore> findAllLatest( String address, Long nextId )

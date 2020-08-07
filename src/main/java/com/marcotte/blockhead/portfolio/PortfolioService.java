@@ -71,6 +71,8 @@ public class PortfolioService
         updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CryptoNames.LITE_COIN.code, refresh);
         updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CryptoNames.ZCASH.code, refresh);
         updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CryptoNames.MONERO.code, refresh);
+        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CryptoNames.LINK.code, refresh);
+        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CryptoNames.MKR.code, refresh);
 
         // save copy of the portflio here
         DateTracker dateTracker = createAndSaveDateTracker();
@@ -225,6 +227,16 @@ public class PortfolioService
         }
 
         if (coinList.getCoinName().equals(CryptoNames.MONERO.code))
+        {
+            //TODO implement an exporor service call here.
+            return;
+        }
+        if (coinList.getCoinName().equals(CryptoNames.LINK.code))
+        {
+            //TODO implement an exporor service call here.
+            return;
+        }
+        if (coinList.getCoinName().equals(CryptoNames.MKR.code))
         {
             //TODO implement an exporor service call here.
             return;

@@ -56,7 +56,7 @@ public class ExodosCsvService
       }
 
 
-      BlockchainAddressStore lastAddress = blockchainAddressStoreService.findLatestByAddress( address );
+      BlockchainAddressStore lastAddress = blockchainAddressStoreService.findLatestByAddressAndCurrency( address , currency);
       if (lastAddress == null )
       {
         BlockchainAddressStore newAddress = new BlockchainAddressStore();

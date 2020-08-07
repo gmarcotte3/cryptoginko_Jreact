@@ -43,6 +43,8 @@ public class CoinGeckoService
     public static final String MONERO_ID = "monero";
     public static final String STELLAR_ID = "Stellar";
     public static final String ZCASH_ID = "zcash";
+    public static final String LINK_ID = "chainlink";
+    public static final String MAKER_ID = "maker";
 
     private static final Logger log = LoggerFactory.getLogger(CoinGeckoService.class);
 
@@ -70,7 +72,8 @@ public class CoinGeckoService
         this.cryptoCodeToCoinGekoCoinID.put( "XMR", "monero" );
         this.cryptoCodeToCoinGekoCoinID.put( "XLM", "Stellar" );
         this.cryptoCodeToCoinGekoCoinID.put( "ZEC", "zcash" );
-
+        this.cryptoCodeToCoinGekoCoinID.put( "LINK", "chainlink" );
+        this.cryptoCodeToCoinGekoCoinID.put( "MKR", "maker" );
     }
 
     /**

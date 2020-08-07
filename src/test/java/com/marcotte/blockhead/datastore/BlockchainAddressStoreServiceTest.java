@@ -36,7 +36,7 @@ public class BlockchainAddressStoreServiceTest
         addressStoreService.save(addressStore);
         assertTrue(addressStore.getId() != null &&  addressStore.getId() > 0);
 
-        List<BlockchainAddressStore> savedBlock = addressStoreService.findByAddress("1234567890");
+        List<BlockchainAddressStore> savedBlock = addressStoreService.findByAddressAndCurrency("1234567890", "JPYT");
         assertEquals(1, savedBlock.size());
 
         assertEquals("1234567890", savedBlock.get(0).getAddress() );
@@ -61,7 +61,7 @@ public class BlockchainAddressStoreServiceTest
         addressStoreService.saveWithHistory(addressStore);
         assertTrue(addressStore.getId() != null &&  addressStore.getId() > 0);
 
-        List<BlockchainAddressStore> savedBlock = addressStoreService.findByAddress("1234567890");
+        List<BlockchainAddressStore> savedBlock = addressStoreService.findByAddressAndCurrency("1234567890", "JPYT");
         assertEquals(1, savedBlock.size());
 
         assertEquals("1234567890", savedBlock.get(0).getAddress() );
@@ -77,12 +77,12 @@ public class BlockchainAddressStoreServiceTest
         addressStore2.setLastBalance(addressStore.getLastBalance() * 1.5);
         addressStore2.setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStoreService.saveWithHistory(addressStore2);
-        List<BlockchainAddressStore> savedBlock2 = addressStoreService.findByAddress("1234567890");
+        List<BlockchainAddressStore> savedBlock2 = addressStoreService.findByAddressAndCurrency("1234567890", "JPYT");
         assertEquals(2, savedBlock2.size());
         assertEquals( savedBlock2.get(0).getNextId(), savedBlock2.get(1).getId());
         assertEquals( savedBlock2.get(0).getNextId(), addressStore2.getId() );
 
-        BlockchainAddressStore latestSavedBlock = addressStoreService.findLatestByAddress("1234567890");
+        BlockchainAddressStore latestSavedBlock = addressStoreService.findLatestByAddressAndCurrency("1234567890","JPYT");
         assertEquals("1234567890", latestSavedBlock.getAddress() );
         assertEquals("JPYT", latestSavedBlock.getCurrency() );
         assertEquals("Test balance", latestSavedBlock.getMessage() );
@@ -106,7 +106,7 @@ public class BlockchainAddressStoreServiceTest
         addressStoreService.saveWithHistory(addressStore);
         assertTrue(addressStore.getId() != null &&  addressStore.getId() > 0);
 
-        List<BlockchainAddressStore> savedBlock = addressStoreService.findByAddress("1234567890");
+        List<BlockchainAddressStore> savedBlock = addressStoreService.findByAddressAndCurrency("1234567890", "JPYT");
         assertEquals(1, savedBlock.size());
 
         assertEquals("1234567890", savedBlock.get(0).getAddress() );
@@ -123,10 +123,10 @@ public class BlockchainAddressStoreServiceTest
         addressStore.setLastUpdated(new Timestamp(moreRightNow.getTime()));
         addressStoreService.saveWithHistory(addressStore);
 
-        List<BlockchainAddressStore> savedBlock2 = addressStoreService.findByAddress("1234567890");
+        List<BlockchainAddressStore> savedBlock2 = addressStoreService.findByAddressAndCurrency("1234567890", "JPYT");
         assertEquals(1, savedBlock2.size());
 
-        BlockchainAddressStore latestSavedBlock = addressStoreService.findLatestByAddress("1234567890");
+        BlockchainAddressStore latestSavedBlock = addressStoreService.findLatestByAddressAndCurrency("1234567890", "JPYT");
         assertEquals( addressStore.getId(),                           latestSavedBlock.getId());
         assertEquals("1234567890",                          latestSavedBlock.getAddress() );
         assertEquals("JPYT",                                latestSavedBlock.getCurrency() );
@@ -172,16 +172,33 @@ public class BlockchainAddressStoreServiceTest
         addressStoreRepository.deleteAll();
     }
 
+    /**
+     * test to see if two different currencies with the same address can be stored and retrived
+     * correctly. This is the case with ETH tokens, they all have the same base ETH address.
+     */
     @Test
     public void findByAddress()
     {
         Date rightNow = new Date();
         BlockchainAddressStore addressStore = getAddress3(rightNow);
         addressStoreRepository.save(addressStore);
+        BlockchainAddressStore addressStore3a = getAddress3a(rightNow);
+        addressStoreRepository.save(addressStore3a);
 
-        List<BlockchainAddressStore> foundAddres = addressStoreService.findByAddress("9876HomerWasHere543210");
+        // look for the first address
+        List<BlockchainAddressStore> foundAddres = addressStoreService
+            .findByAddressAndCurrency(addressStore.getAddress(), addressStore.getCurrency());
         assertEquals(1, foundAddres.size());
-        assertEquals("Test balance 3", foundAddres.get(0).getMessage() );
+        assertEquals(addressStore.getMessage(), foundAddres.get(0).getMessage() );
+        assertEquals(addressStore.getCurrency(), foundAddres.get(0).getCurrency() );
+
+        // look for the second address.
+        List<BlockchainAddressStore> foundAddres2 = addressStoreService
+            .findByAddressAndCurrency(addressStore.getAddress(), addressStore3a.getCurrency());
+        assertEquals(1, foundAddres2.size());
+        assertEquals(addressStore3a.getMessage(), foundAddres2.get(0).getMessage() );
+        assertEquals(addressStore3a.getCurrency(), foundAddres2.get(0).getCurrency() );
+
         addressStoreRepository.deleteAll();
     }
 
@@ -199,14 +216,14 @@ public class BlockchainAddressStoreServiceTest
         addressStore.setNextId(addressStore3b.getId());
         addressStoreRepository.save(addressStore);
 
-        List<BlockchainAddressStore> foundAddres = addressStoreService.findByAddress(addressStore.getAddress());
+        List<BlockchainAddressStore> foundAddres = addressStoreService.findByAddressAndCurrency(addressStore.getAddress(), addressStore.getCurrency());
         assertEquals(2,foundAddres.size());
 
-        BlockchainAddressStore foundAddres1 = addressStoreService.findLatestByAddress(addressStore.getAddress());
+        BlockchainAddressStore foundAddres1 = addressStoreService.findLatestByAddressAndCurrency(addressStore.getAddress(), addressStore.getCurrency());
         assertEquals( addressStore3b.getId() , foundAddres1.getId());
 
 
-        List<BlockchainAddressStore> foundAddres2 = addressStoreService.findByAddressAndNextId(addressStore.getAddress(), addressStore.getNextId());
+        List<BlockchainAddressStore> foundAddres2 = addressStoreService.findByAddressAndNextId(addressStore.getAddress(), addressStore.getCurrency(), addressStore.getNextId());
         assertEquals(1, foundAddres2.size() );
         assertEquals( addressStore.getId() , foundAddres2.get(0).getId());
 
@@ -226,6 +243,7 @@ public class BlockchainAddressStoreServiceTest
         addressStore.setNextId( null );
         return addressStore;
     }
+
 
     private BlockchainAddressStore getAddress2(Date rightNow)
     {
@@ -254,6 +272,21 @@ public class BlockchainAddressStoreServiceTest
         addressStore.setNextId( null );
         return addressStore;
     }
+
+    private BlockchainAddressStore getAddress3a(Date rightNow)
+    {
+        BlockchainAddressStore addressStore = new BlockchainAddressStore();
+        addressStore.setAddress("9876HomerWasHere543210");
+        addressStore.setCurrency("USDT");
+        addressStore.setLastBalance( 99.29);
+        addressStore.setLastUpdated( new Timestamp(rightNow.getTime()));
+        addressStore.setMessage("Test balance 3a");
+        addressStore.setMemo("memo3a");
+        addressStore.setNumTransactions(98);
+        addressStore.setNextId( null );
+        return addressStore;
+    }
+
 
     private BlockchainAddressStore getAddress4(Date rightNow)
     {
