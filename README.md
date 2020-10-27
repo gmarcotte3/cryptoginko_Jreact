@@ -1,6 +1,8 @@
-# Blockhead - blockchain address tracker
+# Blockhead - blockchain address tracker Back-end
 This is a blockchain address checking program. It will track a number of public addresses from different
 crypto currencies.
+This will provide REST apis to store and track addresses to track a portfoilo value. and with wallet
+transaction csv dumps can be used to track profit and loss.
 
 ## Test with swaggar interface
 http://localhost:8082/blockhead/swagger-ui.html
