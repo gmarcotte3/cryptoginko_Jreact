@@ -1,21 +1,36 @@
-import React, { Component } from 'react'
-import styled from 'styled-components'
+import React from 'react'
 import axios from 'axios';
+import FilePicker from '../FilePicker/FilePicker';
 
-// Styled button
-const Button = styled.button`
-    border: 3px solid blue;
-    background-color: black;
-    color:white;
-    border-radius: 10px;
-    font-size: 18px;
-    text-align: center;
-    width: 150px;
-`;
 
-// http://localhost:8082/blockhead/import/addresses
-const IMPORT_GINKO_ADDR_URL = "http://localhost:8082/blockhead/import/addresses?filename=%2Fhome%2Fgmarcotte%2FDesktop%2Fblockhead%2FpublicAddresses_test.csv";
-export default class ImportGinkoAddressCSV extends Component {
+
+const IMPORT_GINKO_ADDR_URL = "http://localhost:8082/blockhead/import/addressescsv";
+
+export default function ImportGinkoAddressCSV(props) {
+
+
+    const onSubmitFile = (filedata) => {
+        console.log("do the file upload now", filedata);
+        
+        axios({
+            url: IMPORT_GINKO_ADDR_URL, 
+            method: 'POST',
+            data: filedata,
+            headers: {
+                Accept: 'application/json, text/plain',
+                'Content-Type': 'multipart/form-data',
+            }
+            }, {
+          // receive two parameter endpoint url ,form data 
+          }).then(
+            res => { // then print response status
+            console.log(res.statusText)
+          }).catch ( function (err) {
+            console.log("we got an error", err);
+          });     
+    }
+
+/*
     handleClick = async (event) => {
         event.preventDefault();
         let URL = "http://localhost:8082/blockhead/import/addresses?filename=%2Fhome%2Fgmarcotte%2FDesktop%2Fblockhead%2FpublicAddresses_test.csv";
@@ -26,37 +41,18 @@ export default class ImportGinkoAddressCSV extends Component {
         let response = await axios.put(IMPORT_GINKO_ADDR_URL);
         console.log(response);
     }
+*/
 
-
-
-
-
-    render() {
-        return (
+    return (
+        <div>
+            <h1>Import Ginko address csv file</h1>
+            <p>
+            This is where you can inport address export from this ginko portfolio management
+            program. This will create/update coin address balance in the database so a update
+            portfoilo value can be calculated.</p>
             <div>
-                <h1>Import Ginko address csv file</h1>
-                <p>
-                This is where you can inport address export from this ginko portfolio management
-                program. This will create/update coin address balance in the database so a update
-                portfoilo value can be calculated.</p>
-                <div>
-                <table>
-                    <tbody>
-
-                    
-                        <tr>
-                            <td><input id="theFileName" type="file" name="csvfile" required /> </td>
-                        </tr>
-                        <tr>
-                            <tr><input id="theFullPathFilename" type="text" name="fullfilepath" required /></tr>
-                        </tr>
-                        <tr>
-                            <td><Button onClick={this.handleClick}>Upload</Button></td>
-                        </tr>
-                    </tbody>
-                </table>
-                </div>
+            <FilePicker onSubmitFile={onSubmitFile}  />
             </div>
-        )
-    }
+        </div>
+    )   
 }

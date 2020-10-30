@@ -8,16 +8,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.marcotte.blockhead.util.ReadCSV.readCsv;
+import static com.marcotte.blockhead.util.ReadCSV.readFileCsv;
 
 
 @Api(value = "Import CSV file", tags = "Import")
@@ -84,6 +85,33 @@ public class CsvImportController
       return new ResponseEntity(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
     return new ResponseEntity<List<BlockchainAddressStore>> (savedList, HttpStatus.OK);
+  }
+
+  @PostMapping("/addressescsv")
+  public ResponseEntity<List<BlockchainAddressStore>> importAddressesPostFromCSVfile(
+          @RequestParam("file") MultipartFile file,  RedirectAttributes redirectAttributes) {
+
+    List<List<String>> csvFileArray;
+    List<BlockchainAddressStore> savedList = new ArrayList<BlockchainAddressStore>();
+
+    if (file.isEmpty()) {
+      redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
+      return new ResponseEntity(null, HttpStatus.NOT_FOUND);
+    }
+
+    try {
+      csvFileArray = readFileCsv(file);
+      savedList = importCsvService.processCsvAddressDump(csvFileArray);
+
+      redirectAttributes.addFlashAttribute("message",
+              "You successfully uploaded '" + file.getOriginalFilename() + "'");
+
+    } catch (FileNotFoundException e) {
+      return new ResponseEntity(null, HttpStatus.NOT_FOUND);
+    } catch (IOException e2) {
+      return new ResponseEntity(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    return new ResponseEntity(savedList, HttpStatus.OK);
   }
 
 }
