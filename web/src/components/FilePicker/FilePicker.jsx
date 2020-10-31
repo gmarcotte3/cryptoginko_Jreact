@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import './FilePicker.css';
 import styled from 'styled-components'
+import axios from 'axios';
 
-/*
+
 // Styled button
-const Button = styled.button`
+const Input = styled.input`
     border: 3px solid blue;
     background-color: black;
     color:white;
@@ -13,7 +14,7 @@ const Button = styled.button`
     text-align: center;
     width: 150px;
 `;
-*/
+
 
 /**
  * file picker component. This component manges state using the new functional component useState options.
@@ -26,7 +27,6 @@ const Button = styled.button`
  */
 export default function FilePicker(props) {
     const [selectedFile, setSelectedFile] = useState(null);
-    const [loadedFiles, setLoadedFiles] = useState(0);
   
     const IMPORT_GINKO_ADDR_URL = "http://localhost:8082/blockhead/import/addressescsv";
 
@@ -39,58 +39,50 @@ export default function FilePicker(props) {
       setSelectedFile(event.target.files[0]);
     }
 
-    /*
+    
     const handleSubmit = (event) => {
-      event.preventDefault();
       console.log("sumit, selected file=", selectedFile);
       console.log("event", event);
-    }
-    */
-  
-    /**
-     * handle the submit (upload) button
-     */
-    /*
-    const onClickHandler = () => {
-      if ( props.onSubmitFile === null) {
-        alert("no submit handler");
-      }
 
-      const data = new FormData() 
-      let file = props.selectedFile;
-      data.append('file', file);
-      props.onSubmitFile(data);
-     
+
+      var bodyFormData = new FormData();
+      bodyFormData.append('file', selectedFile); 
+
+      console.log("file", selectedFile ); // debug
+
+      props.onSubmitFile(bodyFormData);
+      /*
+      axios({
+        method: 'post',
+        url: IMPORT_GINKO_ADDR_URL,
+        data: bodyFormData,
+        headers: {'Content-Type': 'multipart/form-data' }
+        })
+        .then(function (response) {
+            //handle success
+            console.log("SUCKsess", response);  //debugging
+        })
+        .catch(function (response) {
+            //handle error
+            console.log("error", response); //debugging
+        });
+      */
+      
+      event.preventDefault();
     }
-    */
+    
   
-    // removed the <Button type="button" className="btn btn-success btn-block" onClick={onClickHandler}>Upload</Button>
-    // render part here.
+    //<form method="POST" onSubmit={handleSubmit} encType="multipart/form-data">
+    //<form method="POST" action={IMPORT_GINKO_ADDR_URL} encType="multipart/form-data">
     return (
+      <div >
         <div >
           <div >
+            <form method="POST" onSubmit={handleSubmit} encType="multipart/form-data">
             <div >
-              <form method="POST" action={IMPORT_GINKO_ADDR_URL} enctype="multipart/form-data">
-              <div >
-                <label>Upload Your File </label>
-                <input type="file" accept=".csv" name="file" onChange={onChangeHandler} />
-                <input type="submit" value="Upload csv" />
-              </div>
-            </form>
-            </div>
-          </div>
-      </div>
-    )
-    /*
-    return (
-      <div className="upload-container">
-        <div className="row">
-          <div className="formupload">
-            <form method="POST" onSubmit={handleSubmit} enctype="multipart/form-data">
-            <div className="form-group files">
               <label>Upload Your File </label>
               <input type="file" accept=".csv" name="file" onChange={onChangeHandler} />
-              <input type="submit" value="Upload csv" />
+              <Input type="submit" value="Upload csv" />
             </div>
             
           </form>
@@ -98,5 +90,5 @@ export default function FilePicker(props) {
         </div>
     </div>
     )
-    */
+  
   }

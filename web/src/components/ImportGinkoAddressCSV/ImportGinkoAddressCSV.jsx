@@ -1,47 +1,38 @@
 import React from 'react'
 import axios from 'axios';
 import FilePicker from '../FilePicker/FilePicker';
+import CoinAddress from '../CoinAddress/CoinAddress';
 
 
 
 const IMPORT_GINKO_ADDR_URL = "http://localhost:8082/blockhead/import/addressescsv";
 
+
 export default function ImportGinkoAddressCSV(props) {
 
+    const [coinAddresses, setCoinAddresses] = React.useState([]);
 
-    const onSubmitFile = (filedata) => {
-        console.log("do the file upload now", filedata);
+    // this does not work, getting error responses.
+    const onSubmitFile = (bodyFormData) => {
+        console.log("do the file upload now", bodyFormData);
         
         axios({
-            url: IMPORT_GINKO_ADDR_URL, 
-            method: 'POST',
-            data: filedata,
-            headers: {
-                Accept: 'application/json, text/plain',
-                'Content-Type': 'multipart/form-data',
-            }
-            }, {
-          // receive two parameter endpoint url ,form data 
-          }).then(
-            res => { // then print response status
-            console.log(res.statusText)
-          }).catch ( function (err) {
-            console.log("we got an error", err);
-          });     
+            method: 'post',
+            url: IMPORT_GINKO_ADDR_URL,
+            data: bodyFormData,
+            headers: {'Content-Type': 'multipart/form-data' }
+            })
+            .then(function (response) {
+                //handle success
+                console.log("SUCKsess", response);  //debugging
+                setCoinAddresses( response.data );
+            })
+            .catch(function (response) {
+                //handle error
+                console.log("error", response); //debugging
+            });
+    
     }
-
-/*
-    handleClick = async (event) => {
-        event.preventDefault();
-        let URL = "http://localhost:8082/blockhead/import/addresses?filename=%2Fhome%2Fgmarcotte%2FDesktop%2Fblockhead%2FpublicAddresses_test.csv";
-        let filename=document.getElementById('theFileName').value;
-        let fullPathFilename=document.getElementById('theFullPathFilename').value;
-        console.log("filename=",filename);
-        console.log("fullpath=",fullPathFilename);
-        let response = await axios.put(IMPORT_GINKO_ADDR_URL);
-        console.log(response);
-    }
-*/
 
     return (
         <div>
@@ -53,6 +44,20 @@ export default function ImportGinkoAddressCSV(props) {
             <div>
             <FilePicker onSubmitFile={onSubmitFile}  />
             </div>
+            <br />
+            <table>
+            <tbody>
+            {
+                coinAddresses.map( ({address, walletName, currency, lastBalance, lastUpdated, message}) =>
+                <CoinAddress 
+                    key={address} address={address} walletName={walletName} currency={currency}
+                    lastBalance={lastBalance} lastUpdated= {lastUpdated} message={message}
+                />
+                 
+                )
+            }
+            </tbody>
+            </table>
         </div>
     )   
 }

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 // styled TD
@@ -7,48 +7,52 @@ const TD = styled.td`
     width : 25vh;
 `;
 
-export default class FiatCurrency extends Component {
+/**
+ * Fiat currency component that will display a row in a table with the correct
+ * fiat symbol 
+ * @param {*} props 
+ */
+export default function FiatCurrency(props) {
 
-    currencyOptions = {
+    const currencyOptions = {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
     }
-    currencyOptionsJpy = {
+    const currencyOptionsJpy = {
         minimumFractionDigits: 0,
         maximumFractionDigits: 0,
     }
 
-    getPrice = () => { 
+    const getPrice = () => { 
         return (
-            this.props.coinValue.toLocaleString(undefined, this.currencyOptions)
+            props.coinValue.toLocaleString(undefined, currencyOptions)
         );
     }
-    getPriceNZD = () => { 
+    const getPriceNZD = () => { 
         return (
-            this.props.coinValue.toLocaleString(undefined, this.currencyOptions)
+            props.coinValue.toLocaleString(undefined, currencyOptions)
         );
     }
-    getPriceJPY = () => { 
+    const getPriceJPY = () => { 
         return (
-            this.props.coinValue.toLocaleString(undefined, this.currencyOptionsJpy)
+            props.coinValue.toLocaleString(undefined, currencyOptionsJpy)
         );
     }
 
-    getValue = () => {
-        if ( this.props.fiatCurrency === 'JPM') {
-            return ( this.getPriceJPY() +" 万円");
-        } else if (this.props.fiatCurrency === 'JPY') {
-            return ( this.getPriceJPY() +" 円");
+    const getValue = () => {
+        if ( props.fiatCurrency === 'JPM') {
+            return ( getPriceJPY() +" 万円");
+        } else if (props.fiatCurrency === 'JPY') {
+            return ( getPriceJPY() +" 円");
         } else {
-            return ( "$" + this.getPrice() );
+            return ( "$" + getPrice() );
         }
     }
-    render() {
-        return (
-            <tr>
-                <TD>{this.getValue()}</TD>
-                <TD>{this.props.fiatCurrency}</TD>
-            </tr>
-        )
-    }
+    
+    return (
+        <tr>
+            <TD>{getValue()}</TD>
+            <TD>{props.fiatCurrency}</TD>
+        </tr>
+    )
 }
