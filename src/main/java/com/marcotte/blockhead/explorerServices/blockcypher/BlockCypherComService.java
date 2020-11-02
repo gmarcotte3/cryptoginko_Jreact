@@ -2,7 +2,7 @@ package com.marcotte.blockhead.explorerServices.blockcypher;
 
 import com.marcotte.blockhead.config.BlockheadConfig;
 import com.marcotte.blockhead.datastore.BlockchainAddressStore;
-import com.marcotte.blockhead.datastore.CryptoNames;
+import com.marcotte.blockhead.model.CryptoNames;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

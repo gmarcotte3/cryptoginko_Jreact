@@ -10,6 +10,10 @@ import com.marcotte.blockhead.explorerServices.etheriumexplorers.EtheriumExplore
 import com.marcotte.blockhead.explorerServices.litecoinexplorers.LiteCoinExplorerServices;
 import com.marcotte.blockhead.explorerServices.pricequote.CoinGeckoService;
 import com.marcotte.blockhead.explorerServices.zcashExplorers.ZCashExplorerServices;
+import com.marcotte.blockhead.model.CoinList;
+import com.marcotte.blockhead.model.CryptoNames;
+import com.marcotte.blockhead.model.Currency;
+import com.marcotte.blockhead.model.QuoteGeneric;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.marcotte.blockhead.explorerServices.eosexplorers;
 
 import com.marcotte.blockhead.datastore.BlockchainAddressStore;
-import com.marcotte.blockhead.datastore.BlockchainTransactionList;
+import com.marcotte.blockhead.model.BlockchainTransactionList;
 import com.marcotte.blockhead.util.ShellScript;
 import org.json.JSONObject;
 import org.slf4j.Logger;

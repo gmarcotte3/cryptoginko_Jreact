@@ -4,14 +4,17 @@ import FiatCurrency from "../FiatCurrency/FiatCurrency";
 import axios from 'axios';
 
 const BACKEND_URL = "http://localhost:8082/blockhead/portfolio";
+const PORTFOLIO_DETAIL_BY_COIN = "http://localhost:8082/blockhead/portfolio/history/detail/";
 
 export default function Portfolio(props) {
 
-    const [coinValue, setCoinValue] = React.useState(-1);
+    const [totalValue, setTotalValue] = React.useState(-1);
     const [porfolioFiatValues, setPortfolioFiatValues] = React.useState([]);
 
     const componentDidMount = async () => {
-        let response = await axios.put(BACKEND_URL);
+        let url = PORTFOLIO_DETAIL_BY_COIN + props.defaultFiatCurrency;
+        console.log("url", url);
+        let response = await axios.get(url);
         let updatedPorfolioFiatValues = response.data;
         console.log("porfolioFiatValues", updatedPorfolioFiatValues);
 
@@ -21,15 +24,26 @@ export default function Portfolio(props) {
         }
         console.log("total Value=", totalValue);
         setPortfolioFiatValues(updatedPorfolioFiatValues);
-        setCoinValue(totalValue);
+        setTotalValue(totalValue);
     }
 
     useEffect( function() {
-        if ( coinValue === -1)
+        if ( totalValue === -1)
         {
             componentDidMount();
         }
     })
+
+    /*
+    {
+     porfolioFiatValues.map( ({coinName, coinValue, fiatCurrency, coinBalance}) =>
+                            <FiatCurrency key={fiatCurrency}  
+                                fiatCurrency={fiatCurrency}
+                                coinValue={coinValue}
+                                />
+                            )
+    }
+    */
 
     return (
         <div>
@@ -41,19 +55,13 @@ export default function Portfolio(props) {
                 <table>
                     <thead>
                         <tr>
-                            <th>value</th>
-                            <th>Fiat</th>
+                            <th>coin</th>
+                            <th>coin balance</th>
+                            <th>fiat value</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {
-                            porfolioFiatValues.map( ({coinValue, fiatCurrency}) =>
-                            <FiatCurrency key={fiatCurrency}  
-                                fiatCurrency={fiatCurrency}
-                                coinValue={coinValue}
-                                />
-                            )
-                        }
+                        <td>{totalValue}</td>
                     </tbody>
                 </table>
             </div>

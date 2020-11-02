@@ -1,4 +1,6 @@
-package com.marcotte.blockhead.datastore;
+package com.marcotte.blockhead.model;
+
+import com.marcotte.blockhead.model.Wallet;
 
 import java.util.ArrayList;
 import java.util.List;

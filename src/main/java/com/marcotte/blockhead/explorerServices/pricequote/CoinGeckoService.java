@@ -1,9 +1,9 @@
 package com.marcotte.blockhead.explorerServices.pricequote;
 
 import com.marcotte.blockhead.config.BlockheadConfig;
-import com.marcotte.blockhead.datastore.Currency;
-import com.marcotte.blockhead.datastore.FiatNames;
-import com.marcotte.blockhead.datastore.QuoteGeneric;
+import com.marcotte.blockhead.model.Currency;
+import com.marcotte.blockhead.model.FiatNames;
+import com.marcotte.blockhead.model.QuoteGeneric;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,7 +1,7 @@
 package com.marcotte.blockhead.explorerServices.pricequote;
 
-import com.marcotte.blockhead.datastore.Currency;
-import com.marcotte.blockhead.datastore.QuoteGeneric;
+import com.marcotte.blockhead.model.Currency;
+import com.marcotte.blockhead.model.QuoteGeneric;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -173,6 +173,28 @@ public class BlockchainAddressStoreServiceTest
     }
 
     /**
+     * testing if we can do a group by currency summing up the balances.
+     */
+    @Test public void findAllLatest_test() {
+        List<BlockchainAddressStore> listOfAddresses = getAddresses6();
+        for (BlockchainAddressStore addressStore : listOfAddresses ) {
+            addressStoreService.saveWithHistory(addressStore);
+        }
+        Date rightNow = new Date();
+
+        listOfAddresses.get(0).setLastBalance(1.0);
+        listOfAddresses.get(0).setLastUpdated( new Timestamp(rightNow.getTime()));
+        addressStoreService.saveWithHistory(listOfAddresses.get(0));
+        // dash should have balance of 3.0
+
+        List<BlockchainAddressStore> foundAddresses = addressStoreService.findAllLatestSumBalanceGroupByCurency();
+        System.out.println(foundAddresses.size());
+        assertTrue( foundAddresses.get(1).getLastBalance() > 2.0 && foundAddresses.get(1).getLastBalance() < 4.0 );
+
+        addressStoreRepository.deleteAll();
+    }
+
+    /**
      * test to see if two different currencies with the same address can be stored and retrived
      * correctly. This is the case with ETH tokens, they all have the same base ETH address.
      */
@@ -363,6 +385,79 @@ public class BlockchainAddressStoreServiceTest
         addressStore6.setMessage("Dash big test");
         addressStore6.setMemo("memo dash2");
         addressStore6.setNumTransactions(5);
+        addressStore6.setNextId( null );
+        addressList.add(addressStore6);
+
+        return addressList;
+    }
+
+    private List<BlockchainAddressStore> getAddresses6() {
+        Date rightNow = new Date();
+        List<BlockchainAddressStore> addressList = new ArrayList<>();
+
+        BlockchainAddressStore addressStore = new BlockchainAddressStore();
+        addressStore.setAddress("Xaaaaaaaaaaaaaaaaaaaaa1");
+        addressStore.setCurrency("DASH");
+        addressStore.setLastBalance( 323434556767889.0);
+        addressStore.setLastUpdated( new Timestamp(rightNow.getTime()));
+        addressStore.setMessage("Dash test");
+        addressStore.setMemo("memo dash1");
+        addressStore.setNumTransactions(1);
+        addressStore.setNextId( null );
+        addressList.add(addressStore);
+
+        BlockchainAddressStore addressStore2 = new BlockchainAddressStore();
+        addressStore2.setAddress("Xaaaaaaaaaaaaaaaaaaaaa2");
+        addressStore2.setCurrency("DASH");
+        addressStore2.setLastBalance( 2.0);
+        addressStore2.setLastUpdated( new Timestamp(rightNow.getTime()));
+        addressStore2.setMessage("Dash test");
+        addressStore2.setMemo("memo dash1");
+        addressStore2.setNumTransactions(1);
+        addressStore2.setNextId( null );
+        addressList.add(addressStore2);
+
+        BlockchainAddressStore addressStore3 = new BlockchainAddressStore();
+        addressStore3.setAddress("0bbbbbbbbbbbbbbbb1");
+        addressStore3.setCurrency("BTC");
+        addressStore3.setLastBalance( 1.1);
+        addressStore3.setLastUpdated( new Timestamp(rightNow.getTime()));
+        addressStore3.setMessage("Bitcoin test1");
+        addressStore3.setMemo("memo BTC");
+        addressStore3.setNumTransactions(3);
+        addressStore3.setNextId( null );
+        addressList.add(addressStore3);
+
+        BlockchainAddressStore addressStore4 = new BlockchainAddressStore();
+        addressStore4.setAddress("0bbbbbbbbbbbbbbbb2");
+        addressStore4.setCurrency("BTC");
+        addressStore4.setLastBalance( 1.2);
+        addressStore4.setLastUpdated( new Timestamp(rightNow.getTime()));
+        addressStore4.setMessage("Bitcoin test2");
+        addressStore4.setMemo("memo BTC");
+        addressStore4.setNumTransactions(1);
+        addressStore4.setNextId( null );
+        addressList.add(addressStore4);
+
+        BlockchainAddressStore addressStore5 = new BlockchainAddressStore();
+        addressStore5.setAddress("0ethethewthewthwthethhhhhh1");
+        addressStore5.setCurrency("ETH");
+        addressStore5.setLastBalance( 10.0);
+        addressStore5.setLastUpdated( new Timestamp(rightNow.getTime()));
+        addressStore5.setMessage("Oshirium test1");
+        addressStore5.setMemo("memo ETH");
+        addressStore5.setNumTransactions(1);
+        addressStore5.setNextId( null );
+        addressList.add(addressStore5);
+
+        BlockchainAddressStore addressStore6 = new BlockchainAddressStore();
+        addressStore6.setAddress("0edddddddddddddddddddog1");
+        addressStore6.setCurrency("DOG");
+        addressStore6.setLastBalance( 20.0);
+        addressStore6.setLastUpdated( new Timestamp(rightNow.getTime()));
+        addressStore6.setMessage("Doggie coin test1");
+        addressStore6.setMemo("memo DOG");
+        addressStore6.setNumTransactions(1);
         addressStore6.setNextId( null );
         addressList.add(addressStore6);
 

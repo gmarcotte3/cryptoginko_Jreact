@@ -1,5 +1,8 @@
 package com.marcotte.blockhead.datastore;
 
+import com.marcotte.blockhead.model.CoinList;
+import com.marcotte.blockhead.model.Wallet;
+import com.marcotte.blockhead.model.WalletList;
 import com.marcotte.blockhead.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -109,6 +112,11 @@ public class BlockchainAddressStoreService
         return walletList;
     }
 
+    /**
+     * find latest addreses of the specified coin
+     * @param coinname
+     * @return
+     */
     public List<BlockchainAddressStore> findAllByCoinName( String coinname)
     {
         List<BlockchainAddressStore> results = blockchainAddressStoreRepository.findBlockchainAddressStoreBycurrencyAndNextId(coinname, null);
@@ -153,9 +161,53 @@ public class BlockchainAddressStoreService
         return blockchainAddressStoreRepository.findBlockchainAddressStoreByAddressAndCurrencyAndNextId(address,currency, nextId);
     }
 
-    public List<BlockchainAddressStore> findAllLatest( String address, Long nextId )
+
+    /**
+     * returns the latest addresses ordered by the currency. we see all the addresses with coin balance and ordered by the
+     * currency name.
+     *
+     * @return
+     */
+    public List<BlockchainAddressStore> findAllLatestOrderByCoin( )
     {
-        return blockchainAddressStoreRepository.findBlockchainAddressStoreByNextId(null);
+        return blockchainAddressStoreRepository.findBlockchainAddressStoreByNextIdOrderByCurrency(null);
+    }
+
+    /**
+     * return a list of crypto currencies that are all the addresses sum over blanceds grouped by the
+     * currency. This gives you a balance of each of the latest coins in the coin address store.
+     *
+     * @return
+     */
+    public List<BlockchainAddressStore> findAllLatestSumBalanceGroupByCurency( )
+    {
+        List<BlockchainAddressStore> foundLatestOrderedByCurrency = blockchainAddressStoreRepository.findBlockchainAddressStoreByNextIdOrderByCurrency(null);
+        List<BlockchainAddressStore> summedByCurrency = new ArrayList<BlockchainAddressStore>();
+
+        Double runningBalance = 0.0;
+        String currentCoin = "";
+        for (BlockchainAddressStore addr : foundLatestOrderedByCurrency ) {
+            if ( currentCoin.length() == 0) {
+                currentCoin = addr.getCurrency();
+                runningBalance = addr.getLastBalance();
+            } else if (currentCoin.compareToIgnoreCase(addr.getCurrency() )!= 0 ) {
+                BlockchainAddressStore newAddr = new BlockchainAddressStore();
+                newAddr.setLastBalance(runningBalance);
+                newAddr.setCurrency(currentCoin);
+                summedByCurrency.add(newAddr);
+                runningBalance = addr.getLastBalance();
+                currentCoin = addr.getCurrency();
+            } else {
+                runningBalance += addr.getLastBalance();
+            }
+        }
+        // save the last item
+        BlockchainAddressStore newAddr = new BlockchainAddressStore();
+        newAddr.setLastBalance(runningBalance);
+        newAddr.setCurrency(currentCoin);
+        summedByCurrency.add(newAddr);
+
+        return summedByCurrency;
     }
 
     public CoinList findAllByCoinNameAndWalletNameAndSummerize(String cryptoName, String walletName)

@@ -1,6 +1,6 @@
 package com.marcotte.blockhead.portfolio;
 
-import com.marcotte.blockhead.datastore.CoinList;
+import com.marcotte.blockhead.model.CoinList;
 import com.marcotte.blockhead.datastore.PortfolioTracker;
 
 import java.util.List;

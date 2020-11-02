@@ -1,5 +1,6 @@
 import React from 'react'
 import logo from './tranquility200x.png';
+import ginkoLogo from './ginkoLogo.svg';
 import styled from 'styled-components'
 
 // styled header
@@ -29,8 +30,7 @@ const H1 = styled.h1`
 export default function GinkoHeader(props) {
     return (
         <Header>
-          <Img src={logo} alt="tranquility logo" />
-          <H1>Crypto Ginko Portfolio Management</H1>
+          <Img src={ginkoLogo} alt="ginko logo" />
         </Header>
     );
 }

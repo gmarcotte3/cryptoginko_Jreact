@@ -15,6 +15,10 @@
     $ npm install --save styled-components
     $ npm install axios --save
 
+    $ npm install bootstrap --save
+    $ npm install bootswatch --save
+    $ npm install @fortawesome/fontawesome-free
+
 ## Generated Readme:
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

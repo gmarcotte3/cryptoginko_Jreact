@@ -1,7 +1,6 @@
 package com.marcotte.blockhead.portfolio;
 
 
-import com.marcotte.blockhead.datastore.CoinList;
 import com.marcotte.blockhead.datastore.PortfolioTracker;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
@@ -11,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Api(value = "Portfolio reports", tags = "portfolio")

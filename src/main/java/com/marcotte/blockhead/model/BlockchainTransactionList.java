@@ -1,4 +1,6 @@
-package com.marcotte.blockhead.datastore;
+package com.marcotte.blockhead.model;
+
+import com.marcotte.blockhead.datastore.BlockchainAddressStore;
 
 import java.util.List;
 

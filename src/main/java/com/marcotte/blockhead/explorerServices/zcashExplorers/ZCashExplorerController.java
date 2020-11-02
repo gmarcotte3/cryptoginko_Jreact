@@ -1,7 +1,7 @@
 package com.marcotte.blockhead.explorerServices.zcashExplorers;
 
 import com.marcotte.blockhead.datastore.BlockchainAddressStore;
-import com.marcotte.blockhead.datastore.CryptoNames;
+import com.marcotte.blockhead.model.CryptoNames;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

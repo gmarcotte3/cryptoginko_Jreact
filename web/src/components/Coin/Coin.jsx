@@ -5,19 +5,18 @@
  // styled TD
 const TD = styled.td`
     border: 1px solid #2c2b2b;
-    width : 25vh;
+    width : 16vw;
 `;
 
 // Styled button
 const Button = styled.button`
-    border: 3px solid blue;
-    background-color: black;
-    color:white;
-    border-radius: 10px;
-    font-size: 18px;
-    text-align: center;
-    width: 150px;
+    font-size: 11px;
+    width: 64px;
+    margin: 3px 5px 0;
+    vertical-align: middle;
 `;
+
+
 
  /**
   * This class represents a crypto coin with attributes of name, ticker, and price

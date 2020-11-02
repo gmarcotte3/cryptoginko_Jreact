@@ -1,6 +1,7 @@
 package com.marcotte.blockhead.datastore;
 
-import com.marcotte.blockhead.about.AboutInfo;
+import com.marcotte.blockhead.model.CoinList;
+import com.marcotte.blockhead.model.WalletList;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,15 +44,22 @@ public class BlockchainAddressStoreController
         blockchainAddressCsvService.writeAddressesToCSVStream(response.getWriter(), blockchainAddressStores);
     }
 
+    @GetMapping( value = "/crypto")
+    public ResponseEntity<List<BlockchainAddressStore>> findAllLatestSumBalanceGroupByCurency()
+    {
+        List<BlockchainAddressStore> blockchainAddressStores = blockchainAddressStoreService.findAllLatestSumBalanceGroupByCurency();
+        return new ResponseEntity<List<BlockchainAddressStore>>(blockchainAddressStores, HttpStatus.OK);
+    }
+
     @GetMapping( value = "/crypto/{cryptoName}")
-    public ResponseEntity<WalletList> getLatestAddresses( @PathVariable String cryptoName)
+    public ResponseEntity<WalletList> getLatestAddresses(@PathVariable String cryptoName)
     {
         WalletList walletList = blockchainAddressStoreService.summarizeAddressStoreByCoinNameAndWalletName(cryptoName.toUpperCase());
         return new ResponseEntity<WalletList>(walletList, HttpStatus.OK);
     }
 
     @GetMapping( value = "/crypto/{cryptoName}/{walletName}")
-    public ResponseEntity<CoinList> getLatestAddresses( @PathVariable String cryptoName, @PathVariable String walletName)
+    public ResponseEntity<CoinList> getLatestAddresses(@PathVariable String cryptoName, @PathVariable String walletName)
     {
         CoinList coinlist = blockchainAddressStoreService.findAllByCoinNameAndWalletNameAndSummerize(cryptoName.toUpperCase(), walletName.toUpperCase());
         return new ResponseEntity<CoinList>(coinlist, HttpStatus.OK);

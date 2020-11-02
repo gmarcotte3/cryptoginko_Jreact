@@ -1,4 +1,4 @@
-package com.marcotte.blockhead.datastore;
+package com.marcotte.blockhead.model;
 
 import java.util.Date;
 

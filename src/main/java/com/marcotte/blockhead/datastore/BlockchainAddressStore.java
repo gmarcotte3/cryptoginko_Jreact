@@ -6,6 +6,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.sql.Timestamp;
 
+/**
+ * address store with a pointer to the last address balance.
+ * address where nextID == null is the latest
+ */
 @Entity
 public class BlockchainAddressStore
 {
