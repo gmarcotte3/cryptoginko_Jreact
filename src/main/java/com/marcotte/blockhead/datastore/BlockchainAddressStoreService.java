@@ -180,10 +180,10 @@ public class BlockchainAddressStoreService
      *
      * @return
      */
-    public List<Coin> findAllLatestSumBalanceGroupByCurency( )
+    public List<CoinDTO> findAllLatestSumBalanceGroupByCurency( )
     {
         List<BlockchainAddressStore> foundLatestOrderedByCurrency = blockchainAddressStoreRepository.findBlockchainAddressStoreByNextIdOrderByCurrency(null);
-        List<Coin> summedByCurrency = new ArrayList<Coin>();
+        List<CoinDTO> summedByCurrency = new ArrayList<CoinDTO>();
 
         Double runningBalance = 0.0;
         String currentCoin = "";
@@ -192,11 +192,11 @@ public class BlockchainAddressStoreService
                 currentCoin = addr.getCurrency();
                 runningBalance = addr.getLastBalance();
             } else if (currentCoin.compareToIgnoreCase(addr.getCurrency() )!= 0 ) {
-                Coin newCoin = new Coin();
-                newCoin.setCoinBalance(runningBalance);
-                newCoin.setTicker(currentCoin);
-                newCoin.setCoinName((CryptoNames.valueOfCode(currentCoin)).getName());
-                summedByCurrency.add(newCoin);
+                CoinDTO newCoinDTO = new CoinDTO();
+                newCoinDTO.setCoinBalance(runningBalance);
+                newCoinDTO.setTicker(currentCoin);
+                newCoinDTO.setCoinName((CryptoNames.valueOfCode(currentCoin)).getName());
+                summedByCurrency.add(newCoinDTO);
                 runningBalance = addr.getLastBalance();
                 currentCoin = addr.getCurrency();
             } else {
@@ -204,11 +204,11 @@ public class BlockchainAddressStoreService
             }
         }
         // save the last item
-        Coin newCoin = new Coin();
-        newCoin.setCoinBalance(runningBalance);
-        newCoin.setTicker(currentCoin);
-        newCoin.setCoinName((CryptoNames.valueOfCode(currentCoin)).getName());
-        summedByCurrency.add(newCoin);
+        CoinDTO newCoinDTO = new CoinDTO();
+        newCoinDTO.setCoinBalance(runningBalance);
+        newCoinDTO.setTicker(currentCoin);
+        newCoinDTO.setCoinName((CryptoNames.valueOfCode(currentCoin)).getName());
+        summedByCurrency.add(newCoinDTO);
 
         return summedByCurrency;
     }

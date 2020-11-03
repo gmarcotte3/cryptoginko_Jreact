@@ -1,5 +1,6 @@
 package com.marcotte.blockhead.explorerServices.pricequote;
 
+import com.marcotte.blockhead.model.CoinDTO;
 import com.marcotte.blockhead.model.Currency;
 import com.marcotte.blockhead.model.QuoteGeneric;
 import io.swagger.annotations.Api;
@@ -29,6 +30,12 @@ public class  CoinGeckoController
     public CoinGeckoController(CoinGeckoService coinGeckoService)
     {
         this.coinGeckoService = coinGeckoService;
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<List<CoinDTO>> getQuoteAllCoinsNow() {
+        List<CoinDTO> result = coinGeckoService.getPriceAllCoinsNow();
+        return new ResponseEntity<List<CoinDTO>>(result, HttpStatus.OK);
     }
 
     @GetMapping("/quote/raw")

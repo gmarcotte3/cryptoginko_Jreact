@@ -4,7 +4,6 @@ import FiatCurrency from "../FiatCurrency/FiatCurrency";
 import axios from 'axios';
 
 const BACKEND_URL = "http://localhost:8082/blockhead/portfolio";
-const PORTFOLIO_DETAIL_BY_COIN = "http://localhost:8082/blockhead/portfolio/history/detail/";
 
 export default function Portfolio(props) {
 
@@ -12,9 +11,7 @@ export default function Portfolio(props) {
     const [porfolioFiatValues, setPortfolioFiatValues] = React.useState([]);
 
     const componentDidMount = async () => {
-        let url = PORTFOLIO_DETAIL_BY_COIN + props.defaultFiatCurrency;
-        console.log("url", url);
-        let response = await axios.get(url);
+        let response = await axios.put(BACKEND_URL);
         let updatedPorfolioFiatValues = response.data;
         console.log("porfolioFiatValues", updatedPorfolioFiatValues);
 
@@ -34,38 +31,33 @@ export default function Portfolio(props) {
         }
     })
 
-    /*
-    {
-     porfolioFiatValues.map( ({coinName, coinValue, fiatCurrency, coinBalance}) =>
-                            <FiatCurrency key={fiatCurrency}  
-                                fiatCurrency={fiatCurrency}
-                                coinValue={coinValue}
-                                />
-                            )
-    }
-    */
-
     return (
-        <div>
-            <div label="overall">
-                <h1>Protfolio total value</h1>
-                <p>
-                show the Protfolio current total value and broken down
-                by coin.</p>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>coin</th>
-                            <th>coin balance</th>
-                            <th>fiat value</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <td>{totalValue}</td>
-                    </tbody>
-                </table>
+            <div>
+                <div label="overall">
+                    <h1>Protfolio total value</h1>
+                    <p>
+                    show the Protfolio current total value and broken down
+                    by coin.</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>value</th>
+                                <th>Fiat</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                porfolioFiatValues.map( ({coinValue, fiatCurrency}) =>
+                                <FiatCurrency key={fiatCurrency}
+                                    fiatCurrency={fiatCurrency}
+                                    coinValue={coinValue}
+                                    />
+                                )
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-    )
+        )
     
 }

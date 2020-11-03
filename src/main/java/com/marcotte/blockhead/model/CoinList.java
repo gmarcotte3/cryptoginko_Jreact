@@ -5,7 +5,12 @@ import com.marcotte.blockhead.datastore.BlockchainAddressStore;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * this holds a list of addresses for a single coin (ie coin addresses for BTC)
+ * it also can list the current values in a list of fiat currencies.
+ * list of error messages associated with getting data from the block chanin about one or more of the
+ * addresses associted with this coin.
+ */
 public class CoinList
 {
     private String coinName;

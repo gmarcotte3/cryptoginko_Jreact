@@ -1,5 +1,4 @@
 import React from 'react'
-import logo from './tranquility200x.png';
 import ginkoLogo from './ginkoLogo.svg';
 import styled from 'styled-components'
 

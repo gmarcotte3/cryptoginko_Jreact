@@ -1,6 +1,7 @@
 package com.marcotte.blockhead.explorerServices.pricequote;
 
 import com.marcotte.blockhead.config.BlockheadConfig;
+import com.marcotte.blockhead.model.CoinDTO;
 import com.marcotte.blockhead.model.Currency;
 import com.marcotte.blockhead.model.FiatNames;
 import com.marcotte.blockhead.model.QuoteGeneric;
@@ -76,6 +77,23 @@ public class CoinGeckoService
         this.cryptoCodeToCoinGekoCoinID.put( "MKR", "maker" );
     }
 
+    public List<CoinDTO> getPriceAllCoinsNow() {
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "https://api.coingecko.com/api/v3/coins";
+        String theRawJsonQuotes = restTemplate.getForObject(url, String.class);
+
+        return parseCoingekoPriceDump(theRawJsonQuotes);
+    }
+
+    private List<CoinDTO> parseCoingekoPriceDump(String theRawJsonQuotes) {
+        JSONObject jsonObj;
+        JSONObject marketDataObj;
+        JSONObject current_price_DataObj;
+        List<Currency> currencyList = new ArrayList<Currency>();
+        List<CoinDTO> coinDTOList = new ArrayList<CoinDTO>();
+
+        return coinDTOList;
+    }
     /**
      *
      * @param coinID          coindID (from https://api.coingecko.com/api/v3/coins/list)
@@ -125,15 +143,26 @@ public class CoinGeckoService
      * @param theRawJsonQuote
      * @return
      */
-    private List<Currency> parseJsonRawQuote(String coin, String theRawJsonQuote )
-    {
+    private List<Currency> parseJsonRawQuote(String coin, String theRawJsonQuote ) {
         JSONObject jsonObj;
+        List<Currency> currencyList = new ArrayList<Currency>();
+
+        try {
+            jsonObj = new JSONObject(theRawJsonQuote);
+            return parseJsonRawQuote(coin, jsonObj );
+        } catch (Exception e) {
+            log.error("missing or bad price and date format coin {} error={}", coin, e.getMessage());
+            return currencyList;
+        }
+    }
+
+    private List<Currency> parseJsonRawQuote(String coin, JSONObject jsonObj )
+    {
         JSONObject marketDataObj;
         JSONObject current_price_DataObj;
         List<Currency> currencyList = new ArrayList<Currency>();
 
         try {
-            jsonObj = new JSONObject(theRawJsonQuote);
             marketDataObj = jsonObj.getJSONObject("market_data");
             current_price_DataObj = marketDataObj.getJSONObject("current_price");
         } catch ( Exception e)

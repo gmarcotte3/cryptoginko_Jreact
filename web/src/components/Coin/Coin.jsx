@@ -17,12 +17,11 @@ const Button = styled.button`
 `;
 
 
-
- /**
-  * This class represents a crypto coin with attributes of name, ticker, and price
-  * This class also has a member function that get the current price from the internet.
-  */
- export default function Coin(props) {
+/**
+ * This class represents a crypto coin with attributes of name, ticker, and price
+ * This class also has a member function that get the current price from the internet.
+ */
+export default function Coin(props) {
     const currencyOptions = {
        minimumFractionDigits: 2,
        maximumFractionDigits: 2,
@@ -49,21 +48,20 @@ const Button = styled.button`
     }
 
     return (
-       <tr className="coin-row">
-         <TD>{this.props.name}</TD>
-         <TD>{this.props.ticker}</TD>
-         <TD>${this.getPrice()}</TD>
-           <TD>${this.getPriceNZD()}</TD>
-           <TD>{this.getPriceJPY()}円</TD>
-         </tr>
+        <tr className="coin-row">
+            <TD>{this.props.name}</TD>
+            <TD>{this.props.ticker}</TD>
+            <TD>${this.getPrice()}</TD>
+            <TD>${this.getPriceNZD()}</TD>
+            <TD>{this.getPriceJPY()}円</TD>
+        </tr>
     )
 
- }  //endCoin
+}  //endCoin
 
- // data member requirements and type.
- Coin.protoType = {
-     name: PropTypes.string.isRequired,
-     ticker: PropTypes.string.isRequired,
-     price: PropTypes.number.isRequired
- }
- 
+// data member requirements and type.
+Coin.protoType = {
+    name: PropTypes.string.isRequired,
+    ticker: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired
+}

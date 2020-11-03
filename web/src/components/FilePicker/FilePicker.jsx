@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import './FilePicker.css';
 import styled from 'styled-components'
-import axios from 'axios';
 
 
 // Styled button
@@ -44,36 +43,14 @@ export default function FilePicker(props) {
       console.log("sumit, selected file=", selectedFile);
       console.log("event", event);
 
-
       var bodyFormData = new FormData();
       bodyFormData.append('file', selectedFile); 
 
-      console.log("file", selectedFile ); // debug
-
       props.onSubmitFile(bodyFormData);
-      /*
-      axios({
-        method: 'post',
-        url: IMPORT_GINKO_ADDR_URL,
-        data: bodyFormData,
-        headers: {'Content-Type': 'multipart/form-data' }
-        })
-        .then(function (response) {
-            //handle success
-            console.log("SUCKsess", response);  //debugging
-        })
-        .catch(function (response) {
-            //handle error
-            console.log("error", response); //debugging
-        });
-      */
-      
       event.preventDefault();
     }
     
-  
-    //<form method="POST" onSubmit={handleSubmit} encType="multipart/form-data">
-    //<form method="POST" action={IMPORT_GINKO_ADDR_URL} encType="multipart/form-data">
+
     return (
       <div >
         <div >

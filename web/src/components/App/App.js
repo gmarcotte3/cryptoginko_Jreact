@@ -22,37 +22,6 @@ export default function App(props) {
   const [myCoins, setMyCoins] = useState([]);
   const [defaultFiatCurrency, setDefaultFiatCurrency] = useState('JPM');
 
-  /*
-    state = {
-      balance: 10001,
-      myCoins : [
-        {
-          name: 'Bitcoin',
-          ticker: 'BTC'
-        },
-        {
-          name: 'bitcoin-cash',
-          ticker: 'BCH'
-        },
-        {
-          name: 'Ethereum',
-          ticker: 'ETH'
-        },
-        {
-          name: 'Dash',
-          ticker: 'DASH'
-        },
-        {
-          name: 'Cardano',
-          ticker: 'ADA'
-        }
-      ],
-      coinData: [
-      ]
-    }
-  */
-
-
 
   return (
     <div className="App">

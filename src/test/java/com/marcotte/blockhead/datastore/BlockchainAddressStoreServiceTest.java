@@ -1,6 +1,6 @@
 package com.marcotte.blockhead.datastore;
 
-import com.marcotte.blockhead.model.Coin;
+import com.marcotte.blockhead.model.CoinDTO;
 import com.marcotte.blockhead.util.Utils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -188,7 +188,7 @@ public class BlockchainAddressStoreServiceTest
         addressStoreService.saveWithHistory(listOfAddresses.get(0));
         // dash should have balance of 3.0
 
-        List<Coin> foundAddresses = addressStoreService.findAllLatestSumBalanceGroupByCurency();
+        List<CoinDTO> foundAddresses = addressStoreService.findAllLatestSumBalanceGroupByCurency();
         assertTrue( foundAddresses.get(0).getCoinBalance() > 19.0 && foundAddresses.get(0).getCoinBalance() < 21.0 );
         assertEquals( "ADA", foundAddresses.get(0).getTicker());
 

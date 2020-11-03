@@ -1,23 +1,28 @@
 package com.marcotte.blockhead.model;
 
+import java.util.List;
+
 /**
  * This represents a simple coin having name, balance, fiat prices, and fiat values
  */
-public class Coin {
+public class CoinDTO {
     private String coinName;    // name of the coin ie Bitcoin, Dash, BitcoinCash, Cardano etc.
     private String ticker;      // trading symbol ie BTH, DASH, BCH, ADA etc
     private Double coinBalance; // the coin balance in Satoshis for bitcoin DASH and BitcoinCash etc.
+
+    // TODO refactor Fiat and Currency into one class.
     private Fiat priceFiat;     // the current price in default fiat currency
     private Fiat valueFiat;     // The fiat value (coinBalance * priceFiat)
     private Fiat priceFiatAlt1; // same as priceFiat but using fiat alternate currency 1
     private Fiat valueFiatAlt1; // same as valueFiat but using fiat alternate currency 1
     private Fiat priceFiatAlt2; // same as priceFiat but using fiat alternate currency 2
     private Fiat valueFiatAlt2; // same as valueFiat but using fiat alternate currency 2
+    private List<Currency> fiat_balances;  // list of all the supported fiat currencies values known for this coin.
 
-    public Coin() {
+    public CoinDTO() {
 
     }
-    public Coin(String coinName, String ticker)
+    public CoinDTO(String coinName, String ticker)
     {
         this.coinName = coinName;
         this.ticker = ticker;
@@ -95,5 +100,11 @@ public class Coin {
         this.valueFiatAlt2 = valueFiatAlt2;
     }
 
+    public List<Currency> getFiat_balances() {
+        return fiat_balances;
+    }
 
+    public void setFiat_balances(List<Currency> fiat_balances) {
+        this.fiat_balances = fiat_balances;
+    }
 }
