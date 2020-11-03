@@ -1,8 +1,6 @@
 package com.marcotte.blockhead.datastore;
 
-import com.marcotte.blockhead.model.CoinList;
-import com.marcotte.blockhead.model.Wallet;
-import com.marcotte.blockhead.model.WalletList;
+import com.marcotte.blockhead.model.*;
 import com.marcotte.blockhead.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -177,12 +175,15 @@ public class BlockchainAddressStoreService
      * return a list of crypto currencies that are all the addresses sum over blanceds grouped by the
      * currency. This gives you a balance of each of the latest coins in the coin address store.
      *
+     * This function sets the ticker, coinname and coin balance, other fields are null and must be
+     * filled in by the caller.
+     *
      * @return
      */
-    public List<BlockchainAddressStore> findAllLatestSumBalanceGroupByCurency( )
+    public List<Coin> findAllLatestSumBalanceGroupByCurency( )
     {
         List<BlockchainAddressStore> foundLatestOrderedByCurrency = blockchainAddressStoreRepository.findBlockchainAddressStoreByNextIdOrderByCurrency(null);
-        List<BlockchainAddressStore> summedByCurrency = new ArrayList<BlockchainAddressStore>();
+        List<Coin> summedByCurrency = new ArrayList<Coin>();
 
         Double runningBalance = 0.0;
         String currentCoin = "";
@@ -191,10 +192,11 @@ public class BlockchainAddressStoreService
                 currentCoin = addr.getCurrency();
                 runningBalance = addr.getLastBalance();
             } else if (currentCoin.compareToIgnoreCase(addr.getCurrency() )!= 0 ) {
-                BlockchainAddressStore newAddr = new BlockchainAddressStore();
-                newAddr.setLastBalance(runningBalance);
-                newAddr.setCurrency(currentCoin);
-                summedByCurrency.add(newAddr);
+                Coin newCoin = new Coin();
+                newCoin.setCoinBalance(runningBalance);
+                newCoin.setTicker(currentCoin);
+                newCoin.setCoinName((CryptoNames.valueOfCode(currentCoin)).getName());
+                summedByCurrency.add(newCoin);
                 runningBalance = addr.getLastBalance();
                 currentCoin = addr.getCurrency();
             } else {
@@ -202,10 +204,11 @@ public class BlockchainAddressStoreService
             }
         }
         // save the last item
-        BlockchainAddressStore newAddr = new BlockchainAddressStore();
-        newAddr.setLastBalance(runningBalance);
-        newAddr.setCurrency(currentCoin);
-        summedByCurrency.add(newAddr);
+        Coin newCoin = new Coin();
+        newCoin.setCoinBalance(runningBalance);
+        newCoin.setTicker(currentCoin);
+        newCoin.setCoinName((CryptoNames.valueOfCode(currentCoin)).getName());
+        summedByCurrency.add(newCoin);
 
         return summedByCurrency;
     }

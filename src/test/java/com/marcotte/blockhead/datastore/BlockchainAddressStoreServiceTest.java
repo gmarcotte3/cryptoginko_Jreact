@@ -1,5 +1,6 @@
 package com.marcotte.blockhead.datastore;
 
+import com.marcotte.blockhead.model.Coin;
 import com.marcotte.blockhead.util.Utils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -187,9 +188,11 @@ public class BlockchainAddressStoreServiceTest
         addressStoreService.saveWithHistory(listOfAddresses.get(0));
         // dash should have balance of 3.0
 
-        List<BlockchainAddressStore> foundAddresses = addressStoreService.findAllLatestSumBalanceGroupByCurency();
-        System.out.println(foundAddresses.size());
-        assertTrue( foundAddresses.get(1).getLastBalance() > 2.0 && foundAddresses.get(1).getLastBalance() < 4.0 );
+        List<Coin> foundAddresses = addressStoreService.findAllLatestSumBalanceGroupByCurency();
+        assertTrue( foundAddresses.get(0).getCoinBalance() > 19.0 && foundAddresses.get(0).getCoinBalance() < 21.0 );
+        assertEquals( "ADA", foundAddresses.get(0).getTicker());
+
+        assertTrue( foundAddresses.get(2).getCoinBalance() > 2.0 && foundAddresses.get(2).getCoinBalance() < 4.0 );
 
         addressStoreRepository.deleteAll();
     }
@@ -452,11 +455,11 @@ public class BlockchainAddressStoreServiceTest
 
         BlockchainAddressStore addressStore6 = new BlockchainAddressStore();
         addressStore6.setAddress("0edddddddddddddddddddog1");
-        addressStore6.setCurrency("DOG");
+        addressStore6.setCurrency("ADA");
         addressStore6.setLastBalance( 20.0);
         addressStore6.setLastUpdated( new Timestamp(rightNow.getTime()));
-        addressStore6.setMessage("Doggie coin test1");
-        addressStore6.setMemo("memo DOG");
+        addressStore6.setMessage("Cardanocoin test1");
+        addressStore6.setMemo("memo Cardano ADA");
         addressStore6.setNumTransactions(1);
         addressStore6.setNextId( null );
         addressList.add(addressStore6);

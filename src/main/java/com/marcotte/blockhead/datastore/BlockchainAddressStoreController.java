@@ -1,5 +1,6 @@
 package com.marcotte.blockhead.datastore;
 
+import com.marcotte.blockhead.model.Coin;
 import com.marcotte.blockhead.model.CoinList;
 import com.marcotte.blockhead.model.WalletList;
 import io.swagger.annotations.Api;
@@ -45,10 +46,10 @@ public class BlockchainAddressStoreController
     }
 
     @GetMapping( value = "/crypto")
-    public ResponseEntity<List<BlockchainAddressStore>> findAllLatestSumBalanceGroupByCurency()
+    public ResponseEntity<List<Coin>> findAllLatestSumBalanceGroupByCurency()
     {
-        List<BlockchainAddressStore> blockchainAddressStores = blockchainAddressStoreService.findAllLatestSumBalanceGroupByCurency();
-        return new ResponseEntity<List<BlockchainAddressStore>>(blockchainAddressStores, HttpStatus.OK);
+        List<Coin> blockchainAddressStores = blockchainAddressStoreService.findAllLatestSumBalanceGroupByCurency();
+        return new ResponseEntity<List<Coin>>(blockchainAddressStores, HttpStatus.OK);
     }
 
     @GetMapping( value = "/crypto/{cryptoName}")
