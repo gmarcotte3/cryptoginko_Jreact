@@ -11,13 +11,15 @@ public class CoinDTO {
     private Double coinBalance; // the coin balance in Satoshis for bitcoin DASH and BitcoinCash etc.
 
     // TODO refactor Fiat and Currency into one class.
-    private Fiat priceFiat;     // the current price in default fiat currency
-    private Fiat valueFiat;     // The fiat value (coinBalance * priceFiat)
-    private Fiat priceFiatAlt1; // same as priceFiat but using fiat alternate currency 1
-    private Fiat valueFiatAlt1; // same as valueFiat but using fiat alternate currency 1
-    private Fiat priceFiatAlt2; // same as priceFiat but using fiat alternate currency 2
-    private Fiat valueFiatAlt2; // same as valueFiat but using fiat alternate currency 2
-    private List<Currency> fiat_balances;  // list of all the supported fiat currencies values known for this coin.
+//    private Fiat priceFiat;     // the current price in default fiat currency
+//    private Fiat valueFiat;     // The fiat value (coinBalance * priceFiat)
+//    private Fiat priceFiatAlt1; // same as priceFiat but using fiat alternate currency 1
+//    private Fiat valueFiatAlt1; // same as valueFiat but using fiat alternate currency 1
+//    private Fiat priceFiatAlt2; // same as priceFiat but using fiat alternate currency 2
+//    private Fiat valueFiatAlt2; // same as valueFiat but using fiat alternate currency 2
+    private List<Currency> fiat_prices;  // list of all the supported fiat currencies prices.
+    private List<Currency> fiat_balances;  // list of all the supported fiat currencies values( price * coinBalance).
+
 
     public CoinDTO() {
 
@@ -52,52 +54,12 @@ public class CoinDTO {
         this.coinBalance = coinBalance;
     }
 
-    public Fiat getPriceFiat() {
-        return priceFiat;
+    public List<Currency> getFiat_prices() {
+        return fiat_prices;
     }
 
-    public void setPriceFiat(Fiat priceFiat) {
-        this.priceFiat = priceFiat;
-    }
-
-    public Fiat getValueFiat() {
-        return valueFiat;
-    }
-
-    public void setValueFiat(Fiat valueFiat) {
-        this.valueFiat = valueFiat;
-    }
-
-    public Fiat getPriceFiatAlt1() {
-        return priceFiatAlt1;
-    }
-
-    public void setPriceFiatAlt1(Fiat priceFiatAlt1) {
-        this.priceFiatAlt1 = priceFiatAlt1;
-    }
-
-    public Fiat getValueFiatAlt1() {
-        return valueFiatAlt1;
-    }
-
-    public void setValueFiatAlt1(Fiat valueFiatAlt1) {
-        this.valueFiatAlt1 = valueFiatAlt1;
-    }
-
-    public Fiat getPriceFiatAlt2() {
-        return priceFiatAlt2;
-    }
-
-    public void setPriceFiatAlt2(Fiat priceFiatAlt2) {
-        this.priceFiatAlt2 = priceFiatAlt2;
-    }
-
-    public Fiat getValueFiatAlt2() {
-        return valueFiatAlt2;
-    }
-
-    public void setValueFiatAlt2(Fiat valueFiatAlt2) {
-        this.valueFiatAlt2 = valueFiatAlt2;
+    public void setFiat_prices(List<Currency> fiat_prices) {
+        this.fiat_prices = fiat_prices;
     }
 
     public List<Currency> getFiat_balances() {
@@ -107,4 +69,5 @@ public class CoinDTO {
     public void setFiat_balances(List<Currency> fiat_balances) {
         this.fiat_balances = fiat_balances;
     }
+
 }

@@ -309,7 +309,7 @@ public class PortfolioService
 
                     portfoiloByFiatCurrency.put(portfolioTracker.getFiatCurrency(), portfolioTracker);
                 }
-                portfolioTracker.setCoinValue(portfolioTracker.getCoinValue() + currency.getRate());
+                portfolioTracker.setCoinValue(portfolioTracker.getCoinValue() + currency.getValue());
             }
 
         }
@@ -336,7 +336,7 @@ public class PortfolioService
                 portfolioTrackerDetail.setDateTrackerID( dateTracker.getId());
                 portfolioTrackerDetail.setDateUpdated(dateTracker.getDateUpdated());
                 portfolioTrackerDetail.setFiatCurrency(currency.getCode());
-                portfolioTrackerDetail.setCoinValue(currency.getRate());
+                portfolioTrackerDetail.setCoinValue(currency.getValue());
                 portfolioTrackerDetailService.save(portfolioTrackerDetail);
             }
         }

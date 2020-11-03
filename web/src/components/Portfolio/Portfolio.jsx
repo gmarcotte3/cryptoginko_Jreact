@@ -47,9 +47,9 @@ export default function Portfolio(props) {
                         </thead>
                         <tbody>
                             {
-                                porfolioFiatValues.map( ({coinValue, fiatCurrency}) =>
-                                <FiatCurrency key={fiatCurrency}
-                                    fiatCurrency={fiatCurrency}
+                                porfolioFiatValues.map( ({coinValue, currency}) =>
+                                <FiatCurrency key={currency}
+                                    currency={currency}
                                     coinValue={coinValue}
                                     />
                                 )

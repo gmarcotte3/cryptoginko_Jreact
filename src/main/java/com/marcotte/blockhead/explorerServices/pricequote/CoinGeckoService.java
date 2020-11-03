@@ -172,29 +172,29 @@ public class CoinGeckoService
         }
 
         Float nzd_price = getDoubleFromJsonObject(current_price_DataObj, "nzd");
-        currencyList.add(new Currency().setCode("NZD").setRate(nzd_price).setDescription("New Zeland Dollar").setSymbol("$"));
+        currencyList.add(new Currency().setCode("NZD").setValue(nzd_price).setDescription("New Zeland Dollar").setSymbol("$"));
 
         Float usd_price = getDoubleFromJsonObject(current_price_DataObj, "usd");
-        currencyList.add(new Currency().setCode("USD").setRate(usd_price).setDescription("US Dollar").setSymbol("$"));
+        currencyList.add(new Currency().setCode("USD").setValue(usd_price).setDescription("US Dollar").setSymbol("$"));
 
         Float aud_price = getDoubleFromJsonObject(current_price_DataObj, "aud");
-        currencyList.add(new Currency().setCode("AUD").setRate(aud_price).setDescription("Aussie Dollar").setSymbol("$"));
+        currencyList.add(new Currency().setCode("AUD").setValue(aud_price).setDescription("Aussie Dollar").setSymbol("$"));
 
         Float jpy_price = getDoubleFromJsonObject(current_price_DataObj, "jpy");
-        currencyList.add(new Currency().setCode("JPY").setRate(jpy_price).setDescription("Japanese yen").setSymbol("¥"));
-        currencyList.add(new Currency().setCode("JPM").setRate(jpy_price/10000).setDescription("Japanese 万 (10,000 Yen)").setSymbol("万"));
+        currencyList.add(new Currency().setCode("JPY").setValue(jpy_price).setDescription("Japanese yen").setSymbol("¥"));
+        currencyList.add(new Currency().setCode("JPM").setValue(jpy_price/10000).setDescription("Japanese 万 (10,000 Yen)").setSymbol("万"));
 
         Float eur_price = getDoubleFromJsonObject(current_price_DataObj, "eur");
-        currencyList.add(new Currency().setCode("EUR").setRate(eur_price).setDescription("Euros").setSymbol("€"));
+        currencyList.add(new Currency().setCode("EUR").setValue(eur_price).setDescription("Euros").setSymbol("€"));
 
         Float gbp_price = getDoubleFromJsonObject(current_price_DataObj, "gbp");
-        currencyList.add(new Currency().setCode("GBP").setRate(gbp_price).setDescription("Pound sterling").setSymbol("£"));
+        currencyList.add(new Currency().setCode("GBP").setValue(gbp_price).setDescription("Pound sterling").setSymbol("£"));
 
         Float krw_price = getDoubleFromJsonObject(current_price_DataObj, "krw");
-        currencyList.add(new Currency().setCode("KRW").setRate(krw_price).setDescription("South Koria won").setSymbol("₩"));
+        currencyList.add(new Currency().setCode("KRW").setValue(krw_price).setDescription("South Koria won").setSymbol("₩"));
 
         Float inr_price = getDoubleFromJsonObject(current_price_DataObj, "inr");
-        currencyList.add(new Currency().setCode("INR").setRate(inr_price).setDescription("Indian Rupee").setSymbol("₹"));
+        currencyList.add(new Currency().setCode("INR").setValue(inr_price).setDescription("Indian Rupee").setSymbol("₹"));
 
 
         return currencyList;
@@ -345,7 +345,7 @@ public class CoinGeckoService
     {
         Currency result;
 
-        for ( Currency curency : inputCurrencyList )
+        for ( Currency curency : inputCurrencyList)
         {
             if ( curency.getCode().compareToIgnoreCase( currencyName) == 0)
             {

@@ -40,9 +40,9 @@ export default function FiatCurrency(props) {
     }
 
     const getValue = () => {
-        if ( props.fiatCurrency === 'JPM') {
+        if ( props.currency === 'JPM') {
             return ( getPriceJPY() +" 万円");
-        } else if (props.fiatCurrency === 'JPY') {
+        } else if (props.currency === 'JPY') {
             return ( getPriceJPY() +" 円");
         } else {
             return ( "$" + getPrice() );
@@ -52,7 +52,7 @@ export default function FiatCurrency(props) {
     return (
         <tr>
             <TD>{getValue()}</TD>
-            <TD>{props.fiatCurrency}</TD>
+            <TD>{props.currency}</TD>
         </tr>
     )
 }

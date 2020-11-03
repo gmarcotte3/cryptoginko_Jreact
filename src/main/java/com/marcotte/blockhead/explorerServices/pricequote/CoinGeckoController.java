@@ -53,7 +53,7 @@ public class  CoinGeckoController
     public ResponseEntity<QuoteGeneric> getQuoteLocal(
             @RequestParam(value = "coin", required = true) final String coinName  )
     {
-        QuoteGeneric quoteGeneric = coinGeckoService.getQuote(coinName);
+        QuoteGeneric quoteGeneric = coinGeckoService.getQuote(coinName.toUpperCase());
         return new ResponseEntity<QuoteGeneric>(quoteGeneric, HttpStatus.OK);
     }
 }

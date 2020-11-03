@@ -44,7 +44,7 @@ public class CoinList
             Currency currency = new Currency();
             currency.setSymbol(fiat.getSymbol());
             currency.setCode( fiat.getCode());
-            currency.setRate( getBalance() * fiat.getRate());
+            currency.setValue( getBalance() * fiat.getValue());
             currency.setDescription( fiat.getDescription());
 
             fiatBalances.add(currency);

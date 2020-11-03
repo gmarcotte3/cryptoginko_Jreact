@@ -7,20 +7,24 @@ public class Currency
 {
     private String symbol;
     private String description;
-    private double rate;
-    private String code;
+    private double value;
+    private FiatNames fiatType;
 
     @Override
     public String toString()
     {
+        return  symbol + " " + value + " " + fiatType.code;
+    }
+
+    public String toStringDebug()
+    {
         return "Currency{" +
                 ", symbol='" + symbol + '\'' +
                 ", description='" + description + '\'' +
-                ", rate=" + rate +
-                ", code='" + code + '\'' +
+                ", rate=" + value +
+                ", code='" + fiatType.code + '\'' +
                 '}';
     }
-
 
     public static Currency findCurrencyByName(List<Currency> currencies, String currencyName)
     {
@@ -54,21 +58,22 @@ public class Currency
         return this;
     }
 
-    public double getRate() {
-        return rate;
+    public double getValue() {
+        return value;
     }
 
-    public Currency setRate(double rate) {
-        this.rate = rate;
+    public Currency setValue(double value) {
+        this.value = value;
         return this;
     }
 
     public String getCode() {
-        return code;
+
+        return fiatType.code;
     }
 
     public Currency setCode(String code) {
-        this.code = code;
+        this.fiatType = FiatNames.valueOfCode(code);
         return this;
     }
 }
