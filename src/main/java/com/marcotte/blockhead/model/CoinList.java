@@ -15,7 +15,7 @@ public class CoinList
 {
     private String coinName;
     private List<BlockchainAddressStore> coins;
-    private List<Currency> fiat_balances;
+    private List<FiatCurrency> fiat_balances;
     private List<String> errorMessages;
     private double balance;
 
@@ -38,10 +38,10 @@ public class CoinList
 
     public void calculateFietBalances(QuoteGeneric quoteGeneric)
     {
-        List<Currency> fiatBalances = new ArrayList<>();
-        for (Currency fiat :  quoteGeneric.getCurrency())
+        List<FiatCurrency> fiatBalances = new ArrayList<>();
+        for (FiatCurrency fiat :  quoteGeneric.getCurrency())
         {
-            Currency currency = new Currency();
+            FiatCurrency currency = new FiatCurrency();
             currency.setSymbol(fiat.getSymbol());
             currency.setCode( fiat.getCode());
             currency.setValue( getBalance() * fiat.getValue());
@@ -68,11 +68,11 @@ public class CoinList
         this.coins = coins;
     }
 
-    public List<Currency> getFiat_balances() {
+    public List<FiatCurrency> getFiat_balances() {
         return fiat_balances;
     }
 
-    public void setFiat_balances(List<Currency> fiat_balances) {
+    public void setFiat_balances(List<FiatCurrency> fiat_balances) {
         this.fiat_balances = fiat_balances;
     }
 

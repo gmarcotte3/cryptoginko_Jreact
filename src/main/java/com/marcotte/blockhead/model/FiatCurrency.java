@@ -3,7 +3,7 @@ package com.marcotte.blockhead.model;
 import java.util.List;
 
 
-public class Currency
+public class FiatCurrency
 {
     private String symbol;
     private String description;
@@ -26,10 +26,10 @@ public class Currency
                 '}';
     }
 
-    public static Currency findCurrencyByName(List<Currency> currencies, String currencyName)
+    public static FiatCurrency findCurrencyByName(List<FiatCurrency> currencies, String currencyName)
     {
-        Currency foundCurrency = null;
-        for (Currency cur : currencies)
+        FiatCurrency foundCurrency = null;
+        for (FiatCurrency cur : currencies)
         {
             if ( cur.getCode().compareToIgnoreCase(currencyName) == 0)
             {
@@ -44,7 +44,7 @@ public class Currency
         return symbol;
     }
 
-    public Currency setSymbol(String symbol) {
+    public FiatCurrency setSymbol(String symbol) {
         this.symbol = symbol;
         return this;
     }
@@ -53,7 +53,7 @@ public class Currency
         return description;
     }
 
-    public Currency setDescription(String description) {
+    public FiatCurrency setDescription(String description) {
         this.description = description;
         return this;
     }
@@ -62,7 +62,7 @@ public class Currency
         return value;
     }
 
-    public Currency setValue(double value) {
+    public FiatCurrency setValue(double value) {
         this.value = value;
         return this;
     }
@@ -72,7 +72,7 @@ public class Currency
         return fiatType.code;
     }
 
-    public Currency setCode(String code) {
+    public FiatCurrency setCode(String code) {
         this.fiatType = FiatNames.valueOfCode(code);
         return this;
     }

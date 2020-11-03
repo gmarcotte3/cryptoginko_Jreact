@@ -12,7 +12,7 @@ import com.marcotte.blockhead.explorerServices.pricequote.CoinGeckoService;
 import com.marcotte.blockhead.explorerServices.zcashExplorers.ZCashExplorerServices;
 import com.marcotte.blockhead.model.CoinList;
 import com.marcotte.blockhead.model.CryptoNames;
-import com.marcotte.blockhead.model.Currency;
+import com.marcotte.blockhead.model.FiatCurrency;
 import com.marcotte.blockhead.model.QuoteGeneric;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -298,7 +298,7 @@ public class PortfolioService
 
         for ( CoinList coin : portfolioList )
         {
-            for (Currency currency : coin.getFiat_balances() )
+            for (FiatCurrency currency : coin.getFiat_balances() )
             {
                 PortfolioTracker portfolioTracker = portfoiloByFiatCurrency.get(currency.getCode());
                 if ( portfolioTracker == null ) {
@@ -328,7 +328,7 @@ public class PortfolioService
     {
         for (CoinList portfolioCoin : portfolioList )
         {
-            for (Currency currency : portfolioCoin.getFiat_balances() )
+            for (FiatCurrency currency : portfolioCoin.getFiat_balances() )
             {
                 PortfolioTrackerDetail portfolioTrackerDetail = new PortfolioTrackerDetail();
                 portfolioTrackerDetail.setCoinBalance( portfolioCoin.getBalance());

@@ -17,8 +17,8 @@ public class CoinDTO {
 //    private Fiat valueFiatAlt1; // same as valueFiat but using fiat alternate currency 1
 //    private Fiat priceFiatAlt2; // same as priceFiat but using fiat alternate currency 2
 //    private Fiat valueFiatAlt2; // same as valueFiat but using fiat alternate currency 2
-    private List<Currency> fiat_prices;  // list of all the supported fiat currencies prices.
-    private List<Currency> fiat_balances;  // list of all the supported fiat currencies values( price * coinBalance).
+    private List<FiatCurrency> fiat_prices;  // list of all the supported fiat currencies prices.
+    private List<FiatCurrency> fiat_balances;  // list of all the supported fiat currencies values( price * coinBalance).
 
 
     public CoinDTO() {
@@ -54,19 +54,19 @@ public class CoinDTO {
         this.coinBalance = coinBalance;
     }
 
-    public List<Currency> getFiat_prices() {
+    public List<FiatCurrency> getFiat_prices() {
         return fiat_prices;
     }
 
-    public void setFiat_prices(List<Currency> fiat_prices) {
+    public void setFiat_prices(List<FiatCurrency> fiat_prices) {
         this.fiat_prices = fiat_prices;
     }
 
-    public List<Currency> getFiat_balances() {
+    public List<FiatCurrency> getFiat_balances() {
         return fiat_balances;
     }
 
-    public void setFiat_balances(List<Currency> fiat_balances) {
+    public void setFiat_balances(List<FiatCurrency> fiat_balances) {
         this.fiat_balances = fiat_balances;
     }
 

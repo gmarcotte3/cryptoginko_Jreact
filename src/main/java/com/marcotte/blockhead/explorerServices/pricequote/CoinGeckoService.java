@@ -2,7 +2,7 @@ package com.marcotte.blockhead.explorerServices.pricequote;
 
 import com.marcotte.blockhead.config.BlockheadConfig;
 import com.marcotte.blockhead.model.CoinDTO;
-import com.marcotte.blockhead.model.Currency;
+import com.marcotte.blockhead.model.FiatCurrency;
 import com.marcotte.blockhead.model.FiatNames;
 import com.marcotte.blockhead.model.QuoteGeneric;
 import org.json.JSONObject;
@@ -89,7 +89,7 @@ public class CoinGeckoService
         JSONObject jsonObj;
         JSONObject marketDataObj;
         JSONObject current_price_DataObj;
-        List<Currency> currencyList = new ArrayList<Currency>();
+        List<FiatCurrency> currencyList = new ArrayList<FiatCurrency>();
         List<CoinDTO> coinDTOList = new ArrayList<CoinDTO>();
 
         return coinDTOList;
@@ -100,7 +100,7 @@ public class CoinGeckoService
      * @param date_ddmmyyyy  date in this format "dd-mm-yyy"
      * @return List<Currency>
      */
-    public List<Currency> getPriceByCoinAndDate(String coin, String date_ddmmyyyy)
+    public List<FiatCurrency> getPriceByCoinAndDate(String coin, String date_ddmmyyyy)
     {
         RestTemplate restTemplate = new RestTemplate();
         String url;
@@ -109,7 +109,7 @@ public class CoinGeckoService
         String coinID = this.cryptoCodeToCoinGekoCoinID.get(coin);
         if (coinID == null) { // this code is not recoignized so return a blank
             log.error("Coin (" + coin + ") not recoignized by goin geko service so no currency quote is possible");
-            return new ArrayList<Currency>();
+            return new ArrayList<FiatCurrency>();
         }
 
         restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
@@ -143,9 +143,9 @@ public class CoinGeckoService
      * @param theRawJsonQuote
      * @return
      */
-    private List<Currency> parseJsonRawQuote(String coin, String theRawJsonQuote ) {
+    private List<FiatCurrency> parseJsonRawQuote(String coin, String theRawJsonQuote ) {
         JSONObject jsonObj;
-        List<Currency> currencyList = new ArrayList<Currency>();
+        List<FiatCurrency> currencyList = new ArrayList<FiatCurrency>();
 
         try {
             jsonObj = new JSONObject(theRawJsonQuote);
@@ -156,11 +156,11 @@ public class CoinGeckoService
         }
     }
 
-    private List<Currency> parseJsonRawQuote(String coin, JSONObject jsonObj )
+    private List<FiatCurrency> parseJsonRawQuote(String coin, JSONObject jsonObj )
     {
         JSONObject marketDataObj;
         JSONObject current_price_DataObj;
-        List<Currency> currencyList = new ArrayList<Currency>();
+        List<FiatCurrency> currencyList = new ArrayList<FiatCurrency>();
 
         try {
             marketDataObj = jsonObj.getJSONObject("market_data");
@@ -172,29 +172,29 @@ public class CoinGeckoService
         }
 
         Float nzd_price = getDoubleFromJsonObject(current_price_DataObj, "nzd");
-        currencyList.add(new Currency().setCode("NZD").setValue(nzd_price).setDescription("New Zeland Dollar").setSymbol("$"));
+        currencyList.add(new FiatCurrency().setCode("NZD").setValue(nzd_price).setDescription("New Zeland Dollar").setSymbol("$"));
 
         Float usd_price = getDoubleFromJsonObject(current_price_DataObj, "usd");
-        currencyList.add(new Currency().setCode("USD").setValue(usd_price).setDescription("US Dollar").setSymbol("$"));
+        currencyList.add(new FiatCurrency().setCode("USD").setValue(usd_price).setDescription("US Dollar").setSymbol("$"));
 
         Float aud_price = getDoubleFromJsonObject(current_price_DataObj, "aud");
-        currencyList.add(new Currency().setCode("AUD").setValue(aud_price).setDescription("Aussie Dollar").setSymbol("$"));
+        currencyList.add(new FiatCurrency().setCode("AUD").setValue(aud_price).setDescription("Aussie Dollar").setSymbol("$"));
 
         Float jpy_price = getDoubleFromJsonObject(current_price_DataObj, "jpy");
-        currencyList.add(new Currency().setCode("JPY").setValue(jpy_price).setDescription("Japanese yen").setSymbol("¥"));
-        currencyList.add(new Currency().setCode("JPM").setValue(jpy_price/10000).setDescription("Japanese 万 (10,000 Yen)").setSymbol("万"));
+        currencyList.add(new FiatCurrency().setCode("JPY").setValue(jpy_price).setDescription("Japanese yen").setSymbol("¥"));
+        currencyList.add(new FiatCurrency().setCode("JPM").setValue(jpy_price/10000).setDescription("Japanese 万 (10,000 Yen)").setSymbol("万"));
 
         Float eur_price = getDoubleFromJsonObject(current_price_DataObj, "eur");
-        currencyList.add(new Currency().setCode("EUR").setValue(eur_price).setDescription("Euros").setSymbol("€"));
+        currencyList.add(new FiatCurrency().setCode("EUR").setValue(eur_price).setDescription("Euros").setSymbol("€"));
 
         Float gbp_price = getDoubleFromJsonObject(current_price_DataObj, "gbp");
-        currencyList.add(new Currency().setCode("GBP").setValue(gbp_price).setDescription("Pound sterling").setSymbol("£"));
+        currencyList.add(new FiatCurrency().setCode("GBP").setValue(gbp_price).setDescription("Pound sterling").setSymbol("£"));
 
         Float krw_price = getDoubleFromJsonObject(current_price_DataObj, "krw");
-        currencyList.add(new Currency().setCode("KRW").setValue(krw_price).setDescription("South Koria won").setSymbol("₩"));
+        currencyList.add(new FiatCurrency().setCode("KRW").setValue(krw_price).setDescription("South Koria won").setSymbol("₩"));
 
         Float inr_price = getDoubleFromJsonObject(current_price_DataObj, "inr");
-        currencyList.add(new Currency().setCode("INR").setValue(inr_price).setDescription("Indian Rupee").setSymbol("₹"));
+        currencyList.add(new FiatCurrency().setCode("INR").setValue(inr_price).setDescription("Indian Rupee").setSymbol("₹"));
 
 
         return currencyList;
@@ -246,14 +246,14 @@ public class CoinGeckoService
                 .setCoinName(crypto)
                 .setSymbol(crypto);
 
-        List<Currency> currencyList_raw = getPriceByCoinAndDate(crypto, null);
+        List<FiatCurrency> currencyList_raw = getPriceByCoinAndDate(crypto, null);
 
-        List<Currency> currencyList = new ArrayList<Currency>();
+        List<FiatCurrency> currencyList = new ArrayList<FiatCurrency>();
 
         // usa dollar
         if ( currencies.contains(FiatNames.USD.code))
         {
-            Currency usd = findCurrencyByName(currencyList_raw, FiatNames.USD.code);
+            FiatCurrency usd = findCurrencyByName(currencyList_raw, FiatNames.USD.code);
             if ( usd != null )
             {
                 currencyList.add(usd);
@@ -263,7 +263,7 @@ public class CoinGeckoService
         // euro
         if ( currencies.contains(FiatNames.EUR.code))
         {
-            Currency eur = findCurrencyByName(currencyList_raw, FiatNames.EUR.code);
+            FiatCurrency eur = findCurrencyByName(currencyList_raw, FiatNames.EUR.code);
             if ( eur != null )
             {
                 currencyList.add(eur);
@@ -273,7 +273,7 @@ public class CoinGeckoService
         // kiwi dollar
         if ( currencies.contains(FiatNames.NZD.code))
         {
-            Currency nzd = findCurrencyByName(currencyList_raw, FiatNames.NZD.code);
+            FiatCurrency nzd = findCurrencyByName(currencyList_raw, FiatNames.NZD.code);
             if ( nzd != null )
             {
                 currencyList.add(nzd);
@@ -283,7 +283,7 @@ public class CoinGeckoService
         // aussie dollar
         if ( currencies.contains(FiatNames.AUD.code))
         {
-            Currency aud = findCurrencyByName(currencyList_raw, FiatNames.AUD.code);
+            FiatCurrency aud = findCurrencyByName(currencyList_raw, FiatNames.AUD.code);
             if ( aud != null )
             {
                 currencyList.add(aud);
@@ -293,7 +293,7 @@ public class CoinGeckoService
         // british pound
         if ( currencies.contains(FiatNames.GRP.code))
         {
-            Currency gbp = findCurrencyByName(currencyList_raw, FiatNames.GRP.code);
+            FiatCurrency gbp = findCurrencyByName(currencyList_raw, FiatNames.GRP.code);
             if ( gbp != null )
             {
                 currencyList.add(gbp);
@@ -303,7 +303,7 @@ public class CoinGeckoService
         // korian won
         if ( currencies.contains(FiatNames.KRW.code))
         {
-            Currency krw = findCurrencyByName(currencyList_raw, FiatNames.KRW.code);
+            FiatCurrency krw = findCurrencyByName(currencyList_raw, FiatNames.KRW.code);
             if ( krw != null )
             {
                 currencyList.add(krw);
@@ -313,7 +313,7 @@ public class CoinGeckoService
         // Indian Rupee
         if ( currencies.contains(FiatNames.INR.code))
         {
-            Currency inr = findCurrencyByName(currencyList_raw, FiatNames.INR.code);
+            FiatCurrency inr = findCurrencyByName(currencyList_raw, FiatNames.INR.code);
             if ( inr != null )
             {
                 currencyList.add(inr);
@@ -322,7 +322,7 @@ public class CoinGeckoService
 
         // Japanese Yen
         if ( currencies.contains(FiatNames.JPY.code)) {
-            Currency jpy = findCurrencyByName(currencyList_raw, FiatNames.JPY.code);
+            FiatCurrency jpy = findCurrencyByName(currencyList_raw, FiatNames.JPY.code);
             if ( jpy != null )
             {
                 currencyList.add(jpy);
@@ -330,7 +330,7 @@ public class CoinGeckoService
         }
 
         if ( currencies.contains(FiatNames.JPM.code)) {
-            Currency jpm = findCurrencyByName(currencyList_raw, FiatNames.JPM.code);
+            FiatCurrency jpm = findCurrencyByName(currencyList_raw, FiatNames.JPM.code);
             if ( jpm != null )
             {
                 currencyList.add(jpm);
@@ -341,11 +341,11 @@ public class CoinGeckoService
         return quote;
     }
 
-    private Currency findCurrencyByName(List<Currency> inputCurrencyList, String currencyName)
+    private FiatCurrency findCurrencyByName(List<FiatCurrency> inputCurrencyList, String currencyName)
     {
-        Currency result;
+        FiatCurrency result;
 
-        for ( Currency curency : inputCurrencyList)
+        for ( FiatCurrency curency : inputCurrencyList)
         {
             if ( curency.getCode().compareToIgnoreCase( currencyName) == 0)
             {
