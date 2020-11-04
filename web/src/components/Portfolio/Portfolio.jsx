@@ -57,6 +57,7 @@ export default function Portfolio(props) {
                             </tr>
                         </thead>
                         <tbody>
+                            <tr>
                             {
                                 porfolioFiatValues.map( ({coinValue, fiatCurrency}) =>
                                 <FiatCurrency key={fiatCurrency}
@@ -65,6 +66,7 @@ export default function Portfolio(props) {
                                     />
                                 )
                             }
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -72,14 +74,26 @@ export default function Portfolio(props) {
                     <h3>list of coins balance and values</h3>
                     <table>
                         <thead>
-                            <th>coin name</th>
-                            <th>Ticker</th>
-                            <th>coin balance</th>
+                            <tr>
+                                <th>coin name</th>
+                                <th>Ticker</th>
+                                <th>coin balance</th>
+                                <th>Current Price</th>
+                                <th>value</th>
+                            </tr>
                         </thead>
                         <tbody>
                             {
-                              portfolioByCoins.map( ({coinName, ticker, coinBalance }) =>
-                              <PotfolioByCoin coinName={coinName} ticker={ticker} coinBalance={coinBalance} />
+                              portfolioByCoins.map( ({coinName, ticker, coinBalance, fiat_prices, fiat_balances }) =>
+                              <PotfolioByCoin 
+                                    key={ticker}
+                                    coinName={coinName} 
+                                    ticker={ticker} 
+                                    coinBalance={coinBalance} 
+                                    fiat_prices={fiat_prices}
+                                    fiat_balances={fiat_balances}
+                                    defaultFiatCurrency={props.defaultFiatCurrency}
+                                    />
                                 )  
                             }
                         </tbody>

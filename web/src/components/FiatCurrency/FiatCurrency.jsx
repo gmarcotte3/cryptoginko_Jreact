@@ -39,19 +39,21 @@ export default function FiatCurrency(props) {
         );
     }
 
+    // TODO support pounds euros and others here...
     const getValue = () => {
         if ( props.currency === 'JPM') {
-            return ( getPriceJPY() +" 万円");
+            let symbol = (props.symbol? props.symbol: "¥");
+            return (  symbol + getPriceJPY() +" 万円");
         } else if (props.currency === 'JPY') {
-            return ( getPriceJPY() +" 円");
+            let symbol = (props.symbol? props.symbol: "¥");
+            return ( symbol + getPriceJPY() +" 円");
         } else {
-            return ( "$" + getPrice() + " " + props.currency );
+            let symbol = (props.symbol? props.symbol: "$");
+            return ( symbol + getPrice() + " " + props.currency );
         }
     }
     
     return (
-        <tr>
-            <TD>{getValue()}</TD>
-        </tr>
+        <TD>{getValue()}</TD>
     )
 }

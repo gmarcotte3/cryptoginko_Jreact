@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import FiatCurrency from "../FiatCurrency/FiatCurrency";
 
 // styled TD
 const TD = styled.td`
@@ -15,9 +16,31 @@ const TD = styled.td`
  */
 export default function PotfolioByCoin(props) {
 
-    console.log("props=", props);
+    console.log( "defaultFiatCurrency",props.defaultFiatCurrency)
+
+    function findcode(item) {
+        if (item.code === props.defaultFiatCurrency )
+        return item;
+    }
+   
+    let price = props.fiat_prices.find(findcode);
+    let coinvalue = props.fiat_balances.find(findcode);
 
     return (
-            <tr><TD>{props.coinName}</TD><TD>{props.ticker}</TD><TD>{props.coinBalance}</TD></tr>
+            <tr><TD>{props.coinName}</TD>
+                <TD>{props.ticker}</TD>
+                <TD>{props.coinBalance}</TD>
+                <FiatCurrency   key={"price" + props.ticker}
+                                currency={price.code}
+                                coinValue={price.value}
+                                symbol={price.symbol}
+                    />
+                <FiatCurrency   key={"value" + props.ticker}
+                                currency={coinvalue.code}
+                                coinValue={coinvalue.value}
+                                symbol={coinvalue.symbol}
+                    />
+                
+            </tr>
     );
 }

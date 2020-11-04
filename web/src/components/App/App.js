@@ -23,7 +23,7 @@ const PORTFOLIO_BYCOINS_URL = "http://localhost:8082/blockhead/portfolio/bycoins
 export default function App(props) {
   const [portfolioFiatValue, setPortfolioFiatValue] =  useState(0);
   const [myCoins, setMyCoins] = useState([]);
-  const [defaultFiatCurrency, setDefaultFiatCurrency] = useState('JPM');
+  const [defaultFiatCurrency, setDefaultFiatCurrency] = useState('NZD');
 
 
   return (

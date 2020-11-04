@@ -44,7 +44,7 @@ public class  CoinGeckoController
     @GetMapping("/quote/all")
     public ResponseEntity<List<CoinDTO>> getQuoteAllCoinsNow() {
         List<CoinDTO> result = coinGeckoService.getPriceAllCoinsNow();
-        
+
         return new ResponseEntity<List<CoinDTO>>(result, HttpStatus.OK);
     }
 
