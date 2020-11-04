@@ -2,6 +2,7 @@ package com.marcotte.blockhead.portfolio;
 
 
 import com.marcotte.blockhead.datastore.PortfolioTracker;
+import com.marcotte.blockhead.model.CoinDTO;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +28,14 @@ public class PortfolioController
         List<PortfolioTracker> portfolioTrackerList = portfolioService.portfolioCheck(false);
 
         return new ResponseEntity<List<PortfolioTracker>>(portfolioTrackerList, HttpStatus.OK);
+    }
+
+    @PutMapping("/bycoins")
+    public ResponseEntity<List<CoinDTO>> portfolioByCoins()
+    {
+        List<CoinDTO> portfolioByCoinList = portfolioService.portfolioByCoins();
+
+        return new ResponseEntity<List<CoinDTO>>(portfolioByCoinList, HttpStatus.OK);
     }
 
     @PutMapping("/refreshcache")

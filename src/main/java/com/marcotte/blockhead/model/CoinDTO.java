@@ -1,5 +1,6 @@
 package com.marcotte.blockhead.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,24 +11,33 @@ public class CoinDTO {
     private String ticker;      // trading symbol ie BTH, DASH, BCH, ADA etc
     private Double coinBalance; // the coin balance in Satoshis for bitcoin DASH and BitcoinCash etc.
 
-    // TODO refactor Fiat and Currency into one class.
-//    private Fiat priceFiat;     // the current price in default fiat currency
-//    private Fiat valueFiat;     // The fiat value (coinBalance * priceFiat)
-//    private Fiat priceFiatAlt1; // same as priceFiat but using fiat alternate currency 1
-//    private Fiat valueFiatAlt1; // same as valueFiat but using fiat alternate currency 1
-//    private Fiat priceFiatAlt2; // same as priceFiat but using fiat alternate currency 2
-//    private Fiat valueFiatAlt2; // same as valueFiat but using fiat alternate currency 2
     private List<FiatCurrency> fiat_prices;  // list of all the supported fiat currencies prices.
     private List<FiatCurrency> fiat_balances;  // list of all the supported fiat currencies values( price * coinBalance).
 
 
     public CoinDTO() {
-
+        this.coinName = "";
+        this.ticker = "";
+        this.coinBalance = 0.0;
+        this.fiat_prices = new ArrayList<>();
+        this.fiat_balances = new ArrayList<>();
     }
     public CoinDTO(String coinName, String ticker)
     {
         this.coinName = coinName;
         this.ticker = ticker;
+        this.coinBalance = 0.0;
+        this.fiat_prices = new ArrayList<>();
+        this.fiat_balances = new ArrayList<>();
+    }
+
+    public FiatCurrency findFiatPrice(String fiatCode ) {
+        for( int j = 0; j < fiat_prices.size(); j++) {
+            if ( fiat_prices.get(j).getCode().equals(fiatCode)) {
+                return fiat_prices.get(j);
+            }
+        }
+        return new FiatCurrency(); // return a dummy
     }
 
     public String getCoinName() {

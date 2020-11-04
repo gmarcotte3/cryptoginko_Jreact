@@ -10,21 +10,32 @@ public class FiatCurrency
     private double value;
     private FiatNames fiatType;
 
-    @Override
-    public String toString()
-    {
-        return  symbol + " " + value + " " + fiatType.code;
+    public FiatCurrency() {
+        this.value = 0.0;
+        this.fiatType = FiatNames.USD;
+    }
+    public FiatCurrency(double value, FiatNames fiatType) {
+        this.value = value;
+        this.fiatType = fiatType;
     }
 
-    public String toStringDebug()
+    @Override
+    public String toString()
     {
         return "Currency{" +
                 ", symbol='" + symbol + '\'' +
                 ", description='" + description + '\'' +
-                ", rate=" + value +
+                ", value=" + value +
                 ", code='" + fiatType.code + '\'' +
                 '}';
     }
+
+    public String toStringDisplay()
+    {
+        return  symbol + " " + value + " " + fiatType.code;
+    }
+
+
 
     public static FiatCurrency findCurrencyByName(List<FiatCurrency> currencies, String currencyName)
     {
@@ -75,5 +86,13 @@ public class FiatCurrency
     public FiatCurrency setCode(String code) {
         this.fiatType = FiatNames.valueOfCode(code);
         return this;
+    }
+
+    public FiatNames getFiatType() {
+        return fiatType;
+    }
+
+    public void setFiatType(FiatNames fiatType) {
+        this.fiatType = fiatType;
     }
 }

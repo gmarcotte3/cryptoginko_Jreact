@@ -45,14 +45,13 @@ export default function FiatCurrency(props) {
         } else if (props.currency === 'JPY') {
             return ( getPriceJPY() +" 円");
         } else {
-            return ( "$" + getPrice() );
+            return ( "$" + getPrice() + " " + props.currency );
         }
     }
     
     return (
         <tr>
             <TD>{getValue()}</TD>
-            <TD>{props.currency}</TD>
         </tr>
     )
 }

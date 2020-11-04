@@ -17,6 +17,9 @@ import CoinList from '../CoinList/CoinList';
 import 'bootswatch/dist/flatly/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/js/all';
 
+const PORTFOLIO_BACKEND_URL = "http://localhost:8082/blockhead/portfolio";
+const PORTFOLIO_BYCOINS_URL = "http://localhost:8082/blockhead/portfolio/bycoins";
+
 export default function App(props) {
   const [portfolioFiatValue, setPortfolioFiatValue] =  useState(0);
   const [myCoins, setMyCoins] = useState([]);
@@ -28,7 +31,10 @@ export default function App(props) {
       <GinkoHeader />
       <Tabs>
         <div label="Portfolio">
-          <Portfolio defaultFiatCurrency={defaultFiatCurrency} />
+          <Portfolio defaultFiatCurrency={defaultFiatCurrency} 
+            portfolioUrl={PORTFOLIO_BACKEND_URL} 
+            portfolioByCoinsUrl={PORTFOLIO_BYCOINS_URL}
+            />
         </div>
         <div label="current prices">
           <CoinList coinData={myCoins}/>

@@ -1,5 +1,6 @@
 package com.marcotte.blockhead.explorerServices.pricequote;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.marcotte.blockhead.model.CoinDTO;
 import com.marcotte.blockhead.model.FiatCurrency;
 import com.marcotte.blockhead.model.QuoteGeneric;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 
+
 @Api(value = "Currency General Rest API", tags = "currency")
 @RestController
 @RequestMapping("/currency/coingeko")
@@ -31,10 +33,18 @@ public class  CoinGeckoController
     {
         this.coinGeckoService = coinGeckoService;
     }
+    @GetMapping("/quote")
+    public ResponseEntity<QuoteGeneric> getQuoteLocal(
+            @RequestParam(value = "coin", required = true) final String coinName  )
+    {
+        QuoteGeneric quoteGeneric = coinGeckoService.getQuote(coinName.toUpperCase());
+        return new ResponseEntity<QuoteGeneric>(quoteGeneric, HttpStatus.OK);
+    }
 
-    @GetMapping("/")
+    @GetMapping("/quote/all")
     public ResponseEntity<List<CoinDTO>> getQuoteAllCoinsNow() {
         List<CoinDTO> result = coinGeckoService.getPriceAllCoinsNow();
+        
         return new ResponseEntity<List<CoinDTO>>(result, HttpStatus.OK);
     }
 
@@ -49,11 +59,5 @@ public class  CoinGeckoController
     }
 
 
-    @GetMapping("/quote")
-    public ResponseEntity<QuoteGeneric> getQuoteLocal(
-            @RequestParam(value = "coin", required = true) final String coinName  )
-    {
-        QuoteGeneric quoteGeneric = coinGeckoService.getQuote(coinName.toUpperCase());
-        return new ResponseEntity<QuoteGeneric>(quoteGeneric, HttpStatus.OK);
-    }
+
 }

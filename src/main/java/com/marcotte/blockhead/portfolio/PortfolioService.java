@@ -10,10 +10,7 @@ import com.marcotte.blockhead.explorerServices.etheriumexplorers.EtheriumExplore
 import com.marcotte.blockhead.explorerServices.litecoinexplorers.LiteCoinExplorerServices;
 import com.marcotte.blockhead.explorerServices.pricequote.CoinGeckoService;
 import com.marcotte.blockhead.explorerServices.zcashExplorers.ZCashExplorerServices;
-import com.marcotte.blockhead.model.CoinList;
-import com.marcotte.blockhead.model.CryptoNames;
-import com.marcotte.blockhead.model.FiatCurrency;
-import com.marcotte.blockhead.model.QuoteGeneric;
+import com.marcotte.blockhead.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +54,37 @@ public class PortfolioService
     @Autowired
     private PortfolioTrackerDetailService portfolioTrackerDetailService;
 
+
+    /**
+     * returns the portfolio broken down by coin
+     * @return
+     */
+    public List<CoinDTO> portfolioByCoins() {
+        List<CoinDTO> portfolioByCoinList = blockchainAddressStoreService.findAllLatestSumBalanceGroupByCurency();
+        List<CoinDTO> coinPrices = coinGeckoService.getPriceAllCoinsNow();
+
+        copyFiatPricesAndCalculateValueFromCoinPrices( portfolioByCoinList, coinPrices);
+        return portfolioByCoinList;
+    }
+
+    private void  copyFiatPricesAndCalculateValueFromCoinPrices( List<CoinDTO> portfolioByCoinList, List<CoinDTO> coinPrices) {
+        for ( CoinDTO portfolioCoin : portfolioByCoinList ) {
+            for( int i=0; i < coinPrices.size(); i++) {
+                if ( portfolioCoin.getTicker().equals(coinPrices.get(i).getTicker())) {
+                    List<FiatCurrency> fiat_prices = new ArrayList<>();
+                    List<FiatCurrency> fiat_values= new ArrayList<>();
+                    for ( FiatCurrency price : coinPrices.get(i).getFiat_prices()) {
+                        fiat_prices.add(price);
+                        FiatCurrency value = new FiatCurrency(price.getValue() * portfolioCoin.getCoinBalance(),price.getFiatType() );
+                        fiat_values.add( value );
+                    }
+                    portfolioCoin.setFiat_prices(fiat_prices);
+                    portfolioCoin.setFiat_balances(fiat_values);
+                    break;
+                }
+            }
+        }
+    }
 
     /**
      * support for BIC, BCH, DASH, EOS, ETH, ADA, LTE, ZEC

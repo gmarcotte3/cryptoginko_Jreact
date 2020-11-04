@@ -5,6 +5,7 @@ import com.marcotte.blockhead.model.CoinDTO;
 import com.marcotte.blockhead.model.FiatCurrency;
 import com.marcotte.blockhead.model.FiatNames;
 import com.marcotte.blockhead.model.QuoteGeneric;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -87,10 +88,28 @@ public class CoinGeckoService
 
     private List<CoinDTO> parseCoingekoPriceDump(String theRawJsonQuotes) {
         JSONObject jsonObj;
-        JSONObject marketDataObj;
-        JSONObject current_price_DataObj;
-        List<FiatCurrency> currencyList = new ArrayList<FiatCurrency>();
         List<CoinDTO> coinDTOList = new ArrayList<CoinDTO>();
+
+        try {
+            jsonObj = new JSONObject("{ coindata:" + theRawJsonQuotes + "}");
+            JSONArray coinJArray = jsonObj.getJSONArray("coindata");
+            for (int i = 0; i < coinJArray.length(); i++) {
+                JSONObject coinJObj = (JSONObject) coinJArray.get(i);
+                String ticker = (coinJObj.getString("symbol")).toUpperCase();
+                String coinName = coinJObj.getString("name");
+                List<FiatCurrency> fiatCurrencies = parseJsonRawQuote(ticker, coinJObj );
+
+                CoinDTO coinDTO = new CoinDTO();
+                coinDTO.setTicker(ticker);
+                coinDTO.setCoinName(coinName);
+                coinDTO.setFiat_prices(fiatCurrencies);
+                coinDTOList.add(coinDTO);
+            }
+            //return parseJsonRawQuote(coin, jsonObj );
+        } catch (Exception e) {
+            log.error("missing or bad price and date format coin {} error={}", e.getMessage());
+            return coinDTOList;
+        }
 
         return coinDTOList;
     }

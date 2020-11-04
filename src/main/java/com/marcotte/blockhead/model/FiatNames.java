@@ -9,11 +9,14 @@ public enum FiatNames
     EUR("EUR", "Euro"),                         // Euro
     NZD("NZD", "New Zeland dollar"),            // New Zealand (Kiwi) dollar
     AUD("AUD", "Australian dollar"),            // Aussie dollar
-    GRP("GRP", "British pound"),                // British pound
+    GRP("GBP", "British pound"),                // British pound
     JPY("JPY", "Japanese yen"),                 // Japanese yen
     JPM("JPM", "Japanese yen in 10,000s 万"),   // Japanese yen (10,000) 万
     KRW("KRW", "Korian won"),                   // Korian won
-    INR("INR", "Indian ruppee");                // Indian ruppee
+    INR("INR", "Indian ruppee"),                // Indian ruppee
+    WTF("WTF", "Unknown not supported"),        // central bankers wet dream fiat
+    BTC("BTC", "Bitcoin さとし"),                // interms of bitcoin
+    ETH("ETH", "Ether Wei");                    // interms of Ether
 
     public final String code;
     public final String name;
@@ -33,12 +36,12 @@ public enum FiatNames
     {
         for( FiatNames fiat : values())
         {
-            if ( fiat.code.equals(code))
+            if ( fiat.code.equals(code.toUpperCase()))
             {
                 return fiat;
             }
         }
-        return null;
+        return WTF;
     }
 
 }
