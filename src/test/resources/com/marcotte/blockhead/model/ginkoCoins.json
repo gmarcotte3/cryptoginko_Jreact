@@ -1,0 +1,3552 @@
+[
+  {
+    "coinName": "Bitcoin",
+    "ticker": "BTC",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 23106,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 15674.3798828125,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 21578,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 1623281,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 162.32809448242188,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 13264.7802734375,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 11943.9697265625,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 17607508,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 1160257,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "Ethereum",
+    "ticker": "ETH",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 637.469970703125,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 432.44000244140625,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 595.3200073242188,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 44785,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 4.478499889373779,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 365.9599914550781,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 329.5199890136719,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 485773,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 32010,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "Tether",
+    "ticker": "USDT",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 1.4800000190734863,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 1,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 1.3799999952316284,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 103.63999938964844,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.010363999754190445,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 0.8468850255012512,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 0.7625589966773987,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 1124.1500244140625,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 74.08000183105469,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "XRP",
+    "ticker": "XRP",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 0.3694179952144623,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 0.25060001015663147,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 0.34498700499534607,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 25.950000762939453,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.0025949999690055847,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 0.21207599341869354,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 0.19095900654792786,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 281.510009765625,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 18.549999237060547,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "Bitcoin Cash",
+    "ticker": "BCH",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 372.0899963378906,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 252.41000366210938,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 347.4800109863281,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 26141,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 2.6140999794006348,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 213.61000061035156,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 192.33999633789062,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 283544,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 18684.310546875,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "Chainlink",
+    "ticker": "LINK",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 16.670000076293945,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 11.3100004196167,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 15.569999694824219,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 1170.989990234375,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.11709900200366974,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 9.569999694824219,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 8.619999885559082,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 12701.5595703125,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 836.97998046875,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "Binance Coin",
+    "ticker": "BNB",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 42.09000015258789,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 28.549999237060547,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 39.29999923706055,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 2956.699951171875,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.2956700026988983,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 24.15999984741211,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 21.760000228881836,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 32071,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 2113.330078125,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "Polkadot",
+    "ticker": "DOT",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 6.489999771118164,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 4.400000095367432,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 6.059999942779541,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 456.1199951171875,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.04561199992895126,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 3.7300000190734863,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 3.359999895095825,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 4947.4599609375,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 326.0199890136719,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "Litecoin",
+    "ticker": "LTC",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 90.33999633789062,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 61.279998779296875,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 84.36000061035156,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 6346.5498046875,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.6346549987792969,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 51.86000061035156,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 46.70000076293945,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 68840,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 4536.259765625,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "Cardano",
+    "ticker": "ADA",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 0.14983999729156494,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 0.10164599865674973,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 0.13993099331855774,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 10.529999732971191,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.0010529999854043126,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 0.08602000027894974,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 0.07745499908924103,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 114.18000030517578,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 7.519999980926514,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "Bitcoin SV",
+    "ticker": "BSV",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 238.25999450683594,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 161.6199951171875,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 222.5,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 16738.23046875,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 1.6738229990005493,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 136.77999877929688,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 123.16000366210938,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 181557,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 11963.8203125,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "USD Coin",
+    "ticker": "USDC",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 1.4700000286102295,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 0.9996970295906067,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 1.3799999952316284,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 103.52999877929688,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.010352999903261662,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 0.8460149765014648,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 0.761775016784668,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 1122.989990234375,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 74,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "EOS",
+    "ticker": "EOS",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 3.6600000858306885,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 2.4800000190734863,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 3.4200000762939453,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 257.19000244140625,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.02571900002658367,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 2.0999999046325684,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 1.8899999856948853,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 2789.669921875,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 183.8300018310547,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "Monero",
+    "ticker": "XMR",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 177.2899932861328,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 120.2699966430664,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 165.57000732421875,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 12455.2802734375,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 1.245527982711792,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 101.77999877929688,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 91.63999938964844,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 135101,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 8902.5400390625,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "Wrapped Bitcoin",
+    "ticker": "WBTC",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 23055,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 15639.830078125,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 21530,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 1619702,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 161.97019958496094,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 13235.5302734375,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 11917.6396484375,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 17568688,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 1157699,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "TRON",
+    "ticker": "TRX",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 0.037153929471969604,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 0.025203920900821686,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 0.0346967987716198,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 2.609999895095825,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.00026099997921846807,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 0.02132933959364891,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 0.019205540418624878,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 28.309999465942383,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 1.8700000047683716,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "Stellar",
+    "ticker": "XLM",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 0.12049199640750885,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 0.08173699676990509,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 0.11252299696207047,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 8.460000038146973,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.0008459999808110297,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 0.06917200237512589,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 0.06228400021791458,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 91.81999969482422,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 6.050000190734863,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "Crypto.com Coin",
+    "ticker": "CRO",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 0.11597300320863724,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 0.07867199927568436,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 0.10830400139093399,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 8.149999618530273,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.0008149999775923789,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 0.06657800078392029,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 0.05994899943470955,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 88.37999725341797,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 5.820000171661377,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "Tezos",
+    "ticker": "XTZ",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 2.950000047683716,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 2,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 2.75,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 207.0800018310547,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.020708000287413597,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 1.690000057220459,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 1.5199999809265137,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 2246.18994140625,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 148.00999450683594,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "cDAI",
+    "ticker": "CDAI",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 0.030820919200778008,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 0.020907830446958542,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 0.028782609850168228,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 2.1700000762939453,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.0002170000079786405,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 0.017693689092993736,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 0.015931889414787292,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 23.489999771118164,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 1.5499999523162842,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "OKB",
+    "ticker": "OKB",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 6.590000152587891,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 4.46999979019165,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 6.150000095367432,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 462.9599914550781,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.046296000480651855,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 3.7799999713897705,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 3.4100000858306885,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 5021.7099609375,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 330.9100036621094,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "LEO Token",
+    "ticker": "LEO",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 1.840000033378601,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 1.25,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 1.7200000286102295,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 129.39999389648438,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.0129399998113513,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 1.059999942779541,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 0.952114999294281,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 1403.5799560546875,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 92.48999786376953,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "Cosmos",
+    "ticker": "ATOM",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 6.920000076293945,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 4.690000057220459,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 6.460000038146973,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 486.0799865722656,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.048607997596263885,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 3.9700000286102295,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 3.5799999237060547,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 5272.41015625,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 347.42999267578125,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "NEO",
+    "ticker": "NEO",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 21.899999618530273,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 14.859999656677246,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 20.450000762939453,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 1538.5,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.1538500040769577,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 12.569999694824219,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 11.319999694824219,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 16687.9296875,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 1099.6600341796875,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "NEM",
+    "ticker": "XEM",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 0.16680799424648285,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 0.1131569966673851,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 0.1557770073413849,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 11.720000267028809,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.0011720000766217709,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 0.0957610011100769,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 0.08622600138187408,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 127.11000061035156,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 8.380000114440918,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "Dai",
+    "ticker": "DAI",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 1.4900000095367432,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 1.0099999904632568,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 1.3899999856948853,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 104.44000244140625,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.010444000363349915,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 0.8534370064735413,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 0.7684580087661743,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 1132.8399658203125,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 74.6500015258789,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "Filecoin",
+    "ticker": "FIL",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 44.02000045776367,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 29.860000610351562,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 41.11000061035156,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 3092.409912109375,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.30924099683761597,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 25.270000457763672,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 22.75,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 33543,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 2210.330078125,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "Huobi Token",
+    "ticker": "HT",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 5.400000095367432,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 3.6700000762939453,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 5.050000190734863,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 379.6300048828125,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.03796299919486046,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 3.0999999046325684,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 2.7899999618530273,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 4117.830078125,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 271.3500061035156,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "IOTA",
+    "ticker": "MIOTA",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 0.3744089901447296,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 0.2539860010147095,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 0.34964799880981445,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 26.299999237060547,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.002630000002682209,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 0.21494099497795105,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 0.19353899359703064,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 285.30999755859375,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 18.799999237060547,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "Dash",
+    "ticker": "DASH",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 100.91000366210938,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 68.44999694824219,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 94.23999786376953,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 7089.27978515625,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.7089279890060425,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 57.93000030517578,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 52.15999984741211,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 76896,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 5067.14013671875,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "Binance USD",
+    "ticker": "BUSD",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 1.4700000286102295,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 0.9992650151252747,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 1.3799999952316284,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 103.48999786376953,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.010348999872803688,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 0.845649003982544,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 0.7614459991455078,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 1122.5,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 73.97000122070312,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "VeChain",
+    "ticker": "VET",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 0.014874979853630066,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 0.010090669617056847,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 0.013891249895095825,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 1.0499999523162842,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.00010499999189050868,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 0.008539440110325813,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 0.007689150050282478,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 11.34000015258789,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 0.746936023235321,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "Theta Network",
+    "ticker": "THETA",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 0.9642149806022644,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 0.6540889739990234,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 0.9004470109939575,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 67.73999786376953,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.006773999892175198,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 0.5535370111465454,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 0.49842000007629395,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 734.760009765625,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 48.41999816894531,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "Ethereum Classic",
+    "ticker": "ETC",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 7.610000133514404,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 5.159999847412109,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 7.099999904632568,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 534.4600219726562,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.053446002304553986,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 4.369999885559082,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 3.930000066757202,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 5797.25,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 382.010009765625,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "Zcash",
+    "ticker": "ZEC",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 84.41999816894531,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 57.2599983215332,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 78.83000183105469,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 5930.47021484375,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.593047022819519,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 48.459999084472656,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 43.63999938964844,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 64327,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 4238.85986328125,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "Celsius Network",
+    "ticker": "CEL",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 2.369999885559082,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 1.6100000143051147,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 2.2200000286102295,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 166.8000030517578,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.016680000349879265,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 1.3600000143051147,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 1.2300000190734863,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 1809.300048828125,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 119.22000122070312,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "Uniswap",
+    "ticker": "UNI",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 3.4700000286102295,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 2.359999895095825,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 3.240000009536743,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 243.92999267578125,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.024392999708652496,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 1.9900000095367432,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 1.7899999618530273,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 2645.8701171875,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 174.35000610351562,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "cETH",
+    "ticker": "CETH",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 12.760000228881836,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 8.65999984741211,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 11.920000076293945,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 896.72998046875,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.0896729975938797,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 7.329999923706055,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 6.599999904632568,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 9726.6796875,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 640.9500122070312,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "Maker",
+    "ticker": "MKR",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 777.0999755859375,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 527.1599731445312,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 725.7100219726562,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 54594,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 5.459400177001953,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 446.1199951171875,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 401.70001220703125,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 592171,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 39021,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "Paxos Standard",
+    "ticker": "PAX",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 1.4700000286102295,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 0.9996640086174011,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 1.3799999952316284,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 103.52999877929688,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.010352999903261662,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 0.8459870219230652,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 0.7617499828338623,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 1122.949951171875,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 74,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "Synthetix Network Token",
+    "ticker": "SNX",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 4.889999866485596,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 3.319999933242798,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 4.570000171661377,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 343.42999267578125,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.03434300050139427,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 2.809999942779541,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 2.5299999713897705,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 3725.1298828125,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 245.47000122070312,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "OMG Network",
+    "ticker": "OMG",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 4.480000019073486,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 3.0399999618530273,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 4.190000057220459,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 314.8900146484375,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.03148899972438812,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 2.569999933242798,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 2.319999933242798,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 3415.580078125,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 225.07000732421875,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "UMA",
+    "ticker": "UMA",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 10.40999984741211,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 7.059999942779541,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 9.720000267028809,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 731.3699951171875,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.07313700020313263,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 5.980000019073486,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 5.380000114440918,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 7933.080078125,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 522.760009765625,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "Aave",
+    "ticker": "AAVE",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 50.279998779296875,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 34.11000061035156,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 46.95000076293945,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 3532.22998046875,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.3532229959964752,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 28.860000610351562,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 25.989999771118164,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 38314,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 2524.699951171875,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "Compound",
+    "ticker": "COMP",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 135.24000549316406,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 91.73999786376953,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 126.30000305175781,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 9500.98046875,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.9500980377197266,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 77.63999938964844,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 69.91000366210938,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 103056,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 6790.919921875,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "Ontology",
+    "ticker": "ONT",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 0.660565972328186,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 0.44810500741004944,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 0.6168799996376038,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 46.40999984741211,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.004641000181436539,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 0.3792180120944977,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 0.3414579927921295,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 503.3699951171875,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 33.16999816894531,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "Waves",
+    "ticker": "WAVES",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 5.079999923706055,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 3.440000057220459,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 4.739999771118164,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 356.6199951171875,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.03566199913620949,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 2.9100000858306885,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 2.619999885559082,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 3868.22998046875,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 254.89999389648438,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "Dogecoin",
+    "ticker": "DOGE",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 0.003955920226871967,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 0.002683559898287058,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 0.0036943000741302967,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 0.2779160141944885,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.0000277916005870793,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 0.0022710200864821672,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 0.0020448900759220123,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 3.009999990463257,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 0.1986439973115921,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "Aave LINK",
+    "ticker": "ALINK",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 16.59000015258789,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 11.25,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 15.489999771118164,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 1163.68994140625,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.11636899411678314,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 9.510000228881836,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 8.569999694824219,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 12654.01953125,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 832.3599853515625,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  },
+  {
+    "coinName": "FTX Token",
+    "ticker": "FTT",
+    "coinBalance": 0,
+    "fiat_prices": [
+      {
+        "symbol": "$",
+        "description": "New Zeland Dollar",
+        "value": 5.25,
+        "fiatType": "NZD",
+        "code": "NZD"
+      },
+      {
+        "symbol": "$",
+        "description": "US Dollar",
+        "value": 3.559999942779541,
+        "fiatType": "USD",
+        "code": "USD"
+      },
+      {
+        "symbol": "$",
+        "description": "Aussie Dollar",
+        "value": 4.900000095367432,
+        "fiatType": "AUD",
+        "code": "AUD"
+      },
+      {
+        "symbol": "¥",
+        "description": "Japanese yen",
+        "value": 368.7300109863281,
+        "fiatType": "JPY",
+        "code": "JPY"
+      },
+      {
+        "symbol": "万",
+        "description": "Japanese 万 (10,000 Yen)",
+        "value": 0.03687300160527229,
+        "fiatType": "JPM",
+        "code": "JPM"
+      },
+      {
+        "symbol": "€",
+        "description": "Euros",
+        "value": 3.009999990463257,
+        "fiatType": "EUR",
+        "code": "EUR"
+      },
+      {
+        "symbol": "£",
+        "description": "Pound sterling",
+        "value": 2.7100000381469727,
+        "fiatType": "GRP",
+        "code": "GBP"
+      },
+      {
+        "symbol": "₩",
+        "description": "South Koria won",
+        "value": 3999.530029296875,
+        "fiatType": "KRW",
+        "code": "KRW"
+      },
+      {
+        "symbol": "₹",
+        "description": "Indian Rupee",
+        "value": 263.54998779296875,
+        "fiatType": "INR",
+        "code": "INR"
+      }
+    ],
+    "fiat_balances": []
+  }
+]

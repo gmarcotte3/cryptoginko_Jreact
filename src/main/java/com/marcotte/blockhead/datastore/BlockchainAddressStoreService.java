@@ -185,6 +185,11 @@ public class BlockchainAddressStoreService
         List<BlockchainAddressStore> foundLatestOrderedByCurrency = blockchainAddressStoreRepository.findBlockchainAddressStoreByNextIdOrderByCurrency(null);
         List<CoinDTO> summedByCurrency = new ArrayList<CoinDTO>();
 
+        // if there are no coins found then return []
+        if ( foundLatestOrderedByCurrency.size() == 0) {
+            return summedByCurrency;
+        }
+
         Double runningBalance = 0.0;
         String currentCoin = "";
         for (BlockchainAddressStore addr : foundLatestOrderedByCurrency ) {
