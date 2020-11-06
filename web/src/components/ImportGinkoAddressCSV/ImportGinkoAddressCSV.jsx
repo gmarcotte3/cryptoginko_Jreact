@@ -5,14 +5,14 @@ import CoinAddress from '../CoinAddress/CoinAddress';
 
 
 
-const IMPORT_GINKO_ADDR_URL = "http://localhost:8082/blockhead/import/addressescsv";
-
+const IMPORT_GINKO_ADDR_URL = "http://localhost:8082/ginkoJ/import/addressescsv";
 
 export default function ImportGinkoAddressCSV(props) {
 
+    const URL = props.importGinkoAddrURL;
     const [coinAddresses, setCoinAddresses] = React.useState([]);
 
-    // this does not work, getting error responses.
+    // TODO move up to app
     const onSubmitFile = (bodyFormData) => {
         console.log("do the file upload now", bodyFormData);
         

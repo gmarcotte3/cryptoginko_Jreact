@@ -25,6 +25,9 @@ export default function Portfolio(props) {
                         defaultFiatCurrency={props.defaultFiatCurrency} 
                         portfolioUrl={props.portfolioUrl} 
                         portfolioByCoinsUrl={props.portfolioByCoinsUrl}
+                        totalValue={props.totalValue}
+                        porfolioFiatValues={props.porfolioFiatValues}
+                        portfolioByCoins={props.portfolioByCoins}          
                         />
                     </div>
                     <div label="by wallets">

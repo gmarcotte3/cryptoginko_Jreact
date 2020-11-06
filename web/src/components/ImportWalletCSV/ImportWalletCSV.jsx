@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Tabs from  "../Tabs/Tabs"; 
 import ImportGinkoAddressCSV from "../ImportGinkoAddressCSV/ImportGinkoAddressCSV";
 
-const IMPORT_URL = "http://localhost:8082/blockhead/import/addresses?filename=%2Fhome%2Fgmarcotte%2FDesktop%2Fblockhead%2FpublicAddresses_test.csv";
+const IMPORT_URL = "http://localhost:8082/ginkoJ/import/addresses?filename=%2Fhome%2Fgmarcotte%2FDesktop%2Fblockhead%2FpublicAddresses_test.csv";
 export default class ImportWalletCSV extends Component {
     render() {
         return (
@@ -19,7 +19,8 @@ export default class ImportWalletCSV extends Component {
                     </div>
 
                     <div label="Import Ginko">
-                        <ImportGinkoAddressCSV />
+                        <ImportGinkoAddressCSV 
+                          importGinkoAddrURL={IMPORT_URL}/>
                         
                     </div>
                     

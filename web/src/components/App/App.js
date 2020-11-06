@@ -17,6 +17,7 @@ import CoinList from '../CoinList/CoinList';
 import 'bootswatch/dist/flatly/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/js/all';
 import styled from 'styled-components'
+import axios from 'axios';
 
 
 // stypled logo
@@ -30,13 +31,48 @@ const Div2 = styled.div`
 `;
 
 
-const PORTFOLIO_BACKEND_URL = "http://localhost:8082/blockhead/portfolio";
-const PORTFOLIO_BYCOINS_URL = "http://localhost:8082/blockhead/portfolio/bycoins";
+const PORTFOLIO_BACKEND_URL = "http://localhost:8082/ginkoJ/portfolio";
+const PORTFOLIO_BYCOINS_URL = "http://localhost:8082/ginkoJ/portfolio/bycoins";
+const IMPORT_GINKO_ADDR_URL = "http://localhost:8082/ginkoJ/import/addressescsv";
+
 
 export default function App(props) {
-  const [portfolioFiatValue, setPortfolioFiatValue] =  useState(0);
+//  const [portfolioFiatValue, setPortfolioFiatValue] =  useState(0);
   const [myCoins, setMyCoins] = useState([]);
   const [defaultFiatCurrency, setDefaultFiatCurrency] = useState('NZD');
+
+  const [totalValue, setTotalValue] = React.useState(-1);
+  const [porfolioFiatValues, setPortfolioFiatValues] = React.useState([]);
+  const [portfolioByCoins, setPortfolioByCoins] = React.useState([]);
+
+  const componentDidMount = async () => {
+      let response = await axios.put(PORTFOLIO_BACKEND_URL);
+      let updatedPorfolioFiatValues = response.data;
+      console.log("porfolioFiatValues", updatedPorfolioFiatValues);
+
+      let totalValue2 = 0;
+      for( let i =0; i< updatedPorfolioFiatValues.length; i++) {
+          totalValue2 += updatedPorfolioFiatValues[i].coinValue;
+      }
+      console.log("total Value=", totalValue2);
+      setTotalValue(totalValue2);
+      setPortfolioFiatValues(updatedPorfolioFiatValues);
+      
+      let response2 = await axios.put(PORTFOLIO_BYCOINS_URL);
+      let newPortfolioByCoins = response2.data;
+      console.log("newPortfolioByCoins", newPortfolioByCoins);
+      setPortfolioByCoins(newPortfolioByCoins);
+  }
+
+  useEffect( function() {
+    console.log("..;");
+      if ( totalValue < 0)
+      {
+        setTotalValue(0);
+        console.log("refreshing now ..... ");
+          componentDidMount();
+      }
+  })
 
 
   return (
@@ -48,13 +84,17 @@ export default function App(props) {
             <Portfolio defaultFiatCurrency={defaultFiatCurrency} 
               portfolioUrl={PORTFOLIO_BACKEND_URL} 
               portfolioByCoinsUrl={PORTFOLIO_BYCOINS_URL}
+              totalValue={totalValue}
+              porfolioFiatValues={porfolioFiatValues}
+              portfolioByCoins={portfolioByCoins}
               />
           </div>
           <div label="current prices">
             <CoinList coinData={myCoins}/>
           </div>
           <div label="import wallet csv">
-            <ImportWalletCSV />
+            <ImportWalletCSV
+              importGinkoAddrURL={IMPORT_GINKO_ADDR_URL} />
           </div>
           
         </Tabs>

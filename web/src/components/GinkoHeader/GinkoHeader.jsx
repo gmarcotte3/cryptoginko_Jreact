@@ -53,7 +53,7 @@ export default function GinkoHeader(props) {
             <table>
                 <tbody>
                     <tr>
-                        <Img src={ginkoLogo} alt="ginko logo" /><br />
+                        <td><Img src={ginkoLogo} alt="ginko logo" /></td>
                     </tr>
                     <tr>
                         <MenuSection>

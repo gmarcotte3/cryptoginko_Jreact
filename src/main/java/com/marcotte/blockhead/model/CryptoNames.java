@@ -13,7 +13,7 @@ public enum CryptoNames
     ETHEREUM("ETH", "Ethereum"),
     LITE_COIN("LTC", "Litecoin"),
     STELLAR_LUMENS_XLM("XLM", "Stellar lumens"),
-    IOTA("MIOT", "IOTA"),
+    IOTA("MIOTA", "IOTA"),
     EOS("EOS", "Eos"),
     ZCASH("ZEC", "Zcash"),
     MONERO( "XMR", "Monero"),

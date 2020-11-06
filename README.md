@@ -5,14 +5,14 @@ This will provide REST apis to store and track addresses to track a portfoilo va
 transaction csv dumps can be used to track profit and loss.
 
 ## Test with swaggar interface
-http://localhost:8082/blockhead/swagger-ui.html
+http://localhost:8082/ginkoJ/swagger-ui.html
 
 ## Database connection
 Access to the h2 database can be had from a console:
 
 Open a browser and type 
 ```
-http://localhost:8082/blockhead/h2
+http://localhost:8082/ginkoj/h2
 ```
 ## Front end
 see ./web/reademe.md for react front end

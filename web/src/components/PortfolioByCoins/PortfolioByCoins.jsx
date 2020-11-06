@@ -14,36 +14,6 @@ const TD = styled.td`
 
 export default function PortfolioByCoins(props) {
 
-    const [totalValue, setTotalValue] = React.useState(-1);
-    const [porfolioFiatValues, setPortfolioFiatValues] = React.useState([]);
-    const [portfolioByCoins, setPortfolioByCoins] = React.useState([]);
-
-    const componentDidMount = async () => {
-        let response = await axios.put(props.portfolioUrl);
-        let updatedPorfolioFiatValues = response.data;
-        console.log("porfolioFiatValues", updatedPorfolioFiatValues);
-
-        let totalValue = 0;
-        for( let i =0; i< updatedPorfolioFiatValues.length; i++) {
-            totalValue += updatedPorfolioFiatValues[i].coinValue;
-        }
-        console.log("total Value=", totalValue);
-        setPortfolioFiatValues(updatedPorfolioFiatValues);
-        
-        let response2 = await axios.put(props.portfolioByCoinsUrl);
-        let newPortfolioByCoins = response2.data;
-        console.log("newPortfolioByCoins", newPortfolioByCoins);
-
-        setTotalValue(totalValue);
-        setPortfolioByCoins(newPortfolioByCoins);
-    }
-
-    useEffect( function() {
-        if ( totalValue === -1)
-        {
-            componentDidMount();
-        }
-    })
 
     return (
         <div> 
@@ -58,7 +28,7 @@ export default function PortfolioByCoins(props) {
                 <tbody>
                     <tr>
                     {
-                        porfolioFiatValues.map( ({coinValue, fiatCurrency}) =>
+                        props.porfolioFiatValues.map( ({coinValue, fiatCurrency}) =>
                         <FiatCurrency key={fiatCurrency}
                             currency={fiatCurrency}
                             coinValue={coinValue}
@@ -82,7 +52,7 @@ export default function PortfolioByCoins(props) {
                 </thead>
                 <tbody>
                     {
-                    portfolioByCoins.map( ({coinName, ticker, coinBalance, fiat_prices, fiat_balances }) =>
+                    props.portfolioByCoins.map( ({coinName, ticker, coinBalance, fiat_prices, fiat_balances }) =>
                     <PotfolioByCoin 
                             key={ticker}
                             coinName={coinName} 
