@@ -24,7 +24,7 @@ export default function ImportGinkoAddressCSV(props) {
             })
             .then(function (response) {
                 //handle success
-                console.log("SUCKsess", response);  //debugging
+                console.log("Success", response);  //debugging
                 setCoinAddresses( response.data );
             })
             .catch(function (response) {

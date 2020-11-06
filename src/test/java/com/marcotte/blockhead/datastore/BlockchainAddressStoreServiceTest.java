@@ -37,11 +37,11 @@ public class BlockchainAddressStoreServiceTest
         addressStoreService.save(addressStore);
         assertTrue(addressStore.getId() != null &&  addressStore.getId() > 0);
 
-        List<BlockchainAddressStore> savedBlock = addressStoreService.findByAddressAndCurrency("1234567890", "JPYT");
+        List<BlockchainAddressStore> savedBlock = addressStoreService.findByAddressAndCurrency("1234567890", "USDT");
         assertEquals(1, savedBlock.size());
 
         assertEquals("1234567890", savedBlock.get(0).getAddress() );
-        assertEquals("JPYT", savedBlock.get(0).getCurrency() );
+        assertEquals("USDT", savedBlock.get(0).getCurrency() );
         assertEquals("Test balance", savedBlock.get(0).getMessage() );
         assertEquals((Integer) 42, (Integer) savedBlock.get(0).getNumTransactions() );
         assertEquals(new Timestamp(rightNow.getTime()), savedBlock.get(0).getLastUpdated() );
@@ -62,11 +62,11 @@ public class BlockchainAddressStoreServiceTest
         addressStoreService.saveWithHistory(addressStore);
         assertTrue(addressStore.getId() != null &&  addressStore.getId() > 0);
 
-        List<BlockchainAddressStore> savedBlock = addressStoreService.findByAddressAndCurrency("1234567890", "JPYT");
+        List<BlockchainAddressStore> savedBlock = addressStoreService.findByAddressAndCurrency("1234567890", "USDT");
         assertEquals(1, savedBlock.size());
 
         assertEquals("1234567890", savedBlock.get(0).getAddress() );
-        assertEquals("JPYT", savedBlock.get(0).getCurrency() );
+        assertEquals("USDT", savedBlock.get(0).getCurrency() );
         assertEquals("Test balance", savedBlock.get(0).getMessage() );
         assertEquals((Integer) 42, (Integer) savedBlock.get(0).getNumTransactions() );
         assertEquals(new Timestamp(rightNow.getTime()), savedBlock.get(0).getLastUpdated() );
@@ -78,14 +78,14 @@ public class BlockchainAddressStoreServiceTest
         addressStore2.setLastBalance(addressStore.getLastBalance() * 1.5);
         addressStore2.setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStoreService.saveWithHistory(addressStore2);
-        List<BlockchainAddressStore> savedBlock2 = addressStoreService.findByAddressAndCurrency("1234567890", "JPYT");
+        List<BlockchainAddressStore> savedBlock2 = addressStoreService.findByAddressAndCurrency("1234567890", "USDT");
         assertEquals(2, savedBlock2.size());
         assertEquals( savedBlock2.get(0).getNextId(), savedBlock2.get(1).getId());
         assertEquals( savedBlock2.get(0).getNextId(), addressStore2.getId() );
 
-        BlockchainAddressStore latestSavedBlock = addressStoreService.findLatestByAddressAndCurrency("1234567890","JPYT");
+        BlockchainAddressStore latestSavedBlock = addressStoreService.findLatestByAddressAndCurrency("1234567890","USDT");
         assertEquals("1234567890", latestSavedBlock.getAddress() );
-        assertEquals("JPYT", latestSavedBlock.getCurrency() );
+        assertEquals("USDT", latestSavedBlock.getCurrency() );
         assertEquals("Test balance", latestSavedBlock.getMessage() );
         assertEquals((Integer) 42, (Integer) latestSavedBlock.getNumTransactions() );
         assertEquals(new Timestamp(rightNow.getTime()), latestSavedBlock.getLastUpdated() );
@@ -107,11 +107,11 @@ public class BlockchainAddressStoreServiceTest
         addressStoreService.saveWithHistory(addressStore);
         assertTrue(addressStore.getId() != null &&  addressStore.getId() > 0);
 
-        List<BlockchainAddressStore> savedBlock = addressStoreService.findByAddressAndCurrency("1234567890", "JPYT");
+        List<BlockchainAddressStore> savedBlock = addressStoreService.findByAddressAndCurrency("1234567890", "USDT");
         assertEquals(1, savedBlock.size());
 
         assertEquals("1234567890", savedBlock.get(0).getAddress() );
-        assertEquals("JPYT", savedBlock.get(0).getCurrency() );
+        assertEquals("USDT", savedBlock.get(0).getCurrency() );
         assertEquals("Test balance", savedBlock.get(0).getMessage() );
         assertEquals((Integer) 42, (Integer) savedBlock.get(0).getNumTransactions() );
         assertEquals(new Timestamp(rightNow.getTime()), savedBlock.get(0).getLastUpdated() );
@@ -124,13 +124,13 @@ public class BlockchainAddressStoreServiceTest
         addressStore.setLastUpdated(new Timestamp(moreRightNow.getTime()));
         addressStoreService.saveWithHistory(addressStore);
 
-        List<BlockchainAddressStore> savedBlock2 = addressStoreService.findByAddressAndCurrency("1234567890", "JPYT");
+        List<BlockchainAddressStore> savedBlock2 = addressStoreService.findByAddressAndCurrency("1234567890", "USDT");
         assertEquals(1, savedBlock2.size());
 
-        BlockchainAddressStore latestSavedBlock = addressStoreService.findLatestByAddressAndCurrency("1234567890", "JPYT");
+        BlockchainAddressStore latestSavedBlock = addressStoreService.findLatestByAddressAndCurrency("1234567890", "USDT");
         assertEquals( addressStore.getId(),                           latestSavedBlock.getId());
         assertEquals("1234567890",                          latestSavedBlock.getAddress() );
-        assertEquals("JPYT",                                latestSavedBlock.getCurrency() );
+        assertEquals("USDT",                                latestSavedBlock.getCurrency() );
         assertEquals("Test balance2",                       latestSavedBlock.getMessage() );
         assertEquals((Integer) 42, (Integer)                          latestSavedBlock.getNumTransactions() );
         assertEquals(new Timestamp(moreRightNow.getTime()),           latestSavedBlock.getLastUpdated() );
@@ -176,24 +176,53 @@ public class BlockchainAddressStoreServiceTest
     /**
      * testing if we can do a group by currency summing up the balances.
      */
-    @Test public void findAllLatest_test() {
+    @Test
+    public void findAllLatestSumBalanceGroupByCurency1() {
+
+        // save 6 addresses at one point in time.
         List<BlockchainAddressStore> listOfAddresses = getAddresses6();
         for (BlockchainAddressStore addressStore : listOfAddresses ) {
             addressStoreService.saveWithHistory(addressStore);
         }
-        Date rightNow = new Date();
 
+        // change the first record with new data so we are updating
+        Date rightNow = new Date();
         listOfAddresses.get(0).setLastBalance(1.0);
         listOfAddresses.get(0).setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStoreService.saveWithHistory(listOfAddresses.get(0));
-        // dash should have balance of 3.0
 
+        // find all the latest coins group by crypto curency
         List<CoinDTO> foundAddresses = addressStoreService.findAllLatestSumBalanceGroupByCurency();
+
+        // check results.
         assertTrue( foundAddresses.get(0).getCoinBalance() > 19.0 && foundAddresses.get(0).getCoinBalance() < 21.0 );
         assertEquals( "ADA", foundAddresses.get(0).getTicker());
 
         assertTrue( foundAddresses.get(2).getCoinBalance() > 2.0 && foundAddresses.get(2).getCoinBalance() < 4.0 );
 
+        addressStoreRepository.deleteAll();
+    }
+
+    /**
+     * check edge case where we dont have any records
+     */
+    @Test
+    public void findAllLatestSumBalanceGroupByCurency2() {
+        List<CoinDTO> foundAddresses = addressStoreService.findAllLatestSumBalanceGroupByCurency();
+        int expectedSize = 0;
+        assertEquals(expectedSize, foundAddresses.size());
+        addressStoreRepository.deleteAll();
+    }
+
+    @Test
+    public void findAllLatestSumBalanceGroupByCurency3() {
+        Date rightNow = new Date();
+        BlockchainAddressStore oneAddress =  getAddress1(rightNow);
+        addressStoreService.saveWithHistory(oneAddress);
+
+        List<CoinDTO> foundAddresses = addressStoreService.findAllLatestSumBalanceGroupByCurency();
+        int expectedSize = 1;
+        assertEquals(expectedSize, foundAddresses.size());
         addressStoreRepository.deleteAll();
     }
 
@@ -259,7 +288,7 @@ public class BlockchainAddressStoreServiceTest
     {
         BlockchainAddressStore addressStore = new BlockchainAddressStore();
         addressStore.setAddress("1234567890");
-        addressStore.setCurrency("JPYT");
+        addressStore.setCurrency("USDT");
         addressStore.setLastBalance( 123456.4323);
         addressStore.setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStore.setMessage("Test balance");
@@ -274,7 +303,7 @@ public class BlockchainAddressStoreServiceTest
     {
         BlockchainAddressStore addressStore = new BlockchainAddressStore();
         addressStore.setAddress("9876543210");
-        addressStore.setCurrency("JPYT");
+        addressStore.setCurrency("USDT");
         addressStore.setLastBalance( 999956.4323);
         addressStore.setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStore.setMessage("Test balance 2");
@@ -288,7 +317,7 @@ public class BlockchainAddressStoreServiceTest
     {
         BlockchainAddressStore addressStore = new BlockchainAddressStore();
         addressStore.setAddress("9876HomerWasHere543210");
-        addressStore.setCurrency("JPYT");
+        addressStore.setCurrency("USDT");
         addressStore.setLastBalance( 99229956.4323);
         addressStore.setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStore.setMessage("Test balance 3");
@@ -302,7 +331,7 @@ public class BlockchainAddressStoreServiceTest
     {
         BlockchainAddressStore addressStore = new BlockchainAddressStore();
         addressStore.setAddress("9876HomerWasHere543210");
-        addressStore.setCurrency("USDT");
+        addressStore.setCurrency("USDC");
         addressStore.setLastBalance( 99.29);
         addressStore.setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStore.setMessage("Test balance 3a");
@@ -317,7 +346,7 @@ public class BlockchainAddressStoreServiceTest
     {
         BlockchainAddressStore addressStore = new BlockchainAddressStore();
         addressStore.setAddress("X023sdh23kjh2323j43jj3");
-        addressStore.setCurrency("JPYT");
+        addressStore.setCurrency("USDT");
         addressStore.setLastBalance( 9956.23);
         addressStore.setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStore.setMessage("Test balance 4");

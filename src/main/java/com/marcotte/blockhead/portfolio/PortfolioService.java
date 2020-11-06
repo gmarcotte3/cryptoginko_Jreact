@@ -51,8 +51,6 @@ public class PortfolioService
     private DateTrackerService dateTrackerService;
     @Autowired
     private PortfolioTrackerService portfolioTrackerService;
-    @Autowired
-    private PortfolioTrackerDetailService portfolioTrackerDetailService;
 
 
     /**
@@ -87,7 +85,19 @@ public class PortfolioService
     }
 
     /**
+     * This routine looks up addresses from blockchain explorers and updates the balances.
+     * This is currently hard coded for only the supported currencies.
      * support for BIC, BCH, DASH, EOS, ETH, ADA, LTE, ZEC
+     *
+     * There is a security issue in that some one listening can associate an IP address with individual
+     * address look ups.
+     * We should have two services 1] for accessing nodes on the network and/or local full node wallet directly
+     * 2] one that connects to block chain explorer but uses some kind of boom filter or looks up by block so you
+     * dont know what address are really being requested.
+     *
+     * This function should not be used
+     *
+     * @deprecated
      * @param refresh
      * @return
      */
@@ -110,7 +120,6 @@ public class PortfolioService
         DateTracker dateTracker = createAndSaveDateTracker();
 
         List<PortfolioTracker> portfollioSummary = calculatePortfolioSummary(portfolioList, dateTracker);
-        savePortfolioDetail(portfolioList, dateTracker);
         savePortfolioSummary( portfollioSummary);
         return portfollioSummary;
     }
@@ -349,24 +358,6 @@ public class PortfolioService
         for (PortfolioTracker portfolio : portfollioSummary )
         {
             portfolioTrackerService.save(portfolio);
-        }
-    }
-
-    private void savePortfolioDetail(List<CoinList> portfolioList, DateTracker dateTracker )
-    {
-        for (CoinList portfolioCoin : portfolioList )
-        {
-            for (FiatCurrency currency : portfolioCoin.getFiat_balances() )
-            {
-                PortfolioTrackerDetail portfolioTrackerDetail = new PortfolioTrackerDetail();
-                portfolioTrackerDetail.setCoinBalance( portfolioCoin.getBalance());
-                portfolioTrackerDetail.setCoinName( portfolioCoin.getCoinName());
-                portfolioTrackerDetail.setDateTrackerID( dateTracker.getId());
-                portfolioTrackerDetail.setDateUpdated(dateTracker.getDateUpdated());
-                portfolioTrackerDetail.setFiatCurrency(currency.getCode());
-                portfolioTrackerDetail.setCoinValue(currency.getValue());
-                portfolioTrackerDetailService.save(portfolioTrackerDetail);
-            }
         }
     }
 }

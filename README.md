@@ -12,7 +12,7 @@ Access to the h2 database can be had from a console:
 
 Open a browser and type 
 ```
-http://localhost:8082/ginkoj/h2
+http://localhost:8082/ginkoJ/h2
 ```
 ## Front end
 see ./web/reademe.md for react front end
