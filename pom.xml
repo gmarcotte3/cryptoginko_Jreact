@@ -9,8 +9,8 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.marcotte</groupId>
-	<artifactId>blockhead</artifactId>
-	<version>2020.08.06</version>
+	<artifactId>ginkoJ</artifactId>
+	<version>2020.11.06</version>
 	<name>blockhead</name>
 	<description>BlockDemo project for Spring Boot</description>
 

@@ -14,8 +14,8 @@ public class AboutController {
 
     private static final Logger log = LoggerFactory.getLogger(AboutController.class);
 
-    public static final String applicationName = "BlockHead";
-    public static final String version = "2020.08.06";
+    public static final String applicationName = "ginkoJ";
+    public static final String version = "2020.11.06";
     @GetMapping("")
     public AboutInfo aboutInfo()
     {
