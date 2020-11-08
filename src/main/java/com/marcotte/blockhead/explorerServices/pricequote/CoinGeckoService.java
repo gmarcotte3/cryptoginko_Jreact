@@ -1,6 +1,7 @@
 package com.marcotte.blockhead.explorerServices.pricequote;
 
 import com.marcotte.blockhead.config.BlockheadConfig;
+import com.marcotte.blockhead.datastore.CoinService;
 import com.marcotte.blockhead.model.CoinDTO;
 import com.marcotte.blockhead.model.FiatCurrency;
 import com.marcotte.blockhead.model.FiatNames;
@@ -54,6 +55,9 @@ public class CoinGeckoService
 
     private Map<String, String> cryptoCodeToCoinGekoCoinID;
 
+    @Autowired
+    private CoinService coinService;
+
 
     @Autowired
     public CoinGeckoService(BlockheadConfig blocktestConfig)
@@ -79,11 +83,19 @@ public class CoinGeckoService
     }
 
     public List<CoinDTO> getPriceAllCoinsNow() {
+        return getPriceAllCoinsNow(false);
+    }
+
+    public List<CoinDTO> getPriceAllCoinsNow(boolean saveit) {
         RestTemplate restTemplate = new RestTemplate();
         String url = "https://api.coingecko.com/api/v3/coins";
         String theRawJsonQuotes = restTemplate.getForObject(url, String.class);
 
-        return parseCoingekoPriceDump(theRawJsonQuotes);
+        List<CoinDTO> coinDTOList = parseCoingekoPriceDump(theRawJsonQuotes);
+        if ( saveit) {
+            coinService.updateCoins(coinDTOList);
+        }
+        return coinDTOList;
     }
 
     private List<CoinDTO> parseCoingekoPriceDump(String theRawJsonQuotes) {
