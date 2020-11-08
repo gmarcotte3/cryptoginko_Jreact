@@ -2,6 +2,7 @@ package com.marcotte.blockhead.datastore;
 
 import com.marcotte.blockhead.model.CoinDTO;
 import com.marcotte.blockhead.model.CoinList;
+import com.marcotte.blockhead.model.WalletDTO;
 import com.marcotte.blockhead.model.WalletList;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
@@ -45,6 +46,11 @@ public class BlockchainAddressStoreController
         blockchainAddressCsvService.writeAddressesToCSVStream(response.getWriter(), blockchainAddressStores);
     }
 
+    @GetMapping( value = "/byWallet")
+    public ResponseEntity<List<WalletDTO>> findCoinsOrderedByWalletAndCurrency() {
+        List<WalletDTO> walletDTOS = blockchainAddressStoreService.findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc();
+        return new ResponseEntity<List<WalletDTO>>(walletDTOS, HttpStatus.OK);
+    }
     @GetMapping( value = "/crypto")
     public ResponseEntity<List<CoinDTO>> findAllLatestSumBalanceGroupByCurency()
     {

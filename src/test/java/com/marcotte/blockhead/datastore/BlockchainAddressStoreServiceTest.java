@@ -1,6 +1,7 @@
 package com.marcotte.blockhead.datastore;
 
 import com.marcotte.blockhead.model.CoinDTO;
+import com.marcotte.blockhead.model.WalletDTO;
 import com.marcotte.blockhead.util.Utils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -284,6 +285,69 @@ public class BlockchainAddressStoreServiceTest
         addressStoreRepository.deleteAll();
     }
 
+    @Test
+    public void sumByWalletAndCoin() {
+        List<BlockchainAddressStore> addressStore6 = getAddresses6a();
+        List<WalletDTO> results = addressStoreService.sumByWalletAndCoin(addressStore6);
+        assertEquals( 2, results.size());
+    }
+
+    /**
+     * test case where more than one wallet with more than one coin.
+     */
+    @Test
+    public void findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc() {
+        List<BlockchainAddressStore> addressStore6 = getAddresses6a();
+        for (BlockchainAddressStore addressStore : addressStore6 ) {
+            addressStoreService.saveWithHistory(addressStore);
+        }
+        List<WalletDTO> walletDTOS = addressStoreService.findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc();
+        assertEquals( 2, walletDTOS.size());
+        addressStoreRepository.deleteAll();
+    }
+
+    /**
+     * test the case where the wallet name is blank
+     */
+    @Test
+    public void findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc1() {
+        List<BlockchainAddressStore> addressStore6 = getAddresses6();
+        for (BlockchainAddressStore addressStore : addressStore6 ) {
+            addressStoreService.saveWithHistory(addressStore);
+        }
+        List<WalletDTO> walletDTOS = addressStoreService.findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc();
+        assertEquals( 1, walletDTOS.size());
+        addressStoreRepository.deleteAll();
+    }
+
+    /**
+     * check edge case where we dont have any records
+     */
+    @Test
+    public void findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc2() {
+        List<WalletDTO> foundAddresses = addressStoreService.findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc();
+        int expectedSize = 0;
+        assertEquals(expectedSize, foundAddresses.size());
+        addressStoreRepository.deleteAll();
+    }
+
+    /**
+     * test the case where we only have one record.
+     */
+    @Test
+    public void findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc3() {
+        Date rightNow = new Date();
+        BlockchainAddressStore oneAddress =  getAddress1(rightNow);
+        oneAddress.setWalletName("fredric");
+        addressStoreService.saveWithHistory(oneAddress);
+
+        List<WalletDTO> foundAddresses = addressStoreService.findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc();
+        int expectedSize = 1;
+        assertEquals(expectedSize, foundAddresses.size());
+        addressStoreRepository.deleteAll();
+    }
+
+
     private BlockchainAddressStore getAddress1(Date rightNow)
     {
         BlockchainAddressStore addressStore = new BlockchainAddressStore();
@@ -483,6 +547,172 @@ public class BlockchainAddressStoreServiceTest
         addressList.add(addressStore5);
 
         BlockchainAddressStore addressStore6 = new BlockchainAddressStore();
+        addressStore6.setAddress("0edddddddddddddddddddog1");
+        addressStore6.setCurrency("ADA");
+        addressStore6.setLastBalance( 20.0);
+        addressStore6.setLastUpdated( new Timestamp(rightNow.getTime()));
+        addressStore6.setMessage("Cardanocoin test1");
+        addressStore6.setMemo("memo Cardano ADA");
+        addressStore6.setNumTransactions(1);
+        addressStore6.setNextId( null );
+        addressList.add(addressStore6);
+
+        return addressList;
+    }
+
+    /**
+     * sorted by wallet, coin
+     * @return
+     */
+    private List<BlockchainAddressStore> getAddresses6a() {
+        Date rightNow = new Date();
+        List<BlockchainAddressStore> addressList = new ArrayList<>();
+
+        BlockchainAddressStore addressStore3 = new BlockchainAddressStore();
+        addressStore3.setWalletName("allan");
+        addressStore3.setCurrency("BTC");
+        addressStore3.setLastBalance( 1.1);
+        addressStore3.setAddress("0bbbbbbbbbbbbbbbb1");
+        addressStore3.setLastUpdated( new Timestamp(rightNow.getTime()));
+        addressStore3.setMessage("Bitcoin test1");
+        addressStore3.setMemo("memo BTC");
+        addressStore3.setNumTransactions(3);
+        addressStore3.setNextId( null );
+        addressList.add(addressStore3);
+
+        BlockchainAddressStore addressStore = new BlockchainAddressStore();
+        addressStore.setWalletName("allan");
+        addressStore.setCurrency("DASH");
+        addressStore.setAddress("Xaaaaaaaaaaaaaaaaaaaaa1");
+        addressStore.setLastBalance( 10.1);
+        addressStore.setLastUpdated( new Timestamp(rightNow.getTime()));
+        addressStore.setMessage("Dash test");
+        addressStore.setMemo("memo dash1");
+        addressStore.setNumTransactions(1);
+        addressStore.setNextId( null );
+        addressList.add(addressStore);
+
+        BlockchainAddressStore addressStore2 = new BlockchainAddressStore();
+        addressStore2.setWalletName("allan");
+        addressStore2.setCurrency("DASH");
+        addressStore2.setAddress("Xaaaaaaaaaaaaaaaaaaaaa2");
+        addressStore2.setLastBalance( 10.2);
+        addressStore2.setLastUpdated( new Timestamp(rightNow.getTime()));
+        addressStore2.setMessage("Dash test");
+        addressStore2.setMemo("memo dash1");
+        addressStore2.setNumTransactions(1);
+        addressStore2.setNextId( null );
+        addressList.add(addressStore2);
+
+        BlockchainAddressStore addressStore6 = new BlockchainAddressStore();
+        addressStore6.setWalletName("peter");
+        addressStore6.setAddress("0edddddddddddddddddddog1");
+        addressStore6.setCurrency("ADA");
+        addressStore6.setLastBalance( 20.0);
+        addressStore6.setLastUpdated( new Timestamp(rightNow.getTime()));
+        addressStore6.setMessage("Cardanocoin test1");
+        addressStore6.setMemo("memo Cardano ADA");
+        addressStore6.setNumTransactions(1);
+        addressStore6.setNextId( null );
+        addressList.add(addressStore6);
+
+        BlockchainAddressStore addressStore4 = new BlockchainAddressStore();
+        addressStore4.setWalletName("peter");
+        addressStore4.setCurrency("BTC");
+        addressStore4.setLastBalance( 30.0);
+        addressStore4.setAddress("0bbbbbbbbbbbbbbbb2");
+        addressStore4.setLastUpdated( new Timestamp(rightNow.getTime()));
+        addressStore4.setMessage("Bitcoin test2");
+        addressStore4.setMemo("memo BTC");
+        addressStore4.setNumTransactions(1);
+        addressStore4.setNextId( null );
+        addressList.add(addressStore4);
+
+        BlockchainAddressStore addressStore5 = new BlockchainAddressStore();
+        addressStore5.setAddress("0ethethewthewthwthethhhhhh1");
+        addressStore5.setWalletName("peter");
+        addressStore5.setCurrency("ETH");
+        addressStore5.setLastBalance( 40.1);
+        addressStore5.setLastUpdated( new Timestamp(rightNow.getTime()));
+        addressStore5.setMessage("Oshirium test1");
+        addressStore5.setMemo("memo ETH");
+        addressStore5.setNumTransactions(1);
+        addressStore5.setNextId( null );
+        addressList.add(addressStore5);
+
+        return addressList;
+    }
+
+    /**
+     * unsorted by wallet, coin
+     * @return
+     */
+    private List<BlockchainAddressStore> getAddresses6b() {
+        Date rightNow = new Date();
+        List<BlockchainAddressStore> addressList = new ArrayList<>();
+
+        BlockchainAddressStore addressStore = new BlockchainAddressStore();
+        addressStore.setWalletName("allan");
+        addressStore.setCurrency("DASH");
+        addressStore.setAddress("Xaaaaaaaaaaaaaaaaaaaaa1");
+        addressStore.setLastBalance( 10.1);
+        addressStore.setLastUpdated( new Timestamp(rightNow.getTime()));
+        addressStore.setMessage("Dash test");
+        addressStore.setMemo("memo dash1");
+        addressStore.setNumTransactions(1);
+        addressStore.setNextId( null );
+        addressList.add(addressStore);
+
+        BlockchainAddressStore addressStore2 = new BlockchainAddressStore();
+        addressStore2.setWalletName("allan");
+        addressStore2.setCurrency("DASH");
+        addressStore2.setAddress("Xaaaaaaaaaaaaaaaaaaaaa2");
+        addressStore2.setLastBalance( 10.2);
+        addressStore2.setLastUpdated( new Timestamp(rightNow.getTime()));
+        addressStore2.setMessage("Dash test");
+        addressStore2.setMemo("memo dash1");
+        addressStore2.setNumTransactions(1);
+        addressStore2.setNextId( null );
+        addressList.add(addressStore2);
+
+        BlockchainAddressStore addressStore3 = new BlockchainAddressStore();
+        addressStore3.setWalletName("allan");
+        addressStore3.setCurrency("BTC");
+        addressStore3.setLastBalance( 1.1);
+        addressStore3.setAddress("0bbbbbbbbbbbbbbbb1");
+        addressStore3.setLastUpdated( new Timestamp(rightNow.getTime()));
+        addressStore3.setMessage("Bitcoin test1");
+        addressStore3.setMemo("memo BTC");
+        addressStore3.setNumTransactions(3);
+        addressStore3.setNextId( null );
+        addressList.add(addressStore3);
+
+        BlockchainAddressStore addressStore4 = new BlockchainAddressStore();
+        addressStore4.setWalletName("peter");
+        addressStore4.setCurrency("BTC");
+        addressStore4.setLastBalance( 30.0);
+        addressStore4.setAddress("0bbbbbbbbbbbbbbbb2");
+        addressStore4.setLastUpdated( new Timestamp(rightNow.getTime()));
+        addressStore4.setMessage("Bitcoin test2");
+        addressStore4.setMemo("memo BTC");
+        addressStore4.setNumTransactions(1);
+        addressStore4.setNextId( null );
+        addressList.add(addressStore4);
+
+        BlockchainAddressStore addressStore5 = new BlockchainAddressStore();
+        addressStore5.setAddress("0ethethewthewthwthethhhhhh1");
+        addressStore5.setWalletName("peter");
+        addressStore5.setCurrency("ETH");
+        addressStore5.setLastBalance( 40.1);
+        addressStore5.setLastUpdated( new Timestamp(rightNow.getTime()));
+        addressStore5.setMessage("Oshirium test1");
+        addressStore5.setMemo("memo ETH");
+        addressStore5.setNumTransactions(1);
+        addressStore5.setNextId( null );
+        addressList.add(addressStore5);
+
+        BlockchainAddressStore addressStore6 = new BlockchainAddressStore();
+        addressStore6.setWalletName("peter");
         addressStore6.setAddress("0edddddddddddddddddddog1");
         addressStore6.setCurrency("ADA");
         addressStore6.setLastBalance( 20.0);

@@ -11,6 +11,7 @@ public interface BlockchainAddressStoreRepository extends CrudRepository< Blockc
     List<BlockchainAddressStore> findBlockchainAddressStoreByAddressAndCurrencyAndNextId(String address, String currency, Long nextId);
     List<BlockchainAddressStore> findBlockchainAddressStoreByNextId(Long nextId);
     List<BlockchainAddressStore> findBlockchainAddressStoreByNextIdOrderByCurrency(Long nextId);
+    List<BlockchainAddressStore> findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc(Long nextId);
     List<BlockchainAddressStore> findBlockchainAddressStoreBycurrencyAndNextId( String currency, Long nextID);
     List<BlockchainAddressStore> findBlockchainAddressStoreBycurrencyAndWalletNameAndNextId( String currency, String walletName, Long nextID);
 

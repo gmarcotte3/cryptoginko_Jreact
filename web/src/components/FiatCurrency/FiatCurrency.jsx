@@ -54,6 +54,8 @@ export default function FiatCurrency(props) {
     }
     
     return (
-        <TD>{getValue()}</TD>
+        <>
+        {getValue()}
+        </>
     )
 }

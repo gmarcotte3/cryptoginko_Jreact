@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import Tabs from  "../Tabs/Tabs";
 import PortfolioByCoins from '../PortfolioByCoins/PortfolioByCoins';
+import PortfolioByWallet from '../PortfolioByWallet/PortfolioByWallet';
 
 
 // styled TD
@@ -31,6 +32,11 @@ export default function Portfolio(props) {
                         />
                     </div>
                     <div label="by wallets">
+                        <PortfolioByWallet
+                        defaultFiatCurrency={props.defaultFiatCurrency} 
+                        portfolioUrl={props.portfolioUrl} 
+                        porfolioFiatValues={props.porfolioFiatValues}        
+                        />
                     </div>
                 </Tabs>
             </Div>

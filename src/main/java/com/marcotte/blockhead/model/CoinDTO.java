@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This represents a simple coin having name, balance, fiat prices, and fiat values
+ * This represents a simple coin having name, balance, fiat prices, and fiat values.
+ * The coin can represents multiple UTXOs of a coin, it can repressent coins that belong to
+ * a wallet.
  */
 public class CoinDTO {
     private String coinName;    // name of the coin ie Bitcoin, Dash, BitcoinCash, Cardano etc.

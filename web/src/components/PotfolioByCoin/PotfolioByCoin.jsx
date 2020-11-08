@@ -8,6 +8,26 @@ const TD = styled.td`
     width : 25vh;
 `;
 
+// styled TD
+const TDTicker = styled.td`
+    border: 1px solid #2c2b2b;
+    width : 10vh;
+`;
+
+// styled TD
+const TDbalance = styled.td`
+    border: 1px solid #2c2b2b;
+    width : 15vh;
+    text-align: right;
+`;
+
+// styled TD
+const TDPrice = styled.td`
+    border: 1px solid #2c2b2b;
+    width : 15vh;
+    text-align: right;
+`;
+
 
 /**
  * this component displays one line from the PortfolioByCoin row. 
@@ -28,18 +48,22 @@ export default function PotfolioByCoin(props) {
 
     return (
             <tr><TD>{props.coinName}</TD>
-                <TD>{props.ticker}</TD>
-                <TD>{props.coinBalance}</TD>
-                <FiatCurrency   key={"price" + props.ticker}
+                <TDTicker>{props.ticker}</TDTicker>
+                <TDbalance>{props.coinBalance}</TDbalance>
+                <TDPrice>
+                    <FiatCurrency   key={"price" + props.ticker}
                                 currency={price.code}
                                 coinValue={price.value}
                                 symbol={price.symbol}
                     />
-                <FiatCurrency   key={"value" + props.ticker}
+                </TDPrice>
+                <TDPrice>
+                    <FiatCurrency   key={"value" + props.ticker}
                                 currency={coinvalue.code}
                                 coinValue={coinvalue.value}
                                 symbol={coinvalue.symbol}
                     />
+                </TDPrice>
                 
             </tr>
     );

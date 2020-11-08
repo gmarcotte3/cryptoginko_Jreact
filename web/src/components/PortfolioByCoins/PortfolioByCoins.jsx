@@ -7,9 +7,10 @@ import Tabs from  "../Tabs/Tabs";
 
 
 // styled TD
-const TD = styled.td`
+const TDPrice = styled.td`
     border: 1px solid #2c2b2b;
     width : 25vh;
+    text-align: right;
 `;
 
 export default function PortfolioByCoins(props) {
@@ -27,14 +28,15 @@ export default function PortfolioByCoins(props) {
                 </thead>
                 <tbody>
                     <tr>
-                    {
-                        props.porfolioFiatValues.map( ({coinValue, fiatCurrency}) =>
-                        <FiatCurrency key={fiatCurrency}
-                            currency={fiatCurrency}
-                            coinValue={coinValue}
-                            />
-                        )
-                    }
+                        {
+                            props.porfolioFiatValues.map( ({coinValue, fiatCurrency}) =>
+                            <TDPrice><FiatCurrency key={fiatCurrency}
+                                currency={fiatCurrency}
+                                coinValue={coinValue}
+                                />
+                            </TDPrice>
+                            )
+                        }
                     </tr>
                 </tbody>
             </table>

@@ -84,6 +84,18 @@ public class PortfolioService
         }
     }
 
+    public List<WalletDTO> portfolioByWalletCoins() {
+        List<CoinDTO> portfolioByCoinList;
+        List<WalletDTO> walletDTOS = blockchainAddressStoreService.findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc();
+        List<CoinDTO> coinPrices = coinGeckoService.getPriceAllCoinsNow();
+
+        for (WalletDTO walletDTO : walletDTOS ) {
+            copyFiatPricesAndCalculateValueFromCoinPrices( walletDTO.getCoinDTOs(), coinPrices);
+        }
+
+        return walletDTOS;
+    }
+
     /**
      * This routine looks up addresses from blockchain explorers and updates the balances.
      * This is currently hard coded for only the supported currencies.

@@ -172,7 +172,7 @@ public class BlockchainAddressStoreService
     }
 
     /**
-     * return a list of crypto currencies that are all the addresses sum over blanceds grouped by the
+     * return a list of crypto currencies that are all the addresses sum over balances grouped by the
      * currency. This gives you a balance of each of the latest coins in the coin address store.
      *
      * This function sets the ticker, coinname and coin balance, other fields are null and must be
@@ -183,6 +183,11 @@ public class BlockchainAddressStoreService
     public List<CoinDTO> findAllLatestSumBalanceGroupByCurency( )
     {
         List<BlockchainAddressStore> foundLatestOrderedByCurrency = blockchainAddressStoreRepository.findBlockchainAddressStoreByNextIdOrderByCurrency(null);
+        return sumByCryptoCurrency( foundLatestOrderedByCurrency);
+
+    }
+
+    public List<CoinDTO> sumByCryptoCurrency(List<BlockchainAddressStore> foundLatestOrderedByCurrency) {
         List<CoinDTO> summedByCurrency = new ArrayList<CoinDTO>();
 
         // if there are no coins found then return []
@@ -228,5 +233,83 @@ public class BlockchainAddressStoreService
         coinlist.setCoins(blockchainAddressStores);
         coinlist.calculateCoinBalance();
         return coinlist;
+    }
+
+    /**
+     * return a list of crypto currencies that are all the addresses sum over balances grouped by the wallet and then
+     * the currency. This gives you a balance of each wallet's coins.
+     *
+     * @return
+     */
+    public List<WalletDTO> findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc()
+    {
+        List<BlockchainAddressStore> foundLatestOrderedByCurrency =
+                blockchainAddressStoreRepository.findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc(null);
+
+        return sumByWalletAndCoin(foundLatestOrderedByCurrency);
+    }
+
+    public List<WalletDTO> sumByWalletAndCoin(List<BlockchainAddressStore> foundLatestOrderedByCurrency)
+    {
+        List<CoinDTO> summedByCurrency = new ArrayList<CoinDTO>();
+        List<WalletDTO> summedByWallet = new ArrayList<WalletDTO>();
+
+        // if there are no coins found then return []
+        if ( foundLatestOrderedByCurrency.size() == 0) {
+            return summedByWallet;
+        }
+
+        Double runningBalance = 0.0;
+        String currentCoin = "";
+        String currentWallet = "";
+        boolean firstPass = true;
+        for (BlockchainAddressStore addr : foundLatestOrderedByCurrency ) {
+            if ( firstPass ) {
+                currentWallet = addr.getWalletName();
+                currentCoin = addr.getCurrency();
+                firstPass = false;
+            }
+            if ( currentWallet.compareToIgnoreCase(addr.getWalletName()) != 0 ) {
+                CoinDTO newCoinDTO = new CoinDTO();
+                newCoinDTO.setCoinBalance(runningBalance);
+                newCoinDTO.setTicker(currentCoin);
+                newCoinDTO.setCoinName((CryptoNames.valueOfCode(currentCoin)).getName());
+                summedByCurrency.add(newCoinDTO);
+
+                WalletDTO walletDTO = new WalletDTO();
+                walletDTO.setWalletName(currentWallet);
+                walletDTO.setCoinDTOs(summedByCurrency);
+                summedByWallet.add( walletDTO);
+
+                summedByCurrency = new ArrayList<CoinDTO>();
+                currentCoin = addr.getCurrency();
+                runningBalance = addr.getLastBalance();
+                currentWallet = addr.getWalletName();
+            } else if (currentCoin.compareToIgnoreCase(addr.getCurrency() )!= 0 ) {
+                CoinDTO newCoinDTO = new CoinDTO();
+                newCoinDTO.setCoinBalance(runningBalance);
+                newCoinDTO.setTicker(currentCoin);
+                newCoinDTO.setCoinName((CryptoNames.valueOfCode(currentCoin)).getName());
+                summedByCurrency.add(newCoinDTO);
+                runningBalance = addr.getLastBalance();
+                currentCoin = addr.getCurrency();
+            } else {
+                runningBalance += addr.getLastBalance();
+            }
+        }
+        // save the last item
+        CoinDTO newCoinDTO = new CoinDTO();
+        newCoinDTO.setCoinBalance(runningBalance);
+        newCoinDTO.setTicker(currentCoin);
+        newCoinDTO.setCoinName((CryptoNames.valueOfCode(currentCoin)).getName());
+        summedByCurrency.add(newCoinDTO);
+
+        WalletDTO walletDTO = new WalletDTO();
+        walletDTO.setWalletName(currentWallet);
+        walletDTO.setCoinDTOs(summedByCurrency);
+        summedByWallet.add( walletDTO);
+
+        return summedByWallet;
+
     }
 }
