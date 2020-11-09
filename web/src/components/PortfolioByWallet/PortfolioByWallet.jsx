@@ -12,6 +12,12 @@ const TD = styled.td`
     border: 1px solid #2c2b2b;
     width : 25vh;
 `;
+
+// styled TD
+const Table = styled.table`
+    border: 1px solid #2c2b2b;
+    width : 100%
+`;
 const PORTFOLIO_BYWALLET_URL = "http://localhost:8082/ginkoJ/portfolio/byWallet";
 
 export default function PortfolioByWallet(props) {
@@ -41,7 +47,7 @@ export default function PortfolioByWallet(props) {
             
         
             <h3>list of wallet coins balance and values</h3>
-            <table>
+            <Table>
                 <thead>
                     <tr>
                         <th>Wallet</th>
@@ -58,7 +64,7 @@ export default function PortfolioByWallet(props) {
                         )
                     }
                 </tbody>
-            </table>
+            </Table>
 
         </div>
     )

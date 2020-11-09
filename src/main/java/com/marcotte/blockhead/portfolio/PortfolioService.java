@@ -55,9 +55,15 @@ public class PortfolioService
     @Autowired
     private CoinService coinService;
 
+    @Autowired
+    private PortfolioByCoinsService portfolioByCoinsService;
+
+    @Autowired
+    private PortFolioByWaletAndCoinService portFolioByWaletAndCoinService;
+
 
     public List<PortfolioTracker> portfolioGetTotalValue() {
-        List<CoinDTO> portfolioByCoinList = blockchainAddressStoreService.findAllLatestSumBalanceGroupByCurency();
+        List<CoinDTO> portfolioByCoinList = portfolioByCoinsService.findAllLatestSumBalanceGroupByCoin();
         HashMap<String, FiatCurrency> coinPriceList = coinService.findAllReturnHashmap();
         copyFiatPricesAndCalculateValueFromCoinPrices( portfolioByCoinList, coinPriceList);
 
@@ -116,7 +122,7 @@ public class PortfolioService
      * @return
      */
     public List<CoinDTO> portfolioByCoins() {
-        List<CoinDTO> portfolioByCoinList = blockchainAddressStoreService.findAllLatestSumBalanceGroupByCurency();
+        List<CoinDTO> portfolioByCoinList = portfolioByCoinsService.findAllLatestSumBalanceGroupByCoin();
         List<CoinDTO> coinPrices = coinGeckoService.getPriceAllCoinsNow();
 
         copyFiatPricesAndCalculateValueFromCoinPrices( portfolioByCoinList, coinPrices);
@@ -144,7 +150,7 @@ public class PortfolioService
 
     public List<WalletDTO> portfolioByWalletCoins() {
         List<CoinDTO> portfolioByCoinList;
-        List<WalletDTO> walletDTOS = blockchainAddressStoreService.findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc();
+        List<WalletDTO> walletDTOS = portFolioByWaletAndCoinService.findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc();
         List<CoinDTO> coinPrices = coinGeckoService.getPriceAllCoinsNow();
 
         for (WalletDTO walletDTO : walletDTOS ) {

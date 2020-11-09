@@ -174,58 +174,6 @@ public class BlockchainAddressStoreServiceTest
         addressStoreRepository.deleteAll();
     }
 
-    /**
-     * testing if we can do a group by currency summing up the balances.
-     */
-    @Test
-    public void findAllLatestSumBalanceGroupByCurency1() {
-
-        // save 6 addresses at one point in time.
-        List<BlockchainAddressStore> listOfAddresses = getAddresses6();
-        for (BlockchainAddressStore addressStore : listOfAddresses ) {
-            addressStoreService.saveWithHistory(addressStore);
-        }
-
-        // change the first record with new data so we are updating
-        Date rightNow = new Date();
-        listOfAddresses.get(0).setLastBalance(1.0);
-        listOfAddresses.get(0).setLastUpdated( new Timestamp(rightNow.getTime()));
-        addressStoreService.saveWithHistory(listOfAddresses.get(0));
-
-        // find all the latest coins group by crypto curency
-        List<CoinDTO> foundAddresses = addressStoreService.findAllLatestSumBalanceGroupByCurency();
-
-        // check results.
-        assertTrue( foundAddresses.get(0).getCoinBalance() > 19.0 && foundAddresses.get(0).getCoinBalance() < 21.0 );
-        assertEquals( "ADA", foundAddresses.get(0).getTicker());
-
-        assertTrue( foundAddresses.get(2).getCoinBalance() > 2.0 && foundAddresses.get(2).getCoinBalance() < 4.0 );
-
-        addressStoreRepository.deleteAll();
-    }
-
-    /**
-     * check edge case where we dont have any records
-     */
-    @Test
-    public void findAllLatestSumBalanceGroupByCurency2() {
-        List<CoinDTO> foundAddresses = addressStoreService.findAllLatestSumBalanceGroupByCurency();
-        int expectedSize = 0;
-        assertEquals(expectedSize, foundAddresses.size());
-        addressStoreRepository.deleteAll();
-    }
-
-    @Test
-    public void findAllLatestSumBalanceGroupByCurency3() {
-        Date rightNow = new Date();
-        BlockchainAddressStore oneAddress =  getAddress1(rightNow);
-        addressStoreService.saveWithHistory(oneAddress);
-
-        List<CoinDTO> foundAddresses = addressStoreService.findAllLatestSumBalanceGroupByCurency();
-        int expectedSize = 1;
-        assertEquals(expectedSize, foundAddresses.size());
-        addressStoreRepository.deleteAll();
-    }
 
     /**
      * test to see if two different currencies with the same address can be stored and retrived
@@ -284,69 +232,6 @@ public class BlockchainAddressStoreServiceTest
 
         addressStoreRepository.deleteAll();
     }
-
-    @Test
-    public void sumByWalletAndCoin() {
-        List<BlockchainAddressStore> addressStore6 = getAddresses6a();
-        List<WalletDTO> results = addressStoreService.sumByWalletAndCoin(addressStore6);
-        assertEquals( 2, results.size());
-    }
-
-    /**
-     * test case where more than one wallet with more than one coin.
-     */
-    @Test
-    public void findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc() {
-        List<BlockchainAddressStore> addressStore6 = getAddresses6a();
-        for (BlockchainAddressStore addressStore : addressStore6 ) {
-            addressStoreService.saveWithHistory(addressStore);
-        }
-        List<WalletDTO> walletDTOS = addressStoreService.findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc();
-        assertEquals( 2, walletDTOS.size());
-        addressStoreRepository.deleteAll();
-    }
-
-    /**
-     * test the case where the wallet name is blank
-     */
-    @Test
-    public void findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc1() {
-        List<BlockchainAddressStore> addressStore6 = getAddresses6();
-        for (BlockchainAddressStore addressStore : addressStore6 ) {
-            addressStoreService.saveWithHistory(addressStore);
-        }
-        List<WalletDTO> walletDTOS = addressStoreService.findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc();
-        assertEquals( 1, walletDTOS.size());
-        addressStoreRepository.deleteAll();
-    }
-
-    /**
-     * check edge case where we dont have any records
-     */
-    @Test
-    public void findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc2() {
-        List<WalletDTO> foundAddresses = addressStoreService.findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc();
-        int expectedSize = 0;
-        assertEquals(expectedSize, foundAddresses.size());
-        addressStoreRepository.deleteAll();
-    }
-
-    /**
-     * test the case where we only have one record.
-     */
-    @Test
-    public void findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc3() {
-        Date rightNow = new Date();
-        BlockchainAddressStore oneAddress =  getAddress1(rightNow);
-        oneAddress.setWalletName("fredric");
-        addressStoreService.saveWithHistory(oneAddress);
-
-        List<WalletDTO> foundAddresses = addressStoreService.findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc();
-        int expectedSize = 1;
-        assertEquals(expectedSize, foundAddresses.size());
-        addressStoreRepository.deleteAll();
-    }
-
 
     private BlockchainAddressStore getAddress1(Date rightNow)
     {

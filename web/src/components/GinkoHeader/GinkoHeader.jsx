@@ -8,7 +8,7 @@ const Header = styled.header`
     background-color: #282c34;
     background: transparent url('./headerBackground.png') 0% 0% no-repeat;
     
-    min-height: 20vh;
+    min-height: 25vh;
     max-height: 152px;
     display: flex;
     flex-direction: row;

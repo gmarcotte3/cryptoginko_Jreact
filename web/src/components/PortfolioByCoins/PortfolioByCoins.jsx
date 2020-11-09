@@ -13,6 +13,17 @@ const TDPrice = styled.td`
     text-align: right;
 `;
 
+// styled TD
+const Table = styled.table`
+    border: 1px solid #2c2b2b;
+    width : 90%;
+
+`;
+// styled TD
+const Div = styled.div`
+margin-right:100px;
+`;
+
 export default function PortfolioByCoins(props) {
 
 
@@ -40,35 +51,36 @@ export default function PortfolioByCoins(props) {
                     </tr>
                 </tbody>
             </table>
-        
-            <h3>list of coins balance and values</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Icon</th>
-                        <th>coin name</th>
-                        <th>Ticker</th>
-                        <th>coin balance</th>
-                        <th>Current Price</th>
-                        <th>value</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                    props.portfolioByCoins.map( ({coinName, ticker, coinBalance, fiat_prices, fiat_balances }) =>
-                    <PotfolioByCoin 
-                            key={ticker}
-                            coinName={coinName} 
-                            ticker={ticker} 
-                            coinBalance={coinBalance} 
-                            fiat_prices={fiat_prices}
-                            fiat_balances={fiat_balances}
-                            defaultFiatCurrency={props.defaultFiatCurrency}
-                            />
-                        )  
-                    }
-                </tbody>
-            </table>
+            <Div>
+                <h3>list of coins balance and values</h3>
+                <Table>
+                    <thead>
+                        <tr>
+                            <th>Icon</th>
+                            <th>coin name</th>
+                            <th>Ticker</th>
+                            <th>coin balance</th>
+                            <th>Current Price</th>
+                            <th>value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                        props.portfolioByCoins.map( ({coinName, ticker, coinBalance, fiat_prices, fiat_balances }) =>
+                        <PotfolioByCoin 
+                                key={ticker}
+                                coinName={coinName} 
+                                ticker={ticker} 
+                                coinBalance={coinBalance} 
+                                fiat_prices={fiat_prices}
+                                fiat_balances={fiat_balances}
+                                defaultFiatCurrency={props.defaultFiatCurrency}
+                                />
+                            )  
+                        }
+                    </tbody>
+                </Table>
+            </Div>
 
         </div>
     )

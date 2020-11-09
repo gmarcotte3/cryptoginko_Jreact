@@ -46,33 +46,6 @@ public class BlockchainAddressStoreController
         blockchainAddressCsvService.writeAddressesToCSVStream(response.getWriter(), blockchainAddressStores);
     }
 
-    @GetMapping( value = "/byWallet")
-    public ResponseEntity<List<WalletDTO>> findCoinsOrderedByWalletAndCurrency() {
-        List<WalletDTO> walletDTOS = blockchainAddressStoreService.findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc();
-        return new ResponseEntity<List<WalletDTO>>(walletDTOS, HttpStatus.OK);
-    }
-    @GetMapping( value = "/crypto")
-    public ResponseEntity<List<CoinDTO>> findAllLatestSumBalanceGroupByCurency()
-    {
-        List<CoinDTO> blockchainAddressStores = blockchainAddressStoreService.findAllLatestSumBalanceGroupByCurency();
-        return new ResponseEntity<List<CoinDTO>>(blockchainAddressStores, HttpStatus.OK);
-    }
-
-    @GetMapping( value = "/crypto/{cryptoName}")
-    public ResponseEntity<WalletList> getLatestAddresses(@PathVariable String cryptoName)
-    {
-        WalletList walletList = blockchainAddressStoreService.summarizeAddressStoreByCoinNameAndWalletName(cryptoName.toUpperCase());
-        return new ResponseEntity<WalletList>(walletList, HttpStatus.OK);
-    }
-
-    @GetMapping( value = "/crypto/{cryptoName}/{walletName}")
-    public ResponseEntity<CoinList> getLatestAddresses(@PathVariable String cryptoName, @PathVariable String walletName)
-    {
-        CoinList coinlist = blockchainAddressStoreService.findAllByCoinNameAndWalletNameAndSummerize(cryptoName.toUpperCase(), walletName.toUpperCase());
-        return new ResponseEntity<CoinList>(coinlist, HttpStatus.OK);
-    }
-
-
     @PutMapping("/address")
     public @ResponseBody
     ResponseEntity<BlockchainAddressStore> putCryptoAddress(
