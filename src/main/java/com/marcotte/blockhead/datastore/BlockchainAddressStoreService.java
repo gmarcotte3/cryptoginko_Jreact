@@ -1,6 +1,5 @@
 package com.marcotte.blockhead.datastore;
 
-import com.marcotte.blockhead.model.*;
 import com.marcotte.blockhead.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -61,55 +59,6 @@ public class BlockchainAddressStoreService
         return results;
     }
 
-//    /**
-//     * gets all the addresstores of a given crypto currency sorted by wallet
-//     * accumilate balance by wallet and over all and returns this summary
-//     *
-//     * @param cryptoName
-//     * @return
-//     */
-//    public WalletList summarizeAddressStoreByCoinNameAndWalletName(String cryptoName)
-//    {
-//        WalletList walletList = new WalletList();
-//        walletList.setCryptoName(cryptoName);
-//
-//        List<BlockchainAddressStore> addressStores =
-//            blockchainAddressStoreRepository.findBlockchainAddressStoreBycurrencyAndNextId(cryptoName, null);
-//
-//        addressStores.sort( new Comparator<BlockchainAddressStore>() {
-//            @Override
-//            public int compare(BlockchainAddressStore lhs, BlockchainAddressStore rhs) {
-//                // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
-//                return lhs.getWalletName().compareToIgnoreCase(rhs.getWalletName());
-//            }
-//        });
-//
-//        if ( addressStores != null) {
-//            Wallet currentWallet = new Wallet();
-//            currentWallet.setCryptoName(cryptoName);
-//            currentWallet.setWalletName( addressStores.get(0).getWalletName());
-//            walletList.addWallet(currentWallet);
-//
-//            for (BlockchainAddressStore addr: addressStores )
-//            {
-//                if ( currentWallet.getWalletName().compareToIgnoreCase(addr.getWalletName()) != 0)
-//                {
-//                    walletList.addBalance(currentWallet.getBalance());
-//                    currentWallet = new Wallet();
-//                    currentWallet.setCryptoName(cryptoName);
-//                    currentWallet.setWalletName( addr.getWalletName());
-//                    walletList.addWallet(currentWallet);
-//                }
-//                currentWallet.addAddressStores(addr);
-//                currentWallet.addBalance(addr.getLastBalance());
-//            }
-//            // save the last wallet.
-//            walletList.addBalance(currentWallet.getBalance());
-//
-//        }
-//        return walletList;
-//    }
-
     /**
      * find latest addreses of the specified coin
      * @param coinname
@@ -154,9 +103,9 @@ public class BlockchainAddressStoreService
         return null;
     }
 
-    public List<BlockchainAddressStore> findByAddressAndNextId( String address, String currency, Long nextId )
+    public List<BlockchainAddressStore> findByAddressAndCoin(String address, String ticker, Long nextId )
     {
-        return blockchainAddressStoreRepository.findBlockchainAddressStoreByAddressAndCurrencyAndNextId(address,currency, nextId);
+        return blockchainAddressStoreRepository.findBlockchainAddressStoreByAddressAndCurrencyAndNextId(address,ticker, nextId);
     }
 
 
@@ -169,5 +118,18 @@ public class BlockchainAddressStoreService
     public List<BlockchainAddressStore> findAllLatestOrderByCoin( )
     {
         return blockchainAddressStoreRepository.findBlockchainAddressStoreByNextIdOrderByCurrency(null);
+    }
+
+    public List<BlockchainAddressStore> findBlockchainAddressStoreOrderByWalletNameAscCurrencyAsc()
+    {
+        return blockchainAddressStoreRepository.findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc(null);
+    }
+
+    /**
+     * clears the table
+     *
+     */
+    public void deleteAll() {
+        blockchainAddressStoreRepository.deleteAll();
     }
 }

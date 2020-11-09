@@ -1,7 +1,7 @@
 package com.marcotte.blockhead.portfolio;
 
 import com.marcotte.blockhead.datastore.BlockchainAddressStore;
-import com.marcotte.blockhead.datastore.BlockchainAddressStoreRepository;
+import com.marcotte.blockhead.datastore.BlockchainAddressStoreService;
 import com.marcotte.blockhead.model.CoinDTO;
 import com.marcotte.blockhead.model.CryptoNames;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +13,9 @@ import java.util.List;
 @Service
 public class PortfolioByCoinsService {
 
+
     @Autowired
-    private BlockchainAddressStoreRepository blockchainAddressStoreRepository;
+    private BlockchainAddressStoreService blockchainAddressStoreService;
 
     /**
      * return a list of crypto currencies that are all the addresses sum over balances grouped by the
@@ -27,7 +28,7 @@ public class PortfolioByCoinsService {
      */
     public List<CoinDTO> findAllLatestSumBalanceGroupByCoin( )
     {
-        List<BlockchainAddressStore> foundLatestOrderedByCurrency = blockchainAddressStoreRepository.findBlockchainAddressStoreByNextIdOrderByCurrency(null);
+        List<BlockchainAddressStore> foundLatestOrderedByCurrency = blockchainAddressStoreService.findAllLatestOrderByCoin();
         return sumByCryptoCurrency( foundLatestOrderedByCurrency);
 
     }

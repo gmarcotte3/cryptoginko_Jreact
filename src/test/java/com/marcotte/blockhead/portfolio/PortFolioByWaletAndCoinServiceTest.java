@@ -1,7 +1,6 @@
 package com.marcotte.blockhead.portfolio;
 
 import com.marcotte.blockhead.datastore.BlockchainAddressStore;
-import com.marcotte.blockhead.datastore.BlockchainAddressStoreRepository;
 import com.marcotte.blockhead.datastore.BlockchainAddressStoreService;
 import com.marcotte.blockhead.model.WalletDTO;
 import org.junit.Test;
@@ -17,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @TestPropertySource("PortfolioTest.properties")
 @RunWith(SpringRunner.class)
@@ -31,8 +30,6 @@ public class PortFolioByWaletAndCoinServiceTest {
     @Autowired
     private BlockchainAddressStoreService blockchainAddressStoreService;
 
-    @Autowired
-    private BlockchainAddressStoreRepository blockchainAddressStoreRepository;
 
     @Test
     public void findAllByCoinNameAndWalletNameAndSummerize() {
@@ -56,7 +53,7 @@ public class PortFolioByWaletAndCoinServiceTest {
         }
         List<WalletDTO> walletDTOS = portFolioByWaletAndCoinService.findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc();
         assertEquals( 2, walletDTOS.size());
-        blockchainAddressStoreRepository.deleteAll();
+        blockchainAddressStoreService.deleteAll();
     }
 
     /**
@@ -70,7 +67,7 @@ public class PortFolioByWaletAndCoinServiceTest {
         }
         List<WalletDTO> walletDTOS = portFolioByWaletAndCoinService.findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc();
         assertEquals( 1, walletDTOS.size());
-        blockchainAddressStoreRepository.deleteAll();
+        blockchainAddressStoreService.deleteAll();
     }
 
     /**
@@ -81,7 +78,7 @@ public class PortFolioByWaletAndCoinServiceTest {
         List<WalletDTO> foundAddresses = portFolioByWaletAndCoinService.findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc();
         int expectedSize = 0;
         assertEquals(expectedSize, foundAddresses.size());
-        blockchainAddressStoreRepository.deleteAll();
+        blockchainAddressStoreService.deleteAll();
     }
 
     /**
@@ -97,7 +94,7 @@ public class PortFolioByWaletAndCoinServiceTest {
         List<WalletDTO> foundAddresses = portFolioByWaletAndCoinService.findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc();
         int expectedSize = 1;
         assertEquals(expectedSize, foundAddresses.size());
-        blockchainAddressStoreRepository.deleteAll();
+        blockchainAddressStoreService.deleteAll();
     }
 
     private BlockchainAddressStore getAddress1(Date rightNow)

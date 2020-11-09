@@ -1,7 +1,6 @@
 package com.marcotte.blockhead.portfolio;
 
 import com.marcotte.blockhead.datastore.BlockchainAddressStore;
-import com.marcotte.blockhead.datastore.BlockchainAddressStoreRepository;
 import com.marcotte.blockhead.datastore.BlockchainAddressStoreService;
 import com.marcotte.blockhead.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +13,6 @@ import java.util.List;
 @Service
 public class PortFolioByWaletAndCoinService {
 
-    @Autowired
-    private BlockchainAddressStoreRepository blockchainAddressStoreRepository;
 
     @Autowired
     private BlockchainAddressStoreService blockchainAddressStoreService;
@@ -30,7 +27,7 @@ public class PortFolioByWaletAndCoinService {
     public List<WalletDTO> findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc()
     {
         List<BlockchainAddressStore> foundLatestOrderedByCurrency =
-                blockchainAddressStoreRepository.findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc(null);
+                blockchainAddressStoreService.findBlockchainAddressStoreOrderByWalletNameAscCurrencyAsc();
 
         return sumByWalletAndCoin(foundLatestOrderedByCurrency);
     }
@@ -124,7 +121,7 @@ public class PortFolioByWaletAndCoinService {
         walletList.setCryptoName(cryptoName);
 
         List<BlockchainAddressStore> addressStores =
-                blockchainAddressStoreRepository.findBlockchainAddressStoreBycurrencyAndNextId(cryptoName, null);
+                blockchainAddressStoreService.findAllByCoinName(cryptoName);
 
         addressStores.sort( new Comparator<BlockchainAddressStore>() {
             @Override

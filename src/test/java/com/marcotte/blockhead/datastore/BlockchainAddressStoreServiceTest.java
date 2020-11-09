@@ -1,7 +1,5 @@
 package com.marcotte.blockhead.datastore;
 
-import com.marcotte.blockhead.model.CoinDTO;
-import com.marcotte.blockhead.model.WalletDTO;
 import com.marcotte.blockhead.util.Utils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,20 +23,18 @@ import static org.junit.Assert.*;
 public class BlockchainAddressStoreServiceTest
 {
     @Autowired
-    public BlockchainAddressStoreService addressStoreService;
+    public BlockchainAddressStoreService blockchainAddressStoreService;
 
-    @Autowired
-    public BlockchainAddressStoreRepository addressStoreRepository;
 
     @Test
     public void save()
     {
         Date rightNow = new Date();
         BlockchainAddressStore addressStore = getAddress1(rightNow);
-        addressStoreService.save(addressStore);
+        blockchainAddressStoreService.save(addressStore);
         assertTrue(addressStore.getId() != null &&  addressStore.getId() > 0);
 
-        List<BlockchainAddressStore> savedBlock = addressStoreService.findByAddressAndCurrency("1234567890", "USDT");
+        List<BlockchainAddressStore> savedBlock = blockchainAddressStoreService.findByAddressAndCurrency("1234567890", "USDT");
         assertEquals(1, savedBlock.size());
 
         assertEquals("1234567890", savedBlock.get(0).getAddress() );
@@ -49,7 +45,7 @@ public class BlockchainAddressStoreServiceTest
         assertEquals("memo1", savedBlock.get(0).getMemo());
         assertTrue(savedBlock.get(0).getId() != null &&  savedBlock.get(0).getId() > 0);
 
-        addressStoreRepository.deleteAll();
+        blockchainAddressStoreService.deleteAll();
     }
 
     /**
@@ -60,10 +56,10 @@ public class BlockchainAddressStoreServiceTest
     {
         Date rightNow = new Date();
         BlockchainAddressStore addressStore = getAddress1(rightNow);
-        addressStoreService.saveWithHistory(addressStore);
+        blockchainAddressStoreService.saveWithHistory(addressStore);
         assertTrue(addressStore.getId() != null &&  addressStore.getId() > 0);
 
-        List<BlockchainAddressStore> savedBlock = addressStoreService.findByAddressAndCurrency("1234567890", "USDT");
+        List<BlockchainAddressStore> savedBlock = blockchainAddressStoreService.findByAddressAndCurrency("1234567890", "USDT");
         assertEquals(1, savedBlock.size());
 
         assertEquals("1234567890", savedBlock.get(0).getAddress() );
@@ -78,13 +74,13 @@ public class BlockchainAddressStoreServiceTest
         BlockchainAddressStore addressStore2 = new BlockchainAddressStore(addressStore);
         addressStore2.setLastBalance(addressStore.getLastBalance() * 1.5);
         addressStore2.setLastUpdated( new Timestamp(rightNow.getTime()));
-        addressStoreService.saveWithHistory(addressStore2);
-        List<BlockchainAddressStore> savedBlock2 = addressStoreService.findByAddressAndCurrency("1234567890", "USDT");
+        blockchainAddressStoreService.saveWithHistory(addressStore2);
+        List<BlockchainAddressStore> savedBlock2 = blockchainAddressStoreService.findByAddressAndCurrency("1234567890", "USDT");
         assertEquals(2, savedBlock2.size());
         assertEquals( savedBlock2.get(0).getNextId(), savedBlock2.get(1).getId());
         assertEquals( savedBlock2.get(0).getNextId(), addressStore2.getId() );
 
-        BlockchainAddressStore latestSavedBlock = addressStoreService.findLatestByAddressAndCurrency("1234567890","USDT");
+        BlockchainAddressStore latestSavedBlock = blockchainAddressStoreService.findLatestByAddressAndCurrency("1234567890","USDT");
         assertEquals("1234567890", latestSavedBlock.getAddress() );
         assertEquals("USDT", latestSavedBlock.getCurrency() );
         assertEquals("Test balance", latestSavedBlock.getMessage() );
@@ -94,7 +90,7 @@ public class BlockchainAddressStoreServiceTest
         assertEquals(addressStore2.getId(), latestSavedBlock.getId());
         assertTrue(Utils.almostEqual(addressStore2.getLastBalance(), latestSavedBlock.getLastBalance()));
 
-        addressStoreRepository.deleteAll();
+        blockchainAddressStoreService.deleteAll();
     }
 
     /**
@@ -105,10 +101,10 @@ public class BlockchainAddressStoreServiceTest
     {
         Date rightNow = new Date();
         BlockchainAddressStore addressStore = getAddress1(rightNow);
-        addressStoreService.saveWithHistory(addressStore);
+        blockchainAddressStoreService.saveWithHistory(addressStore);
         assertTrue(addressStore.getId() != null &&  addressStore.getId() > 0);
 
-        List<BlockchainAddressStore> savedBlock = addressStoreService.findByAddressAndCurrency("1234567890", "USDT");
+        List<BlockchainAddressStore> savedBlock = blockchainAddressStoreService.findByAddressAndCurrency("1234567890", "USDT");
         assertEquals(1, savedBlock.size());
 
         assertEquals("1234567890", savedBlock.get(0).getAddress() );
@@ -123,12 +119,12 @@ public class BlockchainAddressStoreServiceTest
         addressStore.setMessage("Test balance2");
         Date moreRightNow = new Date();
         addressStore.setLastUpdated(new Timestamp(moreRightNow.getTime()));
-        addressStoreService.saveWithHistory(addressStore);
+        blockchainAddressStoreService.saveWithHistory(addressStore);
 
-        List<BlockchainAddressStore> savedBlock2 = addressStoreService.findByAddressAndCurrency("1234567890", "USDT");
+        List<BlockchainAddressStore> savedBlock2 = blockchainAddressStoreService.findByAddressAndCurrency("1234567890", "USDT");
         assertEquals(1, savedBlock2.size());
 
-        BlockchainAddressStore latestSavedBlock = addressStoreService.findLatestByAddressAndCurrency("1234567890", "USDT");
+        BlockchainAddressStore latestSavedBlock = blockchainAddressStoreService.findLatestByAddressAndCurrency("1234567890", "USDT");
         assertEquals( addressStore.getId(),                           latestSavedBlock.getId());
         assertEquals("1234567890",                          latestSavedBlock.getAddress() );
         assertEquals("USDT",                                latestSavedBlock.getCurrency() );
@@ -138,7 +134,7 @@ public class BlockchainAddressStoreServiceTest
         assertEquals("memo2",                               latestSavedBlock.getMemo());
         assertTrue(Utils.almostEqual(addressStore.getLastBalance(),   latestSavedBlock.getLastBalance()));
 
-        addressStoreRepository.deleteAll();
+        blockchainAddressStoreService.deleteAll();
     }
 
     @Test
@@ -146,15 +142,15 @@ public class BlockchainAddressStoreServiceTest
     {
         List<BlockchainAddressStore> listOfAddresses = getAddresses5();
         for (BlockchainAddressStore addressStore : listOfAddresses ) {
-            addressStoreService.saveWithHistory(addressStore);
+            blockchainAddressStoreService.saveWithHistory(addressStore);
         }
 
-        List<BlockchainAddressStore> dashList = addressStoreService.findAllByCoinName("DASH");
+        List<BlockchainAddressStore> dashList = blockchainAddressStoreService.findAllByCoinName("DASH");
 
         assertEquals(2, dashList.size());
         assertEquals("X023232333332223j43jj3", dashList.get(0).getAddress());
         assertEquals("X024443w33323j43jj3", dashList.get(1).getAddress());
-        addressStoreRepository.deleteAll();
+        blockchainAddressStoreService.deleteAll();
     }
 
     @Test
@@ -162,16 +158,16 @@ public class BlockchainAddressStoreServiceTest
     {
         Date rightNow = new Date();
         BlockchainAddressStore addressStore = getAddress1(rightNow);
-        addressStoreRepository.save(addressStore);
+        blockchainAddressStoreService.save(addressStore);
 
         rightNow = new Date();
         addressStore = getAddress2(rightNow);
-        addressStoreRepository.save(addressStore);
+        blockchainAddressStoreService.save(addressStore);
 
-        List<BlockchainAddressStore> foundAddress = addressStoreService.findAll();
+        List<BlockchainAddressStore> foundAddress = blockchainAddressStoreService.findAll();
         assertEquals(2, foundAddress.size());
 
-        addressStoreRepository.deleteAll();
+        blockchainAddressStoreService.deleteAll();
     }
 
 
@@ -184,25 +180,25 @@ public class BlockchainAddressStoreServiceTest
     {
         Date rightNow = new Date();
         BlockchainAddressStore addressStore = getAddress3(rightNow);
-        addressStoreRepository.save(addressStore);
+        blockchainAddressStoreService.save(addressStore);
         BlockchainAddressStore addressStore3a = getAddress3a(rightNow);
-        addressStoreRepository.save(addressStore3a);
+        blockchainAddressStoreService.save(addressStore3a);
 
         // look for the first address
-        List<BlockchainAddressStore> foundAddres = addressStoreService
+        List<BlockchainAddressStore> foundAddres = blockchainAddressStoreService
             .findByAddressAndCurrency(addressStore.getAddress(), addressStore.getCurrency());
         assertEquals(1, foundAddres.size());
         assertEquals(addressStore.getMessage(), foundAddres.get(0).getMessage() );
         assertEquals(addressStore.getCurrency(), foundAddres.get(0).getCurrency() );
 
         // look for the second address.
-        List<BlockchainAddressStore> foundAddres2 = addressStoreService
+        List<BlockchainAddressStore> foundAddres2 = blockchainAddressStoreService
             .findByAddressAndCurrency(addressStore.getAddress(), addressStore3a.getCurrency());
         assertEquals(1, foundAddres2.size());
         assertEquals(addressStore3a.getMessage(), foundAddres2.get(0).getMessage() );
         assertEquals(addressStore3a.getCurrency(), foundAddres2.get(0).getCurrency() );
 
-        addressStoreRepository.deleteAll();
+        blockchainAddressStoreService.deleteAll();
     }
 
     @Test
@@ -210,27 +206,27 @@ public class BlockchainAddressStoreServiceTest
     {
         Date rightNow = new Date();
         BlockchainAddressStore addressStore = getAddress4(rightNow);
-        addressStoreRepository.save(addressStore);
+        blockchainAddressStoreService.save(addressStore);
 
         BlockchainAddressStore addressStore3b = new BlockchainAddressStore( addressStore );
         addressStore3b.setLastBalance(addressStore.getLastBalance() * 1.1F);
-        addressStoreRepository.save(addressStore3b);
+        blockchainAddressStoreService.save(addressStore3b);
 
         addressStore.setNextId(addressStore3b.getId());
-        addressStoreRepository.save(addressStore);
+        blockchainAddressStoreService.save(addressStore);
 
-        List<BlockchainAddressStore> foundAddres = addressStoreService.findByAddressAndCurrency(addressStore.getAddress(), addressStore.getCurrency());
+        List<BlockchainAddressStore> foundAddres = blockchainAddressStoreService.findByAddressAndCurrency(addressStore.getAddress(), addressStore.getCurrency());
         assertEquals(2,foundAddres.size());
 
-        BlockchainAddressStore foundAddres1 = addressStoreService.findLatestByAddressAndCurrency(addressStore.getAddress(), addressStore.getCurrency());
+        BlockchainAddressStore foundAddres1 = blockchainAddressStoreService.findLatestByAddressAndCurrency(addressStore.getAddress(), addressStore.getCurrency());
         assertEquals( addressStore3b.getId() , foundAddres1.getId());
 
 
-        List<BlockchainAddressStore> foundAddres2 = addressStoreService.findByAddressAndNextId(addressStore.getAddress(), addressStore.getCurrency(), addressStore.getNextId());
+        List<BlockchainAddressStore> foundAddres2 = blockchainAddressStoreService.findByAddressAndCoin(addressStore.getAddress(), addressStore.getCurrency(), addressStore.getNextId());
         assertEquals(1, foundAddres2.size() );
         assertEquals( addressStore.getId() , foundAddres2.get(0).getId());
 
-        addressStoreRepository.deleteAll();
+        blockchainAddressStoreService.deleteAll();
     }
 
     private BlockchainAddressStore getAddress1(Date rightNow)

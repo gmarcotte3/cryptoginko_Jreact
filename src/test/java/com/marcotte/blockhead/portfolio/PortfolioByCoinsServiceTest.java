@@ -1,7 +1,6 @@
 package com.marcotte.blockhead.portfolio;
 
 import com.marcotte.blockhead.datastore.BlockchainAddressStore;
-import com.marcotte.blockhead.datastore.BlockchainAddressStoreRepository;
 import com.marcotte.blockhead.datastore.BlockchainAddressStoreService;
 import com.marcotte.blockhead.model.CoinDTO;
 import org.junit.Test;
@@ -17,7 +16,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 
 @TestPropertySource("PortfolioTest.properties")
@@ -29,10 +29,6 @@ public class PortfolioByCoinsServiceTest {
     @Autowired
     private PortfolioByCoinsService portfolioByCoinsService;
 
-
-    @Autowired
-    private BlockchainAddressStoreRepository addressStoreRepository;
-
     @Autowired
     private BlockchainAddressStoreService blockchainAddressStoreService;
 
@@ -42,7 +38,6 @@ public class PortfolioByCoinsServiceTest {
 
     /**
      * testing if we can do a group by currency summing up the balances.
-     * TODO move to protfolioByCoinService
      */
     @Test
     public void findAllLatestSumBalanceGroupByCoin1() {
@@ -68,19 +63,18 @@ public class PortfolioByCoinsServiceTest {
 
         assertTrue( foundAddresses.get(2).getCoinBalance() > 2.0 && foundAddresses.get(2).getCoinBalance() < 4.0 );
 
-        addressStoreRepository.deleteAll();
+        blockchainAddressStoreService.deleteAll();
     }
 
     /**
      * check edge case where we dont have any records
-     * TODO move to protfolioByCoinService
      */
     @Test
     public void findAllLatestSumBalanceGroupByCoin2() {
         List<CoinDTO> foundAddresses = portfolioByCoinsService.findAllLatestSumBalanceGroupByCoin();
         int expectedSize = 0;
         assertEquals(expectedSize, foundAddresses.size());
-        addressStoreRepository.deleteAll();
+        blockchainAddressStoreService.deleteAll();
     }
 
     @Test
@@ -92,7 +86,7 @@ public class PortfolioByCoinsServiceTest {
         List<CoinDTO> foundAddresses = portfolioByCoinsService.findAllLatestSumBalanceGroupByCoin();
         int expectedSize = 1;
         assertEquals(expectedSize, foundAddresses.size());
-        addressStoreRepository.deleteAll();
+        blockchainAddressStoreService.deleteAll();
     }
 
     private BlockchainAddressStore getAddress1(Date rightNow)
