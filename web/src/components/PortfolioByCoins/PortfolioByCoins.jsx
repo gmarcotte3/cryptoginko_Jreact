@@ -45,6 +45,7 @@ export default function PortfolioByCoins(props) {
             <table>
                 <thead>
                     <tr>
+                        <th>Icon</th>
                         <th>coin name</th>
                         <th>Ticker</th>
                         <th>coin balance</th>
