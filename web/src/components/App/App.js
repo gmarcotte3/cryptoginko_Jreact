@@ -31,7 +31,7 @@ const Div2 = styled.div`
 `;
 
 
-const PORTFOLIO_BACKEND_URL = "http://localhost:8082/ginkoJ/portfolio";
+const PORTFOLIO_BACKEND_URL = "http://localhost:8082/ginkoJ/portfolio/total";
 const PORTFOLIO_BYCOINS_URL = "http://localhost:8082/ginkoJ/portfolio/bycoins";
 const IMPORT_GINKO_ADDR_URL = "http://localhost:8082/ginkoJ/import/addressescsv";
 
@@ -58,7 +58,7 @@ export default function App(props) {
       setTotalValue(totalValue2);
       setPortfolioFiatValues(updatedPorfolioFiatValues);
       
-      let response2 = await axios.put(PORTFOLIO_BYCOINS_URL);
+      let response2 = await axios.get(PORTFOLIO_BYCOINS_URL);
       let newPortfolioByCoins = response2.data;
       console.log("newPortfolioByCoins", newPortfolioByCoins);
       setPortfolioByCoins(newPortfolioByCoins);

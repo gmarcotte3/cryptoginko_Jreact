@@ -35,12 +35,34 @@ public class Coin {
         this.coinName = "";
         this.ticker = "";
         this.description = "";
+        this.priceUSD = 0.0;
+        this.priceNZD = 0.0;
+        this.priceJPY = 0.0;
+        this.priceJPM = 0.0;
+        this.priceAUD = 0.0;
+        this.priceEUR = 0.0;
+        this.priceGBP = 0.0;
+        this.priceKRW = 0.0;
+        this.priceINR = 0.0;
+        this.priceBTC = 0.0;
+        this.priceETH = 0.0;
     }
     public Coin(String coinName, String ticker, String description)
     {
         this.coinName = coinName;
         this.ticker = ticker.toUpperCase();
         this.description = description;
+        this.priceUSD = 0.0;
+        this.priceNZD = 0.0;
+        this.priceJPY = 0.0;
+        this.priceJPM = 0.0;
+        this.priceAUD = 0.0;
+        this.priceEUR = 0.0;
+        this.priceGBP = 0.0;
+        this.priceKRW = 0.0;
+        this.priceINR = 0.0;
+        this.priceBTC = 0.0;
+        this.priceETH = 0.0;
     }
 
     public Long getId() {

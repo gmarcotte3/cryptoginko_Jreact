@@ -52,6 +52,64 @@ public class PortfolioService
     @Autowired
     private PortfolioTrackerService portfolioTrackerService;
 
+    @Autowired
+    private CoinService coinService;
+
+
+    public List<PortfolioTracker> portfolioGetTotalValue() {
+        List<CoinDTO> portfolioByCoinList = blockchainAddressStoreService.findAllLatestSumBalanceGroupByCurency();
+        HashMap<String, FiatCurrency> coinPriceList = coinService.findAllReturnHashmap();
+        copyFiatPricesAndCalculateValueFromCoinPrices( portfolioByCoinList, coinPriceList);
+
+        DateTracker dateTracker = createAndSaveDateTracker();
+        List<PortfolioTracker> portfollioSummary = calculatePortfolioSummary2(portfolioByCoinList, dateTracker);
+        savePortfolioSummary( portfollioSummary);
+
+        return portfollioSummary;
+    }
+
+    // new and improved method
+    private void copyFiatPricesAndCalculateValueFromCoinPrices( List<CoinDTO> portfolioByCoinList, HashMap<String, FiatCurrency> coinPrices) {
+        FiatCurrency fiat;
+
+        for ( CoinDTO portfolioCoin : portfolioByCoinList ) {
+            String currentTicker = portfolioCoin.getTicker();
+            List<FiatCurrency> fiat_prices = new ArrayList<>();
+            List<FiatCurrency> fiat_values= new ArrayList<>();
+
+            calculateValueBasedOnPriceAndBalance(  currentTicker, portfolioCoin, coinPrices,fiat_prices,fiat_values);
+
+            portfolioCoin.setFiat_prices(fiat_prices);
+            portfolioCoin.setFiat_balances(fiat_values);
+
+        }
+    }
+
+    /**
+     * generate an entry for fiatPrice for a set number of fiats
+     * calculate coorisponding fiat values (price * balance)
+     *
+     * @param currentTicker
+     * @param portfolioCoin
+     * @param coinPrices
+     * @param fiat_prices
+     * @param fiat_values
+     */
+    private void calculateValueBasedOnPriceAndBalance(  String currentTicker,
+                                                        CoinDTO portfolioCoin,
+
+                                                        HashMap<String, FiatCurrency>  coinPrices,
+                                                        List<FiatCurrency> fiat_prices,
+                                                        List<FiatCurrency> fiat_values)
+    {
+        String fiatCodes[] = {"USD", "NZD", "JPY", "JPM"};
+        for (String fiatCode : fiatCodes ) {
+            String mapKey = currentTicker + "-" + fiatCode;
+            FiatCurrency fiatPrice = coinPrices.get(mapKey);
+            fiat_prices.add(fiatPrice);
+            fiat_values.add( new FiatCurrency(fiatPrice.getValue() * portfolioCoin.getCoinBalance(), fiatCode ));
+        }
+    }
 
     /**
      * returns the portfolio broken down by coin
@@ -135,6 +193,7 @@ public class PortfolioService
         savePortfolioSummary( portfollioSummary);
         return portfollioSummary;
     }
+
 
     private DateTracker createAndSaveDateTracker()
     {
@@ -346,6 +405,31 @@ public class PortfolioService
         HashMap<String, PortfolioTracker> portfoiloByFiatCurrency = new HashMap<String, PortfolioTracker>();
 
         for ( CoinList coin : portfolioList )
+        {
+            for (FiatCurrency currency : coin.getFiat_balances() )
+            {
+                PortfolioTracker portfolioTracker = portfoiloByFiatCurrency.get(currency.getCode());
+                if ( portfolioTracker == null ) {
+                    portfolioTracker = new PortfolioTracker();
+                    portfolioTracker.setDateTrackerID(dateTracker.getId());
+                    portfolioTracker.setDateUpdated(dateTracker.getDateUpdated());
+                    portfolioTracker.setFiatCurrency( currency.getCode());
+
+                    portfoiloByFiatCurrency.put(portfolioTracker.getFiatCurrency(), portfolioTracker);
+                }
+                portfolioTracker.setCoinValue(portfolioTracker.getCoinValue() + currency.getValue());
+            }
+
+        }
+        return  new ArrayList<PortfolioTracker>(portfoiloByFiatCurrency.values());
+    }
+
+    private List<PortfolioTracker> calculatePortfolioSummary2(List<CoinDTO> portfolioList, DateTracker dateTracker  )
+    {
+
+        HashMap<String, PortfolioTracker> portfoiloByFiatCurrency = new HashMap<String, PortfolioTracker>();
+
+        for ( CoinDTO coin : portfolioList )
         {
             for (FiatCurrency currency : coin.getFiat_balances() )
             {

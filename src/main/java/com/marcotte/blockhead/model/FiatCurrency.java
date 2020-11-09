@@ -19,6 +19,11 @@ public class FiatCurrency
         this.fiatType = fiatType;
     }
 
+    public FiatCurrency(double value, String fiatCode) {
+        this.value = value;
+        this.fiatType = FiatNames.valueOfCode(fiatCode);
+    }
+
     @Override
     public String toString()
     {

@@ -322,9 +322,9 @@ public class CoinGeckoService
         }
 
         // british pound
-        if ( currencies.contains(FiatNames.GRP.code))
+        if ( currencies.contains(FiatNames.GBP.code))
         {
-            FiatCurrency gbp = findCurrencyByName(currencyList_raw, FiatNames.GRP.code);
+            FiatCurrency gbp = findCurrencyByName(currencyList_raw, FiatNames.GBP.code);
             if ( gbp != null )
             {
                 currencyList.add(gbp);

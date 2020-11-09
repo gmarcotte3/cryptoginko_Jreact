@@ -9,7 +9,7 @@ public enum FiatNames
     EUR("EUR", "Euro"),                         // Euro
     NZD("NZD", "New Zeland dollar"),            // New Zealand (Kiwi) dollar
     AUD("AUD", "Australian dollar"),            // Aussie dollar
-    GRP("GBP", "British pound"),                // British pound
+    GBP("GBP", "British pound"),                // British pound
     JPY("JPY", "Japanese yen"),                 // Japanese yen
     JPM("JPM", "Japanese yen in 10,000s 万"),   // Japanese yen (10,000) 万
     KRW("KRW", "Korian won"),                   // Korian won

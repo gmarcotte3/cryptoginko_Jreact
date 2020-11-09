@@ -115,7 +115,7 @@ public class CoinServiceTest {
         fiat_prices.add( new FiatCurrency(1500000.00, FiatNames.JPY));
         fiat_prices.add( new FiatCurrency(150.00, FiatNames.JPM));
         fiat_prices.add( new FiatCurrency(25000.00, FiatNames.EUR));
-        fiat_prices.add( new FiatCurrency(22000.00, FiatNames.GRP));
+        fiat_prices.add( new FiatCurrency(22000.00, FiatNames.GBP));
         fiat_prices.add( new FiatCurrency(22000.00, FiatNames.KRW));
         fiat_prices.add( new FiatCurrency(22000.00, FiatNames.INR));
         fiat_prices.add( new FiatCurrency(1.0, FiatNames.BTC));
@@ -134,7 +134,7 @@ public class CoinServiceTest {
         fiat_prices.add( new FiatCurrency(11.0, FiatNames.JPY));
         fiat_prices.add( new FiatCurrency(0.00011, FiatNames.JPM));
         fiat_prices.add( new FiatCurrency(0.25, FiatNames.EUR));
-        fiat_prices.add( new FiatCurrency(0.22, FiatNames.GRP));
+        fiat_prices.add( new FiatCurrency(0.22, FiatNames.GBP));
         fiat_prices.add( new FiatCurrency(22.0, FiatNames.KRW));
         fiat_prices.add( new FiatCurrency(10.0, FiatNames.INR));
         fiat_prices.add( new FiatCurrency(0.00000001, FiatNames.BTC));

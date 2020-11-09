@@ -23,15 +23,28 @@ public class PortfolioController
 
     @Autowired PortfolioService portfolioService;
 
+    /**
+     * This one should go update the coin balances and calculate the total portfolio.
+     * not using this now because the get coin balances depends on REST APIs to block chain explorers which
+     * are unreliable/expensive and security holes. Will be replaceing this function with direct calls to local
+     * full node wallets or trusted nodes on the networks.
+     * @return
+     */
     @PutMapping("")
     public ResponseEntity<List<PortfolioTracker>> portfolio()
     {
         List<PortfolioTracker> portfolioTrackerList = portfolioService.portfolioCheck(false);
-
         return new ResponseEntity<List<PortfolioTracker>>(portfolioTrackerList, HttpStatus.OK);
     }
 
-    @PutMapping("/bycoins")
+    @PutMapping("/total")
+    public ResponseEntity<List<PortfolioTracker>> getPortfolioTotal() {
+        List<PortfolioTracker> portfolioTrackerList = portfolioService.portfolioGetTotalValue();
+        return new ResponseEntity<List<PortfolioTracker>>(portfolioTrackerList, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/bycoins")
     public ResponseEntity<List<CoinDTO>> portfolioByCoins()
     {
         List<CoinDTO> portfolioByCoinList = portfolioService.portfolioByCoins();

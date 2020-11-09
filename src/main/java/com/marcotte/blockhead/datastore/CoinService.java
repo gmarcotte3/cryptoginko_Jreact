@@ -2,10 +2,12 @@ package com.marcotte.blockhead.datastore;
 
 import com.marcotte.blockhead.model.CoinDTO;
 import com.marcotte.blockhead.model.FiatCurrency;
+import com.marcotte.blockhead.model.FiatNames;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -26,6 +28,27 @@ public class CoinService {
             results.add(coin);
         }
         return results;
+    }
+
+    public HashMap<String, FiatCurrency> findAllReturnHashmap()
+    {
+        //FiatCurrency(double value, FiatNames fiatType)
+        HashMap<String, FiatCurrency> priceMap = new HashMap<String, FiatCurrency>();
+        for (Coin coin : coinRepository.findAll())
+        {
+            priceMap.put( coin.getTicker() + "-USD",  new FiatCurrency(coin.getPriceUSD(), FiatNames.USD) );
+            priceMap.put( coin.getTicker() + "-NZD",  new FiatCurrency(coin.getPriceNZD(), FiatNames.NZD) );
+            priceMap.put( coin.getTicker() + "-AUD",  new FiatCurrency(coin.getPriceAUD(), FiatNames.AUD) );
+            priceMap.put( coin.getTicker() + "-JPY",  new FiatCurrency(coin.getPriceJPY(), FiatNames.JPY) );
+            priceMap.put( coin.getTicker() + "-JPM",  new FiatCurrency(coin.getPriceJPM(), FiatNames.JPM) );
+            priceMap.put( coin.getTicker() + "-EUR",  new FiatCurrency(coin.getPriceEUR(), FiatNames.EUR) );
+            priceMap.put( coin.getTicker() + "-GBP",  new FiatCurrency(coin.getPriceGBP(), FiatNames.GBP) );
+            priceMap.put( coin.getTicker() + "-KRW",  new FiatCurrency(coin.getPriceKRW(), FiatNames.KRW) );
+            priceMap.put( coin.getTicker() + "-INR",  new FiatCurrency(coin.getPriceINR(), FiatNames.INR) );
+//            priceMap.put( coin.getTicker() + "-BTC",  new FiatCurrency(coin.getPriceBTC(), FiatNames.BTC) );  // parse coingeko not implemented yet.
+//            priceMap.put( coin.getTicker() + "-ETH",  new FiatCurrency(coin.getPriceETH(), FiatNames.ETH) );
+        }
+        return priceMap;
     }
 
     public List<Coin>  findByTicker(String ticker) {
