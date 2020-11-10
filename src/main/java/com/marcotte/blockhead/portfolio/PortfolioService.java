@@ -123,72 +123,30 @@ public class PortfolioService
      */
     public List<CoinDTO> portfolioByCoins() {
         List<CoinDTO> portfolioByCoinList = portfolioByCoinsService.findAllLatestSumBalanceGroupByCoin();
-        HashMap<String, Coin> coinHashMap = coinService.findAllReturnTickerCoinMap();
+        HashMap<String, CoinDTO> coinHashMap = coinService.findAllReturnTickerCoinDTOMap();
 
-
-        copyFiatPricesAndCalculateValueFromCoinPrices2( portfolioByCoinList, coinHashMap);
+        copyFiatPricesAndCalculateValueFromCoinPrices3( portfolioByCoinList, coinHashMap);
         return portfolioByCoinList;
     }
 
-    private void  copyFiatPricesAndCalculateValueFromCoinPrices2( List<CoinDTO> portfolioByCoinList, HashMap<String, Coin> coinHashMap) {
-        Coin coinWhatIts = new Coin();
-        coinWhatIts.setCoinName("Unknown");
-        coinWhatIts.setDescription("unsupported not even the orical of dephi knows about this one");
-        for ( CoinDTO portfolioCoin : portfolioByCoinList ) {
-            Coin coin = coinHashMap.getOrDefault(portfolioCoin.getTicker(), coinWhatIts);
-            List<FiatCurrency> fiat_prices = new ArrayList<>();
-            List<FiatCurrency> fiat_values= new ArrayList<>();
-
-            calculateFiatValuesFromCoinPrice( fiat_prices,  fiat_values, coin,  portfolioCoin.getCoinBalance());
-
-            portfolioCoin.setFiat_prices(fiat_prices);
-            portfolioCoin.setFiat_balances(fiat_values);
+    private void  copyFiatPricesAndCalculateValueFromCoinPrices3( List<CoinDTO> portfolioByCoinList, HashMap<String, CoinDTO> coinHashMap) {
+        CoinDTO coinDefault = new CoinDTO();
+        coinDefault.setCoinName("Unknown");
+        for ( CoinDTO coinDTO : portfolioByCoinList ) {
+            CoinDTO coinPriceDTO = coinHashMap.getOrDefault(coinDTO.getTicker(),coinDefault);
+            coinDTO.setFiat_prices(coinPriceDTO.getFiat_prices());
+            coinDTO.calculateCoinValue();
         }
     }
-    private void calculateFiatValuesFromCoinPrice(List<FiatCurrency> fiat_prices, List<FiatCurrency> fiat_values, Coin coin, Double coinbalance) {
-        fiat_prices.add ( new FiatCurrency(coin.getPriceUSD(), FiatNames.USD));
-        fiat_values.add( new FiatCurrency((coin.getPriceUSD() * coinbalance), FiatNames.USD));
 
-        fiat_prices.add ( new FiatCurrency(coin.getPriceNZD(), FiatNames.NZD));
-        fiat_values.add ( new FiatCurrency((coin.getPriceNZD() * coinbalance), FiatNames.NZD));
-
-        fiat_prices.add ( new FiatCurrency(coin.getPriceJPY(), FiatNames.JPY));
-        fiat_values.add ( new FiatCurrency((coin.getPriceJPY() * coinbalance), FiatNames.JPY));
-
-        fiat_prices.add ( new FiatCurrency(coin.getPriceJPM(), FiatNames.JPM));
-        fiat_values.add ( new FiatCurrency((coin.getPriceJPM() * coinbalance), FiatNames.JPM));
-
-        fiat_prices.add ( new FiatCurrency(coin.getPriceAUD(), FiatNames.AUD));
-        fiat_values.add ( new FiatCurrency((coin.getPriceAUD() * coinbalance), FiatNames.AUD));
-
-        fiat_prices.add ( new FiatCurrency(coin.getPriceGBP(), FiatNames.GBP));
-        fiat_values.add ( new FiatCurrency((coin.getPriceGBP() * coinbalance), FiatNames.GBP));
-
-        fiat_prices.add ( new FiatCurrency(coin.getPriceEUR(), FiatNames.EUR));
-        fiat_values.add ( new FiatCurrency((coin.getPriceEUR() * coinbalance), FiatNames.EUR));
-
-        fiat_prices.add ( new FiatCurrency(coin.getPriceINR(), FiatNames.INR));
-        fiat_values.add ( new FiatCurrency((coin.getPriceINR() * coinbalance), FiatNames.INR));
-
-        fiat_prices.add ( new FiatCurrency(coin.getPriceKRW(), FiatNames.KRW));
-        fiat_values.add ( new FiatCurrency((coin.getPriceKRW() * coinbalance), FiatNames.KRW));
-
-        fiat_prices.add ( new FiatCurrency(coin.getPriceBTC(), FiatNames.BTC));
-        fiat_values.add ( new FiatCurrency((coin.getPriceBTC() * coinbalance), FiatNames.BTC));
-
-        fiat_prices.add ( new FiatCurrency(coin.getPriceETH(), FiatNames.ETH));
-        fiat_values.add ( new FiatCurrency((coin.getPriceETH() * coinbalance), FiatNames.ETH));
-
-    }
 
     public List<WalletDTO> portfolioByWalletCoins() {
         List<CoinDTO> portfolioByCoinList;
         List<WalletDTO> walletDTOS = portFolioByWaletAndCoinService.findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc();
-        //List<CoinDTO> coinPrices = coinGeckoService.getPriceAllCoinsNow();
-        HashMap<String, Coin> coinHashMap = coinService.findAllReturnTickerCoinMap();
+        HashMap<String, CoinDTO> coinHashMap = coinService.findAllReturnTickerCoinDTOMap();
 
         for (WalletDTO walletDTO : walletDTOS ) {
-            copyFiatPricesAndCalculateValueFromCoinPrices2( walletDTO.getCoinDTOs(), coinHashMap);
+            copyFiatPricesAndCalculateValueFromCoinPrices3( walletDTO.getCoinDTOs(), coinHashMap);
         }
 
         return walletDTOS;

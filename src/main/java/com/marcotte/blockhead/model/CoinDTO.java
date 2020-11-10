@@ -1,5 +1,7 @@
 package com.marcotte.blockhead.model;
 
+import com.marcotte.blockhead.datastore.Coin;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +35,41 @@ public class CoinDTO {
         this.fiat_balances = new ArrayList<>();
     }
 
+    public void setCoinDTO(Coin coin) {
+        this.ticker = coin.getTicker();
+        this.coinName = coin.getCoinName();
+
+        this.fiat_prices = new ArrayList<>();
+        this.fiat_balances = new ArrayList<>();
+
+        this.fiat_prices.add ( new FiatCurrency(coin.getPriceUSD(), FiatNames.USD));
+        this.fiat_prices.add ( new FiatCurrency(coin.getPriceNZD(), FiatNames.NZD));
+        this.fiat_prices.add ( new FiatCurrency(coin.getPriceJPY(), FiatNames.JPY));
+        this.fiat_prices.add ( new FiatCurrency(coin.getPriceJPM(), FiatNames.JPM));
+        this.fiat_prices.add ( new FiatCurrency(coin.getPriceAUD(), FiatNames.AUD));
+        this.fiat_prices.add ( new FiatCurrency(coin.getPriceGBP(), FiatNames.GBP));
+        this.fiat_prices.add ( new FiatCurrency(coin.getPriceEUR(), FiatNames.EUR));
+        this.fiat_prices.add ( new FiatCurrency(coin.getPriceINR(), FiatNames.INR));
+        this.fiat_prices.add ( new FiatCurrency(coin.getPriceKRW(), FiatNames.KRW));
+        this.fiat_prices.add ( new FiatCurrency(coin.getPriceBTC(), FiatNames.BTC));
+        this.fiat_prices.add ( new FiatCurrency(coin.getPriceETH(), FiatNames.ETH));
+    }
+
+    /**
+     * calculates the coin's value (coin balance * price) in all the supported currencies
+     */
+    public void calculateCoinValue() {
+        this.fiat_balances = new ArrayList<>();
+        for ( FiatCurrency fiat : this.fiat_prices ) {
+            this.fiat_balances.add(new FiatCurrency((fiat.getValue() * this.coinBalance), fiat.getFiatType()));
+        }
+    }
+
+    /**
+     * a look up for the coins price by specifying the fiat type (USD, NZD, EUR etc..)
+     * @param fiatCode
+     * @return
+     */
     public FiatCurrency findFiatPrice(String fiatCode ) {
         for( int j = 0; j < fiat_prices.size(); j++) {
             if ( fiat_prices.get(j).getCode().equals(fiatCode)) {

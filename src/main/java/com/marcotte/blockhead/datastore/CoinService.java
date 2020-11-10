@@ -51,6 +51,21 @@ public class CoinService {
     }
 
     /**
+     * get all the coin price and coin data as a hash map of ticker->CoinDTO
+     * @return
+     */
+    public HashMap<String, CoinDTO> findAllReturnTickerCoinDTOMap()
+    {
+        HashMap<String, CoinDTO> coinMap = new HashMap<String, CoinDTO>();
+        for (Coin coin : coinRepository.findAll()) {
+            CoinDTO coinDTO = new CoinDTO();
+            coinDTO.setCoinDTO(coin);
+            coinMap.put( coin.getTicker(), coinDTO);
+        }
+        return coinMap;
+    }
+
+    /**
      * a hash map of all coin+fiat = price
      * @return
      */
