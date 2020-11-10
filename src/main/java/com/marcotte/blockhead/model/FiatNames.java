@@ -15,7 +15,7 @@ public enum FiatNames
     KRW("KRW", "Korian won"),                   // Korian won
     INR("INR", "Indian ruppee"),                // Indian ruppee
     WTF("WTF", "Unknown not supported"),        // central bankers wet dream fiat
-    BTC("BTC", "Bitcoin さとし"),                // interms of bitcoin
+    BTC("BTC", "Bitcoin satoshi"),              // interms of bitcoin
     ETH("ETH", "Ether Wei");                    // interms of Ether
 
     public final String code;

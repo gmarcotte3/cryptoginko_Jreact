@@ -17,7 +17,14 @@ public class CoinService {
     private CoinRepository coinRepository;
 
     public void save( Coin coin) {
-        coinRepository.save(coin);
+        List<Coin> coinsfound = coinRepository.findByTicker(coin.getTicker());
+        if ( coinsfound.size() > 0) {
+            Coin coinfound = coinsfound.get(0);
+            coinfound.setCoin(coin);
+            coinRepository.save(coinfound);
+        } else {
+            coinRepository.save(coin);
+        }
     }
 
     public List<Coin> findAll()
@@ -30,7 +37,24 @@ public class CoinService {
         return results;
     }
 
-    public HashMap<String, FiatCurrency> findAllReturnHashmap()
+    /**
+     * get all the coin price and coin data as a hash map.
+     * @return
+     */
+    public HashMap<String, Coin> findAllReturnTickerCoinMap()
+    {
+        HashMap<String, Coin> coinMap = new HashMap<String, Coin>();
+        for (Coin coin : coinRepository.findAll()) {
+            coinMap.put( coin.getTicker(), coin);
+        }
+        return coinMap;
+    }
+
+    /**
+     * a hash map of all coin+fiat = price
+     * @return
+     */
+    public HashMap<String, FiatCurrency> findAllReturnTickerFiatHashmap()
     {
         //FiatCurrency(double value, FiatNames fiatType)
         HashMap<String, FiatCurrency> priceMap = new HashMap<String, FiatCurrency>();
@@ -45,8 +69,8 @@ public class CoinService {
             priceMap.put( coin.getTicker() + "-GBP",  new FiatCurrency(coin.getPriceGBP(), FiatNames.GBP) );
             priceMap.put( coin.getTicker() + "-KRW",  new FiatCurrency(coin.getPriceKRW(), FiatNames.KRW) );
             priceMap.put( coin.getTicker() + "-INR",  new FiatCurrency(coin.getPriceINR(), FiatNames.INR) );
-//            priceMap.put( coin.getTicker() + "-BTC",  new FiatCurrency(coin.getPriceBTC(), FiatNames.BTC) );  // parse coingeko not implemented yet.
-//            priceMap.put( coin.getTicker() + "-ETH",  new FiatCurrency(coin.getPriceETH(), FiatNames.ETH) );
+            priceMap.put( coin.getTicker() + "-BTC",  new FiatCurrency(coin.getPriceBTC(), FiatNames.BTC) );
+            priceMap.put( coin.getTicker() + "-ETH",  new FiatCurrency(coin.getPriceETH(), FiatNames.ETH) );
         }
         return priceMap;
     }

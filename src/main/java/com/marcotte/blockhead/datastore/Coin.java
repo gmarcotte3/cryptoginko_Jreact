@@ -65,6 +65,23 @@ public class Coin {
         this.priceETH = 0.0;
     }
 
+    public void setCoin( Coin newCoin) {
+        this.coinName = newCoin.getCoinName();
+        this.ticker = newCoin.getTicker();
+        this.description = newCoin.getDescription();
+        this.priceUSD = newCoin.getPriceUSD();
+        this.priceNZD = newCoin.getPriceNZD();
+        this.priceJPY = newCoin.getPriceJPY();
+        this.priceJPM = newCoin.getPriceJPM();
+        this.priceAUD = newCoin.getPriceAUD();
+        this.priceEUR = newCoin.getPriceEUR();
+        this.priceGBP = newCoin.getPriceGBP();
+        this.priceKRW = newCoin.getPriceKRW();
+        this.priceINR = newCoin.getPriceINR();
+        this.priceBTC = newCoin.getPriceBTC();
+        this.priceETH = newCoin.getPriceETH();
+    }
+
     public Long getId() {
         return id;
     }
