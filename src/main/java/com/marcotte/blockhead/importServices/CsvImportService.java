@@ -98,7 +98,7 @@ public class CsvImportService
         newAddress.setMemo("Exodus update");
         newAddress.setWalletName(walletname);
 
-        blockchainAddressStoreService.saveWithHistory(newAddress);
+        blockchainAddressStoreService.save(newAddress);
         savedList.add(newAddress);
       } else {
         lastAddress.setLastUpdated( new Timestamp(rightNow.getTime()));
@@ -107,7 +107,7 @@ public class CsvImportService
         lastAddress.setWalletName(walletname);
         lastAddress.setLastBalance(balance);
         lastAddress.setCurrency(currency);
-        blockchainAddressStoreService.saveWithHistory(lastAddress);
+        blockchainAddressStoreService.save(lastAddress);
         savedList.add(lastAddress);
       }
       //balance = Double.valueOf(row.get(2));

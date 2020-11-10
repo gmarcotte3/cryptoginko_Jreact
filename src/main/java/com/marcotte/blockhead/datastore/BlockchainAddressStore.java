@@ -26,8 +26,6 @@ public class BlockchainAddressStore
     private String message;
     private String memo;
     private Boolean updatedViaBlockChainExplorer;
-
-    private Long nextId;
     private String walletName;
 
     public BlockchainAddressStore()
@@ -36,8 +34,11 @@ public class BlockchainAddressStore
         this.currency = "";
     }
 
-    public BlockchainAddressStore( BlockchainAddressStore old)
-    {
+    public BlockchainAddressStore( BlockchainAddressStore old) {
+        setBlockChainAddressStore( old );
+    }
+
+    public void setBlockChainAddressStore( BlockchainAddressStore old ) {
         this.address = old.getAddress();
         this.currency = old.getCurrency();
         this.lastBalance = old.getLastBalance();
@@ -126,21 +127,9 @@ public class BlockchainAddressStore
         this.memo = memo;
     }
 
-    public Long getNextId() {
-        return nextId;
-    }
-
-    public void setNextId(Long nextId) {
-        this.nextId = nextId;
-    }
-
     public String getWalletName()
     {
-        if ( this.walletName == null )
-        {
-            return "";
-        }
-        return walletName;
+        return this.walletName;
     }
 
     public void setWalletName(String walletName)

@@ -49,7 +49,7 @@ public class PortFolioByWaletAndCoinServiceTest {
     public void findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc() {
         List<BlockchainAddressStore> addressStore6 = getAddresses6a();
         for (BlockchainAddressStore addressStore : addressStore6 ) {
-            blockchainAddressStoreService.saveWithHistory(addressStore);
+            blockchainAddressStoreService.save(addressStore);
         }
         List<WalletDTO> walletDTOS = portFolioByWaletAndCoinService.findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc();
         assertEquals( 2, walletDTOS.size());
@@ -63,7 +63,7 @@ public class PortFolioByWaletAndCoinServiceTest {
     public void findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc1() {
         List<BlockchainAddressStore> addressStore6 = getAddresses6();
         for (BlockchainAddressStore addressStore : addressStore6 ) {
-            blockchainAddressStoreService.saveWithHistory(addressStore);
+            blockchainAddressStoreService.save(addressStore);
         }
         List<WalletDTO> walletDTOS = portFolioByWaletAndCoinService.findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc();
         assertEquals( 1, walletDTOS.size());
@@ -89,7 +89,7 @@ public class PortFolioByWaletAndCoinServiceTest {
         Date rightNow = new Date();
         BlockchainAddressStore oneAddress =  getAddress1(rightNow);
         oneAddress.setWalletName("fredric");
-        blockchainAddressStoreService.saveWithHistory(oneAddress);
+        blockchainAddressStoreService.save(oneAddress);
 
         List<WalletDTO> foundAddresses = portFolioByWaletAndCoinService.findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc();
         int expectedSize = 1;
@@ -107,7 +107,6 @@ public class PortFolioByWaletAndCoinServiceTest {
         addressStore.setMessage("Test balance");
         addressStore.setMemo("memo1");
         addressStore.setNumTransactions(42);
-        addressStore.setNextId( null );
         return addressStore;
     }
 
@@ -123,7 +122,6 @@ public class PortFolioByWaletAndCoinServiceTest {
         addressStore.setMessage("Dash test");
         addressStore.setMemo("memo dash1");
         addressStore.setNumTransactions(1);
-        addressStore.setNextId( null );
         addressList.add(addressStore);
 
         BlockchainAddressStore addressStore2 = new BlockchainAddressStore();
@@ -134,7 +132,6 @@ public class PortFolioByWaletAndCoinServiceTest {
         addressStore2.setMessage("Dash test");
         addressStore2.setMemo("memo dash1");
         addressStore2.setNumTransactions(1);
-        addressStore2.setNextId( null );
         addressList.add(addressStore2);
 
         BlockchainAddressStore addressStore3 = new BlockchainAddressStore();
@@ -145,7 +142,6 @@ public class PortFolioByWaletAndCoinServiceTest {
         addressStore3.setMessage("Bitcoin test1");
         addressStore3.setMemo("memo BTC");
         addressStore3.setNumTransactions(3);
-        addressStore3.setNextId( null );
         addressList.add(addressStore3);
 
         BlockchainAddressStore addressStore4 = new BlockchainAddressStore();
@@ -156,7 +152,6 @@ public class PortFolioByWaletAndCoinServiceTest {
         addressStore4.setMessage("Bitcoin test2");
         addressStore4.setMemo("memo BTC");
         addressStore4.setNumTransactions(1);
-        addressStore4.setNextId( null );
         addressList.add(addressStore4);
 
         BlockchainAddressStore addressStore5 = new BlockchainAddressStore();
@@ -167,7 +162,6 @@ public class PortFolioByWaletAndCoinServiceTest {
         addressStore5.setMessage("Oshirium test1");
         addressStore5.setMemo("memo ETH");
         addressStore5.setNumTransactions(1);
-        addressStore5.setNextId( null );
         addressList.add(addressStore5);
 
         BlockchainAddressStore addressStore6 = new BlockchainAddressStore();
@@ -178,7 +172,6 @@ public class PortFolioByWaletAndCoinServiceTest {
         addressStore6.setMessage("Cardanocoin test1");
         addressStore6.setMemo("memo Cardano ADA");
         addressStore6.setNumTransactions(1);
-        addressStore6.setNextId( null );
         addressList.add(addressStore6);
 
         return addressList;
@@ -201,7 +194,6 @@ public class PortFolioByWaletAndCoinServiceTest {
         addressStore3.setMessage("Bitcoin test1");
         addressStore3.setMemo("memo BTC");
         addressStore3.setNumTransactions(3);
-        addressStore3.setNextId( null );
         addressList.add(addressStore3);
 
         BlockchainAddressStore addressStore = new BlockchainAddressStore();
@@ -213,7 +205,6 @@ public class PortFolioByWaletAndCoinServiceTest {
         addressStore.setMessage("Dash test");
         addressStore.setMemo("memo dash1");
         addressStore.setNumTransactions(1);
-        addressStore.setNextId( null );
         addressList.add(addressStore);
 
         BlockchainAddressStore addressStore2 = new BlockchainAddressStore();
@@ -225,7 +216,6 @@ public class PortFolioByWaletAndCoinServiceTest {
         addressStore2.setMessage("Dash test");
         addressStore2.setMemo("memo dash1");
         addressStore2.setNumTransactions(1);
-        addressStore2.setNextId( null );
         addressList.add(addressStore2);
 
         BlockchainAddressStore addressStore6 = new BlockchainAddressStore();
@@ -237,7 +227,6 @@ public class PortFolioByWaletAndCoinServiceTest {
         addressStore6.setMessage("Cardanocoin test1");
         addressStore6.setMemo("memo Cardano ADA");
         addressStore6.setNumTransactions(1);
-        addressStore6.setNextId( null );
         addressList.add(addressStore6);
 
         BlockchainAddressStore addressStore4 = new BlockchainAddressStore();
@@ -249,7 +238,6 @@ public class PortFolioByWaletAndCoinServiceTest {
         addressStore4.setMessage("Bitcoin test2");
         addressStore4.setMemo("memo BTC");
         addressStore4.setNumTransactions(1);
-        addressStore4.setNextId( null );
         addressList.add(addressStore4);
 
         BlockchainAddressStore addressStore5 = new BlockchainAddressStore();
@@ -261,7 +249,6 @@ public class PortFolioByWaletAndCoinServiceTest {
         addressStore5.setMessage("Oshirium test1");
         addressStore5.setMemo("memo ETH");
         addressStore5.setNumTransactions(1);
-        addressStore5.setNextId( null );
         addressList.add(addressStore5);
 
         return addressList;
@@ -284,7 +271,6 @@ public class PortFolioByWaletAndCoinServiceTest {
         addressStore.setMessage("Dash test");
         addressStore.setMemo("memo dash1");
         addressStore.setNumTransactions(1);
-        addressStore.setNextId( null );
         addressList.add(addressStore);
 
         BlockchainAddressStore addressStore2 = new BlockchainAddressStore();
@@ -296,7 +282,6 @@ public class PortFolioByWaletAndCoinServiceTest {
         addressStore2.setMessage("Dash test");
         addressStore2.setMemo("memo dash1");
         addressStore2.setNumTransactions(1);
-        addressStore2.setNextId( null );
         addressList.add(addressStore2);
 
         BlockchainAddressStore addressStore3 = new BlockchainAddressStore();
@@ -308,7 +293,6 @@ public class PortFolioByWaletAndCoinServiceTest {
         addressStore3.setMessage("Bitcoin test1");
         addressStore3.setMemo("memo BTC");
         addressStore3.setNumTransactions(3);
-        addressStore3.setNextId( null );
         addressList.add(addressStore3);
 
         BlockchainAddressStore addressStore4 = new BlockchainAddressStore();
@@ -320,7 +304,6 @@ public class PortFolioByWaletAndCoinServiceTest {
         addressStore4.setMessage("Bitcoin test2");
         addressStore4.setMemo("memo BTC");
         addressStore4.setNumTransactions(1);
-        addressStore4.setNextId( null );
         addressList.add(addressStore4);
 
         BlockchainAddressStore addressStore5 = new BlockchainAddressStore();
@@ -332,7 +315,6 @@ public class PortFolioByWaletAndCoinServiceTest {
         addressStore5.setMessage("Oshirium test1");
         addressStore5.setMemo("memo ETH");
         addressStore5.setNumTransactions(1);
-        addressStore5.setNextId( null );
         addressList.add(addressStore5);
 
         BlockchainAddressStore addressStore6 = new BlockchainAddressStore();
@@ -344,7 +326,6 @@ public class PortFolioByWaletAndCoinServiceTest {
         addressStore6.setMessage("Cardanocoin test1");
         addressStore6.setMemo("memo Cardano ADA");
         addressStore6.setNumTransactions(1);
-        addressStore6.setNextId( null );
         addressList.add(addressStore6);
 
         return addressList;
