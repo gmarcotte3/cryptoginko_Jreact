@@ -93,7 +93,7 @@ public class PortfolioByCoinsServiceTest {
     {
         BlockchainAddressStore addressStore = new BlockchainAddressStore();
         addressStore.setAddress("1234567890");
-        addressStore.setCurrency("USDT");
+        addressStore.setTicker("USDT");
         addressStore.setLastBalance( 123456.4323);
         addressStore.setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStore.setMessage("Test balance");
@@ -108,7 +108,7 @@ public class PortfolioByCoinsServiceTest {
 
         BlockchainAddressStore addressStore = new BlockchainAddressStore();
         addressStore.setAddress("Xaaaaaaaaaaaaaaaaaaaaa1");
-        addressStore.setCurrency("DASH");
+        addressStore.setTicker("DASH");
         addressStore.setLastBalance( 323434556767889.0);
         addressStore.setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStore.setMessage("Dash test");
@@ -118,7 +118,7 @@ public class PortfolioByCoinsServiceTest {
 
         BlockchainAddressStore addressStore2 = new BlockchainAddressStore();
         addressStore2.setAddress("Xaaaaaaaaaaaaaaaaaaaaa2");
-        addressStore2.setCurrency("DASH");
+        addressStore2.setTicker("DASH");
         addressStore2.setLastBalance( 2.0);
         addressStore2.setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStore2.setMessage("Dash test");
@@ -128,7 +128,7 @@ public class PortfolioByCoinsServiceTest {
 
         BlockchainAddressStore addressStore3 = new BlockchainAddressStore();
         addressStore3.setAddress("0bbbbbbbbbbbbbbbb1");
-        addressStore3.setCurrency("BTC");
+        addressStore3.setTicker("BTC");
         addressStore3.setLastBalance( 1.1);
         addressStore3.setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStore3.setMessage("Bitcoin test1");
@@ -138,7 +138,7 @@ public class PortfolioByCoinsServiceTest {
 
         BlockchainAddressStore addressStore4 = new BlockchainAddressStore();
         addressStore4.setAddress("0bbbbbbbbbbbbbbbb2");
-        addressStore4.setCurrency("BTC");
+        addressStore4.setTicker("BTC");
         addressStore4.setLastBalance( 1.2);
         addressStore4.setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStore4.setMessage("Bitcoin test2");
@@ -148,7 +148,7 @@ public class PortfolioByCoinsServiceTest {
 
         BlockchainAddressStore addressStore5 = new BlockchainAddressStore();
         addressStore5.setAddress("0ethethewthewthwthethhhhhh1");
-        addressStore5.setCurrency("ETH");
+        addressStore5.setTicker("ETH");
         addressStore5.setLastBalance( 10.0);
         addressStore5.setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStore5.setMessage("Oshirium test1");
@@ -158,7 +158,7 @@ public class PortfolioByCoinsServiceTest {
 
         BlockchainAddressStore addressStore6 = new BlockchainAddressStore();
         addressStore6.setAddress("0edddddddddddddddddddog1");
-        addressStore6.setCurrency("ADA");
+        addressStore6.setTicker("ADA");
         addressStore6.setLastBalance( 20.0);
         addressStore6.setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStore6.setMessage("Cardanocoin test1");
@@ -179,7 +179,7 @@ public class PortfolioByCoinsServiceTest {
 
         BlockchainAddressStore addressStore3 = new BlockchainAddressStore();
         addressStore3.setWalletName("allan");
-        addressStore3.setCurrency("BTC");
+        addressStore3.setTicker("BTC");
         addressStore3.setLastBalance( 1.1);
         addressStore3.setAddress("0bbbbbbbbbbbbbbbb1");
         addressStore3.setLastUpdated( new Timestamp(rightNow.getTime()));
@@ -190,7 +190,7 @@ public class PortfolioByCoinsServiceTest {
 
         BlockchainAddressStore addressStore = new BlockchainAddressStore();
         addressStore.setWalletName("allan");
-        addressStore.setCurrency("DASH");
+        addressStore.setTicker("DASH");
         addressStore.setAddress("Xaaaaaaaaaaaaaaaaaaaaa1");
         addressStore.setLastBalance( 10.1);
         addressStore.setLastUpdated( new Timestamp(rightNow.getTime()));
@@ -201,7 +201,7 @@ public class PortfolioByCoinsServiceTest {
 
         BlockchainAddressStore addressStore2 = new BlockchainAddressStore();
         addressStore2.setWalletName("allan");
-        addressStore2.setCurrency("DASH");
+        addressStore2.setTicker("DASH");
         addressStore2.setAddress("Xaaaaaaaaaaaaaaaaaaaaa2");
         addressStore2.setLastBalance( 10.2);
         addressStore2.setLastUpdated( new Timestamp(rightNow.getTime()));
@@ -213,7 +213,7 @@ public class PortfolioByCoinsServiceTest {
         BlockchainAddressStore addressStore6 = new BlockchainAddressStore();
         addressStore6.setWalletName("peter");
         addressStore6.setAddress("0edddddddddddddddddddog1");
-        addressStore6.setCurrency("ADA");
+        addressStore6.setTicker("ADA");
         addressStore6.setLastBalance( 20.0);
         addressStore6.setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStore6.setMessage("Cardanocoin test1");
@@ -223,7 +223,7 @@ public class PortfolioByCoinsServiceTest {
 
         BlockchainAddressStore addressStore4 = new BlockchainAddressStore();
         addressStore4.setWalletName("peter");
-        addressStore4.setCurrency("BTC");
+        addressStore4.setTicker("BTC");
         addressStore4.setLastBalance( 30.0);
         addressStore4.setAddress("0bbbbbbbbbbbbbbbb2");
         addressStore4.setLastUpdated( new Timestamp(rightNow.getTime()));
@@ -235,7 +235,7 @@ public class PortfolioByCoinsServiceTest {
         BlockchainAddressStore addressStore5 = new BlockchainAddressStore();
         addressStore5.setAddress("0ethethewthewthwthethhhhhh1");
         addressStore5.setWalletName("peter");
-        addressStore5.setCurrency("ETH");
+        addressStore5.setTicker("ETH");
         addressStore5.setLastBalance( 40.1);
         addressStore5.setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStore5.setMessage("Oshirium test1");
@@ -256,7 +256,7 @@ public class PortfolioByCoinsServiceTest {
 
         BlockchainAddressStore addressStore = new BlockchainAddressStore();
         addressStore.setWalletName("allan");
-        addressStore.setCurrency("DASH");
+        addressStore.setTicker("DASH");
         addressStore.setAddress("Xaaaaaaaaaaaaaaaaaaaaa1");
         addressStore.setLastBalance( 10.1);
         addressStore.setLastUpdated( new Timestamp(rightNow.getTime()));
@@ -267,7 +267,7 @@ public class PortfolioByCoinsServiceTest {
 
         BlockchainAddressStore addressStore2 = new BlockchainAddressStore();
         addressStore2.setWalletName("allan");
-        addressStore2.setCurrency("DASH");
+        addressStore2.setTicker("DASH");
         addressStore2.setAddress("Xaaaaaaaaaaaaaaaaaaaaa2");
         addressStore2.setLastBalance( 10.2);
         addressStore2.setLastUpdated( new Timestamp(rightNow.getTime()));
@@ -278,7 +278,7 @@ public class PortfolioByCoinsServiceTest {
 
         BlockchainAddressStore addressStore3 = new BlockchainAddressStore();
         addressStore3.setWalletName("allan");
-        addressStore3.setCurrency("BTC");
+        addressStore3.setTicker("BTC");
         addressStore3.setLastBalance( 1.1);
         addressStore3.setAddress("0bbbbbbbbbbbbbbbb1");
         addressStore3.setLastUpdated( new Timestamp(rightNow.getTime()));
@@ -289,7 +289,7 @@ public class PortfolioByCoinsServiceTest {
 
         BlockchainAddressStore addressStore4 = new BlockchainAddressStore();
         addressStore4.setWalletName("peter");
-        addressStore4.setCurrency("BTC");
+        addressStore4.setTicker("BTC");
         addressStore4.setLastBalance( 30.0);
         addressStore4.setAddress("0bbbbbbbbbbbbbbbb2");
         addressStore4.setLastUpdated( new Timestamp(rightNow.getTime()));
@@ -301,7 +301,7 @@ public class PortfolioByCoinsServiceTest {
         BlockchainAddressStore addressStore5 = new BlockchainAddressStore();
         addressStore5.setAddress("0ethethewthewthwthethhhhhh1");
         addressStore5.setWalletName("peter");
-        addressStore5.setCurrency("ETH");
+        addressStore5.setTicker("ETH");
         addressStore5.setLastBalance( 40.1);
         addressStore5.setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStore5.setMessage("Oshirium test1");
@@ -312,7 +312,7 @@ public class PortfolioByCoinsServiceTest {
         BlockchainAddressStore addressStore6 = new BlockchainAddressStore();
         addressStore6.setWalletName("peter");
         addressStore6.setAddress("0edddddddddddddddddddog1");
-        addressStore6.setCurrency("ADA");
+        addressStore6.setTicker("ADA");
         addressStore6.setLastBalance( 20.0);
         addressStore6.setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStore6.setMessage("Cardanocoin test1");

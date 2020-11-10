@@ -23,7 +23,7 @@ public class BlockchainAddressStoreService
      */
     public void save( BlockchainAddressStore blockchainAddressStore)
     {
-        BlockchainAddressStore lastAddressStore = findLatestByAddressAndCurrency( blockchainAddressStore.getAddress(), blockchainAddressStore.getCurrency() );
+        BlockchainAddressStore lastAddressStore = findLatestByAddressAndCurrency( blockchainAddressStore.getAddress(), blockchainAddressStore.getTicker() );
         if ( lastAddressStore != null ) {
             lastAddressStore.setBlockChainAddressStore(blockchainAddressStore);
             blockchainAddressStoreRepository.save(lastAddressStore);
@@ -34,7 +34,7 @@ public class BlockchainAddressStoreService
 
     private BlockchainAddressStore hasCoinBalanceChangedSinceLastSave(BlockchainAddressStore newAddressStore )
     {
-        BlockchainAddressStore lastAddressStore = findLatestByAddressAndCurrency( newAddressStore.getAddress(), newAddressStore.getCurrency() );
+        BlockchainAddressStore lastAddressStore = findLatestByAddressAndCurrency( newAddressStore.getAddress(), newAddressStore.getTicker() );
         if ( lastAddressStore != null )
         {
             if (!Utils.almostEqual(lastAddressStore.getLastBalance(), newAddressStore.getLastBalance())) {
@@ -61,7 +61,7 @@ public class BlockchainAddressStoreService
      */
     public List<BlockchainAddressStore> findAllByCoinName( String coinname)
     {
-        List<BlockchainAddressStore> results = blockchainAddressStoreRepository.findBlockchainAddressStoreBycurrency(coinname);
+        List<BlockchainAddressStore> results = blockchainAddressStoreRepository.findBlockchainAddressStoreByTicker(coinname);
         if ( results != null) {
             return results;
         }
@@ -71,16 +71,16 @@ public class BlockchainAddressStoreService
     public List<BlockchainAddressStore> findAllByCoinNameAndWalletName( String coinname, String walletName)
     {
         List<BlockchainAddressStore> results = blockchainAddressStoreRepository
-            .findBlockchainAddressStoreBycurrencyAndWalletName(coinname, walletName);
+            .findBlockchainAddressStoreByTickerAndWalletName(coinname, walletName);
         if ( results != null) {
             return results;
         }
         return  new ArrayList<BlockchainAddressStore>();
     }
 
-    public List<BlockchainAddressStore> findByAddressAndCurrency(String address, String currency)
+    public List<BlockchainAddressStore> findByAddressAndCurrency(String address, String ticker)
     {
-        return blockchainAddressStoreRepository.findBlockchainAddressStoreByAddressAndCurrency(address, currency);
+        return blockchainAddressStoreRepository.findBlockchainAddressStoreByAddressAndTicker(address, ticker);
     }
 
     public void delete( BlockchainAddressStore blockchainAddressStore)
@@ -88,9 +88,9 @@ public class BlockchainAddressStoreService
         blockchainAddressStoreRepository.delete(blockchainAddressStore);
     }
 
-    public BlockchainAddressStore findLatestByAddressAndCurrency( String address, String currency )
+    public BlockchainAddressStore findLatestByAddressAndCurrency( String address, String ticker )
     {
-        List<BlockchainAddressStore> latestList =  blockchainAddressStoreRepository.findBlockchainAddressStoreByAddressAndCurrency(address, currency);
+        List<BlockchainAddressStore> latestList =  blockchainAddressStoreRepository.findBlockchainAddressStoreByAddressAndTicker(address, ticker);
         if (latestList != null && !latestList.isEmpty())
         {
             return latestList.get(0);
@@ -98,9 +98,9 @@ public class BlockchainAddressStoreService
         return null;
     }
 
-    public List<BlockchainAddressStore> findByAddressAndCoin(String address, String ticker, Long nextId )
+    public List<BlockchainAddressStore> findByAddressAndCoin(String address, String ticker )
     {
-        return blockchainAddressStoreRepository.findBlockchainAddressStoreByAddressAndCurrency(address,ticker);
+        return blockchainAddressStoreRepository.findBlockchainAddressStoreByAddressAndTicker(address,ticker);
     }
 
 

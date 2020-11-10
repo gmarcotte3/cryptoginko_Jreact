@@ -35,7 +35,7 @@ public class EOS_ExplorerController
 
         BlockchainAddressStore blockchainAddressStore = new BlockchainAddressStore();
         blockchainAddressStore.setAddress(address);
-        blockchainAddressStore.setCurrency(CryptoNames.EOS.code);
+        blockchainAddressStore.setTicker(CryptoNames.EOS.code);
 
         eos_explorerServices.addressInfo(blockchainAddressStore);
 

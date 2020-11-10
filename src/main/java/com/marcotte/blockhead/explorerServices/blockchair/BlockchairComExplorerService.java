@@ -136,7 +136,7 @@ public class BlockchairComExplorerService
   public boolean addressInfo(BlockchainAddressStore blockchainAddressStore)
   {
     boolean result = false;
-    String crypto = blockchainAddressStore.getCurrency();
+    String crypto = blockchainAddressStore.getTicker();
  //   String address = blockchainAddressStore.getAddress();
     String theRawJsonQuote;
     Timestamp lastupdated;
@@ -258,7 +258,7 @@ public class BlockchairComExplorerService
   {
     String chain;
     String url ="";
-    switch (blockchainAddressStore.getCurrency().toUpperCase())
+    switch (blockchainAddressStore.getTicker().toUpperCase())
     {
       case "ADA":
         //https://api.blockchair.com/{:ada_chain}/raw/address/{:address}

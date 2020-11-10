@@ -1,6 +1,5 @@
 package com.marcotte.blockhead.datastore;
 
-import com.marcotte.blockhead.util.Utils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +37,7 @@ public class BlockchainAddressStoreServiceTest
         assertEquals(1, savedBlock.size());
 
         assertEquals("1234567890", savedBlock.get(0).getAddress() );
-        assertEquals("USDT", savedBlock.get(0).getCurrency() );
+        assertEquals("USDT", savedBlock.get(0).getTicker() );
         assertEquals("Test balance", savedBlock.get(0).getMessage() );
         assertEquals((Integer) 42, (Integer) savedBlock.get(0).getNumTransactions() );
         assertEquals(new Timestamp(rightNow.getTime()), savedBlock.get(0).getLastUpdated() );
@@ -103,17 +102,17 @@ public class BlockchainAddressStoreServiceTest
 
         // look for the first address
         List<BlockchainAddressStore> foundAddres = blockchainAddressStoreService
-            .findByAddressAndCurrency(addressStore.getAddress(), addressStore.getCurrency());
+            .findByAddressAndCurrency(addressStore.getAddress(), addressStore.getTicker());
         assertEquals(1, foundAddres.size());
         assertEquals(addressStore.getMessage(), foundAddres.get(0).getMessage() );
-        assertEquals(addressStore.getCurrency(), foundAddres.get(0).getCurrency() );
+        assertEquals(addressStore.getTicker(), foundAddres.get(0).getTicker() );
 
         // look for the second address.
         List<BlockchainAddressStore> foundAddres2 = blockchainAddressStoreService
-            .findByAddressAndCurrency(addressStore.getAddress(), addressStore3a.getCurrency());
+            .findByAddressAndCurrency(addressStore.getAddress(), addressStore3a.getTicker());
         assertEquals(1, foundAddres2.size());
         assertEquals(addressStore3a.getMessage(), foundAddres2.get(0).getMessage() );
-        assertEquals(addressStore3a.getCurrency(), foundAddres2.get(0).getCurrency() );
+        assertEquals(addressStore3a.getTicker(), foundAddres2.get(0).getTicker() );
 
         blockchainAddressStoreService.deleteAll();
     }
@@ -127,9 +126,9 @@ public class BlockchainAddressStoreServiceTest
 
         List<BlockchainAddressStore> sortedArray = blockchainAddressStoreService.findBlockchainAddressStoreOrderByWalletNameAscCurrencyAsc();
         assertEquals(6, sortedArray.size());
-        assertEquals("AYA-BTC", (sortedArray.get(0).getWalletName() + "-" + sortedArray.get(0).getCurrency() ));
-        assertEquals("AYA-ETH", (sortedArray.get(2).getWalletName() + "-" + sortedArray.get(2).getCurrency() ));
-        assertEquals("MIKA-DASH", (sortedArray.get(5).getWalletName() + "-" + sortedArray.get(5).getCurrency() ));
+        assertEquals("AYA-BTC", (sortedArray.get(0).getWalletName() + "-" + sortedArray.get(0).getTicker() ));
+        assertEquals("AYA-ETH", (sortedArray.get(2).getWalletName() + "-" + sortedArray.get(2).getTicker() ));
+        assertEquals("MIKA-DASH", (sortedArray.get(5).getWalletName() + "-" + sortedArray.get(5).getTicker() ));
 
         blockchainAddressStoreService.deleteAll();
     }
@@ -144,9 +143,9 @@ public class BlockchainAddressStoreServiceTest
 
         List<BlockchainAddressStore> sortedArray = blockchainAddressStoreService.findAllLatestOrderByCoin();
         assertEquals(6, sortedArray.size());
-        assertEquals("ADA", (sortedArray.get(0).getCurrency() ));
-        assertEquals("BTC", ( sortedArray.get(2).getCurrency() ));
-        assertEquals("ETH", (sortedArray.get(5).getCurrency() ));
+        assertEquals("ADA", (sortedArray.get(0).getTicker() ));
+        assertEquals("BTC", ( sortedArray.get(2).getTicker() ));
+        assertEquals("ETH", (sortedArray.get(5).getTicker() ));
         blockchainAddressStoreService.deleteAll();
 
     }
@@ -155,7 +154,7 @@ public class BlockchainAddressStoreServiceTest
     {
         BlockchainAddressStore addressStore = new BlockchainAddressStore();
         addressStore.setAddress("1234567890");
-        addressStore.setCurrency("USDT");
+        addressStore.setTicker("USDT");
         addressStore.setLastBalance( 123456.4323);
         addressStore.setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStore.setMessage("Test balance");
@@ -170,7 +169,7 @@ public class BlockchainAddressStoreServiceTest
     {
         BlockchainAddressStore addressStore = new BlockchainAddressStore();
         addressStore.setAddress("9876543210");
-        addressStore.setCurrency("USDT");
+        addressStore.setTicker("USDT");
         addressStore.setLastBalance( 999956.4323);
         addressStore.setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStore.setMessage("Test balance 2");
@@ -183,7 +182,7 @@ public class BlockchainAddressStoreServiceTest
     {
         BlockchainAddressStore addressStore = new BlockchainAddressStore();
         addressStore.setAddress("9876HomerWasHere543210");
-        addressStore.setCurrency("USDT");
+        addressStore.setTicker("USDT");
         addressStore.setLastBalance( 99229956.4323);
         addressStore.setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStore.setMessage("Test balance 3");
@@ -196,7 +195,7 @@ public class BlockchainAddressStoreServiceTest
     {
         BlockchainAddressStore addressStore = new BlockchainAddressStore();
         addressStore.setAddress("9876HomerWasHere543210");
-        addressStore.setCurrency("USDC");
+        addressStore.setTicker("USDC");
         addressStore.setLastBalance( 99.29);
         addressStore.setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStore.setMessage("Test balance 3a");
@@ -210,7 +209,7 @@ public class BlockchainAddressStoreServiceTest
     {
         BlockchainAddressStore addressStore = new BlockchainAddressStore();
         addressStore.setAddress("X023sdh23kjh2323j43jj3");
-        addressStore.setCurrency("USDT");
+        addressStore.setTicker("USDT");
         addressStore.setLastBalance( 9956.23);
         addressStore.setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStore.setMessage("Test balance 4");
@@ -226,7 +225,7 @@ public class BlockchainAddressStoreServiceTest
 
         BlockchainAddressStore addressStore = new BlockchainAddressStore();
         addressStore.setAddress("X023232333332223j43jj3");
-        addressStore.setCurrency("DASH");
+        addressStore.setTicker("DASH");
         addressStore.setLastBalance( 1.0);
         addressStore.setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStore.setMessage("Dash test");
@@ -245,7 +244,7 @@ public class BlockchainAddressStoreServiceTest
 
         BlockchainAddressStore addressStore3 = new BlockchainAddressStore();
         addressStore3.setAddress("0b1234sdsds2325456");
-        addressStore3.setCurrency("BTC");
+        addressStore3.setTicker("BTC");
         addressStore3.setLastBalance( 2.0);
         addressStore3.setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStore3.setMessage("Bitcoin test");
@@ -257,7 +256,7 @@ public class BlockchainAddressStoreServiceTest
         Date rightNow3 = new Date();
         BlockchainAddressStore addressStore4 = new BlockchainAddressStore();
         addressStore4.setAddress("0b1223232345355466");
-        addressStore4.setCurrency("BTC");
+        addressStore4.setTicker("BTC");
         addressStore4.setLastBalance( 0.001200);
         addressStore4.setLastUpdated( new Timestamp(rightNow3.getTime()));
         addressStore4.setMessage("Bitcoin test2");
@@ -274,7 +273,7 @@ public class BlockchainAddressStoreServiceTest
 
         BlockchainAddressStore addressStore6 = new BlockchainAddressStore();
         addressStore6.setAddress("X024443w33323j43jj3");
-        addressStore6.setCurrency("DASH");
+        addressStore6.setTicker("DASH");
         addressStore6.setLastBalance( 1000.0);
         addressStore6.setLastUpdated( new Timestamp(rightNow4.getTime()));
         addressStore6.setMessage("Dash big test");
@@ -292,7 +291,7 @@ public class BlockchainAddressStoreServiceTest
 
         BlockchainAddressStore addressStore = new BlockchainAddressStore();
         addressStore.setAddress("Xaaaaaaaaaaaaaaaaaaaaa1");
-        addressStore.setCurrency("DASH");
+        addressStore.setTicker("DASH");
         addressStore.setLastBalance( 323434556767889.0);
         addressStore.setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStore.setMessage("Dash test");
@@ -303,7 +302,7 @@ public class BlockchainAddressStoreServiceTest
 
         BlockchainAddressStore addressStore2 = new BlockchainAddressStore();
         addressStore2.setAddress("Xaaaaaaaaaaaaaaaaaaaaa2");
-        addressStore2.setCurrency("DASH");
+        addressStore2.setTicker("DASH");
         addressStore2.setLastBalance( 2.0);
         addressStore2.setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStore2.setMessage("Dash test");
@@ -314,7 +313,7 @@ public class BlockchainAddressStoreServiceTest
 
         BlockchainAddressStore addressStore3 = new BlockchainAddressStore();
         addressStore3.setAddress("0bbbbbbbbbbbbbbbb1");
-        addressStore3.setCurrency("BTC");
+        addressStore3.setTicker("BTC");
         addressStore3.setLastBalance( 1.1);
         addressStore3.setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStore3.setMessage("Bitcoin test1");
@@ -325,7 +324,7 @@ public class BlockchainAddressStoreServiceTest
 
         BlockchainAddressStore addressStore4 = new BlockchainAddressStore();
         addressStore4.setAddress("0bbbbbbbbbbbbbbbb2");
-        addressStore4.setCurrency("BTC");
+        addressStore4.setTicker("BTC");
         addressStore4.setLastBalance( 1.2);
         addressStore4.setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStore4.setMessage("Bitcoin test2");
@@ -336,7 +335,7 @@ public class BlockchainAddressStoreServiceTest
 
         BlockchainAddressStore addressStore5 = new BlockchainAddressStore();
         addressStore5.setAddress("0ethethewthewthwthethhhhhh1");
-        addressStore5.setCurrency("ETH");
+        addressStore5.setTicker("ETH");
         addressStore5.setLastBalance( 10.0);
         addressStore5.setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStore5.setMessage("Oshirium test1");
@@ -347,7 +346,7 @@ public class BlockchainAddressStoreServiceTest
 
         BlockchainAddressStore addressStore6 = new BlockchainAddressStore();
         addressStore6.setAddress("0edddddddddddddddddddog1");
-        addressStore6.setCurrency("ADA");
+        addressStore6.setTicker("ADA");
         addressStore6.setLastBalance( 20.0);
         addressStore6.setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStore6.setMessage("Cardanocoin test1");
@@ -369,7 +368,7 @@ public class BlockchainAddressStoreServiceTest
 
         BlockchainAddressStore addressStore3 = new BlockchainAddressStore();
         addressStore3.setWalletName("allan");
-        addressStore3.setCurrency("BTC");
+        addressStore3.setTicker("BTC");
         addressStore3.setLastBalance( 1.1);
         addressStore3.setAddress("0bbbbbbbbbbbbbbbb1");
         addressStore3.setLastUpdated( new Timestamp(rightNow.getTime()));
@@ -380,7 +379,7 @@ public class BlockchainAddressStoreServiceTest
 
         BlockchainAddressStore addressStore = new BlockchainAddressStore();
         addressStore.setWalletName("allan");
-        addressStore.setCurrency("DASH");
+        addressStore.setTicker("DASH");
         addressStore.setAddress("Xaaaaaaaaaaaaaaaaaaaaa1");
         addressStore.setLastBalance( 10.1);
         addressStore.setLastUpdated( new Timestamp(rightNow.getTime()));
@@ -391,7 +390,7 @@ public class BlockchainAddressStoreServiceTest
 
         BlockchainAddressStore addressStore2 = new BlockchainAddressStore();
         addressStore2.setWalletName("allan");
-        addressStore2.setCurrency("DASH");
+        addressStore2.setTicker("DASH");
         addressStore2.setAddress("Xaaaaaaaaaaaaaaaaaaaaa2");
         addressStore2.setLastBalance( 10.2);
         addressStore2.setLastUpdated( new Timestamp(rightNow.getTime()));
@@ -403,7 +402,7 @@ public class BlockchainAddressStoreServiceTest
         BlockchainAddressStore addressStore6 = new BlockchainAddressStore();
         addressStore6.setWalletName("peter");
         addressStore6.setAddress("0edddddddddddddddddddog1");
-        addressStore6.setCurrency("ADA");
+        addressStore6.setTicker("ADA");
         addressStore6.setLastBalance( 20.0);
         addressStore6.setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStore6.setMessage("Cardanocoin test1");
@@ -413,7 +412,7 @@ public class BlockchainAddressStoreServiceTest
 
         BlockchainAddressStore addressStore4 = new BlockchainAddressStore();
         addressStore4.setWalletName("peter");
-        addressStore4.setCurrency("BTC");
+        addressStore4.setTicker("BTC");
         addressStore4.setLastBalance( 30.0);
         addressStore4.setAddress("0bbbbbbbbbbbbbbbb2");
         addressStore4.setLastUpdated( new Timestamp(rightNow.getTime()));
@@ -425,7 +424,7 @@ public class BlockchainAddressStoreServiceTest
         BlockchainAddressStore addressStore5 = new BlockchainAddressStore();
         addressStore5.setAddress("0ethethewthewthwthethhhhhh1");
         addressStore5.setWalletName("peter");
-        addressStore5.setCurrency("ETH");
+        addressStore5.setTicker("ETH");
         addressStore5.setLastBalance( 40.1);
         addressStore5.setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStore5.setMessage("Oshirium test1");
@@ -446,7 +445,7 @@ public class BlockchainAddressStoreServiceTest
 
         BlockchainAddressStore addressStore = new BlockchainAddressStore();
         addressStore.setWalletName("allan");
-        addressStore.setCurrency("DASH");
+        addressStore.setTicker("DASH");
         addressStore.setAddress("Xaaaaaaaaaaaaaaaaaaaaa1");
         addressStore.setLastBalance( 10.1);
         addressStore.setLastUpdated( new Timestamp(rightNow.getTime()));
@@ -457,7 +456,7 @@ public class BlockchainAddressStoreServiceTest
 
         BlockchainAddressStore addressStore2 = new BlockchainAddressStore();
         addressStore2.setWalletName("allan");
-        addressStore2.setCurrency("DASH");
+        addressStore2.setTicker("DASH");
         addressStore2.setAddress("Xaaaaaaaaaaaaaaaaaaaaa2");
         addressStore2.setLastBalance( 10.2);
         addressStore2.setLastUpdated( new Timestamp(rightNow.getTime()));
@@ -468,7 +467,7 @@ public class BlockchainAddressStoreServiceTest
 
         BlockchainAddressStore addressStore3 = new BlockchainAddressStore();
         addressStore3.setWalletName("allan");
-        addressStore3.setCurrency("BTC");
+        addressStore3.setTicker("BTC");
         addressStore3.setLastBalance( 1.1);
         addressStore3.setAddress("0bbbbbbbbbbbbbbbb1");
         addressStore3.setLastUpdated( new Timestamp(rightNow.getTime()));
@@ -479,7 +478,7 @@ public class BlockchainAddressStoreServiceTest
 
         BlockchainAddressStore addressStore4 = new BlockchainAddressStore();
         addressStore4.setWalletName("peter");
-        addressStore4.setCurrency("BTC");
+        addressStore4.setTicker("BTC");
         addressStore4.setLastBalance( 30.0);
         addressStore4.setAddress("0bbbbbbbbbbbbbbbb2");
         addressStore4.setLastUpdated( new Timestamp(rightNow.getTime()));
@@ -491,7 +490,7 @@ public class BlockchainAddressStoreServiceTest
         BlockchainAddressStore addressStore5 = new BlockchainAddressStore();
         addressStore5.setAddress("0ethethewthewthwthethhhhhh1");
         addressStore5.setWalletName("peter");
-        addressStore5.setCurrency("ETH");
+        addressStore5.setTicker("ETH");
         addressStore5.setLastBalance( 40.1);
         addressStore5.setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStore5.setMessage("Oshirium test1");
@@ -502,7 +501,7 @@ public class BlockchainAddressStoreServiceTest
         BlockchainAddressStore addressStore6 = new BlockchainAddressStore();
         addressStore6.setWalletName("peter");
         addressStore6.setAddress("0edddddddddddddddddddog1");
-        addressStore6.setCurrency("ADA");
+        addressStore6.setTicker("ADA");
         addressStore6.setLastBalance( 20.0);
         addressStore6.setLastUpdated( new Timestamp(rightNow.getTime()));
         addressStore6.setMessage("Cardanocoin test1");

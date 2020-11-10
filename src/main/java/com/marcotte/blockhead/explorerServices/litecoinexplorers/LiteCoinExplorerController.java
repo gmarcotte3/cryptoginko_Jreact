@@ -35,7 +35,7 @@ public class LiteCoinExplorerController
 
         BlockchainAddressStore blockchainAddressStore = new BlockchainAddressStore();
         blockchainAddressStore.setAddress(address);
-        blockchainAddressStore.setCurrency(CryptoNames.LITE_COIN.code);
+        blockchainAddressStore.setTicker(CryptoNames.LITE_COIN.code);
 
         liteCoinExplorerServices.addressInfo(blockchainAddressStore);
 

@@ -37,7 +37,7 @@ public class BlockCypherComExplorerController
 
         BlockchainAddressStore blockchainAddressStore = new BlockchainAddressStore();
         blockchainAddressStore.setAddress(address);
-        blockchainAddressStore.setCurrency(crypto.toUpperCase());
+        blockchainAddressStore.setTicker(crypto.toUpperCase());
 
         blockCypherComService.addressInfo(blockchainAddressStore);
 

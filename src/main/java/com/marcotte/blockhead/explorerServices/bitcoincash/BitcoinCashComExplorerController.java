@@ -29,7 +29,7 @@ public class BitcoinCashComExplorerController
     {
         BlockchainAddressStore blockchainAddressStore = new BlockchainAddressStore();
         blockchainAddressStore.setAddress(address);
-        blockchainAddressStore.setCurrency(CryptoNames.BITCOIN_CASH.code.toUpperCase());
+        blockchainAddressStore.setTicker(CryptoNames.BITCOIN_CASH.code.toUpperCase());
 
         bitcoinCashComExplorerService.addressInfo(blockchainAddressStore);
 
@@ -44,7 +44,7 @@ public class BitcoinCashComExplorerController
     {
         BlockchainAddressStore blockchainAddressStore = new BlockchainAddressStore();
         blockchainAddressStore.setAddress(address);
-        blockchainAddressStore.setCurrency(CryptoNames.BITCOIN_CASH.code.toUpperCase());
+        blockchainAddressStore.setTicker(CryptoNames.BITCOIN_CASH.code.toUpperCase());
 
         BlockchainTransactionList transactionList = new BlockchainTransactionList();
         transactionList.setAddressStore(blockchainAddressStore);

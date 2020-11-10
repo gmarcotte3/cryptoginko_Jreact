@@ -38,7 +38,7 @@ public class BlockchairComExplorerController
 
     BlockchainAddressStore blockchainAddressStore = new BlockchainAddressStore();
     blockchainAddressStore.setAddress(address);
-    blockchainAddressStore.setCurrency(crypto.toUpperCase());
+    blockchainAddressStore.setTicker(crypto.toUpperCase());
 
     blockchairComExplorerService.addressInfo(blockchainAddressStore);
 

@@ -1,9 +1,5 @@
 package com.marcotte.blockhead.datastore;
 
-import com.marcotte.blockhead.model.CoinDTO;
-import com.marcotte.blockhead.model.CoinList;
-import com.marcotte.blockhead.model.WalletDTO;
-import com.marcotte.blockhead.model.WalletList;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,7 +66,7 @@ public class BlockchainAddressStoreController
         {
             cryptoAddress = new BlockchainAddressStore();
             cryptoAddress.setAddress( address);
-            cryptoAddress.setCurrency(cryptoName.toUpperCase());
+            cryptoAddress.setTicker(cryptoName.toUpperCase());
             cryptoAddress.setLastBalance(0.0);
             blockchainAddressStoreService.save(cryptoAddress);
             addressStores.add(cryptoAddress);

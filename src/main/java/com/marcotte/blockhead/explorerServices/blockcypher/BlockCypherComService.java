@@ -69,7 +69,7 @@ public class BlockCypherComService
     public boolean addressInfo(BlockchainAddressStore blockchainAddressStore)
     {
         boolean result = false;
-        String crypto = blockchainAddressStore.getCurrency();
+        String crypto = blockchainAddressStore.getTicker();
         String address = blockchainAddressStore.getAddress();
         String theRawJsonQuote;
         Timestamp lastupdated;

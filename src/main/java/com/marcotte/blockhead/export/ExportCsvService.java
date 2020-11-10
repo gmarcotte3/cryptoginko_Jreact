@@ -110,18 +110,18 @@ public class ExportCsvService
       // only happens the first time though
       if ( currentAddr == null ) {
         currentAddr = new BlockchainAddressStore();
-        currentAddr.setCurrency(addr.getCurrency());
+        currentAddr.setTicker(addr.getTicker());
         currentAddr.setWalletName(addr.getWalletName());
         currentAddr.setLastBalance(0.0);
         summary.add(currentAddr);
       }
       // happens every time the currency or walletname changes
       if (
-          addr.getCurrency().compareToIgnoreCase(currentAddr.getCurrency()) != 0 ||
+          addr.getTicker().compareToIgnoreCase(currentAddr.getTicker()) != 0 ||
           addr.getWalletName().compareToIgnoreCase(currentAddr.getWalletName()) != 0)
       {
         currentAddr = new BlockchainAddressStore();
-        currentAddr.setCurrency(addr.getCurrency());
+        currentAddr.setTicker(addr.getTicker());
         currentAddr.setWalletName(addr.getWalletName());
         currentAddr.setLastBalance(0.0);
         summary.add(currentAddr);
@@ -169,7 +169,7 @@ public class ExportCsvService
       @Override
       public int compare(BlockchainAddressStore lhs, BlockchainAddressStore rhs) {
         // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
-        int compareResult = lhs.getCurrency().compareToIgnoreCase(rhs.getCurrency());
+        int compareResult = lhs.getTicker().compareToIgnoreCase(rhs.getTicker());
         if ( compareResult == 0 )
         {
           compareResult = lhs.getWalletName().compareToIgnoreCase(rhs.getWalletName());

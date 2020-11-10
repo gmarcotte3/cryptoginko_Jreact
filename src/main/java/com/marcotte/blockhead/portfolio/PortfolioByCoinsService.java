@@ -45,16 +45,16 @@ public class PortfolioByCoinsService {
         String currentCoin = "";
         for (BlockchainAddressStore addr : foundLatestOrderedByName ) {
             if ( currentCoin.length() == 0) {
-                currentCoin = addr.getCurrency();
+                currentCoin = addr.getTicker();
                 runningBalance = addr.getLastBalance();
-            } else if (currentCoin.compareToIgnoreCase(addr.getCurrency() )!= 0 ) {
+            } else if (currentCoin.compareToIgnoreCase(addr.getTicker() )!= 0 ) {
                 CoinDTO newCoinDTO = new CoinDTO();
                 newCoinDTO.setCoinBalance(runningBalance);
                 newCoinDTO.setTicker(currentCoin);
                 newCoinDTO.setCoinName((CryptoNames.valueOfCode(currentCoin)).getName());
                 summedByCurrency.add(newCoinDTO);
                 runningBalance = addr.getLastBalance();
-                currentCoin = addr.getCurrency();
+                currentCoin = addr.getTicker();
             } else {
                 runningBalance += addr.getLastBalance();
             }

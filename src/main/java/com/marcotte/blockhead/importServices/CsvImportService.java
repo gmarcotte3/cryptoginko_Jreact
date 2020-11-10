@@ -92,7 +92,7 @@ public class CsvImportService
         BlockchainAddressStore newAddress = new BlockchainAddressStore();
         newAddress.setAddress(address);
         newAddress.setLastBalance(balance);
-        newAddress.setCurrency(currency);
+        newAddress.setTicker(currency);
         newAddress.setLastUpdated( new Timestamp(rightNow.getTime()));
         newAddress.setMessage(IMPORT_MESSAGE);
         newAddress.setMemo("Exodus update");
@@ -106,7 +106,7 @@ public class CsvImportService
         lastAddress.setMemo(IMPORT_MEMO);
         lastAddress.setWalletName(walletname);
         lastAddress.setLastBalance(balance);
-        lastAddress.setCurrency(currency);
+        lastAddress.setTicker(currency);
         blockchainAddressStoreService.save(lastAddress);
         savedList.add(lastAddress);
       }

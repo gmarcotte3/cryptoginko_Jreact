@@ -19,7 +19,7 @@ public class BlockchainAddressStore
 
 
     private String address;
-    private String currency;
+    private String ticker;
     private Double lastBalance;
     private Integer numTransactions;
     private Timestamp lastUpdated;
@@ -31,7 +31,7 @@ public class BlockchainAddressStore
     public BlockchainAddressStore()
     {
         this.walletName = "";
-        this.currency = "";
+        this.ticker = "";
     }
 
     public BlockchainAddressStore( BlockchainAddressStore old) {
@@ -40,7 +40,7 @@ public class BlockchainAddressStore
 
     public void setBlockChainAddressStore( BlockchainAddressStore old ) {
         this.address = old.getAddress();
-        this.currency = old.getCurrency();
+        this.ticker = old.getTicker();
         this.lastBalance = old.getLastBalance();
         this.numTransactions = old.getNumTransactions();
         this.lastUpdated = old.getLastUpdated();
@@ -65,12 +65,12 @@ public class BlockchainAddressStore
         this.address = address;
     }
 
-    public String getCurrency() {
-        return currency;
+    public String getTicker() {
+        return ticker;
     }
 
-    public void setCurrency(String currency) {
-        this.currency = currency.toUpperCase();
+    public void setTicker(String ticker) {
+        this.ticker = ticker.toUpperCase();
     }
 
     public Double getLastBalance() {

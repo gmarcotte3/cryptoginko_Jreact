@@ -49,7 +49,7 @@ public class PortFolioByWaletAndCoinService {
         for (BlockchainAddressStore addr : foundLatestOrderedByCurrency ) {
             if ( firstPass ) {
                 currentWallet = addr.getWalletName();
-                currentCoin = addr.getCurrency();
+                currentCoin = addr.getTicker();
                 firstPass = false;
             }
             if ( currentWallet.compareToIgnoreCase(addr.getWalletName()) != 0 ) {
@@ -65,17 +65,17 @@ public class PortFolioByWaletAndCoinService {
                 summedByWallet.add( walletDTO);
 
                 summedByCurrency = new ArrayList<CoinDTO>();
-                currentCoin = addr.getCurrency();
+                currentCoin = addr.getTicker();
                 runningBalance = addr.getLastBalance();
                 currentWallet = addr.getWalletName();
-            } else if (currentCoin.compareToIgnoreCase(addr.getCurrency() )!= 0 ) {
+            } else if (currentCoin.compareToIgnoreCase(addr.getTicker() )!= 0 ) {
                 CoinDTO newCoinDTO = new CoinDTO();
                 newCoinDTO.setCoinBalance(runningBalance);
                 newCoinDTO.setTicker(currentCoin);
                 newCoinDTO.setCoinName((CryptoNames.valueOfCode(currentCoin)).getName());
                 summedByCurrency.add(newCoinDTO);
                 runningBalance = addr.getLastBalance();
-                currentCoin = addr.getCurrency();
+                currentCoin = addr.getTicker();
             } else {
                 runningBalance += addr.getLastBalance();
             }

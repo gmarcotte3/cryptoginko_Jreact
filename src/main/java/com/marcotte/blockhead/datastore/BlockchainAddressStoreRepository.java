@@ -7,13 +7,13 @@ import java.util.List;
 
 public interface BlockchainAddressStoreRepository extends CrudRepository< BlockchainAddressStore, Long>
 {
-    List<BlockchainAddressStore> findBlockchainAddressStoreByAddressAndCurrency(String address, String currency);
-    List<BlockchainAddressStore> findBlockchainAddressStoreBycurrency( String currency);
-    List<BlockchainAddressStore> findBlockchainAddressStoreBycurrencyAndWalletName( String currency, String walletName);
-    
+    List<BlockchainAddressStore> findBlockchainAddressStoreByAddressAndTicker(String address, String ticker);
+    List<BlockchainAddressStore> findBlockchainAddressStoreByTicker(String ticker);
+    List<BlockchainAddressStore> findBlockchainAddressStoreByTickerAndWalletName(String ticker, String walletName);
+
     @Query(nativeQuery = true, value =
             "SELECT currency, sum(lastBalance) as lastBalance " +
                     "FROM BlockchainAddressStore " +
-                    "GROUP BY currency")
-    List<BlockchainAddressStore> findAllLatestSumBalanceGroupByCurrency( );
+                    "GROUP BY ticker")
+    List<BlockchainAddressStore> findAllLatestSumBalanceGroupByTicker( );
 }
