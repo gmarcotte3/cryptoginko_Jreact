@@ -7,17 +7,27 @@ import styled from 'styled-components'
 import Tabs from  "../Tabs/Tabs";
 
 
+
+
+
 // styled TD
 const TD = styled.td`
-    border: 1px solid #2c2b2b;
+//    border: 1px solid #2c2b2b;
     width : 25vh;
 `;
 
 // styled TD
 const Table = styled.table`
-    border: 1px solid #2c2b2b;
+//    border: 1px solid #2c2b2b;
     width : 100%
 `;
+
+const DivPage = styled.div`
+position: relative;
+    top: -20px;
+    background: transparent linear-gradient(180deg, #393939 0%, #7A7A7A 100%) 0% 0% no-repeat padding-box;
+`;
+
 const PORTFOLIO_BYWALLET_URL = "http://localhost:8082/ginkoJ/portfolio/byWallet";
 
 export default function PortfolioByWallet(props) {
@@ -43,7 +53,7 @@ export default function PortfolioByWallet(props) {
       })
 
     return (
-        <div> 
+        <DivPage> 
             
         
             <h3>list of wallet coins balance and values</h3>
@@ -66,7 +76,7 @@ export default function PortfolioByWallet(props) {
                 </tbody>
             </Table>
 
-        </div>
+        </DivPage>
     )
 
 }

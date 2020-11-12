@@ -2,8 +2,20 @@ import React from 'react'
 import axios from 'axios';
 import FilePicker from '../FilePicker/FilePicker';
 import CoinAddress from '../CoinAddress/CoinAddress';
+import styled from 'styled-components'
 
+const Div = styled.div`
+    background: #2B2B2B 0% 0% no-repeat padding-box;
+    //background: transparent linear-gradient(180deg, #393939 0%, #7A7A7A 100%) 0% 0% no-repeat padding-box;
+    opacity: 1;
+    height: 44px
+`;
 
+const DivPage = styled.div`
+position: relative;
+    top: -20px;
+    background: transparent linear-gradient(180deg, #393939 0%, #7A7A7A 100%) 0% 0% no-repeat padding-box;
+`;
 
 const IMPORT_GINKO_ADDR_URL = "http://localhost:8082/ginkoJ/import/addressescsv";
 
@@ -35,7 +47,7 @@ export default function ImportGinkoAddressCSV(props) {
     }
 
     return (
-        <div>
+        <DivPage>
             <h1>Import Ginko address csv file</h1>
             <p>
             This is where you can inport address export from this ginko portfolio management
@@ -58,6 +70,6 @@ export default function ImportGinkoAddressCSV(props) {
             }
             </tbody>
             </table>
-        </div>
+        </DivPage>
     )   
 }

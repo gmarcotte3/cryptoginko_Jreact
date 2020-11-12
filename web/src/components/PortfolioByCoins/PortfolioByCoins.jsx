@@ -24,11 +24,17 @@ const Div = styled.div`
 margin-right:100px;
 `;
 
+const DivPage = styled.div`
+position: relative;
+    top: -20px;
+    background: transparent linear-gradient(180deg, #393939 0%, #7A7A7A 100%) 0% 0% no-repeat padding-box;
+`;
+
 export default function PortfolioByCoins(props) {
 
 
     return (
-        <div> 
+        <DivPage> 
             <h1>Protfolio value</h1>
             <p></p>
             <table>
@@ -82,7 +88,7 @@ export default function PortfolioByCoins(props) {
                 </Table>
             </Div>
 
-        </div>
+        </DivPage>
     )
 
 }

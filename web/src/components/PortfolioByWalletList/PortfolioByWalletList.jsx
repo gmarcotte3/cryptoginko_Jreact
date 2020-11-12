@@ -6,7 +6,7 @@ import PotfolioByCoin from "../PotfolioByCoin/PotfolioByCoin";
 
 // styled TD
 const TD = styled.td`
-    border: 1px solid #2c2b2b;
+ //   border: 1px solid #2c2b2b;
     width : 25vh;
 `;
 

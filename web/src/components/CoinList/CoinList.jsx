@@ -7,11 +7,19 @@ const Table = styled.table`
   }
 `;
 
+const Div = styled.div`
+    background: #2B2B2B 0% 0% no-repeat padding-box;
+    //background: transparent linear-gradient(180deg, #393939 0%, #7A7A7A 100%) 0% 0% no-repeat padding-box;
+    opacity: 1;
+    height: 44px
+`;
+
+
 export default function CoinList(props) {
     // render as a table of coins
 
         return (
-            <div label="current prices">
+            <Div label="current prices">
                 <Table >
                     <thead>
                         <tr>
@@ -38,6 +46,6 @@ export default function CoinList(props) {
                         }
                     </tbody>
                 </Table>
-            </div>
+            </Div>
         )
 }

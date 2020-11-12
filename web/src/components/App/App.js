@@ -20,14 +20,15 @@ import styled from 'styled-components'
 import axios from 'axios';
 
 
-// stypled logo
+// stypled tab bar
 const Div2 = styled.div`
     position: relative;
-    top: -20px;
-    //background: #2B2B2B 0% 0% no-repeat padding-box;
-    background: transparent linear-gradient(180deg, #101010 0%, #646464 100%) 0% 0% no-repeat padding-box;
+    top: 0px;
+    background: #2B2B2B 0% 0% no-repeat padding-box;
+    //background: transparent linear-gradient(180deg, #101010 0%, #646464 100%) 0% 0% no-repeat padding-box;
     opacity: 1;
     color: white;
+    height: 70px
 `;
 
 
