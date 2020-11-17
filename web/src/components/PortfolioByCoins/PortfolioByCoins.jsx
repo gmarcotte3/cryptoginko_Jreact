@@ -35,7 +35,7 @@ export default function PortfolioByCoins(props) {
 
     return (
         <DivPage> 
-            <h1>Protfolio value</h1>
+            <h1>Portfolio value</h1>
             <p></p>
             <table>
                 <thead>

@@ -3,6 +3,8 @@ package com.marcotte.blockhead.importServices;
 import com.marcotte.blockhead.datastore.BlockchainAddressCsvService;
 import com.marcotte.blockhead.datastore.BlockchainAddressStore;
 import com.marcotte.blockhead.datastore.BlockchainAddressStoreService;
+import com.marcotte.blockhead.datastore.CoinService;
+import com.marcotte.blockhead.model.CoinDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -25,6 +28,9 @@ public class CsvImportService
   private BlockchainAddressStoreService blockchainAddressStoreService;
   @Autowired
   private BlockchainAddressCsvService blockchainAddressCsvService;
+
+  @Autowired
+  private CoinService coinService;
 
   private static final int COL_CSV_ROW_TYPE = 0;
   private static final int COL_ADDRESS = 1;
@@ -62,6 +68,8 @@ public class CsvImportService
     }
 
     Date rightNow = new Date();
+    HashMap<String, CoinDTO> coinMap = coinService.findAllReturnTickerCoinDTOMap();
+
 
     for( int j = 0 ; j < csvFileArray.size(); j++)
     {
@@ -79,6 +87,7 @@ public class CsvImportService
       {
         balance = Double.valueOf(row.get(COL_BALANCE));
       } catch ( Exception e) {
+        //TODO throw exception here.
         log.error("faild to convert balance input:" + row.get(COL_BALANCE));
         balance = 0.0;
       }
@@ -97,9 +106,13 @@ public class CsvImportService
         newAddress.setMessage(IMPORT_MESSAGE);
         newAddress.setMemo("Exodus update");
         newAddress.setWalletName(walletname);
-
-        blockchainAddressStoreService.save(newAddress);
-        savedList.add(newAddress);
+        if ( validateAddress( newAddress )) {
+          blockchainAddressStoreService.save(newAddress);
+          savedList.add(newAddress);
+        } else {
+          // TODO throw exception here
+          log.error("Bad Coin import=" + newAddress.toString());
+        }
       } else {
         lastAddress.setLastUpdated( new Timestamp(rightNow.getTime()));
         lastAddress.setMessage(IMPORT_MESSAGE);
@@ -114,6 +127,19 @@ public class CsvImportService
     } //endfor
     return savedList;
 
+  }
+  private boolean validateAddress( BlockchainAddressStore addressToTest ) {
+    if ( isNullOrBlank(addressToTest.getAddress()) ) return false;
+    if ( isNullOrBlank(addressToTest.getWalletName()) ) return false;
+    if ( isNullOrBlank(addressToTest.getTicker()) ) return false;
+
+    return true;
+
+  }
+  private boolean isNullOrBlank(String testStr) {
+    if ( testStr == null ) return true;
+    if ( testStr.length() == 0 ) return true;
+    return false;
   }
 
 }

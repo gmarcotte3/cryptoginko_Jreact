@@ -70,8 +70,8 @@ export default function App(props) {
       if ( totalValue < 0)
       {
         setTotalValue(0);
-        console.log("refreshing now ..... ");
-          componentDidMount();
+        console.log("refreshing now =..... ");
+        componentDidMount();
       }
   })
 

@@ -47,7 +47,6 @@ export default function PortfolioByWallet(props) {
           if ( numberOfWallets < 0)
           {
             setNumberOfWallets(0);
-            console.log("refreshing now ..... ");
             componentDidMount();
           }
       })

@@ -155,4 +155,12 @@ public class CoinService {
         }
         return coinList;
     }
+
+    /**
+     * clear the coin table
+     */
+    public void deleteAll() {
+        coinRepository.deleteAll();
+    }
+
 }

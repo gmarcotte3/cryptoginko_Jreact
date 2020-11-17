@@ -2,12 +2,14 @@ package com.marcotte.blockhead.portfolio;
 
 import com.marcotte.blockhead.datastore.BlockchainAddressStore;
 import com.marcotte.blockhead.datastore.BlockchainAddressStoreService;
+import com.marcotte.blockhead.datastore.CoinService;
 import com.marcotte.blockhead.model.CoinDTO;
 import com.marcotte.blockhead.model.CryptoNames;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -16,6 +18,9 @@ public class PortfolioByCoinsService {
 
     @Autowired
     private BlockchainAddressStoreService blockchainAddressStoreService;
+
+    @Autowired
+    private CoinService coinService;
 
     /**
      * return a list of crypto currencies that are all the addresses sum over balances grouped by the
@@ -36,6 +41,7 @@ public class PortfolioByCoinsService {
     public List<CoinDTO> sumByCryptoCurrency(List<BlockchainAddressStore> foundLatestOrderedByName) {
         List<CoinDTO> summedByCurrency = new ArrayList<CoinDTO>();
 
+        HashMap<String, CoinDTO>  coinMap = coinService.findAllReturnTickerCoinDTOMap();
         // if there are no coins found then return []
         if ( foundLatestOrderedByName.size() == 0) {
             return summedByCurrency;
@@ -51,7 +57,7 @@ public class PortfolioByCoinsService {
                 CoinDTO newCoinDTO = new CoinDTO();
                 newCoinDTO.setCoinBalance(runningBalance);
                 newCoinDTO.setTicker(currentCoin);
-                newCoinDTO.setCoinName((CryptoNames.valueOfCode(currentCoin)).getName());
+                newCoinDTO.setCoinName(getCoinNameFromTicker(currentCoin,  coinMap));
                 summedByCurrency.add(newCoinDTO);
                 runningBalance = addr.getLastBalance();
                 currentCoin = addr.getTicker();
@@ -67,5 +73,14 @@ public class PortfolioByCoinsService {
         summedByCurrency.add(newCoinDTO);
 
         return summedByCurrency;
+    }
+
+    private String getCoinNameFromTicker(String ticker, HashMap<String, CoinDTO>  coinMap) {
+        CoinDTO coinDTO = coinMap.get(ticker);
+        if ( coinDTO != null ) {
+            return coinDTO.getCoinName();
+        } else {
+            return "UknownCoin";
+        }
     }
 }

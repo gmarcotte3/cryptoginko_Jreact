@@ -76,10 +76,17 @@ public class BlockchainAddressStoreController
     }
 
     @DeleteMapping("/address")
-    public @ResponseBody  ResponseEntity<BlockchainAddressStore> deleteAddresses(
+    public @ResponseBody  ResponseEntity<BlockchainAddressStore> deleteAddress(
             @RequestBody BlockchainAddressStore addressStore) throws Exception
     {
         blockchainAddressStoreService.delete(addressStore);
         return new ResponseEntity<BlockchainAddressStore>(addressStore, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/address/all")
+    public @ResponseBody  ResponseEntity<String> deleteAddresses() throws Exception
+    {
+        blockchainAddressStoreService.deleteAll();
+        return new ResponseEntity<String>("address have been cleared", HttpStatus.OK);
     }
 }
