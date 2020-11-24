@@ -15,7 +15,7 @@ public class AboutController {
     private static final Logger log = LoggerFactory.getLogger(AboutController.class);
 
     public static final String applicationName = "ginkoJ";
-    public static final String version = "2020.11.12";
+    public static final String version = "2020.11.24";
     @GetMapping("")
     public AboutInfo aboutInfo()
     {
