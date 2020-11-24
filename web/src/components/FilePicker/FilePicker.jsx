@@ -26,8 +26,6 @@ const Input = styled.input`
  */
 export default function FilePicker(props) {
     const [selectedFile, setSelectedFile] = useState(null);
-  
-    const IMPORT_GINKO_ADDR_URL = "http://localhost:8082/blockhead/import/addressescsv";
 
     /**
      * Handle the file selection button event. 
@@ -40,9 +38,6 @@ export default function FilePicker(props) {
 
     
     const handleSubmit = (event) => {
-      console.log("sumit, selected file=", selectedFile);
-      console.log("event", event);
-
       var bodyFormData = new FormData();
       bodyFormData.append('file', selectedFile); 
 

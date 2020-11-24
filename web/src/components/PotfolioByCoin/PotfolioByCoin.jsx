@@ -87,12 +87,12 @@ export default function PotfolioByCoin(props) {
         return item;
     }
    
-    console.log("props.ticker", props.ticker);
+ //   console.log("props.ticker", props.ticker);
     let price = props.fiat_prices.find(findcode);
-    console.log("price=", price);
+//    console.log("price=", price);
     let coinvalue = props.fiat_balances.find(findcode);
 
-    console.log("coinvalue.code=", coinvalue.code);
+//    console.log("coinvalue.code=", coinvalue.code);
     let coinIcon = coinIconsMap.get(props.ticker);
     if ( typeof coinIcon === 'undefined') {
         coinIcon = unkIcon;

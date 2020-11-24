@@ -38,10 +38,6 @@ const Img2 = styled.img`
     
 `;
 
-//styled header hi
-const H1 = styled.h1`
-    font-size: 4rem;
-`;
 
 
 export default function GinkoHeader(props) {

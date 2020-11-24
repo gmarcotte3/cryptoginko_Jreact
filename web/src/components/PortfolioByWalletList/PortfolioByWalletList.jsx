@@ -1,12 +1,10 @@
 
 import React from 'react'
 import styled from 'styled-components'
-import FiatCurrency from "../FiatCurrency/FiatCurrency";
 import PotfolioByCoin from "../PotfolioByCoin/PotfolioByCoin";
 
 // styled TD
 const TD = styled.td`
- //   border: 1px solid #2c2b2b;
     width : 25vh;
 `;
 
@@ -17,9 +15,6 @@ const TD = styled.td`
  * 
  */
 export default function PortfolioByWalletList(props) {
-
-    console.log( "defaultFiatCurrency",props.defaultFiatCurrency); //debug
-    console.log( "portfolioByCoins",props.portfolioByCoins);       //debug
    
  
     return (

@@ -1,11 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
 
-// styled TD
-const TD = styled.td`
-    border: 1px solid #2c2b2b;
-    width : 25vh;
-`;
 
 /**
  * Fiat currency component that will display a row in a table with the correct

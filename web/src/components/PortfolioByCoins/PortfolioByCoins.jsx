@@ -1,9 +1,7 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import FiatCurrency from "../FiatCurrency/FiatCurrency";
 import PotfolioByCoin from "../PotfolioByCoin/PotfolioByCoin";
-import axios from 'axios';
 import styled from 'styled-components'
-import Tabs from  "../Tabs/Tabs";
 
 
 // styled TD

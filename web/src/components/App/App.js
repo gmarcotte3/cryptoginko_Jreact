@@ -35,6 +35,7 @@ const Div2 = styled.div`
 const PORTFOLIO_BACKEND_URL = "http://localhost:8082/ginkoJ/portfolio/total";
 const PORTFOLIO_BYCOINS_URL = "http://localhost:8082/ginkoJ/portfolio/bycoins";
 const IMPORT_GINKO_ADDR_URL = "http://localhost:8082/ginkoJ/import/addressescsv";
+const GET_COINS_PRICE_URL = "http://localhost:8082/ginkoJ/coin/";
 
 
 export default function App(props) {
@@ -47,30 +48,37 @@ export default function App(props) {
   const [portfolioByCoins, setPortfolioByCoins] = React.useState([]);
 
   const componentDidMount = async () => {
+      let response0 = await axios.get(GET_COINS_PRICE_URL);
+      setMyCoins(response0.data);
+
       let response = await axios.put(PORTFOLIO_BACKEND_URL);
       let updatedPorfolioFiatValues = response.data;
-      console.log("porfolioFiatValues", updatedPorfolioFiatValues);
 
       let totalValue2 = 0;
       for( let i =0; i< updatedPorfolioFiatValues.length; i++) {
           totalValue2 += updatedPorfolioFiatValues[i].coinValue;
       }
-      console.log("total Value=", totalValue2);
+  
       setTotalValue(totalValue2);
       setPortfolioFiatValues(updatedPorfolioFiatValues);
       
       let response2 = await axios.get(PORTFOLIO_BYCOINS_URL);
       let newPortfolioByCoins = response2.data;
-      console.log("newPortfolioByCoins", newPortfolioByCoins);
+      
       setPortfolioByCoins(newPortfolioByCoins);
   }
 
+
+
+  const handleRefreshCoinPrices = () => {
+//    console.log("maded it back to handleRefreshCoinPrices");
+    componentDidMount();
+  };
+
   useEffect( function() {
-    console.log("..;");
       if ( totalValue < 0)
       {
         setTotalValue(0);
-        console.log("refreshing now =..... ");
         componentDidMount();
       }
   })
@@ -91,7 +99,7 @@ export default function App(props) {
               />
           </div>
           <div label="current prices">
-            <CoinList coinData={myCoins}/>
+            <CoinList coinData={myCoins} handleRefreshCoinPrices={handleRefreshCoinPrices} />
           </div>
           <div label="import wallet csv">
             <ImportWalletCSV

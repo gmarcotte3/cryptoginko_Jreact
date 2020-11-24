@@ -8,14 +8,12 @@ const TD = styled.td`
     width : 16vw;
 `;
 
-// Styled button
-const Button = styled.button`
-    font-size: 11px;
-    width: 64px;
-    margin: 3px 5px 0;
-    vertical-align: middle;
+// styled TD
+const TDPrice = styled.td`
+    border: 1px solid #2c2b2b;
+    width : 25vh;
+    text-align: right;
 `;
-
 
 /**
  * This class represents a crypto coin with attributes of name, ticker, and price
@@ -31,29 +29,29 @@ export default function Coin(props) {
        maximumFractionDigits: 0,
     }
 
-    const getPrice = () => {
+    const getPriceUSD = () => {
         return (
-            this.props.price.toLocaleString(undefined, this.currencyOptions)
+            props.priceUSD.toLocaleString(undefined, currencyOptions)
         );
     }
     const getPriceNZD = () => {
         return (
-            this.props.nzd.toLocaleString(undefined, this.currencyOptions)
+            props.priceNZD.toLocaleString(undefined, currencyOptions)
         );
     }
     const getPriceJPY = () => {
         return (
-            this.props.jpy.toLocaleString(undefined, this.currencyOptionsJpy)
+            props.priceJPY.toLocaleString(undefined, currencyOptionsJpy)
         );
     }
 
     return (
         <tr className="coin-row">
-            <TD>{this.props.name}</TD>
-            <TD>{this.props.ticker}</TD>
-            <TD>${this.getPrice()}</TD>
-            <TD>${this.getPriceNZD()}</TD>
-            <TD>{this.getPriceJPY()}円</TD>
+            <TD>{props.coinName}</TD>
+            <TD>{props.ticker}</TD>
+            <TDPrice>${getPriceUSD()}</TDPrice>
+            <TDPrice>${getPriceNZD()}</TDPrice>
+            <TDPrice>{getPriceJPY()}円</TDPrice>
         </tr>
     )
 
@@ -61,7 +59,7 @@ export default function Coin(props) {
 
 // data member requirements and type.
 Coin.protoType = {
-    name: PropTypes.string.isRequired,
+    coinName: PropTypes.string.isRequired,
     ticker: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired
 }

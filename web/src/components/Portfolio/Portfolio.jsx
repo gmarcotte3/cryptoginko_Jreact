@@ -1,15 +1,9 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import Tabs from  "../Tabs/Tabs";
 import PortfolioByCoins from '../PortfolioByCoins/PortfolioByCoins';
 import PortfolioByWallet from '../PortfolioByWallet/PortfolioByWallet';
 
-
-// styled TD
-const TD = styled.td`
-    border: 1px solid #2c2b2b;
-    width : 25vh;
-`;
 
 const Div = styled.div`
     background: #2B2B2B 0% 0% no-repeat padding-box;

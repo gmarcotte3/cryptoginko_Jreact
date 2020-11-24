@@ -4,13 +4,6 @@ import FilePicker from '../FilePicker/FilePicker';
 import CoinAddress from '../CoinAddress/CoinAddress';
 import styled from 'styled-components'
 
-const Div = styled.div`
-    background: #2B2B2B 0% 0% no-repeat padding-box;
-    //background: transparent linear-gradient(180deg, #393939 0%, #7A7A7A 100%) 0% 0% no-repeat padding-box;
-    opacity: 1;
-    height: 44px
-`;
-
 const DivPage = styled.div`
 position: relative;
     top: -20px;
@@ -21,12 +14,10 @@ const IMPORT_GINKO_ADDR_URL = "http://localhost:8082/ginkoJ/import/addressescsv"
 
 export default function ImportGinkoAddressCSV(props) {
 
-    const URL = props.importGinkoAddrURL;
     const [coinAddresses, setCoinAddresses] = React.useState([]);
 
     // TODO move up to app
     const onSubmitFile = (bodyFormData) => {
-        console.log("do the file upload now", bodyFormData);
         
         axios({
             method: 'post',
@@ -36,12 +27,11 @@ export default function ImportGinkoAddressCSV(props) {
             })
             .then(function (response) {
                 //handle success
-                console.log("Success", response);  //debugging
                 setCoinAddresses( response.data );
             })
             .catch(function (response) {
                 //handle error
-                console.log("error", response); //debugging
+                // TODO some kind of error hanndling here.
             });
     
     }
