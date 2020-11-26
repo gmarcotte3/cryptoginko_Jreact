@@ -172,17 +172,17 @@ public class PortfolioService
     public List<PortfolioTracker> portfolioCheck(boolean refresh)
     {
         List<CoinList> portfolioList = new ArrayList<>();
-        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CryptoNames.BITCOIN.code, refresh);
-        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CryptoNames.BITCOIN_CASH.code, refresh);
-        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CryptoNames.DASH.code, refresh);
-        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CryptoNames.ETHEREUM.code, refresh);
-        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CryptoNames.CARDANO_ADA.code, refresh);
-        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CryptoNames.EOS.code, refresh);
-        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CryptoNames.LITE_COIN.code, refresh);
-        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CryptoNames.ZCASH.code, refresh);
-        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CryptoNames.MONERO.code, refresh);
-        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CryptoNames.LINK.code, refresh);
-        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CryptoNames.MKR.code, refresh);
+        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.BITCOIN_TICKER, refresh);
+        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.BITCOINCASH_TICKER, refresh);
+        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.DASH_TICKER, refresh);
+        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.ETHEREUM_TICKER, refresh);
+        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.CARDANO_ADA_TICKER, refresh);
+        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.EOS_TICKER, refresh);
+        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.LITE_COIN_TICKER, refresh);
+        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.ZCASH_TICKER, refresh);
+        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.MONERO_TICKER, refresh);
+        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.LINK_TICKER, refresh);
+        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.MAKER_TICKER, refresh);
 
         // save copy of the portflio here
         DateTracker dateTracker = createAndSaveDateTracker();
@@ -288,65 +288,65 @@ public class PortfolioService
      */
     public void updateCurrentCoinBalancesViaBlockExplorers(CoinList coinList)
     {
-        if ( coinList.getCoinName().equals(CryptoNames.BITCOIN.code))
+        if ( coinList.getCoinName().equals(CoinCodes.BITCOIN_TICKER))
         {
             updateCurrentBalancesForBitcoin( coinList.getCoins());
             return;
         }
 
-        if ( coinList.getCoinName().equals(CryptoNames.BITCOIN_CASH.code))
+        if ( coinList.getCoinName().equals(CoinCodes.BITCOINCASH_TICKER))
         {
             updateCurrentBalanceForBitcoinCash(coinList.getCoins());
             return;
         }
 
-        if ( coinList.getCoinName().equals(CryptoNames.DASH.code))
+        if ( coinList.getCoinName().equals(CoinCodes.DASH_TICKER))
         {
             updateCurrentBalanceForDash(coinList.getCoins());
             return;
         }
 
-        if ( coinList.getCoinName().equals(CryptoNames.ETHEREUM.code))
+        if ( coinList.getCoinName().equals(CoinCodes.ETHEREUM_TICKER))
         {
             updateCurrentBalancesForEtherium(coinList.getCoins() );
             return;
         }
 
-        if (coinList.getCoinName().equals(CryptoNames.CARDANO_ADA.code))
+        if (coinList.getCoinName().equals(CoinCodes.CARDANO_ADA_TICKER))
         {
             updateCurrentBalancesForCardano(coinList.getCoins()  );
             return;
         }
 
-        if (coinList.getCoinName().equals(CryptoNames.LITE_COIN.code))
+        if (coinList.getCoinName().equals(CoinCodes.LITE_COIN_TICKER))
         {
             updateCurrentBalancesForLiteCoin(coinList.getCoins() );
             return;
         }
 
-        if (coinList.getCoinName().equals(CryptoNames.EOS.code))
+        if (coinList.getCoinName().equals(CoinCodes.EOS_TICKER))
         {
             updateCurrentBalancesForEOS_Coin(coinList.getCoins() );
             return;
         }
 
-        if (coinList.getCoinName().equals(CryptoNames.ZCASH.code))
+        if (coinList.getCoinName().equals(CoinCodes.ZCASH_TICKER))
         {
             updateCurrentBalancesForZCashCoin(coinList.getCoins() );
             return;
         }
 
-        if (coinList.getCoinName().equals(CryptoNames.MONERO.code))
+        if (coinList.getCoinName().equals(CoinCodes.MONERO_TICKER))
         {
             //TODO implement an exporor service call here.
             return;
         }
-        if (coinList.getCoinName().equals(CryptoNames.LINK.code))
+        if (coinList.getCoinName().equals(CoinCodes.LINK_TICKER))
         {
             //TODO implement an exporor service call here.
             return;
         }
-        if (coinList.getCoinName().equals(CryptoNames.MKR.code))
+        if (coinList.getCoinName().equals(CoinCodes.MAKER_TICKER))
         {
             //TODO implement an exporor service call here.
             return;

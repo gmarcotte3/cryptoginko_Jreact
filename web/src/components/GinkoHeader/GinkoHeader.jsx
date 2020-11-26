@@ -10,7 +10,7 @@ const DivBanner = styled.div`
     height: 150px;
 `;
 
-const MenuSection = styled.div`
+const MenuSection = styled.td`
     position: relative;
     top: 0 px;
     left: 0 px;

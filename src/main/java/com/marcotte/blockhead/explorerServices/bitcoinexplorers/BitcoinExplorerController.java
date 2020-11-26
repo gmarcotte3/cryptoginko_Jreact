@@ -1,7 +1,7 @@
 package com.marcotte.blockhead.explorerServices.bitcoinexplorers;
 
 import com.marcotte.blockhead.datastore.BlockchainAddressStore;
-import com.marcotte.blockhead.model.CryptoNames;
+import com.marcotte.blockhead.model.CoinCodes;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +19,7 @@ public class BitcoinExplorerController
 {
     private static final Logger log = LoggerFactory.getLogger(BitcoinExplorerController.class);
 
+
     @Autowired
     private BitcoinExplorerServices bitcoinExplorerServices;
 
@@ -30,7 +31,7 @@ public class BitcoinExplorerController
     {
         BlockchainAddressStore blockchainAddressStore = new BlockchainAddressStore();
         blockchainAddressStore.setAddress(address);
-        blockchainAddressStore.setTicker(CryptoNames.BITCOIN.code);
+        blockchainAddressStore.setTicker(CoinCodes.BITCOIN_TICKER);
 
         bitcoinExplorerServices.addressInfo(blockchainAddressStore);
 

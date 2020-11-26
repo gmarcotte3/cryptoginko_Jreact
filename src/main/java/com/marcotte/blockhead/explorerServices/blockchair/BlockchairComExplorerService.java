@@ -2,7 +2,6 @@ package com.marcotte.blockhead.explorerServices.blockchair;
 
 import com.marcotte.blockhead.config.BlockheadConfig;
 import com.marcotte.blockhead.datastore.BlockchainAddressStore;
-import com.marcotte.blockhead.model.CryptoNames;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -297,7 +296,6 @@ public class BlockchairComExplorerService
   private double getSatochiDecmalsForCrypto(String crypto)
   {
     double satoshiDecimals;
-    CryptoNames cryptoNames;
 
     switch (crypto.toUpperCase() )
     {

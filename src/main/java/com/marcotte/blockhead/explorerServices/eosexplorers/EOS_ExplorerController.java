@@ -1,7 +1,7 @@
 package com.marcotte.blockhead.explorerServices.eosexplorers;
 
 import com.marcotte.blockhead.datastore.BlockchainAddressStore;
-import com.marcotte.blockhead.model.CryptoNames;
+import com.marcotte.blockhead.model.CoinCodes;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +22,7 @@ public class EOS_ExplorerController
 {
     private static final Logger log = LoggerFactory.getLogger(EOS_ExplorerController.class);
 
+
     @Autowired
     private EOS_ExplorerServices eos_explorerServices;
 
@@ -35,7 +36,7 @@ public class EOS_ExplorerController
 
         BlockchainAddressStore blockchainAddressStore = new BlockchainAddressStore();
         blockchainAddressStore.setAddress(address);
-        blockchainAddressStore.setTicker(CryptoNames.EOS.code);
+        blockchainAddressStore.setTicker(CoinCodes.EOS_TICKER);
 
         eos_explorerServices.addressInfo(blockchainAddressStore);
 

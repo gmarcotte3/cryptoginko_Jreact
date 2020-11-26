@@ -2,7 +2,7 @@ package com.marcotte.blockhead.explorerServices.blockcypher;
 
 import com.marcotte.blockhead.config.BlockheadConfig;
 import com.marcotte.blockhead.datastore.BlockchainAddressStore;
-import com.marcotte.blockhead.model.CryptoNames;
+import com.marcotte.blockhead.model.CoinCodes;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +27,8 @@ public class BlockCypherComService
 {
     private static final Logger log = LoggerFactory.getLogger(BlockCypherComService.class);
     public  final String BLOCKCYPHER_SERVICE = "blockCypherCom";
+
+
 
 
     //TODO use the blockcyper api key
@@ -167,9 +169,8 @@ public class BlockCypherComService
     private double getSatochiDecmalsForCrypto(String crypto)
     {
         double satoshiDecimals;
-        CryptoNames cryptoNames;
 
-        if ( crypto.toUpperCase().equals(CryptoNames.ETHEREUM))
+        if ( crypto.toUpperCase().equals(CoinCodes.ETHEREUM_TICKER))
         {
             // Etherioum uses a finer number of satoshi for each coin
             satoshiDecimals = 1E18;

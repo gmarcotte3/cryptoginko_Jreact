@@ -4,7 +4,6 @@ import com.marcotte.blockhead.datastore.BlockchainAddressStore;
 import com.marcotte.blockhead.datastore.BlockchainAddressStoreService;
 import com.marcotte.blockhead.datastore.CoinService;
 import com.marcotte.blockhead.model.CoinDTO;
-import com.marcotte.blockhead.model.CryptoNames;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -69,7 +68,7 @@ public class PortfolioByCoinsService {
         CoinDTO newCoinDTO = new CoinDTO();
         newCoinDTO.setCoinBalance(runningBalance);
         newCoinDTO.setTicker(currentCoin);
-        newCoinDTO.setCoinName((CryptoNames.valueOfCode(currentCoin)).getName());
+        newCoinDTO.setCoinName(getCoinNameFromTicker(currentCoin,  coinMap));
         summedByCurrency.add(newCoinDTO);
 
         return summedByCurrency;

@@ -1,7 +1,7 @@
 package com.marcotte.blockhead.explorerServices.zcashExplorers;
 
 import com.marcotte.blockhead.datastore.BlockchainAddressStore;
-import com.marcotte.blockhead.model.CryptoNames;
+import com.marcotte.blockhead.model.CoinCodes;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +21,7 @@ public class ZCashExplorerController
 {
     private static final Logger log = LoggerFactory.getLogger(ZCashExplorerController.class);
 
+
     @Autowired
     private ZCashExplorerServices zCashExplorerServices;
 
@@ -34,7 +35,7 @@ public class ZCashExplorerController
 
         BlockchainAddressStore blockchainAddressStore = new BlockchainAddressStore();
         blockchainAddressStore.setAddress(address);
-        blockchainAddressStore.setTicker(CryptoNames.ZCASH.code);
+        blockchainAddressStore.setTicker(CoinCodes.ZCASH_TICKER);
 
         zCashExplorerServices.addressInfo(blockchainAddressStore);
 

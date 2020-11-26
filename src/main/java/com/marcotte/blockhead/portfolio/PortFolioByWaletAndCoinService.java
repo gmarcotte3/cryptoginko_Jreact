@@ -2,12 +2,14 @@ package com.marcotte.blockhead.portfolio;
 
 import com.marcotte.blockhead.datastore.BlockchainAddressStore;
 import com.marcotte.blockhead.datastore.BlockchainAddressStoreService;
+import com.marcotte.blockhead.datastore.CoinService;
 import com.marcotte.blockhead.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -16,6 +18,10 @@ public class PortFolioByWaletAndCoinService {
 
     @Autowired
     private BlockchainAddressStoreService blockchainAddressStoreService;
+
+    @Autowired
+    private CoinService coinService;
+
 
 
     /**
@@ -37,6 +43,9 @@ public class PortFolioByWaletAndCoinService {
         List<CoinDTO> summedByCurrency = new ArrayList<CoinDTO>();
         List<WalletDTO> summedByWallet = new ArrayList<WalletDTO>();
 
+        HashMap<String, CoinDTO> coinMap = coinService.findAllReturnTickerCoinDTOMap();
+
+
         // if there are no coins found then return []
         if ( foundLatestOrderedByCurrency.size() == 0) {
             return summedByWallet;
@@ -56,7 +65,7 @@ public class PortFolioByWaletAndCoinService {
                 CoinDTO newCoinDTO = new CoinDTO();
                 newCoinDTO.setCoinBalance(runningBalance);
                 newCoinDTO.setTicker(currentCoin);
-                newCoinDTO.setCoinName((CryptoNames.valueOfCode(currentCoin)).getName());
+                newCoinDTO.setCoinName(getCoinNameFromTicker(currentCoin,  coinMap));
                 summedByCurrency.add(newCoinDTO);
 
                 WalletDTO walletDTO = new WalletDTO();
@@ -72,7 +81,7 @@ public class PortFolioByWaletAndCoinService {
                 CoinDTO newCoinDTO = new CoinDTO();
                 newCoinDTO.setCoinBalance(runningBalance);
                 newCoinDTO.setTicker(currentCoin);
-                newCoinDTO.setCoinName((CryptoNames.valueOfCode(currentCoin)).getName());
+                newCoinDTO.setCoinName(getCoinNameFromTicker(currentCoin,  coinMap));
                 summedByCurrency.add(newCoinDTO);
                 runningBalance = addr.getLastBalance();
                 currentCoin = addr.getTicker();
@@ -84,7 +93,7 @@ public class PortFolioByWaletAndCoinService {
         CoinDTO newCoinDTO = new CoinDTO();
         newCoinDTO.setCoinBalance(runningBalance);
         newCoinDTO.setTicker(currentCoin);
-        newCoinDTO.setCoinName((CryptoNames.valueOfCode(currentCoin)).getName());
+        newCoinDTO.setCoinName(getCoinNameFromTicker(currentCoin,  coinMap));
         summedByCurrency.add(newCoinDTO);
 
         WalletDTO walletDTO = new WalletDTO();
@@ -157,5 +166,13 @@ public class PortFolioByWaletAndCoinService {
         return walletList;
     }
 
+    private String getCoinNameFromTicker(String ticker, HashMap<String, CoinDTO>  coinMap) {
+        CoinDTO coinDTO = coinMap.get(ticker);
+        if ( coinDTO != null ) {
+            return coinDTO.getCoinName();
+        } else {
+            return "UknownCoin";
+        }
+    }
 
 }

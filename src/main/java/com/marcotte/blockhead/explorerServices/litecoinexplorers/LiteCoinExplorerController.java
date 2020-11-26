@@ -1,7 +1,7 @@
 package com.marcotte.blockhead.explorerServices.litecoinexplorers;
 
 import com.marcotte.blockhead.datastore.BlockchainAddressStore;
-import com.marcotte.blockhead.model.CryptoNames;
+import com.marcotte.blockhead.model.CoinCodes;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +22,7 @@ public class LiteCoinExplorerController
 {
     private static final Logger log = LoggerFactory.getLogger(LiteCoinExplorerController.class);
 
+
     @Autowired
     private LiteCoinExplorerServices liteCoinExplorerServices;
 
@@ -35,7 +36,7 @@ public class LiteCoinExplorerController
 
         BlockchainAddressStore blockchainAddressStore = new BlockchainAddressStore();
         blockchainAddressStore.setAddress(address);
-        blockchainAddressStore.setTicker(CryptoNames.LITE_COIN.code);
+        blockchainAddressStore.setTicker(CoinCodes.LITE_COIN_TICKER);
 
         liteCoinExplorerServices.addressInfo(blockchainAddressStore);
 

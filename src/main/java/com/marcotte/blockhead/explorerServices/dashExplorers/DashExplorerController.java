@@ -1,7 +1,7 @@
 package com.marcotte.blockhead.explorerServices.dashExplorers;
 
 import com.marcotte.blockhead.datastore.BlockchainAddressStore;
-import com.marcotte.blockhead.model.CryptoNames;
+import com.marcotte.blockhead.model.CoinCodes;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +25,7 @@ public class DashExplorerController
 {
     private static final Logger log = LoggerFactory.getLogger(DashExplorerController.class);
 
+
     @Autowired
     private DashExplorerServices dashExplorerServices;
 
@@ -37,7 +38,7 @@ public class DashExplorerController
 
         BlockchainAddressStore blockchainAddressStore = new BlockchainAddressStore();
         blockchainAddressStore.setAddress(address);
-        blockchainAddressStore.setTicker(CryptoNames.DASH.code);
+        blockchainAddressStore.setTicker(CoinCodes.DASH_TICKER);
 
         dashExplorerServices.addressInfo(blockchainAddressStore);
 

@@ -5,7 +5,8 @@ import java.util.List;
 public class WalletDTO {
     private String walletName;
     private String description;
-    List<CoinDTO> coinDTOs;
+    private List<CoinDTO> coinDTOs;
+    private List<FiatCurrency> fiat_balances;  // list of all the supported fiat currencies values( total values = sum over coin totals).
 
     public String getWalletName() {
         return walletName;

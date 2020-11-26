@@ -2,7 +2,7 @@ package com.marcotte.blockhead.explorerServices.bitcoincash;
 
 import com.marcotte.blockhead.datastore.BlockchainAddressStore;
 import com.marcotte.blockhead.model.BlockchainTransactionList;
-import com.marcotte.blockhead.model.CryptoNames;
+import com.marcotte.blockhead.model.CoinCodes;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +18,7 @@ public class BitcoinCashComExplorerController
 {
     private static final Logger log = LoggerFactory.getLogger(BitcoinCashComExplorerController.class);
 
+
     @Autowired
     private BitcoinCashComExplorerService bitcoinCashComExplorerService;
 
@@ -29,7 +30,7 @@ public class BitcoinCashComExplorerController
     {
         BlockchainAddressStore blockchainAddressStore = new BlockchainAddressStore();
         blockchainAddressStore.setAddress(address);
-        blockchainAddressStore.setTicker(CryptoNames.BITCOIN_CASH.code.toUpperCase());
+        blockchainAddressStore.setTicker(CoinCodes.BITCOINCASH_TICKER);
 
         bitcoinCashComExplorerService.addressInfo(blockchainAddressStore);
 
@@ -44,7 +45,7 @@ public class BitcoinCashComExplorerController
     {
         BlockchainAddressStore blockchainAddressStore = new BlockchainAddressStore();
         blockchainAddressStore.setAddress(address);
-        blockchainAddressStore.setTicker(CryptoNames.BITCOIN_CASH.code.toUpperCase());
+        blockchainAddressStore.setTicker(CoinCodes.BITCOINCASH_TICKER);
 
         BlockchainTransactionList transactionList = new BlockchainTransactionList();
         transactionList.setAddressStore(blockchainAddressStore);
