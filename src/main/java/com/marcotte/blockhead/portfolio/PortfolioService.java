@@ -59,7 +59,7 @@ public class PortfolioService
     private PortfolioByCoinsService portfolioByCoinsService;
 
     @Autowired
-    private PortFolioByWaletAndCoinService portFolioByWaletAndCoinService;
+    private PortFolioByWalletAndCoinService portFolioByWalletAndCoinService;
 
 
     public List<PortfolioTracker> portfolioGetTotalValue() {
@@ -142,7 +142,7 @@ public class PortfolioService
 
     public List<WalletDTO> portfolioByWalletCoins() {
         List<CoinDTO> portfolioByCoinList;
-        List<WalletDTO> walletDTOS = portFolioByWaletAndCoinService.findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc();
+        List<WalletDTO> walletDTOS = portFolioByWalletAndCoinService.findBlockchainAddressStoreOrderByWalletNameAscCurrencyAsc();
         HashMap<String, CoinDTO> coinHashMap = coinService.findAllReturnTickerCoinDTOMap();
 
         for (WalletDTO walletDTO : walletDTOS ) {

@@ -42,26 +42,50 @@ public class PortfolioByCoinsServiceTest {
     @Test
     public void findAllLatestSumBalanceGroupByCoin1() {
 
-        // save 6 addresses at one point in time.
+
+        // save 6 addresses --------------------
+        /**
+         * 6 addresses
+         * 0] DASH   323434556767889.0
+         * 1] DASH   2.0
+         * 2] BTC    1.1
+         * 3] BTC    1.2
+         * 4] ETH   10.0
+         * 5] ADA   20.0
+         *
+         * Total DASH 323434556767891.0
+         *       BTC  2.3
+         *       ETH 10.0
+         *       ADA 20.0
+         *
+         * @return
+         */
         List<BlockchainAddressStore> listOfAddresses = getAddresses6();
         for (BlockchainAddressStore addressStore : listOfAddresses ) {
             blockchainAddressStoreService.save(addressStore);
         }
 
-        // change the first record with new data so we are updating
+        // change the first record with new data so the DASH total will be 3.0
         Date rightNow = new Date();
         listOfAddresses.get(0).setLastBalance(1.0);
         listOfAddresses.get(0).setLastUpdated( new Timestamp(rightNow.getTime()));
         blockchainAddressStoreService.save(listOfAddresses.get(0));
 
         // find all the latest coins group by crypto curency
+        // we should have 4 elements in the array one for ADA, BTC, DASH, ETH and in that order.
         List<CoinDTO> foundAddresses = portfolioByCoinsService.findAllLatestSumBalanceGroupByCoin();
 
-        // check results.
-        assertTrue( foundAddresses.get(0).getCoinBalance() > 19.0 && foundAddresses.get(0).getCoinBalance() < 21.0 );
+        // check order
         assertEquals( "ADA", foundAddresses.get(0).getTicker());
+        assertEquals( "BTC", foundAddresses.get(1).getTicker());
+        assertEquals( "DASH", foundAddresses.get(2).getTicker());
+        assertEquals( "ETH", foundAddresses.get(3).getTicker());
 
-        assertTrue( foundAddresses.get(2).getCoinBalance() > 2.0 && foundAddresses.get(2).getCoinBalance() < 4.0 );
+        // check results.
+        assertTrue( Math.abs(foundAddresses.get(0).getCoinBalance() - 20.0) < 0.001 ); // ADA balance
+        assertTrue( Math.abs(foundAddresses.get(1).getCoinBalance() - 2.3) < 0.001 );  // BTC balance
+        assertTrue( Math.abs(foundAddresses.get(2).getCoinBalance() - 3.0) < 0.001 );  // DASH balance
+        assertTrue( Math.abs(foundAddresses.get(3).getCoinBalance() - 10.0) < 0.001 );  // ETH balance
 
         blockchainAddressStoreService.deleteAll();
     }
@@ -77,6 +101,9 @@ public class PortfolioByCoinsServiceTest {
         blockchainAddressStoreService.deleteAll();
     }
 
+    /**
+     * create one address and then see if we have any problems with just one
+     */
     @Test
     public void findAllLatestSumBalanceGroupByCoin3() {
         Date rightNow = new Date();
@@ -89,6 +116,11 @@ public class PortfolioByCoinsServiceTest {
         blockchainAddressStoreService.deleteAll();
     }
 
+    /**
+     * get one address of USDT with a balance of 123456.4323
+     * @param rightNow
+     * @return
+     */
     private BlockchainAddressStore getAddress1(Date rightNow)
     {
         BlockchainAddressStore addressStore = new BlockchainAddressStore();
@@ -102,10 +134,27 @@ public class PortfolioByCoinsServiceTest {
         return addressStore;
     }
 
+    /**
+     * 6 addresses
+     * 0] DASH   323434556767889.0
+     * 1] DASH   2.0
+     * 2] BTC    1.1
+     * 3] BTC    1.2
+     * 4] ETH   10.0
+     * 5] ADA   20.0
+     *
+     * Total DASH 323434556767891.0
+     *       BTC  2.3
+     *       ETH 10.0
+     *       ADA 20.0
+     *
+     * @return
+     */
     private List<BlockchainAddressStore> getAddresses6() {
         Date rightNow = new Date();
         List<BlockchainAddressStore> addressList = new ArrayList<>();
 
+        // DASH
         BlockchainAddressStore addressStore = new BlockchainAddressStore();
         addressStore.setAddress("Xaaaaaaaaaaaaaaaaaaaaa1");
         addressStore.setTicker("DASH");
@@ -126,6 +175,7 @@ public class PortfolioByCoinsServiceTest {
         addressStore2.setNumTransactions(1);
         addressList.add(addressStore2);
 
+        // BTC
         BlockchainAddressStore addressStore3 = new BlockchainAddressStore();
         addressStore3.setAddress("0bbbbbbbbbbbbbbbb1");
         addressStore3.setTicker("BTC");
@@ -146,6 +196,7 @@ public class PortfolioByCoinsServiceTest {
         addressStore4.setNumTransactions(1);
         addressList.add(addressStore4);
 
+        // ETH
         BlockchainAddressStore addressStore5 = new BlockchainAddressStore();
         addressStore5.setAddress("0ethethewthewthwthethhhhhh1");
         addressStore5.setTicker("ETH");
@@ -156,6 +207,7 @@ public class PortfolioByCoinsServiceTest {
         addressStore5.setNumTransactions(1);
         addressList.add(addressStore5);
 
+        // ADA
         BlockchainAddressStore addressStore6 = new BlockchainAddressStore();
         addressStore6.setAddress("0edddddddddddddddddddog1");
         addressStore6.setTicker("ADA");

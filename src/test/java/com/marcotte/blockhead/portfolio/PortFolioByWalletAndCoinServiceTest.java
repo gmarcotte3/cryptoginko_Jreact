@@ -22,10 +22,10 @@ import static org.junit.Assert.assertEquals;
 @RunWith(SpringRunner.class)
 @DirtiesContext
 @SpringBootTest
-public class PortFolioByWaletAndCoinServiceTest {
+public class PortFolioByWalletAndCoinServiceTest {
 
     @Autowired
-    private PortFolioByWaletAndCoinService portFolioByWaletAndCoinService;
+    private PortFolioByWalletAndCoinService portFolioByWalletAndCoinService;
 
     @Autowired
     private BlockchainAddressStoreService blockchainAddressStoreService;
@@ -35,27 +35,90 @@ public class PortFolioByWaletAndCoinServiceTest {
     public void findAllByCoinNameAndWalletNameAndSummerize() {
     }
 
+    /**
+     * test the summing code
+     * we start with an already sorted array by wallet, coin
+     *
+     * Initial setup of addresses:
+     *    Ticker    value   wallet
+     * 0] BTC       1.1     allan
+     * 1] DASH      10.1    allan
+     * 2] DASH      10.2    allan
+     * 3] ADA       20.0    peter
+     * 4] BTC       30.0    peter
+     * 5] ETH       40.1    peter
+     *
+     * So the wallet should be
+     * ALLAN    BTC      1.1
+     *          DASH    20.3
+     * PETER    ADA     20.0
+     *          BTC     30.0
+     *          ETH     40.1
+     */
     @Test
     public void sumByWalletAndCoin() {
         List<BlockchainAddressStore> addressStore6 = getAddresses6a();
-        List<WalletDTO> results = portFolioByWaletAndCoinService.sumByWalletAndCoin(addressStore6);
-        assertEquals( 2, results.size());
+
+        List<WalletDTO> results = portFolioByWalletAndCoinService.sumByWalletAndCoin(addressStore6);
+        assertEquals( 2, results.size());  // two wallets
+        assertEquals( "ALLAN", results.get(0).getWalletName());
+        assertEquals( "PETER", results.get(1).getWalletName());
+        assertEquals(2, results.get(0).getCoinDTOs().size()); // first wallet two coins
+        assertEquals(3, results.get(1).getCoinDTOs().size()); // second wallet three coins
     }
 
     /**
-     * test case where more than one wallet with more than one coin.
+     * test the case where we have a sorted array already saved to the database then
+     * retrieved and summarized.
      */
     @Test
-    public void findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc() {
+    public void findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc_unsorted() {
         List<BlockchainAddressStore> addressStore6 = getAddresses6a();
         for (BlockchainAddressStore addressStore : addressStore6 ) {
             blockchainAddressStoreService.save(addressStore);
         }
-        List<WalletDTO> walletDTOS = portFolioByWaletAndCoinService.findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc();
-        assertEquals( 2, walletDTOS.size());
+        List<WalletDTO> walletDTOS = portFolioByWalletAndCoinService.findBlockchainAddressStoreOrderByWalletNameAscCurrencyAsc();
+        assertEquals( 2, walletDTOS.size());  // two wallets
+        assertEquals( "ALLAN", walletDTOS.get(0).getWalletName());
+        assertEquals( "PETER", walletDTOS.get(1).getWalletName());
+        assertEquals(2, walletDTOS.get(0).getCoinDTOs().size()); // first wallet two coins
+        assertEquals(3, walletDTOS.get(1).getCoinDTOs().size()); // second wallet three coins
+
         blockchainAddressStoreService.deleteAll();
     }
 
+    /**
+     * test where the address are not sorted
+     */
+    @Test
+    public void findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc() {
+        List<BlockchainAddressStore> addressStore7 = getAddresses6a();
+
+        Date rightNow = new Date();
+        BlockchainAddressStore addressStore = new BlockchainAddressStore();
+        addressStore.setWalletName("allan");
+        addressStore.setTicker("ADA");
+        addressStore.setAddress("3435456676786");
+        addressStore.setLastBalance( 50.2);
+        addressStore.setLastUpdated( new Timestamp(rightNow.getTime()));
+        addressStore.setMessage("ADA test");
+        addressStore.setMemo("memo ADA");
+        addressStore.setNumTransactions(1);
+        addressStore7.add(addressStore);
+
+        for (BlockchainAddressStore addressStore_i : addressStore7 ) {
+            blockchainAddressStoreService.save(addressStore_i);
+        }
+        List<WalletDTO> walletDTOS = portFolioByWalletAndCoinService.findBlockchainAddressStoreOrderByWalletNameAscCurrencyAsc();
+        assertEquals( 2, walletDTOS.size());  // two wallets
+        assertEquals( "ALLAN", walletDTOS.get(0).getWalletName());
+        assertEquals( "PETER", walletDTOS.get(1).getWalletName());
+        assertEquals(3, walletDTOS.get(0).getCoinDTOs().size()); // first wallet three coins
+        assertEquals("ADA", walletDTOS.get(0).getCoinDTOs().get(0).getTicker());
+        assertEquals(3, walletDTOS.get(1).getCoinDTOs().size()); // second wallet three coins
+
+        blockchainAddressStoreService.deleteAll();
+    }
     /**
      * test the case where the wallet name is blank
      */
@@ -65,7 +128,7 @@ public class PortFolioByWaletAndCoinServiceTest {
         for (BlockchainAddressStore addressStore : addressStore6 ) {
             blockchainAddressStoreService.save(addressStore);
         }
-        List<WalletDTO> walletDTOS = portFolioByWaletAndCoinService.findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc();
+        List<WalletDTO> walletDTOS = portFolioByWalletAndCoinService.findBlockchainAddressStoreOrderByWalletNameAscCurrencyAsc();
         assertEquals( 1, walletDTOS.size());
         blockchainAddressStoreService.deleteAll();
     }
@@ -75,7 +138,7 @@ public class PortFolioByWaletAndCoinServiceTest {
      */
     @Test
     public void findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc2() {
-        List<WalletDTO> foundAddresses = portFolioByWaletAndCoinService.findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc();
+        List<WalletDTO> foundAddresses = portFolioByWalletAndCoinService.findBlockchainAddressStoreOrderByWalletNameAscCurrencyAsc();
         int expectedSize = 0;
         assertEquals(expectedSize, foundAddresses.size());
         blockchainAddressStoreService.deleteAll();
@@ -91,7 +154,7 @@ public class PortFolioByWaletAndCoinServiceTest {
         oneAddress.setWalletName("fredric");
         blockchainAddressStoreService.save(oneAddress);
 
-        List<WalletDTO> foundAddresses = portFolioByWaletAndCoinService.findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc();
+        List<WalletDTO> foundAddresses = portFolioByWalletAndCoinService.findBlockchainAddressStoreOrderByWalletNameAscCurrencyAsc();
         int expectedSize = 1;
         assertEquals(expectedSize, foundAddresses.size());
         blockchainAddressStoreService.deleteAll();
@@ -110,6 +173,10 @@ public class PortFolioByWaletAndCoinServiceTest {
         return addressStore;
     }
 
+    /**
+     * presorted list by wallet and then coin
+     * @return
+     */
     private List<BlockchainAddressStore> getAddresses6() {
         Date rightNow = new Date();
         List<BlockchainAddressStore> addressList = new ArrayList<>();
@@ -179,24 +246,35 @@ public class PortFolioByWaletAndCoinServiceTest {
 
     /**
      * sorted by wallet, coin
+     *
+     * returns addreess
+     *    Ticker    value   wallet
+     * 0] BTC       1.1     allan
+     * 1] DASH      10.1    allan
+     * 2] DASH      10.2    allan
+     * 3] ADA       20.0    peter
+     * 4] BTC       30.0    peter
+     * 5] ETH       40.1    peter
+     * 6] ADA       50.2    allan
+     *
      * @return
      */
     private List<BlockchainAddressStore> getAddresses6a() {
         Date rightNow = new Date();
         List<BlockchainAddressStore> addressList = new ArrayList<>();
 
-        BlockchainAddressStore addressStore3 = new BlockchainAddressStore();
-        addressStore3.setWalletName("allan");
-        addressStore3.setTicker("BTC");
-        addressStore3.setLastBalance( 1.1);
-        addressStore3.setAddress("0bbbbbbbbbbbbbbbb1");
-        addressStore3.setLastUpdated( new Timestamp(rightNow.getTime()));
-        addressStore3.setMessage("Bitcoin test1");
-        addressStore3.setMemo("memo BTC");
-        addressStore3.setNumTransactions(3);
-        addressList.add(addressStore3);
-
         BlockchainAddressStore addressStore = new BlockchainAddressStore();
+        addressStore.setWalletName("allan");
+        addressStore.setTicker("BTC");
+        addressStore.setLastBalance( 1.1);
+        addressStore.setAddress("0bbbbbbbbbbbbbbbb1");
+        addressStore.setLastUpdated( new Timestamp(rightNow.getTime()));
+        addressStore.setMessage("Bitcoin test1");
+        addressStore.setMemo("memo BTC");
+        addressStore.setNumTransactions(3);
+        addressList.add(addressStore);
+
+        addressStore = new BlockchainAddressStore();
         addressStore.setWalletName("allan");
         addressStore.setTicker("DASH");
         addressStore.setAddress("Xaaaaaaaaaaaaaaaaaaaaa1");
@@ -207,49 +285,49 @@ public class PortFolioByWaletAndCoinServiceTest {
         addressStore.setNumTransactions(1);
         addressList.add(addressStore);
 
-        BlockchainAddressStore addressStore2 = new BlockchainAddressStore();
-        addressStore2.setWalletName("allan");
-        addressStore2.setTicker("DASH");
-        addressStore2.setAddress("Xaaaaaaaaaaaaaaaaaaaaa2");
-        addressStore2.setLastBalance( 10.2);
-        addressStore2.setLastUpdated( new Timestamp(rightNow.getTime()));
-        addressStore2.setMessage("Dash test");
-        addressStore2.setMemo("memo dash1");
-        addressStore2.setNumTransactions(1);
-        addressList.add(addressStore2);
+        addressStore = new BlockchainAddressStore();
+        addressStore.setWalletName("allan");
+        addressStore.setTicker("DASH");
+        addressStore.setAddress("Xaaaaaaaaaaaaaaaaaaaaa2");
+        addressStore.setLastBalance( 10.2);
+        addressStore.setLastUpdated( new Timestamp(rightNow.getTime()));
+        addressStore.setMessage("Dash test");
+        addressStore.setMemo("memo dash1");
+        addressStore.setNumTransactions(1);
+        addressList.add(addressStore);
 
-        BlockchainAddressStore addressStore6 = new BlockchainAddressStore();
-        addressStore6.setWalletName("peter");
-        addressStore6.setAddress("0edddddddddddddddddddog1");
-        addressStore6.setTicker("ADA");
-        addressStore6.setLastBalance( 20.0);
-        addressStore6.setLastUpdated( new Timestamp(rightNow.getTime()));
-        addressStore6.setMessage("Cardanocoin test1");
-        addressStore6.setMemo("memo Cardano ADA");
-        addressStore6.setNumTransactions(1);
-        addressList.add(addressStore6);
+        addressStore = new BlockchainAddressStore();
+        addressStore.setWalletName("peter");
+        addressStore.setAddress("0edddddddddddddddddddog1");
+        addressStore.setTicker("ADA");
+        addressStore.setLastBalance( 20.0);
+        addressStore.setLastUpdated( new Timestamp(rightNow.getTime()));
+        addressStore.setMessage("Cardanocoin test1");
+        addressStore.setMemo("memo Cardano ADA");
+        addressStore.setNumTransactions(1);
+        addressList.add(addressStore);
 
-        BlockchainAddressStore addressStore4 = new BlockchainAddressStore();
-        addressStore4.setWalletName("peter");
-        addressStore4.setTicker("BTC");
-        addressStore4.setLastBalance( 30.0);
-        addressStore4.setAddress("0bbbbbbbbbbbbbbbb2");
-        addressStore4.setLastUpdated( new Timestamp(rightNow.getTime()));
-        addressStore4.setMessage("Bitcoin test2");
-        addressStore4.setMemo("memo BTC");
-        addressStore4.setNumTransactions(1);
-        addressList.add(addressStore4);
+        addressStore = new BlockchainAddressStore();
+        addressStore.setWalletName("peter");
+        addressStore.setTicker("BTC");
+        addressStore.setLastBalance( 30.0);
+        addressStore.setAddress("0bbbbbbbbbbbbbbbb2");
+        addressStore.setLastUpdated( new Timestamp(rightNow.getTime()));
+        addressStore.setMessage("Bitcoin test2");
+        addressStore.setMemo("memo BTC");
+        addressStore.setNumTransactions(1);
+        addressList.add(addressStore);
 
-        BlockchainAddressStore addressStore5 = new BlockchainAddressStore();
-        addressStore5.setAddress("0ethethewthewthwthethhhhhh1");
-        addressStore5.setWalletName("peter");
-        addressStore5.setTicker("ETH");
-        addressStore5.setLastBalance( 40.1);
-        addressStore5.setLastUpdated( new Timestamp(rightNow.getTime()));
-        addressStore5.setMessage("Oshirium test1");
-        addressStore5.setMemo("memo ETH");
-        addressStore5.setNumTransactions(1);
-        addressList.add(addressStore5);
+        addressStore = new BlockchainAddressStore();
+        addressStore.setAddress("0ethethewthewthwthethhhhhh1");
+        addressStore.setWalletName("peter");
+        addressStore.setTicker("ETH");
+        addressStore.setLastBalance( 40.1);
+        addressStore.setLastUpdated( new Timestamp(rightNow.getTime()));
+        addressStore.setMessage("Oshirium test1");
+        addressStore.setMemo("memo ETH");
+        addressStore.setNumTransactions(1);
+        addressList.add(addressStore);
 
         return addressList;
     }

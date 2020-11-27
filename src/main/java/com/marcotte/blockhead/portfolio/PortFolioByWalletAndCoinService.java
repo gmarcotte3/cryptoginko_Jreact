@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @Service
-public class PortFolioByWaletAndCoinService {
+public class PortFolioByWalletAndCoinService {
 
 
     @Autowired
@@ -30,7 +30,7 @@ public class PortFolioByWaletAndCoinService {
      *
      * @return
      */
-    public List<WalletDTO> findBlockchainAddressStoreByNextIdOrderByWalletNameAscCurrencyAsc()
+    public List<WalletDTO> findBlockchainAddressStoreOrderByWalletNameAscCurrencyAsc()
     {
         List<BlockchainAddressStore> foundLatestOrderedByCurrency =
                 blockchainAddressStoreService.findBlockchainAddressStoreOrderByWalletNameAscCurrencyAsc();
