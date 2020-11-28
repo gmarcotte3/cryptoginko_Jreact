@@ -113,43 +113,18 @@ public class CoinService {
                 newCoin = foundCoins.get(0);
             }
 
-            for ( FiatCurrency fiat : coinDTO.getFiat_prices() ) {
-                switch (fiat.getCode()) {
-                    case "USD" :
-                        newCoin.setPriceUSD( fiat.getValue());
-                        break;
-                    case "NZD" :
-                        newCoin.setPriceNZD( fiat.getValue());
-                        break;
-                    case "AUD" :
-                        newCoin.setPriceAUD( fiat.getValue());
-                        break;
-                    case "JPY" :
-                        newCoin.setPriceJPY( fiat.getValue());
-                        break;
-                    case "JPM" :
-                        newCoin.setPriceJPM( fiat.getValue());
-                        break;
-                    case "EUR" :
-                        newCoin.setPriceEUR( fiat.getValue());
-                        break;
-                    case "GBP" :
-                        newCoin.setPriceGBP( fiat.getValue());
-                        break;
-                    case "KRW" :
-                        newCoin.setPriceKRW( fiat.getValue());
-                        break;
-                    case "INR" :
-                        newCoin.setPriceINR( fiat.getValue());
-                        break;
-                    case "ETH" :
-                        newCoin.setPriceETH( fiat.getValue());
-                        break;
-                    case "BTC" :
-                        newCoin.setPriceBTC( fiat.getValue());
-                        break;
-                }
-            }
+            newCoin.setPriceUSD( coinDTO.getFiat_prices().findFiat("USD").getValue());
+            newCoin.setPriceNZD( coinDTO.getFiat_prices().findFiat("NZD").getValue());
+            newCoin.setPriceAUD( coinDTO.getFiat_prices().findFiat("AUD").getValue());
+            newCoin.setPriceJPY( coinDTO.getFiat_prices().findFiat("JPY").getValue());
+            newCoin.setPriceJPM( coinDTO.getFiat_prices().findFiat("JPM").getValue());
+            newCoin.setPriceEUR( coinDTO.getFiat_prices().findFiat("EUR").getValue());
+            newCoin.setPriceGBP( coinDTO.getFiat_prices().findFiat("GBP").getValue());
+            newCoin.setPriceKRW( coinDTO.getFiat_prices().findFiat("KRW").getValue());
+            newCoin.setPriceINR( coinDTO.getFiat_prices().findFiat("INR").getValue());
+            newCoin.setPriceETH( coinDTO.getFiat_prices().findFiat("ETH").getValue());
+            newCoin.setPriceBTC( coinDTO.getFiat_prices().findFiat("BTC").getValue());
+
             save( newCoin);
             coinList.add(newCoin);
         }

@@ -3,6 +3,7 @@ package com.marcotte.blockhead.explorerServices.pricequote;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.marcotte.blockhead.model.CoinDTO;
 import com.marcotte.blockhead.model.FiatCurrency;
+import com.marcotte.blockhead.model.FiatCurrencyList;
 import com.marcotte.blockhead.model.QuoteGeneric;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
@@ -54,13 +55,13 @@ public class  CoinGeckoController
 
 
     @GetMapping("/quote/raw")
-    public ResponseEntity<List<FiatCurrency>> getQuoteRaw(
+    public ResponseEntity<FiatCurrencyList> getQuoteRaw(
             @RequestParam(value = "coin", required = true) final String coinID,
             @RequestParam(value = "quotedate", required = false) final String date_ddmmyyyy
     )
     {
-        List<FiatCurrency> currencyList = coinGeckoService.getPriceByCoinAndDate(coinID, date_ddmmyyyy);
-        return new ResponseEntity<List<FiatCurrency>>(currencyList, HttpStatus.OK);
+        FiatCurrencyList currencyList = coinGeckoService.getPriceByCoinAndDate(coinID, date_ddmmyyyy);
+        return new ResponseEntity<FiatCurrencyList>(currencyList, HttpStatus.OK);
     }
 
 

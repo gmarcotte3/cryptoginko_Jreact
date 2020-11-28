@@ -67,7 +67,7 @@ public class PortfolioServiceTest {
         assertEquals("DASH", portfolioByCoins.get(2).getTicker());
         assertEquals("ETH", portfolioByCoins.get(3).getTicker());
 
-        assertTrue( Math.abs(portfolioByCoins.get(0).getFiat_balances().get(0).getValue() - 1.0) < 0.0001 );
+        assertTrue( Math.abs(portfolioByCoins.get(0).getFiat_balances().findFiat("USD").getValue() - 1.0) < 0.0001 );
 
         // clean up
         blockchainAddressStoreService.deleteAll();

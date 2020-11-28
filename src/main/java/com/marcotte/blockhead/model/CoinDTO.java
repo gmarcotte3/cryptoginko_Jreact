@@ -15,53 +15,54 @@ public class CoinDTO {
     private String ticker;      // trading symbol ie BTH, DASH, BCH, ADA etc
     private Double coinBalance; // the coin balance in Satoshis for bitcoin DASH and BitcoinCash etc.
 
-    private List<FiatCurrency> fiat_prices;  // list of all the supported fiat currencies prices.
-    private List<FiatCurrency> fiat_balances;  // list of all the supported fiat currencies values( price * coinBalance).
+    private FiatCurrencyList fiat_prices;  // list of all the supported fiat currencies prices.
+    private FiatCurrencyList fiat_balances;  // list of all the supported fiat currencies values( price * coinBalance).
 
 
     public CoinDTO() {
         this.coinName = "";
         this.ticker = "";
         this.coinBalance = 0.0;
-        this.fiat_prices = new ArrayList<>();
-        this.fiat_balances = new ArrayList<>();
+        this.fiat_prices = new FiatCurrencyList();
+        this.fiat_balances = new FiatCurrencyList();
     }
     public CoinDTO(String coinName, String ticker)
     {
         this.coinName = coinName;
         this.ticker = ticker;
         this.coinBalance = 0.0;
-        this.fiat_prices = new ArrayList<>();
-        this.fiat_balances = new ArrayList<>();
+        this.fiat_prices = new FiatCurrencyList();
+        this.fiat_balances = new FiatCurrencyList();
     }
 
     public void setCoinDTO(Coin coin) {
         this.ticker = coin.getTicker();
         this.coinName = coin.getCoinName();
 
-        this.fiat_prices = new ArrayList<>();
-        this.fiat_balances = new ArrayList<>();
+        this.fiat_prices = new FiatCurrencyList();
+        this.fiat_balances = new FiatCurrencyList();
 
-        this.fiat_prices.add ( new FiatCurrency(coin.getPriceUSD(), FiatNames.USD));
-        this.fiat_prices.add ( new FiatCurrency(coin.getPriceNZD(), FiatNames.NZD));
-        this.fiat_prices.add ( new FiatCurrency(coin.getPriceJPY(), FiatNames.JPY));
-        this.fiat_prices.add ( new FiatCurrency(coin.getPriceJPM(), FiatNames.JPM));
-        this.fiat_prices.add ( new FiatCurrency(coin.getPriceAUD(), FiatNames.AUD));
-        this.fiat_prices.add ( new FiatCurrency(coin.getPriceGBP(), FiatNames.GBP));
-        this.fiat_prices.add ( new FiatCurrency(coin.getPriceEUR(), FiatNames.EUR));
-        this.fiat_prices.add ( new FiatCurrency(coin.getPriceINR(), FiatNames.INR));
-        this.fiat_prices.add ( new FiatCurrency(coin.getPriceKRW(), FiatNames.KRW));
-        this.fiat_prices.add ( new FiatCurrency(coin.getPriceBTC(), FiatNames.BTC));
-        this.fiat_prices.add ( new FiatCurrency(coin.getPriceETH(), FiatNames.ETH));
+        this.fiat_prices.setFiat( new FiatCurrency(coin.getPriceUSD(), "USD" ));
+        this.fiat_prices.setFiat( new FiatCurrency(coin.getPriceNZD(), "NZD" ));
+        this.fiat_prices.setFiat( new FiatCurrency(coin.getPriceJPY(), "JPY" ));
+        this.fiat_prices.setFiat( new FiatCurrency(coin.getPriceJPM(), "JPM" ));
+        this.fiat_prices.setFiat( new FiatCurrency(coin.getPriceAUD(), "AUD" ));
+        this.fiat_prices.setFiat( new FiatCurrency(coin.getPriceEUR(), "EUR" ));
+        this.fiat_prices.setFiat( new FiatCurrency(coin.getPriceGBP(), "GBP" ));
+        this.fiat_prices.setFiat( new FiatCurrency(coin.getPriceKRW(), "KRW" ));
+        this.fiat_prices.setFiat( new FiatCurrency(coin.getPriceINR(), "INR" ));
+        this.fiat_prices.setFiat( new FiatCurrency(coin.getPriceBTC(), "BTC" ));
+        this.fiat_prices.setFiat( new FiatCurrency(coin.getPriceETH(), "ETH" ));
+
     }
 
     /**
      * calculates the coin's value (coin balance * price) in all the supported currencies
      */
     public void calculateCoinValue() {
-        this.fiat_balances = new ArrayList<>();
-        for ( FiatCurrency fiat : this.fiat_prices ) {
-            this.fiat_balances.add(new FiatCurrency((fiat.getValue() * this.coinBalance), fiat.getFiatType()));
+        this.fiat_balances = new FiatCurrencyList();
+        for ( FiatCurrency fiat : this.fiat_prices.getFiat_values() ) {
+            this.fiat_balances.setFiat(new FiatCurrency((fiat.getValue() * this.coinBalance), fiat.getFiatType()));
         }
     }
 
@@ -71,12 +72,40 @@ public class CoinDTO {
      * @return
      */
     public FiatCurrency findFiatPrice(String fiatCode ) {
-        for( int j = 0; j < fiat_prices.size(); j++) {
-            if ( fiat_prices.get(j).getCode().equals(fiatCode)) {
-                return fiat_prices.get(j);
-            }
-        }
-        return new FiatCurrency(); // return a dummy
+        return this.fiat_prices.findFiat( fiatCode );
+    }
+
+    public void setFiatPrice( FiatCurrency fiatPrice) {
+        this.fiat_prices.setFiat( fiatPrice);
+    }
+
+    // these getters for json ouput
+    public double getPriceUSD() {
+       return findFiatPrice("USD").getValue();
+    }
+    public double getPriceNZD() {
+        return findFiatPrice("NZD").getValue();
+    }
+    public double getPriceJPY() {
+        return findFiatPrice("JPY").getValue();
+    }
+    public double getPriceJPM() {
+        return findFiatPrice("JPM").getValue();
+    }
+    public double getPriceAUD() {
+        return findFiatPrice("AUD").getValue();
+    }
+    public double getPriceGBP() {
+        return findFiatPrice("GBP").getValue();
+    }
+    public double getPriceEUR() {
+        return findFiatPrice("EUR").getValue();
+    }
+    public double getPriceINR() {
+        return findFiatPrice("INR").getValue();
+    }
+    public double getPriceKRW() {
+        return findFiatPrice("KRW").getValue();
     }
 
     public String getCoinName() {
@@ -103,19 +132,20 @@ public class CoinDTO {
         this.coinBalance = coinBalance;
     }
 
-    public List<FiatCurrency> getFiat_prices() {
+
+    public FiatCurrencyList getFiat_prices() {
         return fiat_prices;
     }
 
-    public void setFiat_prices(List<FiatCurrency> fiat_prices) {
+    public void setFiat_prices(FiatCurrencyList fiat_prices) {
         this.fiat_prices = fiat_prices;
     }
 
-    public List<FiatCurrency> getFiat_balances() {
+    public FiatCurrencyList getFiat_balances() {
         return fiat_balances;
     }
 
-    public void setFiat_balances(List<FiatCurrency> fiat_balances) {
+    public void setFiat_balances(FiatCurrencyList fiat_balances) {
         this.fiat_balances = fiat_balances;
     }
 

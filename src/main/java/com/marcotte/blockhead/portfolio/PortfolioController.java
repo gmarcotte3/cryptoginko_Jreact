@@ -60,25 +60,4 @@ public class PortfolioController
         return new ResponseEntity<List<WalletDTO>>(portfolioByWalletCoinList, HttpStatus.OK);
     }
 
-    @PutMapping("/refreshcache")
-    public ResponseEntity<List<PortfolioTracker>> portfolio_refresh_cache()
-    {
-        List<PortfolioTracker> portfolioResult = portfolioService.portfolioCheck(true);
-
-        return new ResponseEntity<List<PortfolioTracker>>(portfolioResult, HttpStatus.OK);
-    }
-
-    @PutMapping("/refreshcache/{cryptoname}")
-    public ResponseEntity<PortfolioCheckResults> portfolio_refresh_cache(@PathVariable String cryptoname)
-    {
-        PortfolioCheckResults results =  portfolioService.portfolioCheck(true, cryptoname.toUpperCase());
-        return new ResponseEntity<PortfolioCheckResults>(results, HttpStatus.OK);
-    }
-
-    @PutMapping("/refreshcache/{cryptoname}/{walletName}")
-    public ResponseEntity<PortfolioCheckResults> portfolio_refresh_cache(@PathVariable String cryptoname, @PathVariable String walletName)
-    {
-        PortfolioCheckResults results =  portfolioService.portfolioCheck(true, cryptoname.toUpperCase(), walletName.toUpperCase());
-        return new ResponseEntity<PortfolioCheckResults>(results, HttpStatus.OK);
-    }
 }

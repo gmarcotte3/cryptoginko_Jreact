@@ -37,7 +37,7 @@ public class PortfolioByCoinsService {
 
     }
 
-    public List<CoinDTO> sumByCryptoCurrency(List<BlockchainAddressStore> foundLatestOrderedByName) {
+    private List<CoinDTO> sumByCryptoCurrency(List<BlockchainAddressStore> foundLatestOrderedByName) {
         List<CoinDTO> summedByCurrency = new ArrayList<CoinDTO>();
 
         HashMap<String, CoinDTO>  coinMap = coinService.findAllReturnTickerCoinDTOMap();

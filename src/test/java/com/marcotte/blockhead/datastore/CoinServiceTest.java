@@ -2,6 +2,7 @@ package com.marcotte.blockhead.datastore;
 
 import com.marcotte.blockhead.model.CoinDTO;
 import com.marcotte.blockhead.model.FiatCurrency;
+import com.marcotte.blockhead.model.FiatCurrencyList;
 import com.marcotte.blockhead.model.FiatNames;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -103,23 +104,23 @@ public class CoinServiceTest {
 
     private List<CoinDTO> getCoinDTOs() {
         List<CoinDTO> coinDTOList = new ArrayList<CoinDTO>();
-        List<FiatCurrency> fiat_prices;
+        FiatCurrencyList fiat_prices;
 
         CoinDTO coinDTO1 = new CoinDTO();
         coinDTO1.setCoinName("Bitcoin");
         coinDTO1.setTicker("BTC");
-        fiat_prices = new ArrayList<FiatCurrency>();
-        fiat_prices.add( new FiatCurrency(15000.00, FiatNames.USD));
-        fiat_prices.add( new FiatCurrency(20000.00, FiatNames.NZD));
-        fiat_prices.add( new FiatCurrency(19500.00, FiatNames.AUD));
-        fiat_prices.add( new FiatCurrency(1500000.00, FiatNames.JPY));
-        fiat_prices.add( new FiatCurrency(150.00, FiatNames.JPM));
-        fiat_prices.add( new FiatCurrency(25000.00, FiatNames.EUR));
-        fiat_prices.add( new FiatCurrency(22000.00, FiatNames.GBP));
-        fiat_prices.add( new FiatCurrency(22000.00, FiatNames.KRW));
-        fiat_prices.add( new FiatCurrency(22000.00, FiatNames.INR));
-        fiat_prices.add( new FiatCurrency(1.0, FiatNames.BTC));
-        fiat_prices.add( new FiatCurrency(37.0, FiatNames.ETH));
+        fiat_prices = new FiatCurrencyList();
+        fiat_prices.setFiat( new FiatCurrency(15000.00, FiatNames.USD));
+        fiat_prices.setFiat( new FiatCurrency(20000.00, FiatNames.NZD));
+        fiat_prices.setFiat( new FiatCurrency(19500.00, FiatNames.AUD));
+        fiat_prices.setFiat( new FiatCurrency(1500000.00, FiatNames.JPY));
+        fiat_prices.setFiat( new FiatCurrency(150.00, FiatNames.JPM));
+        fiat_prices.setFiat( new FiatCurrency(25000.00, FiatNames.EUR));
+        fiat_prices.setFiat( new FiatCurrency(22000.00, FiatNames.GBP));
+        fiat_prices.setFiat( new FiatCurrency(22000.00, FiatNames.KRW));
+        fiat_prices.setFiat( new FiatCurrency(22000.00, FiatNames.INR));
+        fiat_prices.setFiat( new FiatCurrency(1.0, FiatNames.BTC));
+        fiat_prices.setFiat( new FiatCurrency(37.0, FiatNames.ETH));
         coinDTO1.setFiat_prices(fiat_prices);
         coinDTOList.add(coinDTO1);
 
@@ -127,18 +128,18 @@ public class CoinServiceTest {
         CoinDTO coinDTO2 = new CoinDTO();
         coinDTO2.setCoinName("Cardano");
         coinDTO2.setTicker("ADA");
-        fiat_prices = new ArrayList<FiatCurrency>();
-        fiat_prices.add( new FiatCurrency(0.10, FiatNames.USD));
-        fiat_prices.add( new FiatCurrency(0.15, FiatNames.NZD));
-        fiat_prices.add( new FiatCurrency(0.14, FiatNames.AUD));
-        fiat_prices.add( new FiatCurrency(11.0, FiatNames.JPY));
-        fiat_prices.add( new FiatCurrency(0.00011, FiatNames.JPM));
-        fiat_prices.add( new FiatCurrency(0.25, FiatNames.EUR));
-        fiat_prices.add( new FiatCurrency(0.22, FiatNames.GBP));
-        fiat_prices.add( new FiatCurrency(22.0, FiatNames.KRW));
-        fiat_prices.add( new FiatCurrency(10.0, FiatNames.INR));
-        fiat_prices.add( new FiatCurrency(0.00000001, FiatNames.BTC));
-        fiat_prices.add( new FiatCurrency(0.00000037, FiatNames.ETH));
+        fiat_prices = new FiatCurrencyList();
+        fiat_prices.setFiat( new FiatCurrency(0.10, FiatNames.USD));
+        fiat_prices.setFiat( new FiatCurrency(0.15, FiatNames.NZD));
+        fiat_prices.setFiat( new FiatCurrency(0.14, FiatNames.AUD));
+        fiat_prices.setFiat( new FiatCurrency(11.0, FiatNames.JPY));
+        fiat_prices.setFiat( new FiatCurrency(0.00011, FiatNames.JPM));
+        fiat_prices.setFiat( new FiatCurrency(0.25, FiatNames.EUR));
+        fiat_prices.setFiat( new FiatCurrency(0.22, FiatNames.GBP));
+        fiat_prices.setFiat( new FiatCurrency(22.0, FiatNames.KRW));
+        fiat_prices.setFiat( new FiatCurrency(10.0, FiatNames.INR));
+        fiat_prices.setFiat( new FiatCurrency(0.00000001, FiatNames.BTC));
+        fiat_prices.setFiat( new FiatCurrency(0.00000037, FiatNames.ETH));
         coinDTO2.setFiat_prices(fiat_prices);
         coinDTOList.add(coinDTO2);
 

@@ -2,10 +2,7 @@ package com.marcotte.blockhead.explorerServices.pricequote;
 
 import com.marcotte.blockhead.config.BlockheadConfig;
 import com.marcotte.blockhead.datastore.CoinService;
-import com.marcotte.blockhead.model.CoinDTO;
-import com.marcotte.blockhead.model.FiatCurrency;
-import com.marcotte.blockhead.model.FiatNames;
-import com.marcotte.blockhead.model.QuoteGeneric;
+import com.marcotte.blockhead.model.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -109,7 +106,7 @@ public class CoinGeckoService
                 JSONObject coinJObj = (JSONObject) coinJArray.get(i);
                 String ticker = (coinJObj.getString("symbol")).toUpperCase();
                 String coinName = coinJObj.getString("name");
-                List<FiatCurrency> fiatCurrencies = parseJsonRawQuote(ticker, coinJObj );
+                FiatCurrencyList fiatCurrencies = parseJsonRawQuote(ticker, coinJObj );
 
                 CoinDTO coinDTO = new CoinDTO();
                 coinDTO.setTicker(ticker);
@@ -131,16 +128,16 @@ public class CoinGeckoService
      * @param date_ddmmyyyy  date in this format "dd-mm-yyy"
      * @return List<Currency>
      */
-    public List<FiatCurrency> getPriceByCoinAndDate(String coin, String date_ddmmyyyy)
+    public FiatCurrencyList getPriceByCoinAndDate(String coin, String date_ddmmyyyy)
     {
         RestTemplate restTemplate = new RestTemplate();
         String url;
 
-        // convert the coin ticker symbole to a coin geko coinID
+        // convert the coin ticker to a coin geko coinID
         String coinID = this.cryptoCodeToCoinGekoCoinID.get(coin);
         if (coinID == null) { // this code is not recoignized so return a blank
             log.error("Coin (" + coin + ") not recoignized by goin geko service so no currency quote is possible");
-            return new ArrayList<FiatCurrency>();
+            return new FiatCurrencyList();
         }
 
         restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
@@ -174,9 +171,9 @@ public class CoinGeckoService
      * @param theRawJsonQuote
      * @return
      */
-    private List<FiatCurrency> parseJsonRawQuote(String coin, String theRawJsonQuote ) {
+    private FiatCurrencyList parseJsonRawQuote(String coin, String theRawJsonQuote ) {
         JSONObject jsonObj;
-        List<FiatCurrency> currencyList = new ArrayList<FiatCurrency>();
+        FiatCurrencyList currencyList = new FiatCurrencyList();
 
         try {
             jsonObj = new JSONObject(theRawJsonQuote);
@@ -187,11 +184,11 @@ public class CoinGeckoService
         }
     }
 
-    private List<FiatCurrency> parseJsonRawQuote(String coin, JSONObject jsonObj )
+    private FiatCurrencyList parseJsonRawQuote(String coin, JSONObject jsonObj )
     {
         JSONObject marketDataObj;
         JSONObject current_price_DataObj;
-        List<FiatCurrency> currencyList = new ArrayList<FiatCurrency>();
+        FiatCurrencyList currencyList = new FiatCurrencyList();
 
         try {
             marketDataObj = jsonObj.getJSONObject("market_data");
@@ -203,29 +200,29 @@ public class CoinGeckoService
         }
 
         Float nzd_price = getDoubleFromJsonObject(current_price_DataObj, "nzd");
-        currencyList.add(new FiatCurrency().setCode("NZD").setValue(nzd_price).setDescription("New Zeland Dollar").setSymbol("$"));
+        currencyList.setFiat(new FiatCurrency().setCode("NZD").setValue(nzd_price).setDescription("New Zeland Dollar").setSymbol("$"));
 
         Float usd_price = getDoubleFromJsonObject(current_price_DataObj, "usd");
-        currencyList.add(new FiatCurrency().setCode("USD").setValue(usd_price).setDescription("US Dollar").setSymbol("$"));
+        currencyList.setFiat(new FiatCurrency().setCode("USD").setValue(usd_price).setDescription("US Dollar").setSymbol("$"));
 
         Float aud_price = getDoubleFromJsonObject(current_price_DataObj, "aud");
-        currencyList.add(new FiatCurrency().setCode("AUD").setValue(aud_price).setDescription("Aussie Dollar").setSymbol("$"));
+        currencyList.setFiat(new FiatCurrency().setCode("AUD").setValue(aud_price).setDescription("Aussie Dollar").setSymbol("$"));
 
         Float jpy_price = getDoubleFromJsonObject(current_price_DataObj, "jpy");
-        currencyList.add(new FiatCurrency().setCode("JPY").setValue(jpy_price).setDescription("Japanese yen").setSymbol("¥"));
-        currencyList.add(new FiatCurrency().setCode("JPM").setValue(jpy_price/10000).setDescription("Japanese 万 (10,000 Yen)").setSymbol("万"));
+        currencyList.setFiat(new FiatCurrency().setCode("JPY").setValue(jpy_price).setDescription("Japanese yen").setSymbol("¥"));
+        currencyList.setFiat(new FiatCurrency().setCode("JPM").setValue(jpy_price/10000).setDescription("Japanese 万 (10,000 Yen)").setSymbol("万"));
 
         Float eur_price = getDoubleFromJsonObject(current_price_DataObj, "eur");
-        currencyList.add(new FiatCurrency().setCode("EUR").setValue(eur_price).setDescription("Euros").setSymbol("€"));
+        currencyList.setFiat(new FiatCurrency().setCode("EUR").setValue(eur_price).setDescription("Euros").setSymbol("€"));
 
         Float gbp_price = getDoubleFromJsonObject(current_price_DataObj, "gbp");
-        currencyList.add(new FiatCurrency().setCode("GBP").setValue(gbp_price).setDescription("Pound sterling").setSymbol("£"));
+        currencyList.setFiat(new FiatCurrency().setCode("GBP").setValue(gbp_price).setDescription("Pound sterling").setSymbol("£"));
 
         Float krw_price = getDoubleFromJsonObject(current_price_DataObj, "krw");
-        currencyList.add(new FiatCurrency().setCode("KRW").setValue(krw_price).setDescription("South Koria won").setSymbol("₩"));
+        currencyList.setFiat(new FiatCurrency().setCode("KRW").setValue(krw_price).setDescription("South Koria won").setSymbol("₩"));
 
         Float inr_price = getDoubleFromJsonObject(current_price_DataObj, "inr");
-        currencyList.add(new FiatCurrency().setCode("INR").setValue(inr_price).setDescription("Indian Rupee").setSymbol("₹"));
+        currencyList.setFiat(new FiatCurrency().setCode("INR").setValue(inr_price).setDescription("Indian Rupee").setSymbol("₹"));
 
 
         return currencyList;
@@ -277,97 +274,98 @@ public class CoinGeckoService
                 .setCoinName(crypto)
                 .setSymbol(crypto);
 
-        List<FiatCurrency> currencyList_raw = getPriceByCoinAndDate(crypto, null);
+        // TODO fix this by implemengint reverting it back the way it was then do the conversion raw to fiatList here.
+        quote.setCurrency(getPriceByCoinAndDate(crypto, null));
 
-        List<FiatCurrency> currencyList = new ArrayList<FiatCurrency>();
+//        FiatCurrencyList currencyList = new FiatCurrencyList();
 
-        // usa dollar
-        if ( currencies.contains(FiatNames.USD.code))
-        {
-            FiatCurrency usd = findCurrencyByName(currencyList_raw, FiatNames.USD.code);
-            if ( usd != null )
-            {
-                currencyList.add(usd);
-            }
-        }
-
-        // euro
-        if ( currencies.contains(FiatNames.EUR.code))
-        {
-            FiatCurrency eur = findCurrencyByName(currencyList_raw, FiatNames.EUR.code);
-            if ( eur != null )
-            {
-                currencyList.add(eur);
-            }
-        }
-
-        // kiwi dollar
-        if ( currencies.contains(FiatNames.NZD.code))
-        {
-            FiatCurrency nzd = findCurrencyByName(currencyList_raw, FiatNames.NZD.code);
-            if ( nzd != null )
-            {
-                currencyList.add(nzd);
-            }
-        }
-
-        // aussie dollar
-        if ( currencies.contains(FiatNames.AUD.code))
-        {
-            FiatCurrency aud = findCurrencyByName(currencyList_raw, FiatNames.AUD.code);
-            if ( aud != null )
-            {
-                currencyList.add(aud);
-            }
-        }
-
-        // british pound
-        if ( currencies.contains(FiatNames.GBP.code))
-        {
-            FiatCurrency gbp = findCurrencyByName(currencyList_raw, FiatNames.GBP.code);
-            if ( gbp != null )
-            {
-                currencyList.add(gbp);
-            }
-        }
-
-        // korian won
-        if ( currencies.contains(FiatNames.KRW.code))
-        {
-            FiatCurrency krw = findCurrencyByName(currencyList_raw, FiatNames.KRW.code);
-            if ( krw != null )
-            {
-                currencyList.add(krw);
-            }
-        }
-
-        // Indian Rupee
-        if ( currencies.contains(FiatNames.INR.code))
-        {
-            FiatCurrency inr = findCurrencyByName(currencyList_raw, FiatNames.INR.code);
-            if ( inr != null )
-            {
-                currencyList.add(inr);
-            }
-        }
-
-        // Japanese Yen
-        if ( currencies.contains(FiatNames.JPY.code)) {
-            FiatCurrency jpy = findCurrencyByName(currencyList_raw, FiatNames.JPY.code);
-            if ( jpy != null )
-            {
-                currencyList.add(jpy);
-            }
-        }
-
-        if ( currencies.contains(FiatNames.JPM.code)) {
-            FiatCurrency jpm = findCurrencyByName(currencyList_raw, FiatNames.JPM.code);
-            if ( jpm != null )
-            {
-                currencyList.add(jpm);
-            }
-        }
-        quote.setCurrency(currencyList);
+//        // usa dollar
+//        if ( currencies.contains(FiatNames.USD.code))
+//        {
+//            FiatCurrency usd = findCurrencyByName(currencyList_raw, FiatNames.USD.code);
+//            if ( usd != null )
+//            {
+//                currencyList.add(usd);
+//            }
+//        }
+//
+//        // euro
+//        if ( currencies.contains(FiatNames.EUR.code))
+//        {
+//            FiatCurrency eur = findCurrencyByName(currencyList_raw, FiatNames.EUR.code);
+//            if ( eur != null )
+//            {
+//                currencyList.add(eur);
+//            }
+//        }
+//
+//        // kiwi dollar
+//        if ( currencies.contains(FiatNames.NZD.code))
+//        {
+//            FiatCurrency nzd = findCurrencyByName(currencyList_raw, FiatNames.NZD.code);
+//            if ( nzd != null )
+//            {
+//                currencyList.add(nzd);
+//            }
+//        }
+//
+//        // aussie dollar
+//        if ( currencies.contains(FiatNames.AUD.code))
+//        {
+//            FiatCurrency aud = findCurrencyByName(currencyList_raw, FiatNames.AUD.code);
+//            if ( aud != null )
+//            {
+//                currencyList.add(aud);
+//            }
+//        }
+//
+//        // british pound
+//        if ( currencies.contains(FiatNames.GBP.code))
+//        {
+//            FiatCurrency gbp = findCurrencyByName(currencyList_raw, FiatNames.GBP.code);
+//            if ( gbp != null )
+//            {
+//                currencyList.add(gbp);
+//            }
+//        }
+//
+//        // korian won
+//        if ( currencies.contains(FiatNames.KRW.code))
+//        {
+//            FiatCurrency krw = findCurrencyByName(currencyList_raw, FiatNames.KRW.code);
+//            if ( krw != null )
+//            {
+//                currencyList.add(krw);
+//            }
+//        }
+//
+//        // Indian Rupee
+//        if ( currencies.contains(FiatNames.INR.code))
+//        {
+//            FiatCurrency inr = findCurrencyByName(currencyList_raw, FiatNames.INR.code);
+//            if ( inr != null )
+//            {
+//                currencyList.add(inr);
+//            }
+//        }
+//
+//        // Japanese Yen
+//        if ( currencies.contains(FiatNames.JPY.code)) {
+//            FiatCurrency jpy = findCurrencyByName(currencyList_raw, FiatNames.JPY.code);
+//            if ( jpy != null )
+//            {
+//                currencyList.add(jpy);
+//            }
+//        }
+//
+//        if ( currencies.contains(FiatNames.JPM.code)) {
+//            FiatCurrency jpm = findCurrencyByName(currencyList_raw, FiatNames.JPM.code);
+//            if ( jpm != null )
+//            {
+//                currencyList.add(jpm);
+//            }
+//        }
+//        quote.setCurrency(currencyList);
 
         return quote;
     }

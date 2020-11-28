@@ -39,7 +39,7 @@ public class CoinList
     public void calculateFietBalances(QuoteGeneric quoteGeneric)
     {
         List<FiatCurrency> fiatBalances = new ArrayList<>();
-        for (FiatCurrency fiat :  quoteGeneric.getCurrency())
+        for (FiatCurrency fiat :  quoteGeneric.getCurrency().getFiat_values())
         {
             FiatCurrency currency = new FiatCurrency();
             currency.setSymbol(fiat.getSymbol());

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -38,7 +37,7 @@ public class PortFolioByWalletAndCoinService {
         return sumByWalletAndCoin(foundLatestOrderedByCurrency);
     }
 
-    public List<WalletDTO> sumByWalletAndCoin(List<BlockchainAddressStore> foundLatestOrderedByCurrency)
+    private List<WalletDTO> sumByWalletAndCoin(List<BlockchainAddressStore> foundLatestOrderedByCurrency)
     {
         List<CoinDTO> summedByCurrency = new ArrayList<CoinDTO>();
         List<WalletDTO> summedByWallet = new ArrayList<WalletDTO>();
@@ -105,66 +104,6 @@ public class PortFolioByWalletAndCoinService {
 
     }
 
-    public CoinList findAllByCoinNameAndWalletNameAndSummerize(String cryptoName, String walletName)
-    {
-        List<BlockchainAddressStore> blockchainAddressStores;
-        blockchainAddressStores = blockchainAddressStoreService.findAllByCoinNameAndWalletName(cryptoName.toUpperCase(), walletName.toUpperCase());
-
-        CoinList coinlist = new CoinList();
-        coinlist.setCoinName(cryptoName);
-        coinlist.setCoins(blockchainAddressStores);
-        coinlist.calculateCoinBalance();
-        return coinlist;
-    }
-
-    /**
-     * gets all the addresstores of a given crypto currency sorted by wallet
-     * accumilate balance by wallet and over all and returns this summary
-     *
-     * @param cryptoName
-     * @return
-     */
-    public WalletList summarizeAddressStoreByCoinNameAndWalletName(String cryptoName)
-    {
-        WalletList walletList = new WalletList();
-        walletList.setCryptoName(cryptoName);
-
-        List<BlockchainAddressStore> addressStores =
-                blockchainAddressStoreService.findAllByCoinName(cryptoName);
-
-        addressStores.sort( new Comparator<BlockchainAddressStore>() {
-            @Override
-            public int compare(BlockchainAddressStore lhs, BlockchainAddressStore rhs) {
-                // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
-                return lhs.getWalletName().compareToIgnoreCase(rhs.getWalletName());
-            }
-        });
-
-        if ( addressStores != null) {
-            Wallet currentWallet = new Wallet();
-            currentWallet.setCryptoName(cryptoName);
-            currentWallet.setWalletName( addressStores.get(0).getWalletName());
-            walletList.addWallet(currentWallet);
-
-            for (BlockchainAddressStore addr: addressStores )
-            {
-                if ( currentWallet.getWalletName().compareToIgnoreCase(addr.getWalletName()) != 0)
-                {
-                    walletList.addBalance(currentWallet.getBalance());
-                    currentWallet = new Wallet();
-                    currentWallet.setCryptoName(cryptoName);
-                    currentWallet.setWalletName( addr.getWalletName());
-                    walletList.addWallet(currentWallet);
-                }
-                currentWallet.addAddressStores(addr);
-                currentWallet.addBalance(addr.getLastBalance());
-            }
-            // save the last wallet.
-            walletList.addBalance(currentWallet.getBalance());
-
-        }
-        return walletList;
-    }
 
     private String getCoinNameFromTicker(String ticker, HashMap<String, CoinDTO>  coinMap) {
         CoinDTO coinDTO = coinMap.get(ticker);

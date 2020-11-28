@@ -85,9 +85,8 @@ public class PortfolioService
 
             calculateValueBasedOnPriceAndBalance(  currentTicker, portfolioCoin, coinPrices,fiat_prices,fiat_values);
 
-            portfolioCoin.setFiat_prices(fiat_prices);
-            portfolioCoin.setFiat_balances(fiat_values);
-
+            portfolioCoin.getFiat_prices().setFiat_values(fiat_prices);
+            portfolioCoin.getFiat_balances().setFiat_values(fiat_values);
         }
     }
 
@@ -103,7 +102,6 @@ public class PortfolioService
      */
     private void calculateValueBasedOnPriceAndBalance(  String currentTicker,
                                                         CoinDTO portfolioCoin,
-
                                                         HashMap<String, FiatCurrency>  coinPrices,
                                                         List<FiatCurrency> fiat_prices,
                                                         List<FiatCurrency> fiat_values)
@@ -198,26 +196,6 @@ public class PortfolioService
         DateTracker dateTracker = new DateTracker();
         dateTrackerService.save(dateTracker);
         return dateTracker;
-    }
-
-    public PortfolioCheckResults portfolioCheck(boolean refresh, String cryptoName)
-    {
-        List<CoinList> portfolioList = new ArrayList<>();
-        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, cryptoName, refresh);
-
-        DateTracker dateTracker = createAndSaveDateTracker();
-        List<PortfolioTracker> portfollioSummary = calculatePortfolioSummary(portfolioList, dateTracker);
-        return new PortfolioCheckResults( portfollioSummary, portfolioList);
-    }
-
-    public PortfolioCheckResults portfolioCheck(boolean refresh, String cryptoName, String walletName)
-    {
-        List<CoinList> portfolioList = new ArrayList<>();
-        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, cryptoName, refresh, walletName);
-
-        DateTracker dateTracker = createAndSaveDateTracker();
-        List<PortfolioTracker> portfollioSummary = calculatePortfolioSummary(portfolioList, dateTracker);
-        return new PortfolioCheckResults( portfollioSummary, portfolioList);
     }
 
     private void updateCoinBalanceCacheCalculateFiatBalance(List<CoinList> portfolioList, String cryptoName, boolean refresh, String walletName)
@@ -429,7 +407,7 @@ public class PortfolioService
 
         for ( CoinDTO coin : portfolioList )
         {
-            for (FiatCurrency currency : coin.getFiat_balances() )
+            for (FiatCurrency currency : coin.getFiat_balances().getFiat_values() )
             {
                 PortfolioTracker portfolioTracker = portfoiloByFiatCurrency.get(currency.getCode());
                 if ( portfolioTracker == null ) {

@@ -11,7 +11,7 @@ public class QuoteGeneric
     private String timeISO;
     private String coinName;
     private String symbol;
-    private List<FiatCurrency> currency;
+    private FiatCurrencyList currency;
 
     public QuoteGeneric()
     {
@@ -45,11 +45,11 @@ public class QuoteGeneric
         return this;
     }
 
-    public List<FiatCurrency> getCurrency() {
+    public FiatCurrencyList getCurrency() {
         return currency;
     }
 
-    public QuoteGeneric setCurrency(List<FiatCurrency> currency) {
+    public QuoteGeneric setCurrency(FiatCurrencyList currency) {
         this.currency = currency;
         return this;
     }
