@@ -67,7 +67,7 @@ public class PortfolioService
      * TODO  refactor this so we just return one PortfolioTracker with multiple columns for all the major fiat currencies
      * @return
      */
-    public List<PortfolioTracker> portfolioGetTotalValue() {
+    public PortfolioValueTrackerDTO portfolioGetTotalValue() {
         List<CoinDTO> portfolioByCoinList = portfolioByCoinsService.findAllLatestSumBalanceGroupByCoin();
         HashMap<String, FiatCurrency> coinPriceList = coinService.findAllReturnTickerFiatHashmap();
         copyFiatPricesAndCalculateValueFromCoinPrices( portfolioByCoinList, coinPriceList);
@@ -75,8 +75,8 @@ public class PortfolioService
 //        copyFiatPricesAndCalculateValueFromCoinPrices3( portfolioByCoinList, coinHashMap);
 
         DateTracker dateTracker = createAndSaveDateTracker();
-        List<PortfolioTracker> portfollioSummary = calculatePortfolioSummary2(portfolioByCoinList, dateTracker);
-        savePortfolioSummary( portfollioSummary);
+        PortfolioValueTrackerDTO portfollioSummary = calculatePortfolioSummary2(portfolioByCoinList, dateTracker);
+        //savePortfolioSummary( portfollioSummary);
 
         return portfollioSummary;
     }
@@ -328,7 +328,6 @@ public class PortfolioService
             return;
         }
 
-
         log.error("unsupported crypto name={}", coinList.getCoinName());
         coinList.addErrorMessage("unsupported crypto name=" + coinList.getCoinName());
     }
@@ -398,29 +397,19 @@ public class PortfolioService
         return  new ArrayList<PortfolioTracker>(portfoiloByFiatCurrency.values());
     }
 
-    private List<PortfolioTracker> calculatePortfolioSummary2(List<CoinDTO> portfolioList, DateTracker dateTracker  )
+    private PortfolioValueTrackerDTO calculatePortfolioSummary2(List<CoinDTO> portfolioList, DateTracker dateTracker  )
     {
-
         HashMap<String, PortfolioTracker> portfoiloByFiatCurrency = new HashMap<String, PortfolioTracker>();
+        PortfolioValueTrackerDTO portfolioValueTrackerDTO = new PortfolioValueTrackerDTO();
 
         for ( CoinDTO coin : portfolioList )
         {
             for (FiatCurrency currency : coin.getFiat_balances().getFiat_values() )
             {
-                PortfolioTracker portfolioTracker = portfoiloByFiatCurrency.get(currency.getCode());
-                if ( portfolioTracker == null ) {
-                    portfolioTracker = new PortfolioTracker();
-                    portfolioTracker.setDateTrackerID(dateTracker.getId());
-                    portfolioTracker.setDateUpdated(dateTracker.getDateUpdated());
-                    portfolioTracker.setFiatCurrency( currency.getCode());
-
-                    portfoiloByFiatCurrency.put(portfolioTracker.getFiatCurrency(), portfolioTracker);
-                }
-                portfolioTracker.setCoinValue(portfolioTracker.getCoinValue() + currency.getValue());
+                portfolioValueTrackerDTO.getFiat_balances().addToFiat(currency);
             }
-
         }
-        return  new ArrayList<PortfolioTracker>(portfoiloByFiatCurrency.values());
+        return  portfolioValueTrackerDTO;
     }
 
     private void savePortfolioSummary(List<PortfolioTracker> portfollioSummary)

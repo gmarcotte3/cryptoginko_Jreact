@@ -3,6 +3,7 @@ package com.marcotte.blockhead.portfolio;
 
 import com.marcotte.blockhead.datastore.PortfolioTracker;
 import com.marcotte.blockhead.model.CoinDTO;
+import com.marcotte.blockhead.model.PortfolioValueTrackerDTO;
 import com.marcotte.blockhead.model.WalletDTO;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
@@ -38,9 +39,9 @@ public class PortfolioController
     }
 
     @PutMapping("/total")
-    public ResponseEntity<List<PortfolioTracker>> getPortfolioTotal() {
-        List<PortfolioTracker> portfolioTrackerList = portfolioService.portfolioGetTotalValue();
-        return new ResponseEntity<List<PortfolioTracker>>(portfolioTrackerList, HttpStatus.OK);
+    public ResponseEntity<PortfolioValueTrackerDTO> getPortfolioTotal() {
+        PortfolioValueTrackerDTO portfolioValueTrackerDTO = portfolioService.portfolioGetTotalValue();
+        return new ResponseEntity<PortfolioValueTrackerDTO>(portfolioValueTrackerDTO, HttpStatus.OK);
     }
 
 

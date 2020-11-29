@@ -42,6 +42,16 @@ public class FiatCurrencyList {
         return;
     }
 
+    public void addToFiat( FiatCurrency fiatCurrency) {
+        for( int j = 0; j < this.fiat_values.size(); j++) {
+            if ( this.fiat_values.get(j).getCode().equals(fiatCurrency.getCode())) {
+                this.fiat_values.get(j).setValue(this.fiat_values.get(j).getValue() + fiatCurrency.getValue());
+                return;
+            }
+        }
+        return;
+    }
+
     public List<FiatCurrency>  getFiat_values() {
         return fiat_values;
     }

@@ -31,6 +31,10 @@ const Div2 = styled.div`
     height: 70px
 `;
 
+const DivAPP = styled.div`
+    width: 100%;
+`;
+
 
 const PORTFOLIO_BACKEND_URL = "http://localhost:8082/ginkoJ/portfolio/total";
 const PORTFOLIO_BYCOINS_URL = "http://localhost:8082/ginkoJ/portfolio/bycoins";
@@ -50,9 +54,10 @@ export default function App(props) {
   const componentDidMount = async () => {
       let response0 = await axios.get(GET_COINS_PRICE_URL);
       setMyCoins(response0.data);
-
+      //console.log("mycoins=", response0.data);
       let response = await axios.put(PORTFOLIO_BACKEND_URL);
       let updatedPorfolioFiatValues = response.data;
+      
 
       let totalValue2 = 0;
       for( let i =0; i< updatedPorfolioFiatValues.length; i++) {
@@ -85,7 +90,7 @@ export default function App(props) {
 
 
   return (
-    <div className="App">
+    <DivAPP>
       <GinkoHeader />
       <Div2>
         <Tabs>
@@ -108,7 +113,7 @@ export default function App(props) {
           
         </Tabs>
       </Div2>
-    </div>
+    </DivAPP>
     );  // endReturn
 
 }

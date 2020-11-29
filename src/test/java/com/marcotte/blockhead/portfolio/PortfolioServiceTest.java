@@ -2,6 +2,7 @@ package com.marcotte.blockhead.portfolio;
 
 import com.marcotte.blockhead.datastore.*;
 import com.marcotte.blockhead.model.CoinDTO;
+import com.marcotte.blockhead.model.PortfolioValueTrackerDTO;
 import com.marcotte.blockhead.model.WalletDTO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,10 +39,8 @@ public class PortfolioServiceTest {
     public void portfolioGetTotalValue() {
         initPortfolio1();
 
-        List<PortfolioTracker> portfolioTrackers = portfolioService.portfolioGetTotalValue();
-        assertEquals(4, portfolioTrackers.size());
-        assertEquals("USD", portfolioTrackers.get(2).getFiatCurrency());
-        assertTrue(Math.abs(portfolioTrackers.get(2).getCoinValue() - 4.0) < 0.001); // total for USD should be $4.0
+        PortfolioValueTrackerDTO portfolioTrackers = portfolioService.portfolioGetTotalValue();
+        assertTrue(Math.abs(portfolioTrackers.getFiat_balances().findFiat("USD").getValue() - 4.0) < 0.001); // total for USD should be $4.0
 
         // clean up
         blockchainAddressStoreService.deleteAll();

@@ -6,16 +6,18 @@ import cog from './cog.png';
 
 const DivBanner = styled.div`
     background-color: #282c34;
-    background: transparent url('./headerBackground.png') 0% 0% no-repeat;
+    background: transparent url('./headerBackground.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
     height: 150px;
 `;
 
-const MenuSection = styled.td`
+const MenuSection = styled.div`
     position: relative;
     top: 0 px;
     left: 0 px;
-    width: 1920px;
-    height: 90px;
+    width: 100%;
+    height: 70px;
     background: transparent linear-gradient(180deg, #000000 0%, #545454 100%) 0% 0% no-repeat padding-box;
     opacity: 1;
 `;
@@ -47,16 +49,9 @@ export default function GinkoHeader(props) {
             <Img src={ginkoLogo} alt="ginko logo" />
             
         </DivBanner>
-            <table>
-                <tbody>
-                    <tr>
-                        <MenuSection>
-                            <Img2 src={cog} alt="settings cog" /><br />
-                        </MenuSection>
-                    </tr>
-                </tbody>
-            </table>
-
+            <MenuSection>
+                <Img2 src={cog} alt="settings cog" /><br />
+            </MenuSection>
         </>
     );
 }

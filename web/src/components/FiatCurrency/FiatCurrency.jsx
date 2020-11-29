@@ -8,6 +8,8 @@ import React from 'react'
  */
 export default function FiatCurrency(props) {
 
+    console.log("fiate currency props=", props)
+
     const currencyOptions = {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
@@ -17,20 +19,31 @@ export default function FiatCurrency(props) {
         maximumFractionDigits: 0,
     }
 
-    const getPrice = () => { 
+    const getPriceUSD = () => { 
+        if ( props.coinValue != undefined ) {
         return (
             props.coinValue.toLocaleString(undefined, currencyOptions)
+
         );
+        } else { return "" };
     }
     const getPriceNZD = () => { 
+        if ( props.coinValue == undefined ) {
+            return "";
+        } else {
         return (
             props.coinValue.toLocaleString(undefined, currencyOptions)
-        );
+        )
+        };
     }
     const getPriceJPY = () => { 
+        if ( props.coinValue == undefined ) {
+            return "";
+        } else {
         return (
             props.coinValue.toLocaleString(undefined, currencyOptionsJpy)
-        );
+        )
+        };
     }
 
     // TODO support pounds euros and others here...
@@ -43,7 +56,7 @@ export default function FiatCurrency(props) {
             return ( symbol + getPriceJPY() +" 円");
         } else {
             let symbol = (props.symbol? props.symbol: "$");
-            return ( symbol + getPrice() + " " + props.currency );
+            return ( symbol + getPriceUSD() + " " + props.currency );
         }
     }
     

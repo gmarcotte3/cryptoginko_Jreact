@@ -15,6 +15,8 @@ const Div = styled.div`
 
 
 export default function Portfolio(props) {
+
+    console.log( props);
    
     return (
             <Div>

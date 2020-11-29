@@ -30,6 +30,7 @@ position: relative;
 
 export default function PortfolioByCoins(props) {
 
+    console.log("portfolioByCoins portfolioValue=", props.porfolioFiatValues);
 
     return (
         <DivPage> 
@@ -43,15 +44,29 @@ export default function PortfolioByCoins(props) {
                 </thead>
                 <tbody>
                     <tr>
-                        {
-                            props.porfolioFiatValues.map( ({coinValue, fiatCurrency}) =>
-                            <TDPrice><FiatCurrency key={fiatCurrency}
-                                currency={fiatCurrency}
-                                coinValue={coinValue}
-                                />
-                            </TDPrice>
-                            )
-                        }
+                        <TDPrice><FiatCurrency key="USD"
+                            currency="USD"
+                            coinValue={props.porfolioFiatValues.priceUSD}
+                            />
+                        </TDPrice>
+                        <TDPrice>
+                            <FiatCurrency key="NZD"
+                            currency="NZD"
+                            coinValue={props.porfolioFiatValues.priceNZD}
+                            />
+                        </TDPrice>
+                        <TDPrice>
+                            <FiatCurrency key="JPM"
+                            currency="JPM"
+                            coinValue={props.porfolioFiatValues.priceJPM}
+                            />
+                        </TDPrice>
+                        <TDPrice>
+                            <FiatCurrency key="JPY"
+                            currency="JPY"
+                            coinValue={props.porfolioFiatValues.priceJPY}
+                            />
+                        </TDPrice>
                     </tr>
                 </tbody>
             </table>
