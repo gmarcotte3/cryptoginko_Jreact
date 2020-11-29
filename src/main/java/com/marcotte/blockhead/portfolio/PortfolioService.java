@@ -62,10 +62,17 @@ public class PortfolioService
     private PortFolioByWalletAndCoinService portFolioByWalletAndCoinService;
 
 
+    /**
+     *
+     * TODO  refactor this so we just return one PortfolioTracker with multiple columns for all the major fiat currencies
+     * @return
+     */
     public List<PortfolioTracker> portfolioGetTotalValue() {
         List<CoinDTO> portfolioByCoinList = portfolioByCoinsService.findAllLatestSumBalanceGroupByCoin();
         HashMap<String, FiatCurrency> coinPriceList = coinService.findAllReturnTickerFiatHashmap();
         copyFiatPricesAndCalculateValueFromCoinPrices( portfolioByCoinList, coinPriceList);
+//        HashMap<String, CoinDTO> coinHashMap = coinService.findAllReturnTickerCoinDTOMap();
+//        copyFiatPricesAndCalculateValueFromCoinPrices3( portfolioByCoinList, coinHashMap);
 
         DateTracker dateTracker = createAndSaveDateTracker();
         List<PortfolioTracker> portfollioSummary = calculatePortfolioSummary2(portfolioByCoinList, dateTracker);
@@ -127,10 +134,20 @@ public class PortfolioService
         return portfolioByCoinList;
     }
 
+    /**
+     * go though the list of coins look up the ticker in the hash map that contains the current price for that coin,
+     * if found set the current price for the coin, calculate the current value of the coin (price * balance)
+     *
+     * if coin is not found return a default price of 0.0 and value of 0.0
+     *
+     * @param portfolioByCoinList
+     * @param coinHashMap
+     */
     private void  copyFiatPricesAndCalculateValueFromCoinPrices3( List<CoinDTO> portfolioByCoinList, HashMap<String, CoinDTO> coinHashMap) {
         CoinDTO coinDefault = new CoinDTO();
         coinDefault.setCoinName("Unknown");
         for ( CoinDTO coinDTO : portfolioByCoinList ) {
+            coinDefault.setTicker(coinDTO.getTicker());
             CoinDTO coinPriceDTO = coinHashMap.getOrDefault(coinDTO.getTicker(),coinDefault);
             coinDTO.setFiat_prices(coinPriceDTO.getFiat_prices());
             coinDTO.calculateCoinValue();
@@ -138,6 +155,11 @@ public class PortfolioService
     }
 
 
+    /**
+     * finds the total fiat value for each wallet and group by the coins of each wallet.
+     *
+     * @return
+     */
     public List<WalletDTO> portfolioByWalletCoins() {
         List<CoinDTO> portfolioByCoinList;
         List<WalletDTO> walletDTOS = portFolioByWalletAndCoinService.findBlockchainAddressStoreOrderByWalletNameAscCurrencyAsc();
@@ -190,26 +212,12 @@ public class PortfolioService
         return portfollioSummary;
     }
 
-
     private DateTracker createAndSaveDateTracker()
     {
         DateTracker dateTracker = new DateTracker();
         dateTrackerService.save(dateTracker);
         return dateTracker;
     }
-
-    private void updateCoinBalanceCacheCalculateFiatBalance(List<CoinList> portfolioList, String cryptoName, boolean refresh, String walletName)
-    {
-        CoinList coinList;
-        coinList = getCoinBalancesForCoin(cryptoName, walletName);
-        if ( refresh) {
-            updateCurrentCoinBalancesViaBlockExplorers(coinList);
-            updateAddressStoreBalance(coinList);
-        }
-        calculateFiatBalance(coinList);
-        portfolioList.add(coinList);
-    }
-
 
     private void updateCoinBalanceCacheCalculateFiatBalance(List<CoinList> portfolioList, String cryptoName, boolean refresh)
     {
@@ -238,17 +246,7 @@ public class PortfolioService
         coinList.calculateFietBalances(quoteGeneric);
     }
 
-    public CoinList getCoinBalancesForCoin(String coinName, String walletName )
-    {
-        CoinList coinList = new CoinList();
-        coinList.setCoinName(coinName);
-
-        List<BlockchainAddressStore>  blockchainAddressStores = blockchainAddressStoreService.findAllByCoinNameAndWalletName(coinName, walletName);
-        coinList.setCoins(blockchainAddressStores);
-        return coinList;
-    }
-
-    public CoinList getCoinBalancesForCoin(String coinName )
+    private CoinList getCoinBalancesForCoin(String coinName )
     {
         CoinList coinList = new CoinList();
         coinList.setCoinName(coinName);
@@ -264,7 +262,7 @@ public class PortfolioService
      *
      * @param coinList
      */
-    public void updateCurrentCoinBalancesViaBlockExplorers(CoinList coinList)
+    private void updateCurrentCoinBalancesViaBlockExplorers(CoinList coinList)
     {
         if ( coinList.getCoinName().equals(CoinCodes.BITCOIN_TICKER))
         {

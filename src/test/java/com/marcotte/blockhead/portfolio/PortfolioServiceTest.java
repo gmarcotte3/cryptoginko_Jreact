@@ -110,30 +110,6 @@ public class PortfolioServiceTest {
         coinService.deleteAll();
     }
 
-    @Test
-    public void portfolioCheck() {
-    }
-
-    @Test
-    public void testPortfolioCheck() {
-    }
-
-    @Test
-    public void testPortfolioCheck1() {
-    }
-
-    @Test
-    public void getCoinBalancesForCoin() {
-    }
-
-    @Test
-    public void testGetCoinBalancesForCoin() {
-    }
-
-    @Test
-    public void updateCurrentCoinBalancesViaBlockExplorers() {
-    }
-
     private void initPortfolio1() {
         List<BlockchainAddressStore> addresses6 = getAddresses6a();
 
