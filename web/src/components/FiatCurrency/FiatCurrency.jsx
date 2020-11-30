@@ -8,7 +8,7 @@ import React from 'react'
  */
 export default function FiatCurrency(props) {
 
-    console.log("fiate currency props=", props)
+    //console.log("fiate currency props=", props)
 
     const currencyOptions = {
         minimumFractionDigits: 2,

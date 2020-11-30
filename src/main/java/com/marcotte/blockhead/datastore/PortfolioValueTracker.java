@@ -1,11 +1,13 @@
 package com.marcotte.blockhead.datastore;
 
+import com.marcotte.blockhead.model.PortfolioValueTrackerDTO;
+
 import javax.persistence.*;
 import java.time.Instant;
 
 
 @Entity
-public class PortfolioValueTraker
+public class PortfolioValueTracker
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -52,10 +54,25 @@ public class PortfolioValueTraker
 
 
 
-    public PortfolioValueTraker()
+    public PortfolioValueTracker()
     {
         rightNow();
     }
+
+    public PortfolioValueTracker(PortfolioValueTrackerDTO portfolioValueTrackerDTO) {
+        this.coinValueUSD = portfolioValueTrackerDTO.getPriceUSD();
+        this.coinValueNZD = portfolioValueTrackerDTO.getPriceNZD();
+        this.coinValueJPY = portfolioValueTrackerDTO.getPriceJPY();
+        this.coinValueJPM = portfolioValueTrackerDTO.getPriceJPM();
+        this.coinValueAUD = portfolioValueTrackerDTO.getPriceAUD();
+        this.coinValueEUR = portfolioValueTrackerDTO.getPriceEUR();
+        this.coinValueGBP = portfolioValueTrackerDTO.getPriceGBP();
+        this.coinValueKRW = portfolioValueTrackerDTO.getPriceKRW();
+        this.coinValueINR = portfolioValueTrackerDTO.getPriceINR();
+        this.coinValueBTC = portfolioValueTrackerDTO.getPriceBTC();
+        this.coinValueETH = portfolioValueTrackerDTO.getPriceETH();
+    }
+
 
     public void rightNow()
     {

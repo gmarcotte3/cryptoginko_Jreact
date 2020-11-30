@@ -30,12 +30,17 @@ public class PortfolioValueTrackerDTO {
     public double getPriceEUR() {
         return fiat_balances.findFiat("EUR").getValue();
     }
+    public double getPriceKRW() { return fiat_balances.findFiat("KRW").getValue(); }
     public double getPriceINR() {
         return fiat_balances.findFiat("INR").getValue();
     }
-    public double getPriceKRW() {
-        return fiat_balances.findFiat("KRW").getValue();
+    public double getPriceBTC() {
+        return fiat_balances.findFiat("BTC").getValue();
     }
+    public double getPriceETH() {
+        return fiat_balances.findFiat("ETH").getValue();
+    }
+
 
 
     public PortfolioValueTrackerDTO() {

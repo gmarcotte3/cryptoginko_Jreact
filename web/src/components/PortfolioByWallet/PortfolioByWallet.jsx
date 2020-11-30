@@ -51,11 +51,12 @@ export default function PortfolioByWallet(props) {
                 </thead>
                 <tbody>
                     {
-                        portfolioByWallet.map( ({walletName, coinDTOs}) => 
+                        portfolioByWallet.map( ({walletName, coinDTOs, valueNZD, valueJPY}) => 
                             <PortfolioByWalletList 
                             key={walletName}
                             defaultFiatCurrency={props.defaultFiatCurrency}
-                            walletName={walletName} portfolioByCoins={coinDTOs}/>
+                            walletName={walletName} portfolioByCoins={coinDTOs}
+                            valueNZD={valueNZD} valueJPY={valueJPY}/>
                         )
                     }
                 </tbody>

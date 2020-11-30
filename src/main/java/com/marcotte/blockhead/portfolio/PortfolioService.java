@@ -51,6 +51,8 @@ public class PortfolioService
     private DateTrackerService dateTrackerService;
     @Autowired
     private PortfolioTrackerService portfolioTrackerService;
+    @Autowired
+    private PortfolioValueTrackerService portfolioValueTrackerService;
 
     @Autowired
     private CoinService coinService;
@@ -69,57 +71,14 @@ public class PortfolioService
      */
     public PortfolioValueTrackerDTO portfolioGetTotalValue() {
         List<CoinDTO> portfolioByCoinList = portfolioByCoinsService.findAllLatestSumBalanceGroupByCoin();
-        HashMap<String, FiatCurrency> coinPriceList = coinService.findAllReturnTickerFiatHashmap();
-        copyFiatPricesAndCalculateValueFromCoinPrices( portfolioByCoinList, coinPriceList);
-//        HashMap<String, CoinDTO> coinHashMap = coinService.findAllReturnTickerCoinDTOMap();
-//        copyFiatPricesAndCalculateValueFromCoinPrices3( portfolioByCoinList, coinHashMap);
+        HashMap<String, CoinDTO> coinHashMap = coinService.findAllReturnTickerCoinDTOMap();
+        copyFiatPricesAndCalculateValueFromCoinPrices3( portfolioByCoinList, coinHashMap);
 
         DateTracker dateTracker = createAndSaveDateTracker();
-        PortfolioValueTrackerDTO portfollioSummary = calculatePortfolioSummary2(portfolioByCoinList, dateTracker);
-        //savePortfolioSummary( portfollioSummary);
+        PortfolioValueTrackerDTO portfollioSummary = calculatePortfolioSummary2(portfolioByCoinList);
+        savePortfolioSummary( portfollioSummary, dateTracker);
 
         return portfollioSummary;
-    }
-
-    // new and improved method
-    private void copyFiatPricesAndCalculateValueFromCoinPrices( List<CoinDTO> portfolioByCoinList, HashMap<String, FiatCurrency> coinPrices) {
-        FiatCurrency fiat;
-
-        for ( CoinDTO portfolioCoin : portfolioByCoinList ) {
-            String currentTicker = portfolioCoin.getTicker();
-            List<FiatCurrency> fiat_prices = new ArrayList<>();
-            List<FiatCurrency> fiat_values= new ArrayList<>();
-
-            calculateValueBasedOnPriceAndBalance(  currentTicker, portfolioCoin, coinPrices,fiat_prices,fiat_values);
-
-            portfolioCoin.getFiat_prices().setFiat_values(fiat_prices);
-            portfolioCoin.getFiat_balances().setFiat_values(fiat_values);
-        }
-    }
-
-    /**
-     * generate an entry for fiatPrice for a set number of fiats
-     * calculate coorisponding fiat values (price * balance)
-     *
-     * @param currentTicker
-     * @param portfolioCoin
-     * @param coinPrices
-     * @param fiat_prices
-     * @param fiat_values
-     */
-    private void calculateValueBasedOnPriceAndBalance(  String currentTicker,
-                                                        CoinDTO portfolioCoin,
-                                                        HashMap<String, FiatCurrency>  coinPrices,
-                                                        List<FiatCurrency> fiat_prices,
-                                                        List<FiatCurrency> fiat_values)
-    {
-        String fiatCodes[] = {"USD", "NZD", "JPY", "JPM"};
-        for (String fiatCode : fiatCodes ) {
-            String mapKey = currentTicker + "-" + fiatCode;
-            FiatCurrency fiatPrice = coinPrices.get(mapKey);
-            fiat_prices.add(fiatPrice);
-            fiat_values.add( new FiatCurrency(fiatPrice.getValue() * portfolioCoin.getCoinBalance(), fiatCode ));
-        }
     }
 
     /**
@@ -167,6 +126,8 @@ public class PortfolioService
 
         for (WalletDTO walletDTO : walletDTOS ) {
             copyFiatPricesAndCalculateValueFromCoinPrices3( walletDTO.getCoinDTOs(), coinHashMap);
+            PortfolioValueTrackerDTO walletValueTotal = calculatePortfolioSummary2(walletDTO.getCoinDTOs());
+            walletDTO.setFiat_balances(walletValueTotal.getFiat_balances());
         }
 
         return walletDTOS;
@@ -208,7 +169,7 @@ public class PortfolioService
         DateTracker dateTracker = createAndSaveDateTracker();
 
         List<PortfolioTracker> portfollioSummary = calculatePortfolioSummary(portfolioList, dateTracker);
-        savePortfolioSummary( portfollioSummary);
+        //savePortfolioSummary( portfollioSummary);
         return portfollioSummary;
     }
 
@@ -397,7 +358,7 @@ public class PortfolioService
         return  new ArrayList<PortfolioTracker>(portfoiloByFiatCurrency.values());
     }
 
-    private PortfolioValueTrackerDTO calculatePortfolioSummary2(List<CoinDTO> portfolioList, DateTracker dateTracker  )
+    private PortfolioValueTrackerDTO calculatePortfolioSummary2(List<CoinDTO> portfolioList )
     {
         HashMap<String, PortfolioTracker> portfoiloByFiatCurrency = new HashMap<String, PortfolioTracker>();
         PortfolioValueTrackerDTO portfolioValueTrackerDTO = new PortfolioValueTrackerDTO();
@@ -412,11 +373,13 @@ public class PortfolioService
         return  portfolioValueTrackerDTO;
     }
 
-    private void savePortfolioSummary(List<PortfolioTracker> portfollioSummary)
+    private void savePortfolioSummary(PortfolioValueTrackerDTO portfollioSummaryDTO, DateTracker dateTracker)
     {
-        for (PortfolioTracker portfolio : portfollioSummary )
-        {
-            portfolioTrackerService.save(portfolio);
-        }
+        PortfolioValueTracker portfolioValueTracker = new PortfolioValueTracker(portfollioSummaryDTO);
+        portfolioValueTracker.setDateTrackerID(dateTracker.getId());
+        portfolioValueTracker.setDateUpdated(dateTracker.getDateUpdated());
+
+        portfolioValueTrackerService.save(portfolioValueTracker);
+
     }
 }

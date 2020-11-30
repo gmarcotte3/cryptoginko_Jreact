@@ -20,31 +20,31 @@ public class WalletDTO {
     }
 
     // these getters for json ouput
-    public double getPriceUSD() {
+    public double getValueUSD() {
         return findFiatValue("USD").getValue();
     }
-    public double getPriceNZD() {
+    public double getValueNZD() {
         return findFiatValue("NZD").getValue();
     }
-    public double getPriceJPY() {
+    public double getValueJPY() {
         return findFiatValue("JPY").getValue();
     }
-    public double getPriceJPM() {
+    public double getValueJPM() {
         return findFiatValue("JPM").getValue();
     }
-    public double getPriceAUD() {
+    public double getValueAUD() {
         return findFiatValue("AUD").getValue();
     }
-    public double getPriceGBP() {
+    public double getValueGBP() {
         return findFiatValue("GBP").getValue();
     }
-    public double getPriceEUR() {
+    public double getValueEUR() {
         return findFiatValue("EUR").getValue();
     }
-    public double getPriceINR() {
+    public double getValueINR() {
         return findFiatValue("INR").getValue();
     }
-    public double getPriceKRW() {
+    public double getValueKRW() {
         return findFiatValue("KRW").getValue();
     }
 
@@ -70,5 +70,13 @@ public class WalletDTO {
 
     public void setCoinDTOs(List<CoinDTO> coinDTOs) {
         this.coinDTOs = coinDTOs;
+    }
+
+    public FiatCurrencyList getFiat_balances() {
+        return fiat_balances;
+    }
+
+    public void setFiat_balances(FiatCurrencyList fiat_balances) {
+        this.fiat_balances = fiat_balances;
     }
 }
