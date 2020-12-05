@@ -75,24 +75,33 @@ public class CsvImportService
     {
       List<String> row = csvFileArray.get(j);
 
-      int rowType = Integer.valueOf(row.get(COL_CSV_ROW_TYPE));
+      int rowType = ROWTYPE_HEADER;
+      try {
+        rowType = Integer.valueOf(row.get(COL_CSV_ROW_TYPE));
+      } catch (Exception e ) {
+        log.error("CSV file import error, Invalid row type on line " + j + " skipping the line " + row);
+      }
       if ( rowType == ROWTYPE_HEADER) {
         continue;
       }
 
       String address = row.get(COL_ADDRESS);
-      Double balance = 0.0;
+      String currency = row.get(COL_CURRENCY);
+      if ( currency == null || currency.length() == 0 ) {
+        log.error( "CSV file import error, line " + j + " missing or blank ticker, skipping the line=" + row);
+        continue;
+      }
 
+      Double balance = 0.0;
       try
       {
         balance = Double.valueOf(row.get(COL_BALANCE));
       } catch ( Exception e) {
         //TODO throw exception here.
-        log.error("faild to convert balance input:" + row.get(COL_BALANCE));
+        log.error("CSV file import error, line " + j + "faild to convert balance input:" + row.get(COL_BALANCE) + ", assuming 0.0 on line=" + row);
         balance = 0.0;
       }
 
-      String currency = row.get(COL_CURRENCY);
       String walletname = row.get(COL_WALLET_NAME);
 
       BlockchainAddressStore lastAddress = blockchainAddressStoreService.findLatestByAddressAndCurrency( address, currency );
