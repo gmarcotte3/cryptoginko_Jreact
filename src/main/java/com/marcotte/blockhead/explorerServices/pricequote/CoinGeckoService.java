@@ -26,6 +26,9 @@ import java.util.Map;
  * coingecko service. this site can return a historical price in a million different currencies
  *
  * https://www.coingecko.com/api
+ *
+ * docs
+ * https://www.coingecko.com/en/api#explore-api
  */
 @Service
 public class CoinGeckoService
@@ -124,19 +127,19 @@ public class CoinGeckoService
     }
     /**
      *
-     * @param coinID          coindID (from https://api.coingecko.com/api/v3/coins/list)
-     * @param date_ddmmyyyy  date in this format "dd-mm-yyy"
+     * @param coinTicker     coin ticker symbol (BTC, BCH, ETH ...)
+     * @param date_ddmmyyyy  date in this format "dd-mm-yyyy"
      * @return List<Currency>
      */
-    public FiatCurrencyList getPriceByCoinAndDate(String coin, String date_ddmmyyyy)
+    public FiatCurrencyList getPriceByCoinAndDate(String coinTicker, String date_ddmmyyyy)
     {
         RestTemplate restTemplate = new RestTemplate();
         String url;
 
         // convert the coin ticker to a coin geko coinID
-        String coinID = this.cryptoCodeToCoinGekoCoinID.get(coin);
+        String coinID = this.cryptoCodeToCoinGekoCoinID.get(coinTicker);
         if (coinID == null) { // this code is not recoignized so return a blank
-            log.error("Coin (" + coin + ") not recoignized by goin geko service so no currency quote is possible");
+            log.error("Coin (" + coinTicker + ") not recoignized by goin geko service so no currency quote is possible");
             return new FiatCurrencyList();
         }
 
@@ -144,10 +147,8 @@ public class CoinGeckoService
 
         if ( date_ddmmyyyy != null)
         {
-            String date_ddmmyyyy_clean = verifyFormatDate(date_ddmmyyyy);
-
             url = "https://api.coingecko.com/api/v3/coins/" +
-                    coinID.toLowerCase() + "/history?date=" + date_ddmmyyyy_clean;
+                    coinID.toLowerCase() + "/history?date=" + date_ddmmyyyy;
             log.info("url=" + url);
         } else {
             url = "https://api.coingecko.com/api/v3/coins/" +
@@ -158,7 +159,7 @@ public class CoinGeckoService
         String theRawJsonQuote = restTemplate.getForObject(url, String.class);
         log.debug("raw json=" + theRawJsonQuote);
 
-        return parseJsonRawQuote(coin, theRawJsonQuote);
+        return parseJsonRawQuote(coinTicker, theRawJsonQuote);
     }
 
     /**
@@ -242,29 +243,6 @@ public class CoinGeckoService
         return returnfloat;
     }
 
-    /**
-     * check the string date pattern
-     * @param date_ddmmyyyy
-     * @return
-     */
-    private String verifyFormatDate( String date_ddmmyyyy)
-    {
-        String cleanDateString;
-        if ( date_ddmmyyyy == null || date_ddmmyyyy.length() == 0)
-        {
-            Instant nowUtc = Instant.now();
-            ZoneId usaLosAngels = ZoneId.of("America/Los_Angeles");
-            ZonedDateTime nowUSA = ZonedDateTime.ofInstant(nowUtc, usaLosAngels);
-
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-            cleanDateString = nowUSA.format(formatter);
-
-        } else {
-            cleanDateString = date_ddmmyyyy;
-        }
-        return cleanDateString;
-    }
-
     public QuoteGeneric getQuote(String crypto)
     {
         String currencies = blocktestConfig.getCryptoCompareCurrencyList().toUpperCase();
@@ -274,113 +252,8 @@ public class CoinGeckoService
                 .setCoinName(crypto)
                 .setSymbol(crypto);
 
-        // TODO fix this by implemengint reverting it back the way it was then do the conversion raw to fiatList here.
         quote.setCurrency(getPriceByCoinAndDate(crypto, null));
 
-//        FiatCurrencyList currencyList = new FiatCurrencyList();
-
-//        // usa dollar
-//        if ( currencies.contains(FiatNames.USD.code))
-//        {
-//            FiatCurrency usd = findCurrencyByName(currencyList_raw, FiatNames.USD.code);
-//            if ( usd != null )
-//            {
-//                currencyList.add(usd);
-//            }
-//        }
-//
-//        // euro
-//        if ( currencies.contains(FiatNames.EUR.code))
-//        {
-//            FiatCurrency eur = findCurrencyByName(currencyList_raw, FiatNames.EUR.code);
-//            if ( eur != null )
-//            {
-//                currencyList.add(eur);
-//            }
-//        }
-//
-//        // kiwi dollar
-//        if ( currencies.contains(FiatNames.NZD.code))
-//        {
-//            FiatCurrency nzd = findCurrencyByName(currencyList_raw, FiatNames.NZD.code);
-//            if ( nzd != null )
-//            {
-//                currencyList.add(nzd);
-//            }
-//        }
-//
-//        // aussie dollar
-//        if ( currencies.contains(FiatNames.AUD.code))
-//        {
-//            FiatCurrency aud = findCurrencyByName(currencyList_raw, FiatNames.AUD.code);
-//            if ( aud != null )
-//            {
-//                currencyList.add(aud);
-//            }
-//        }
-//
-//        // british pound
-//        if ( currencies.contains(FiatNames.GBP.code))
-//        {
-//            FiatCurrency gbp = findCurrencyByName(currencyList_raw, FiatNames.GBP.code);
-//            if ( gbp != null )
-//            {
-//                currencyList.add(gbp);
-//            }
-//        }
-//
-//        // korian won
-//        if ( currencies.contains(FiatNames.KRW.code))
-//        {
-//            FiatCurrency krw = findCurrencyByName(currencyList_raw, FiatNames.KRW.code);
-//            if ( krw != null )
-//            {
-//                currencyList.add(krw);
-//            }
-//        }
-//
-//        // Indian Rupee
-//        if ( currencies.contains(FiatNames.INR.code))
-//        {
-//            FiatCurrency inr = findCurrencyByName(currencyList_raw, FiatNames.INR.code);
-//            if ( inr != null )
-//            {
-//                currencyList.add(inr);
-//            }
-//        }
-//
-//        // Japanese Yen
-//        if ( currencies.contains(FiatNames.JPY.code)) {
-//            FiatCurrency jpy = findCurrencyByName(currencyList_raw, FiatNames.JPY.code);
-//            if ( jpy != null )
-//            {
-//                currencyList.add(jpy);
-//            }
-//        }
-//
-//        if ( currencies.contains(FiatNames.JPM.code)) {
-//            FiatCurrency jpm = findCurrencyByName(currencyList_raw, FiatNames.JPM.code);
-//            if ( jpm != null )
-//            {
-//                currencyList.add(jpm);
-//            }
-//        }
-//        quote.setCurrency(currencyList);
-
         return quote;
-    }
-
-    private FiatCurrency findCurrencyByName(List<FiatCurrency> inputCurrencyList, String currencyName)
-    {
-        FiatCurrency result;
-
-        for ( FiatCurrency curency : inputCurrencyList)
-        {
-            if ( curency.getCode().compareToIgnoreCase( currencyName) == 0)
-            {
-                return curency;
-            }
-        }
-        return null;
     }
 }

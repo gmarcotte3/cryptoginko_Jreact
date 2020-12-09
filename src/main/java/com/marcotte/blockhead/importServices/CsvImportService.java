@@ -98,7 +98,7 @@ public class CsvImportService
         balance = Double.valueOf(row.get(COL_BALANCE));
       } catch ( Exception e) {
         //TODO throw exception here.
-        log.error("CSV file import error, line " + j + "faild to convert balance input:" + row.get(COL_BALANCE) + ", assuming 0.0 on line=" + row);
+        log.error("CSV file import error, line " + j + "failed to convert balance input:" + row.get(COL_BALANCE) + ", assuming 0.0 on line=" + row);
         balance = 0.0;
       }
 

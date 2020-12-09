@@ -54,13 +54,19 @@ public class  CoinGeckoController
     }
 
 
+    /**
+     *
+     * @param coinID
+     * @param date_ddmmyyyy
+     * @return
+     */
     @GetMapping("/quote/raw")
     public ResponseEntity<FiatCurrencyList> getQuoteRaw(
-            @RequestParam(value = "coin", required = true) final String coinID,
+            @RequestParam(value = "coin", required = true) final String coinTicker,
             @RequestParam(value = "quotedate", required = false) final String date_ddmmyyyy
     )
     {
-        FiatCurrencyList currencyList = coinGeckoService.getPriceByCoinAndDate(coinID, date_ddmmyyyy);
+        FiatCurrencyList currencyList = coinGeckoService.getPriceByCoinAndDate(coinTicker, date_ddmmyyyy);
         return new ResponseEntity<FiatCurrencyList>(currencyList, HttpStatus.OK);
     }
 
