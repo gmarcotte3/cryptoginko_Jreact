@@ -32,7 +32,8 @@ public class ExportCsvController
 
 
   @GetMapping( value = "/addresses", produces = "application/json")
-  public ResponseEntity<List<BlockchainAddressStore>> dumpAddresses(HttpServletResponse response, @RequestParam String fileName)
+  public ResponseEntity<List<BlockchainAddressStore>> dumpAddresses(HttpServletResponse response,
+                                                                    @RequestParam String fileName)
   {
     List<BlockchainAddressStore> blockchainAddressStores = new ArrayList<>();
 
@@ -48,7 +49,8 @@ public class ExportCsvController
   }
 
   @GetMapping( value = "/addresses/summary", produces = "application/json")
-  public ResponseEntity<List<BlockchainAddressStore>> dumpAddressesSummary(HttpServletResponse response, @RequestParam String fileName)
+  public ResponseEntity<List<BlockchainAddressStore>> dumpAddressesSummary(HttpServletResponse response,
+                                                                           @RequestParam String fileName)
   {
     List<BlockchainAddressStore> blockchainAddressStores = new ArrayList<>();
     List<BlockchainAddressStore> summary = new ArrayList<>();

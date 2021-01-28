@@ -1,5 +1,7 @@
 package com.marcotte.blockhead.model;
 
+import com.opencsv.bean.CsvBindByName;
+
 import java.sql.Timestamp;
 
 public class WalletTransaction {
@@ -8,12 +10,11 @@ public class WalletTransaction {
     private Timestamp transactionTimestamp;
     private Double coinAmount;
     private Double fee;
-    private Double balance;
+    private Double balance;                         // running balance
     private String fiatCurrencyCode;
-    private Double fiatPriceAtTransactionDate;  // fiat price of the coin at transaction time
-    private Double fiatValueAtTransactionDate;  // fiat value of coin price * coinAmount
-    private Double fiatFeeValueAtTransactionDate; // fiat fee value : price * fee
-    private Double fiatRunningBalanceAtTransactionDate;
+    private Double fiatPriceAtTransactionDate;      // fiat price of the coin at transaction time
+    private Double fiatValueAtTransactionDate;      // fiat value of coin price * coinAmount
+    private Double fiatFeeValueAtTransactionDate;   // fiat fee value : price * fee
     private Double fiatRunningCost;                 // priorRunningCost + coinAmount * fiatPrice
     private Double fiatRunningAverageUnitPrice;
     private Double fiatGainOrLossAtTransactionDate;  // fiatValue - (runnaveUnit * coinAmount)
@@ -100,13 +101,6 @@ public class WalletTransaction {
         this.fiatFeeValueAtTransactionDate = fiatFeeValueAtTransactionDate;
     }
 
-    public Double getFiatRunningBalanceAtTransactionDate() {
-        return fiatRunningBalanceAtTransactionDate;
-    }
-
-    public void setFiatRunningBalanceAtTransactionDate(Double fiatRunningBalanceAtTransactionDate) {
-        this.fiatRunningBalanceAtTransactionDate = fiatRunningBalanceAtTransactionDate;
-    }
 
     public Double getFiatRunningCost() {
         return fiatRunningCost;

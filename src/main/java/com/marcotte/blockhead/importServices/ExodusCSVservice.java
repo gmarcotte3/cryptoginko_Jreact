@@ -1,7 +1,6 @@
 package com.marcotte.blockhead.importServices;
 
 import com.marcotte.blockhead.explorerServices.pricequote.CoinGeckoService;
-import com.marcotte.blockhead.model.FiatCurrency;
 import com.marcotte.blockhead.model.FiatCurrencyList;
 import com.marcotte.blockhead.model.WalletTransaction;
 import com.marcotte.blockhead.util.Utils;
@@ -17,6 +16,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * this service handles all the Exodus CSV conversion logic.
+ */
 @Service
 public class ExodusCSVservice {
     private static final Logger log = LoggerFactory.getLogger(com.marcotte.blockhead.wallets.exodus.ExodosCsvService.class);
@@ -77,13 +79,20 @@ public class ExodusCSVservice {
             walletTransaction.setExchangeNote(row.get(EXCHANGE_COL));
             walletTransaction.setPersonalNote(row.get(PERSONAL_NOTE_COL));
 
-
             walletTransactions.add(walletTransaction);
         }
 
             return walletTransactions;
     }
 
+    /**
+     * Exodus date clean up
+     * Need to do some preprocessing of the date comming from exodus csv output before we can convert
+     * to a Timestamp.
+     *
+     * @param dateStr
+     * @return
+     */
     private Timestamp exodusDateClean( String dateStr ) {
         int timeZoneIndex = dateStr.indexOf("GMT");
         String dateStrClean = dateStr.substring(0, timeZoneIndex + 6) + ":" + dateStr.substring(timeZoneIndex + 6, timeZoneIndex + 8);
@@ -91,6 +100,15 @@ public class ExodusCSVservice {
         return transactionDate;
     }
 
+    /**
+     * converts a string formated number into a double.
+     * The input string is the form ####.#### XXX where there is a space following
+     * the number and a coin currency code. The currency code is stripped out before
+     * normal string to double conversion is done.
+     *
+     * @param coinBalanceStr    number string of the form "####.#### XXX"
+     * @return
+     */
     private Double amountStringToDouble(String coinBalanceStr) {
         String cleanString = coinBalanceStr.trim();
         Double cleanAmount = 0.0;
@@ -109,13 +127,22 @@ public class ExodusCSVservice {
         return cleanAmount;
     }
 
-    public void  calculateGainLostTransactions(List<WalletTransaction> walletTransactions, String fiatCode, String cryptoTicker) {
-
-        Double fiatRunningBalanceAtTransactionDate = 0.0;
+    /**
+     * calculate gain and loss of each transaction
+     *
+     * uses the average cost method
+     *
+     * This routine will calculate the gain and loss of each transaction by finding the
+     * unit price at the time of the transaction. tracking the running cost, running average unit cost
+     * when item is withdrawn the gain or loss is calculated:  valueAtSale - (averageUnitCost * numberCoinsSold)
+     * @param walletTransactions
+     * @param fiatCode
+     * @param cryptoTicker
+     */
+    public void calculateGainLossTransactions(List<WalletTransaction> walletTransactions, String fiatCode, String cryptoTicker)
+    {
         Double fiatRunningCost = 0.0;                 // priorRunningCost + coinAmount * fiatPrice
         Double fiatRunningAverageUnitPrice = 0.0;
-
-
 
         for( int i =0 ; i < walletTransactions.size(); i++) {
             Timestamp transDate = walletTransactions.get(i).getTransactionTimestamp();
@@ -136,13 +163,12 @@ public class ExodusCSVservice {
                 walletTransactions.get(i).setFiatRunningAverageUnitPrice(fiatRunningAverageUnitPrice);
             } else {
                 Double fiatCostAtSaleTransaction = walletTransactions.get(i).getCoinAmount() * fiatRunningAverageUnitPrice;
-                walletTransactions.get(i).setFiatGainOrLossAtTransactionDate( -(fiatValueAtTransactionDate) - fiatCostAtSaleTransaction);
+                walletTransactions.get(i).setFiatGainOrLossAtTransactionDate( -(fiatValueAtTransactionDate) + fiatCostAtSaleTransaction);
                 fiatRunningCost += fiatCostAtSaleTransaction;
                 walletTransactions.get(i).setFiatRunningCost(fiatRunningCost);
                 walletTransactions.get(i).setFiatRunningAverageUnitPrice(fiatRunningAverageUnitPrice);
             }
         }
-
     }
 
     /**
@@ -154,5 +180,4 @@ public class ExodusCSVservice {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         return dateFormat.format(new Date(timestamp.getYear(), timestamp.getMonth()-1, timestamp.getDay()));
     }
-
 }

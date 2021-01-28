@@ -1,7 +1,9 @@
 package com.marcotte.blockhead.importServices;
 
 import com.marcotte.blockhead.datastore.BlockchainAddressStore;
+import com.marcotte.blockhead.export.ExportCsvService;
 import com.marcotte.blockhead.model.WalletTransaction;
+import com.marcotte.blockhead.util.BlockHeadException;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +34,9 @@ public class CsvImportController
   private ExodusCSVservice exodusCSVservice;
   @Autowired
   private CsvImportService importCsvService;
+
+  @Autowired
+  private ExportCsvService exportCsvService;
 
   /**
    * This reads a csv file and dumps it in json format. used for testing and development
@@ -121,7 +126,8 @@ public class CsvImportController
           @RequestParam("file") MultipartFile file,
           RedirectAttributes redirectAttributes,
           @RequestParam(value = "coin", required = true) final String coinTicker,
-          @RequestParam(value = "fiat", required = true) final String fiatCode ) {
+          @RequestParam(value = "fiat", required = true) final String fiatCode,
+          @RequestParam String outCsvfileName) {
 
     List<List<String>> csvFileArray;
     List<WalletTransaction> walletTransactions = new ArrayList<>();
@@ -135,28 +141,24 @@ public class CsvImportController
       csvFileArray = readFileCsv(file);
       walletTransactions = exodusCSVservice.parseTransactionCsv(csvFileArray);
 
-      exodusCSVservice.calculateGainLostTransactions( walletTransactions, fiatCode, coinTicker);
-
-      redirectAttributes.addFlashAttribute("message",
-              "You successfully uploaded '" + file.getOriginalFilename() + "'");
-
+      exodusCSVservice.calculateGainLossTransactions( walletTransactions, fiatCode, coinTicker);
     } catch (FileNotFoundException e) {
       return new ResponseEntity(null, HttpStatus.NOT_FOUND);
     } catch (IOException e2) {
       return new ResponseEntity(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    try
+    {
+      exportCsvService.writeWalletTransactionsToCsv( outCsvfileName, walletTransactions);
+      redirectAttributes.addFlashAttribute("message",
+              "You successfully uploaded '" + file.getOriginalFilename() + "'");
+    } catch (BlockHeadException e) {
+      log.error("failed to export file (%s) error==%s",outCsvfileName, e.getMessage());
+      return new ResponseEntity(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     return new ResponseEntity(walletTransactions, HttpStatus.OK);
   }
-
-//  @GetMapping("/exodus/transactions")
-//  public ResponseEntity<List<WalletTransaction>> calculateGainLostTransactions(
-//          @RequestParam(value = "coin", required = true) final String coinTicker,
-//          @RequestParam(value = "fiat", required = true) final String fiatCode,
-//          @RequestParam(value = "transactions", required = true) final List<WalletTransaction> walletTransactions  )
-//  {
-//    exodusCSVservice.calculateGainLostTransactions( walletTransactions, fiatCode, coinTicker);
-//
-//    return new ResponseEntity<List<WalletTransaction>>(walletTransactions, HttpStatus.OK);
-//  }
 
 }
