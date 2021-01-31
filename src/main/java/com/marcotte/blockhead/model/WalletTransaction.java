@@ -4,6 +4,12 @@ import com.opencsv.bean.CsvBindByName;
 
 import java.sql.Timestamp;
 
+/**
+ * A transaction on the block chain in simple accounting format.
+ *
+ * This structure is used for reporting gain or loss so we have
+ * running balance, running average unit cost etc.
+ */
 public class WalletTransaction {
     private String transactionID;
     private String transactionURL;
@@ -20,6 +26,21 @@ public class WalletTransaction {
     private Double fiatGainOrLossAtTransactionDate;  // fiatValue - (runnaveUnit * coinAmount)
     private String exchangeNote;
     private String personalNote;
+
+    /**
+     * constructor init all the doubles to 0.0d.
+     */
+    public  WalletTransaction() {
+        this.setBalance(0.0d);
+        this.setCoinAmount(0.0d);
+        this.setFee(0.0d);
+        this.setFiatFeeValueAtTransactionDate(0.0d);
+        this.setFiatGainOrLossAtTransactionDate(0.0d);
+        this.setFiatRunningAverageUnitPrice(0.0d);
+        this.setFiatRunningCost(0.0d);
+        this.setFiatPriceAtTransactionDate(0.0d);
+        this.setFiatValueAtTransactionDate(0.0d);
+    }
 
     public String getTransactionID() {
         return transactionID;

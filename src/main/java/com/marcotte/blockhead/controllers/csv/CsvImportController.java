@@ -4,6 +4,8 @@ import com.marcotte.blockhead.datastore.BlockchainAddressStore;
 import com.marcotte.blockhead.services.ExportCsvService;
 import com.marcotte.blockhead.model.WalletTransaction;
 import com.marcotte.blockhead.services.GinkoCsvService;
+import com.marcotte.blockhead.services.TransationAnalysisService;
+import com.marcotte.blockhead.services.cardano.CardanoCSVservice;
 import com.marcotte.blockhead.services.exodus.ExodusCSVservice;
 import com.marcotte.blockhead.util.BlockHeadException;
 import io.swagger.annotations.Api;
@@ -35,10 +37,16 @@ public class CsvImportController
   @Autowired
   private ExodusCSVservice exodusCSVservice;
   @Autowired
+  private CardanoCSVservice cardanoCSVservice;
+
+  @Autowired
   private GinkoCsvService ginkoCsvService;
 
   @Autowired
   private ExportCsvService exportCsvService;
+
+  @Autowired
+  private TransationAnalysisService transationAnalysisService;
 
   /**
    * This reads a csv file and dumps it in json format. used for testing and development
@@ -156,7 +164,43 @@ public class CsvImportController
     try {
       csvFileArray = readFileCsv(file);
       walletTransactions = exodusCSVservice.parseTransactionCsv(csvFileArray);
-      exodusCSVservice.calculateGainLossTransactions( walletTransactions, fiatCode, coinTicker);
+      transationAnalysisService.calculateGainLossTransactions( walletTransactions, fiatCode, coinTicker);
+      exportCsvService.writeWalletTransactionsToCsv( outCsvfileName, walletTransactions);
+      redirectAttributes.addFlashAttribute("message",
+              "You successfully uploaded '" + file.getOriginalFilename() + "'");
+
+    } catch (FileNotFoundException e) {
+      return new ResponseEntity(null, HttpStatus.NOT_FOUND);
+    } catch (IOException e2) {
+      return new ResponseEntity(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    } catch (BlockHeadException e) {
+      log.error("failed to export file (%s) error==%s",outCsvfileName, e.getMessage());
+      return new ResponseEntity(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    return new ResponseEntity(walletTransactions, HttpStatus.OK);
+  }
+
+  @PostMapping("/cardano/transactions")
+  public ResponseEntity<List<WalletTransaction>> importCardanoExodusTransactionsCSVfile(
+          @RequestParam("file") MultipartFile file,
+          RedirectAttributes redirectAttributes,
+          @RequestParam(value = "coin", required = true) final String coinTicker,
+          @RequestParam(value = "fiat", required = true) final String fiatCode,
+          @RequestParam String outCsvfileName) {
+
+    List<List<String>> csvFileArray;
+    List<WalletTransaction> walletTransactions = new ArrayList<>();
+
+    if (file.isEmpty()) {
+      redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
+      return new ResponseEntity(null, HttpStatus.NOT_FOUND);
+    }
+
+    try {
+      csvFileArray = readFileCsv(file);
+      walletTransactions = cardanoCSVservice.parseTransactionCsv(csvFileArray);
+      transationAnalysisService.calculateGainLossTransactions( walletTransactions, fiatCode, coinTicker);
       exportCsvService.writeWalletTransactionsToCsv( outCsvfileName, walletTransactions);
       redirectAttributes.addFlashAttribute("message",
               "You successfully uploaded '" + file.getOriginalFilename() + "'");
