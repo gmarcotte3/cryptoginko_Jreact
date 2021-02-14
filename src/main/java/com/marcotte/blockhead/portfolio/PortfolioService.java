@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -82,7 +83,7 @@ public class PortfolioService
     }
 
     /**
-     * returns the portfolio broken down by coin
+     * returns the portfolio broken down by coin and sorted by value in reverse order.
      * @return
      */
     public List<CoinDTO> portfolioByCoins() {
@@ -90,6 +91,7 @@ public class PortfolioService
         HashMap<String, CoinDTO> coinHashMap = coinService.findAllReturnTickerCoinDTOMap();
 
         copyFiatPricesAndCalculateValueFromCoinPrices3( portfolioByCoinList, coinHashMap);
+        Collections.sort(portfolioByCoinList, Collections.reverseOrder(new CoinDTOCompareByFiatBalance()));
         return portfolioByCoinList;
     }
 
@@ -124,12 +126,17 @@ public class PortfolioService
         List<WalletDTO> walletDTOS = portFolioByWalletAndCoinService.findBlockchainAddressStoreOrderByWalletNameAscCurrencyAsc();
         HashMap<String, CoinDTO> coinHashMap = coinService.findAllReturnTickerCoinDTOMap();
 
+        // loop though all wallets and calculate balances
         for (WalletDTO walletDTO : walletDTOS ) {
             copyFiatPricesAndCalculateValueFromCoinPrices3( walletDTO.getCoinDTOs(), coinHashMap);
             PortfolioValueTrackerDTO walletValueTotal = calculatePortfolioSummary2(walletDTO.getCoinDTOs());
             walletDTO.setFiat_balances(walletValueTotal.getFiat_balances());
+            // sort coins by fiat value decending.
+            Collections.sort(walletDTO.getCoinDTOs(), Collections.reverseOrder(new CoinDTOCompareByFiatBalance()));
         }
 
+        // sort wallets by fiat value decending.
+        Collections.sort(walletDTOS, Collections.reverseOrder(new WalletDTOCompareByFiatValue()));
         return walletDTOS;
     }
 

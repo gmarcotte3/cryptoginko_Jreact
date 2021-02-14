@@ -133,6 +133,15 @@ public class CoinDTO {
     }
 
 
+    /**
+     * retrieve the fiat value of the balance with the specified fiat.
+     * @param fiatCode  any of the fiat codes i.e. "USD", "NZD", ...
+     * @return the value in fiat of the coin (coinprice*coinblance)
+     */
+    public FiatCurrency findFiatValue(String fiatCode ) {
+        return this.fiat_balances.findFiat(fiatCode);
+    }
+
     public FiatCurrencyList getFiat_prices() {
         return fiat_prices;
     }

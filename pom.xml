@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.marcotte</groupId>
 	<artifactId>ginkoJ</artifactId>
-	<version>2020.11.24</version>
+	<version>2021.02.15</version>
 	<name>blockhead</name>
 	<description>BlockDemo project for Spring Boot</description>
 
