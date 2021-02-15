@@ -1,6 +1,6 @@
 package com.marcotte.blockhead.model;
 
-import java.util.List;
+import com.marcotte.blockhead.model.fiat.FiatCurrencyList;
 
 
 /**

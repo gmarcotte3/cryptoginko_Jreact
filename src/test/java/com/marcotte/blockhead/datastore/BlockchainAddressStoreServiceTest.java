@@ -1,5 +1,7 @@
 package com.marcotte.blockhead.datastore;
 
+import com.marcotte.blockhead.datastore.blockchainaddressstore.BlockchainAddressStore;
+import com.marcotte.blockhead.services.blockchainaddressstore.BlockchainAddressStoreService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

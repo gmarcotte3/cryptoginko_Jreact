@@ -1,7 +1,7 @@
 package com.marcotte.blockhead.controllers.explorers;
 
-import com.marcotte.blockhead.datastore.BlockchainAddressStore;
-import com.marcotte.blockhead.model.CoinCodes;
+import com.marcotte.blockhead.datastore.blockchainaddressstore.BlockchainAddressStore;
+import com.marcotte.blockhead.model.coin.CoinCodes;
 import com.marcotte.blockhead.services.explorerServices.BitcoinExplorerServices;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;

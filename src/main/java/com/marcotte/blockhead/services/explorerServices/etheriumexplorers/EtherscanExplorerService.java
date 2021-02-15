@@ -1,7 +1,7 @@
 package com.marcotte.blockhead.services.explorerServices.etheriumexplorers;
 
 import com.marcotte.blockhead.config.BlockheadConfig;
-import com.marcotte.blockhead.datastore.BlockchainAddressStore;
+import com.marcotte.blockhead.datastore.blockchainaddressstore.BlockchainAddressStore;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,9 +1,9 @@
 package com.marcotte.blockhead.services.explorerServices;
 
 
-import com.marcotte.blockhead.datastore.BlockchainAddressStore;
-import com.marcotte.blockhead.model.BlockchainTransaction;
-import com.marcotte.blockhead.model.BlockchainTransactionList;
+import com.marcotte.blockhead.datastore.blockchainaddressstore.BlockchainAddressStore;
+import com.marcotte.blockhead.model.blockchaintransaction.BlockchainTransaction;
+import com.marcotte.blockhead.model.blockchaintransaction.BlockchainTransactionList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;

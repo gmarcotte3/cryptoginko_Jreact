@@ -1,7 +1,7 @@
 package com.marcotte.blockhead.controllers.pricedata;
 
-import com.marcotte.blockhead.model.CoinDTO;
-import com.marcotte.blockhead.model.FiatCurrencyList;
+import com.marcotte.blockhead.model.coin.CoinDTO;
+import com.marcotte.blockhead.model.fiat.FiatCurrencyList;
 import com.marcotte.blockhead.model.QuoteGeneric;
 import com.marcotte.blockhead.services.explorerServices.pricequote.CoinGeckoService;
 import io.swagger.annotations.Api;

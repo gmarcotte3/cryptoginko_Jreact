@@ -1,6 +1,6 @@
 package com.marcotte.blockhead.controllers.explorers;
 
-import com.marcotte.blockhead.datastore.BlockchainAddressStore;
+import com.marcotte.blockhead.datastore.blockchainaddressstore.BlockchainAddressStore;
 import com.marcotte.blockhead.services.explorerServices.BlockchairComExplorerService;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;

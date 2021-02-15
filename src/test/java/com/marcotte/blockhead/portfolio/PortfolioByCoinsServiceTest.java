@@ -1,8 +1,9 @@
 package com.marcotte.blockhead.portfolio;
 
-import com.marcotte.blockhead.datastore.BlockchainAddressStore;
-import com.marcotte.blockhead.datastore.BlockchainAddressStoreService;
-import com.marcotte.blockhead.model.CoinDTO;
+import com.marcotte.blockhead.datastore.blockchainaddressstore.BlockchainAddressStore;
+import com.marcotte.blockhead.services.blockchainaddressstore.BlockchainAddressStoreService;
+import com.marcotte.blockhead.model.coin.CoinDTO;
+import com.marcotte.blockhead.services.portfolio.PortfolioByCoinsService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

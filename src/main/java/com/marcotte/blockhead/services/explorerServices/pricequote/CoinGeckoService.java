@@ -1,7 +1,10 @@
 package com.marcotte.blockhead.services.explorerServices.pricequote;
 
 import com.marcotte.blockhead.config.BlockheadConfig;
-import com.marcotte.blockhead.datastore.CoinService;
+import com.marcotte.blockhead.model.coin.CoinDTO;
+import com.marcotte.blockhead.model.fiat.FiatCurrency;
+import com.marcotte.blockhead.model.fiat.FiatCurrencyList;
+import com.marcotte.blockhead.services.coin.CoinService;
 import com.marcotte.blockhead.model.*;
 import org.json.JSONArray;
 import org.json.JSONObject;

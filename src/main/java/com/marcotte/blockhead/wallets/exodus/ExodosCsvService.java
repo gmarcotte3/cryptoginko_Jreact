@@ -1,8 +1,8 @@
 package com.marcotte.blockhead.wallets.exodus;
 
-import com.marcotte.blockhead.datastore.BlockchainAddressCsvService;
-import com.marcotte.blockhead.datastore.BlockchainAddressStore;
-import com.marcotte.blockhead.datastore.BlockchainAddressStoreService;
+import com.marcotte.blockhead.services.blockchainaddressstore.BlockchainAddressCsvService;
+import com.marcotte.blockhead.datastore.blockchainaddressstore.BlockchainAddressStore;
+import com.marcotte.blockhead.services.blockchainaddressstore.BlockchainAddressStoreService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

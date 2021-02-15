@@ -1,6 +1,6 @@
 package com.marcotte.blockhead.model;
 
-import java.util.ArrayList;
+import com.marcotte.blockhead.model.fiat.FiatCurrencyList;
 
 public class PortfolioValueTrackerDTO {
 

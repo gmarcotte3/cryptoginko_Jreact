@@ -1,9 +1,12 @@
 package com.marcotte.blockhead.datastore;
 
-import com.marcotte.blockhead.model.CoinDTO;
-import com.marcotte.blockhead.model.FiatCurrency;
-import com.marcotte.blockhead.model.FiatCurrencyList;
-import com.marcotte.blockhead.model.FiatNames;
+import com.marcotte.blockhead.datastore.coin.Coin;
+import com.marcotte.blockhead.datastore.coin.CoinRepository;
+import com.marcotte.blockhead.model.coin.CoinDTO;
+import com.marcotte.blockhead.model.fiat.FiatCurrency;
+import com.marcotte.blockhead.model.fiat.FiatCurrencyList;
+import com.marcotte.blockhead.model.fiat.FiatNames;
+import com.marcotte.blockhead.services.coin.CoinService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

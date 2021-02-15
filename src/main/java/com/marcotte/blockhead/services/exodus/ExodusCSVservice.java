@@ -1,6 +1,6 @@
 package com.marcotte.blockhead.services.exodus;
 
-import com.marcotte.blockhead.model.WalletTransaction;
+import com.marcotte.blockhead.model.wallet.WalletTransaction;
 import com.marcotte.blockhead.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,10 +1,10 @@
 package com.marcotte.blockhead.controllers.csv;
 
-import com.marcotte.blockhead.datastore.BlockchainAddressStore;
-import com.marcotte.blockhead.services.ExportCsvService;
-import com.marcotte.blockhead.model.WalletTransaction;
-import com.marcotte.blockhead.services.GinkoCsvService;
-import com.marcotte.blockhead.services.TransationAnalysisService;
+import com.marcotte.blockhead.datastore.blockchainaddressstore.BlockchainAddressStore;
+import com.marcotte.blockhead.services.csv.ExportCsvService;
+import com.marcotte.blockhead.model.wallet.WalletTransaction;
+import com.marcotte.blockhead.services.csv.GinkoCsvService;
+import com.marcotte.blockhead.services.financial.TransationAnalysisService;
 import com.marcotte.blockhead.services.cardano.CardanoCSVservice;
 import com.marcotte.blockhead.services.exodus.ExodusCSVservice;
 import com.marcotte.blockhead.util.BlockHeadException;

@@ -1,6 +1,6 @@
 package com.marcotte.blockhead.services.explorerServices.etheriumexplorers;
 
-import com.marcotte.blockhead.datastore.BlockchainAddressStore;
+import com.marcotte.blockhead.datastore.blockchainaddressstore.BlockchainAddressStore;
 import com.marcotte.blockhead.services.explorerServices.BlockCypherComService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

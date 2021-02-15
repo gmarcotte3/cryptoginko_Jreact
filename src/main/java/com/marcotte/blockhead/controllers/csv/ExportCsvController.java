@@ -1,8 +1,8 @@
 package com.marcotte.blockhead.controllers.csv;
 
-import com.marcotte.blockhead.datastore.BlockchainAddressStore;
-import com.marcotte.blockhead.datastore.BlockchainAddressStoreService;
-import com.marcotte.blockhead.services.ExportCsvService;
+import com.marcotte.blockhead.datastore.blockchainaddressstore.BlockchainAddressStore;
+import com.marcotte.blockhead.services.blockchainaddressstore.BlockchainAddressStoreService;
+import com.marcotte.blockhead.services.csv.ExportCsvService;
 import com.marcotte.blockhead.util.BlockHeadException;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;

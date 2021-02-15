@@ -1,6 +1,6 @@
 package com.marcotte.blockhead.services.explorerServices;
 
-import com.marcotte.blockhead.datastore.BlockchainAddressStore;
+import com.marcotte.blockhead.datastore.blockchainaddressstore.BlockchainAddressStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
