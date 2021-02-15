@@ -86,7 +86,7 @@ public class PortfolioService
     public PortfolioValueTrackerDTO portfolioGetTotalValue() {
         List<CoinDTO> portfolioByCoinList = portfolioByCoinsService.findAllLatestSumBalanceGroupByCoin();
         HashMap<String, CoinDTO> coinHashMap = coinService.findAllReturnTickerCoinDTOMap();
-        copyFiatPricesAndCalculateValueFromCoinPrices3( portfolioByCoinList, coinHashMap);
+        copyFiatPricesAndCalculateValueFromCoinPrices( portfolioByCoinList, coinHashMap);
 
         DateTracker dateTracker = createAndSaveDateTracker();
         PortfolioValueTrackerDTO portfollioSummary = calculatePortfolioSummary2(portfolioByCoinList);
@@ -103,7 +103,7 @@ public class PortfolioService
         List<CoinDTO> portfolioByCoinList = portfolioByCoinsService.findAllLatestSumBalanceGroupByCoin();
         HashMap<String, CoinDTO> coinHashMap = coinService.findAllReturnTickerCoinDTOMap();
 
-        copyFiatPricesAndCalculateValueFromCoinPrices3( portfolioByCoinList, coinHashMap);
+        copyFiatPricesAndCalculateValueFromCoinPrices( portfolioByCoinList, coinHashMap);
         Collections.sort(portfolioByCoinList, Collections.reverseOrder(new CoinDTOCompareByFiatBalance()));
         return portfolioByCoinList;
     }
@@ -117,7 +117,7 @@ public class PortfolioService
      * @param portfolioByCoinList
      * @param coinHashMap
      */
-    private void  copyFiatPricesAndCalculateValueFromCoinPrices3( List<CoinDTO> portfolioByCoinList, HashMap<String, CoinDTO> coinHashMap) {
+    private void copyFiatPricesAndCalculateValueFromCoinPrices(List<CoinDTO> portfolioByCoinList, HashMap<String, CoinDTO> coinHashMap) {
         CoinDTO coinDefault = new CoinDTO();
         coinDefault.setCoinName("Unknown");
         for ( CoinDTO coinDTO : portfolioByCoinList ) {
@@ -141,7 +141,7 @@ public class PortfolioService
 
         // loop though all wallets and calculate balances
         for (WalletDTO walletDTO : walletDTOS ) {
-            copyFiatPricesAndCalculateValueFromCoinPrices3( walletDTO.getCoinDTOs(), coinHashMap);
+            copyFiatPricesAndCalculateValueFromCoinPrices( walletDTO.getCoinDTOs(), coinHashMap);
             PortfolioValueTrackerDTO walletValueTotal = calculatePortfolioSummary2(walletDTO.getCoinDTOs());
             walletDTO.setFiat_balances(walletValueTotal.getFiat_balances());
             // sort coins by fiat value decending.
