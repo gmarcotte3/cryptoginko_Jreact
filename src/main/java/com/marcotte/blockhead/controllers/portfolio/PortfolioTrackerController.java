@@ -1,6 +1,7 @@
 package com.marcotte.blockhead.controllers.portfolio;
 
-import com.marcotte.blockhead.datastore.portfolio.PortfolioTrackerService;
+import com.marcotte.blockhead.datastore.portfolio.PortfolioTracker;
+import com.marcotte.blockhead.services.portfolio.PortfolioTrackerService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

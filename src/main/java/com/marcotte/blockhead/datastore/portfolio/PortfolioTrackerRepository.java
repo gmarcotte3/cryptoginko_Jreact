@@ -1,6 +1,5 @@
 package com.marcotte.blockhead.datastore.portfolio;
 
-import com.marcotte.blockhead.controllers.portfolio.PortfolioTracker;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

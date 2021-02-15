@@ -1,8 +1,8 @@
 package com.marcotte.blockhead.datastore;
 
-import com.marcotte.blockhead.controllers.portfolio.PortfolioTracker;
+import com.marcotte.blockhead.datastore.portfolio.PortfolioTracker;
 import com.marcotte.blockhead.datastore.datetraker.DateTracker;
-import com.marcotte.blockhead.datastore.portfolio.PortfolioTrackerService;
+import com.marcotte.blockhead.services.portfolio.PortfolioTrackerService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

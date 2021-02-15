@@ -1,4 +1,4 @@
-package com.marcotte.blockhead.controllers.portfolio;
+package com.marcotte.blockhead.datastore.portfolio;
 
 import javax.persistence.*;
 import java.time.Instant;

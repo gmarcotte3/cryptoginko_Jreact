@@ -1,11 +1,9 @@
 package com.marcotte.blockhead.services.portfolio;
 
-import com.marcotte.blockhead.controllers.portfolio.PortfolioTracker;
+import com.marcotte.blockhead.datastore.portfolio.PortfolioTracker;
 import com.marcotte.blockhead.datastore.blockchainaddressstore.BlockchainAddressStore;
 import com.marcotte.blockhead.datastore.datetraker.DateTracker;
-import com.marcotte.blockhead.datastore.portfolio.PortfolioTrackerService;
 import com.marcotte.blockhead.datastore.portfolio.PortfolioValueTracker;
-import com.marcotte.blockhead.datastore.portfolio.PortfolioValueTrackerService;
 import com.marcotte.blockhead.model.coin.CoinCodes;
 import com.marcotte.blockhead.model.coin.CoinDTO;
 import com.marcotte.blockhead.model.coin.CoinDTOCompareByFiatBalance;

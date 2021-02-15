@@ -1,7 +1,8 @@
-package com.marcotte.blockhead.datastore.portfolio;
+package com.marcotte.blockhead.services.portfolio;
 
 
-import com.marcotte.blockhead.controllers.portfolio.PortfolioTracker;
+import com.marcotte.blockhead.datastore.portfolio.PortfolioTracker;
+import com.marcotte.blockhead.datastore.portfolio.PortfolioTrackerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
