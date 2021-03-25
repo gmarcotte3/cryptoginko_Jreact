@@ -190,12 +190,6 @@ public class ExportCsvService
   /**
    * write out a csv file with transactions and gain/loss info.
    *
-   * Wallet export of transactions contains the deposit/withdraw of coins
-   * but not any detail to calculate gain/loss. these transactions are processed
-   * to have gain and loss information. this routine takes a list of those
-   * processed transaction and output it as a csv file. The csv file can be used
-   * for investment performance analysis and tax reporting applications.
-   *
    * @param fileName            The file name of the csv file to output
    * @param transactions        list of processed transaction (with gain/loss info)
    * @throws BlockHeadException Any File IO, format conversion issues throws an
@@ -203,19 +197,35 @@ public class ExportCsvService
    */
   public void writeWalletTransactionsToCsv( String fileName,
                                             List<WalletTransaction> transactions)
-          throws BlockHeadException
-  {
+          throws BlockHeadException {
     PrintWriter printWriter;
-
-
     try {
       printWriter = new PrintWriter(new File(fileName));
+      writeWalletTransactionToCsv(printWriter, transactions);
+    } catch ( Exception e) {
+      e.printStackTrace();
+      logger.error("failed to create export file (%s) error==%s",fileName, e.getMessage());
+      throw new BlockHeadException(e.getMessage(), e);
+    }
+  }
+
+  /**
+   * write out a PrintWriter with processed transactions that contain the gain/loss info.
+   *
+   * @param printWriter         the printWriter stream to output the report
+   * @param transactions        list of processed transaction (with gain/loss info)
+   * @throws BlockHeadException
+   */
+  public void writeWalletTransactionToCsv(PrintWriter printWriter,  List<WalletTransaction> transactions)
+          throws BlockHeadException
+  {
+
+    try {
       printWriter.append("TransactionID, TransactionURL, Timestamp, Coin Amount, Fee, Balance, " +
               "Price, Value, FeeValue, Running Cost, Running Ave Unit Price, Gain Or Loss, " +
               "Exchange Note, Personal Note\n");
-    } catch (FileNotFoundException e) {
-
-      logger.error("failed to open export file (%s) error==%s",fileName, e.getMessage());
+    } catch (Exception e) {
+      logger.error("failed to write header line to output csv file error==%s", e.getMessage());
       e.printStackTrace();
       throw new BlockHeadException(e.getMessage(), e);
     }

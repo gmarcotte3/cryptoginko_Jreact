@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.ServletOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -180,6 +181,43 @@ public class CsvImportController
 
     return new ResponseEntity(walletTransactions, HttpStatus.OK);
   }
+
+//  @PostMapping("/exodus/transactions/reportgainloss")
+//  public ResponseEntity<List<WalletTransaction>> importExodusTransactionsCSVfileAndOutputReport(
+//          @RequestParam("file") MultipartFile file,
+//          RedirectAttributes redirectAttributes,
+//          @RequestParam(value = "coin", required = true) final String coinTicker,
+//          @RequestParam(value = "fiat", required = true) final String fiatCode) {
+//
+//    List<List<String>> csvFileArray;
+//    List<WalletTransaction> walletTransactions = new ArrayList<>();
+//
+//    if (file.isEmpty()) {
+//      redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
+//      return new ResponseEntity(null, HttpStatus.NOT_FOUND);
+//    }
+//
+//    ServletOutputStream outCsvStream = response.getOutputStream();
+//
+//    try {
+//      csvFileArray = readFileCsv(file);
+//      walletTransactions = exodusCSVservice.parseTransactionCsv(csvFileArray);
+//      transationAnalysisService.calculateGainLossTransactions( walletTransactions, fiatCode, coinTicker);
+//      exportCsvService.writeWalletTransactionsToCsv( outCsvStream, walletTransactions);
+//      redirectAttributes.addFlashAttribute("message",
+//              "You successfully uploaded '" + file.getOriginalFilename() + "'");
+//
+//    } catch (FileNotFoundException e) {
+//      return new ResponseEntity(null, HttpStatus.NOT_FOUND);
+//    } catch (IOException e2) {
+//      return new ResponseEntity(null, HttpStatus.INTERNAL_SERVER_ERROR);
+//    } catch (BlockHeadException e) {
+//      log.error("failed to export file (%s) error==%s",outCsvfileName, e.getMessage());
+//      return new ResponseEntity(null, HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
+//
+//    return new ResponseEntity(walletTransactions, HttpStatus.OK);
+//  }
 
   @PostMapping("/cardano/transactions")
   public ResponseEntity<List<WalletTransaction>> importCardanoExodusTransactionsCSVfile(

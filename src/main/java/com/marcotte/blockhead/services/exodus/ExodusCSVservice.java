@@ -20,15 +20,18 @@ import java.util.List;
 public class ExodusCSVservice {
     private static final Logger log = LoggerFactory.getLogger(com.marcotte.blockhead.wallets.exodus.ExodosCsvService.class);
 
-    private static final int TXID_COL = 0;
-    private static final int TXURL_COL = 1;
-    private static final int DATE_COL = 2;
-    private static final int TYPE_COL = 3;
-    private static final int COIN_AMOUNT_COL = 4;
-    private static final int FEE_COL = 5;
-    private static final int BALANCE_COL = 6;
-    private static final int EXCHANGE_COL = 7;
-    private static final int PERSONAL_NOTE_COL = 8;
+    // transaction csv columns
+    private static int TXID_COL = 0;
+    private static int TXURL_COL = 1;
+    private static int DATE_COL = 2;
+    private static int TYPE_COL = 3;
+    private static int FROMPORTFOLIO_COL = 4;
+    private static int TOPORTFOLIO_COL = 5;
+    private static int COINAMOUNT_COL = 6;
+    private static int FEE_COL = 7;
+    private static int BALANCE_COL = 8;
+    private static int EXCHANGE_COL = 9;
+    private static int PERSONALNOTE_COL = 10;
 
     private static String DATE_PATTERN = "EEE MMM dd yyyy HH:mm:ss z";
 
@@ -36,15 +39,18 @@ public class ExodusCSVservice {
     public List<WalletTransaction> parseTransactionCsv(List<List<String>> csvFileArray) {
         List<WalletTransaction> walletTransactions = new ArrayList<>();
 
+        // what time is it?
         Calendar calendar = Calendar.getInstance();
         Date now = calendar.getTime();
         Timestamp rightNow = new Timestamp(now.getTime());
 
+        // return if the transaction list is empty
         if ( csvFileArray == null || csvFileArray.size() == 0)
         {
             return walletTransactions;
         }
 
+        updateTransactionColumnIndexes( csvFileArray.get(0));
         // parse the transactions skip the first line that is the header.
         for( int j = 1 ; j < csvFileArray.size(); j++) {
 
@@ -53,7 +59,7 @@ public class ExodusCSVservice {
             walletTransaction.setTransactionID( row.get(TXID_COL));
             walletTransaction.setTransactionURL( row.get(TXURL_COL));
 
-            Double coinAmount = amountStringToDouble(row.get(COIN_AMOUNT_COL));
+            Double coinAmount = amountStringToDouble(row.get(COINAMOUNT_COL));
             walletTransaction.setCoinAmount(coinAmount);
 
             Double coinBalance = amountStringToDouble(row.get(BALANCE_COL));
@@ -72,14 +78,72 @@ public class ExodusCSVservice {
             walletTransaction.setTransactionTimestamp(transactionDate);
 
             walletTransaction.setExchangeNote(row.get(EXCHANGE_COL));
-            walletTransaction.setPersonalNote(row.get(PERSONAL_NOTE_COL));
+            walletTransaction.setPersonalNote(row.get(PERSONALNOTE_COL));
 
             walletTransactions.add(walletTransaction);
         }
 
-            return walletTransactions;
+        return walletTransactions;
     }
 
+    /**
+     * update the transaction column indexes by matching up the column names in the
+     * header row
+     *
+     * We do this because Exodus adds new fields to its csv file export.
+     * hopefully they dont change the column names too.
+     *
+     * @param headerArray  the header row is a list of strings
+     */
+    private void updateTransactionColumnIndexes( List<String> headerArray)
+    {
+        for ( int j = 0; j < headerArray.size(); j++ ) {
+            if ( headerArray.get(j).compareToIgnoreCase("TXID") == 0) {
+                TXID_COL = j;
+                continue;
+            }
+            if ( headerArray.get(j).compareToIgnoreCase("TXURL") == 0) {
+                TXURL_COL = j;
+                continue;
+            }
+            if ( headerArray.get(j).compareToIgnoreCase("DATE") == 0) {
+                DATE_COL = j;
+                continue;
+            }
+            if ( headerArray.get(j).compareToIgnoreCase("TYPE") == 0) {
+                TYPE_COL = j;
+                continue;
+            }
+            if ( headerArray.get(j).compareToIgnoreCase("FROMPORTFOLIO") == 0) {
+                FROMPORTFOLIO_COL = j;
+                continue;
+            }
+            if ( headerArray.get(j).compareToIgnoreCase("TOPORTFOLIO") == 0) {
+                TOPORTFOLIO_COL = j;
+                continue;
+            }
+            if ( headerArray.get(j).compareToIgnoreCase("COINAMOUNT") == 0) {
+                COINAMOUNT_COL = j;
+                continue;
+            }
+            if ( headerArray.get(j).compareToIgnoreCase("FEE") == 0) {
+                FEE_COL = j;
+                continue;
+            }
+            if ( headerArray.get(j).compareToIgnoreCase("BALANCE") == 0) {
+                BALANCE_COL = j;
+                continue;
+            }
+            if ( headerArray.get(j).compareToIgnoreCase("EXCHANGE") == 0) {
+                EXCHANGE_COL = j;
+                continue;
+            }
+            if ( headerArray.get(j).compareToIgnoreCase("PERSONALNOTE") == 0) {
+                PERSONALNOTE_COL = j;
+                continue;
+            }
+        }
+    }
     /**
      * Exodus date clean up
      * Need to do some preprocessing of the date comming from exodus csv output before we can convert
