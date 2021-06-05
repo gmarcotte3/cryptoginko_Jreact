@@ -21,7 +21,7 @@ import com.marcotte.blockhead.services.explorerServices.dashExplorers.DashExplor
 import com.marcotte.blockhead.services.explorerServices.eosexplorers.EOS_ExplorerServices;
 import com.marcotte.blockhead.services.explorerServices.etheriumexplorers.EtheriumExplorerServices;
 import com.marcotte.blockhead.services.explorerServices.litecoinexplorers.LiteCoinExplorerServices;
-import com.marcotte.blockhead.services.explorerServices.pricequote.CoinGeckoService;
+import com.marcotte.blockhead.services.explorerServices.pricequote.PriceServiceInterface;
 import com.marcotte.blockhead.services.explorerServices.zcashExplorers.ZCashExplorerServices;
 import com.marcotte.blockhead.model.*;
 import org.slf4j.Logger;
@@ -60,7 +60,7 @@ public class PortfolioService
     @Autowired
     private BlockchainAddressStoreService blockchainAddressStoreService;
     @Autowired
-    private CoinGeckoService coinGeckoService;
+    private PriceServiceInterface coinGeckoService;
     @Autowired
     private DateTrackerService dateTrackerService;
     @Autowired

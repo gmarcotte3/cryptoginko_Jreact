@@ -3,6 +3,7 @@ package com.marcotte.blockhead.services.financial;
 import com.marcotte.blockhead.model.fiat.FiatCurrencyList;
 import com.marcotte.blockhead.model.wallet.WalletTransaction;
 import com.marcotte.blockhead.services.explorerServices.pricequote.CoinGeckoService;
+import com.marcotte.blockhead.services.explorerServices.pricequote.PriceServiceInterface;
 import com.marcotte.blockhead.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ import java.util.List;
 public class TransationAnalysisService {
 
     @Autowired
-    CoinGeckoService coinGeckoService;
+    PriceServiceInterface coinGeckoService;
 
     /**
      * calculate gain and loss of each transaction

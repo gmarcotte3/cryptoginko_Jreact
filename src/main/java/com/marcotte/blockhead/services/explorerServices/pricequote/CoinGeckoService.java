@@ -30,7 +30,7 @@ import java.util.Map;
  * https://www.coingecko.com/en/api#explore-api
  */
 @Service
-public class CoinGeckoService
+public class CoinGeckoService implements PriceServiceInterface
 {
     public static final String ADA_ID =  "cardano";
     public static final String DASH_ID = "dash";
@@ -54,8 +54,8 @@ public class CoinGeckoService
 
     private Map<String, String> cryptoCodeToCoinGekoCoinID;
 
-    @Autowired
-    private CoinService coinService;
+//    @Autowired
+//    private CoinService coinService;
 
 
     @Autowired
@@ -82,50 +82,16 @@ public class CoinGeckoService
     }
 
     public List<CoinDTO> getPriceAllCoinsNow() {
-        return getPriceAllCoinsNow(false);
-    }
-
-    public List<CoinDTO> getPriceAllCoinsNow(boolean saveit) {
         RestTemplate restTemplate = new RestTemplate();
         String url = "https://api.coingecko.com/api/v3/coins";
         String theRawJsonQuotes = restTemplate.getForObject(url, String.class);
 
         List<CoinDTO> coinDTOList = parseCoingekoPriceDump(theRawJsonQuotes);
-        if ( saveit) {
-            coinService.updateCoins(coinDTOList);
-        }
         return coinDTOList;
     }
 
-    private List<CoinDTO> parseCoingekoPriceDump(String theRawJsonQuotes) {
-        JSONObject jsonObj;
-        List<CoinDTO> coinDTOList = new ArrayList<CoinDTO>();
-
-        try {
-            jsonObj = new JSONObject("{ coindata:" + theRawJsonQuotes + "}");
-            JSONArray coinJArray = jsonObj.getJSONArray("coindata");
-            for (int i = 0; i < coinJArray.length(); i++) {
-                JSONObject coinJObj = (JSONObject) coinJArray.get(i);
-                String ticker = (coinJObj.getString("symbol")).toUpperCase();
-                String coinName = coinJObj.getString("name");
-                FiatCurrencyList fiatCurrencies = parseJsonRawQuote(ticker, coinJObj );
-
-                CoinDTO coinDTO = new CoinDTO();
-                coinDTO.setTicker(ticker);
-                coinDTO.setCoinName(coinName);
-                coinDTO.setFiat_prices(fiatCurrencies);
-                coinDTOList.add(coinDTO);
-            }
-            //return parseJsonRawQuote(coin, jsonObj );
-        } catch (Exception e) {
-            log.error("missing or bad price and date format coin {} error={}", e.getMessage());
-            return coinDTOList;
-        }
-
-        return coinDTOList;
-    }
     /**
-     *
+     * get a price of a ticker at a particular date
      * @param coinTicker     coin ticker symbol (BTC, BCH, ETH ...)
      * @param date_ddmmyyyy  date in this format "dd-mm-yyyy"
      * @return List<Currency>
@@ -161,6 +127,47 @@ public class CoinGeckoService
         return parseJsonRawQuote(coinTicker, theRawJsonQuote);
     }
 
+    public QuoteGeneric getQuote(String crypto)
+    {
+        String currencies = blocktestConfig.getCryptoCompareCurrencyList().toUpperCase();
+
+        QuoteGeneric quote = new QuoteGeneric()
+                .setTimeISO("latest")
+                .setCoinName(crypto)
+                .setSymbol(crypto);
+
+        quote.setCurrency(getPriceByCoinAndDate(crypto, null));
+
+        return quote;
+    }
+    private List<CoinDTO> parseCoingekoPriceDump(String theRawJsonQuotes) {
+        JSONObject jsonObj;
+        List<CoinDTO> coinDTOList = new ArrayList<CoinDTO>();
+
+        try {
+            jsonObj = new JSONObject("{ coindata:" + theRawJsonQuotes + "}");
+            JSONArray coinJArray = jsonObj.getJSONArray("coindata");
+            for (int i = 0; i < coinJArray.length(); i++) {
+                JSONObject coinJObj = (JSONObject) coinJArray.get(i);
+                String ticker = (coinJObj.getString("symbol")).toUpperCase();
+                String coinName = coinJObj.getString("name");
+                FiatCurrencyList fiatCurrencies = parseJsonRawQuote(ticker, coinJObj );
+
+                CoinDTO coinDTO = new CoinDTO();
+                coinDTO.setTicker(ticker);
+                coinDTO.setCoinName(coinName);
+                coinDTO.setFiat_prices(fiatCurrencies);
+                coinDTOList.add(coinDTO);
+            }
+            //return parseJsonRawQuote(coin, jsonObj );
+        } catch (Exception e) {
+            log.error("missing or bad price and date format coin {} error={}", e.getMessage());
+            return coinDTOList;
+        }
+
+        return coinDTOList;
+    }
+
     /**
      * takes the raw currnecy list and picks out the top ones used. see currently supported currencies.
      *
@@ -184,6 +191,12 @@ public class CoinGeckoService
         }
     }
 
+    /**
+     * parse the json output from coingeko's raw price quote data.
+     * @param coin
+     * @param jsonObj
+     * @return
+     */
     private FiatCurrencyList parseJsonRawQuote(String coin, JSONObject jsonObj )
     {
         JSONObject marketDataObj;
@@ -242,17 +255,5 @@ public class CoinGeckoService
         return returnfloat;
     }
 
-    public QuoteGeneric getQuote(String crypto)
-    {
-        String currencies = blocktestConfig.getCryptoCompareCurrencyList().toUpperCase();
 
-        QuoteGeneric quote = new QuoteGeneric()
-                .setTimeISO("latest")
-                .setCoinName(crypto)
-                .setSymbol(crypto);
-
-        quote.setCurrency(getPriceByCoinAndDate(crypto, null));
-
-        return quote;
-    }
 }

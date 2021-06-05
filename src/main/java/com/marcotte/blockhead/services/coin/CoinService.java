@@ -2,9 +2,13 @@ package com.marcotte.blockhead.services.coin;
 
 import com.marcotte.blockhead.datastore.coin.Coin;
 import com.marcotte.blockhead.datastore.coin.CoinRepository;
+import com.marcotte.blockhead.model.QuoteGeneric;
 import com.marcotte.blockhead.model.coin.CoinDTO;
 import com.marcotte.blockhead.model.fiat.FiatCurrency;
 import com.marcotte.blockhead.model.fiat.FiatNames;
+import com.marcotte.blockhead.services.portfolio.PortfolioService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +18,8 @@ import java.util.List;
 
 @Service
 public class CoinService {
+
+    private static final Logger log = LoggerFactory.getLogger(CoinService.class);
 
     @Autowired
     private CoinRepository coinRepository;
@@ -100,6 +106,15 @@ public class CoinService {
         }
         return results;
     }
+
+    public List<Coin>  updateCoins(QuoteGeneric quoteGeneric) {
+        List<CoinDTO> coinDTOS = new ArrayList<CoinDTO>();
+        coinDTOS.add( quoteGeneric.getCoinDTO());
+        log.info("trying to save generic quote=" + quoteGeneric.toString() );
+
+        return updateCoins(coinDTOS);
+    }
+
 
     public List<Coin> updateCoins(List<CoinDTO> coinDTOS) {
         List<Coin> coinList = new ArrayList<Coin>();
