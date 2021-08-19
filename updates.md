@@ -1,4 +1,7 @@
 # Updates
+##2021-06-19
+implementing coinPaprika.com interface for coin price data
+
 ##2020-10-30
 moved repo back to github. added react front end.
 

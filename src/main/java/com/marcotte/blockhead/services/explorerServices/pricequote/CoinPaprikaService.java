@@ -1,11 +1,11 @@
 package com.marcotte.blockhead.services.explorerServices.pricequote;
 
+
 import com.marcotte.blockhead.config.BlockheadConfig;
+import com.marcotte.blockhead.model.QuoteGeneric;
 import com.marcotte.blockhead.model.coin.CoinDTO;
 import com.marcotte.blockhead.model.fiat.FiatCurrency;
 import com.marcotte.blockhead.model.fiat.FiatCurrencyList;
-import com.marcotte.blockhead.services.coin.CoinService;
-import com.marcotte.blockhead.model.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -20,18 +20,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 /**
- * coingecko service. this site can return a historical price in a million different currencies
+ * coinpaprika service. this site can return a historical price in a million different currencies
  *
- * https://www.coingecko.com/api
+ * https://www.coinpaprika.com/api
  *
  * docs
- * https://www.coingecko.com/en/api#explore-api
+ * https://coinpaprika.com/api/
  */
 @Service
-public class CoinGeckoService implements PriceServiceInterface
+public class CoinPaprikaService implements PriceServiceInterface
 {
+
     public static final String ADA_ID =  "cardano";
     public static final String DASH_ID = "dash";
     public static final String BITCOIN_ID = "bitcoin";
@@ -52,57 +52,55 @@ public class CoinGeckoService implements PriceServiceInterface
 
     private BlockheadConfig blocktestConfig;
 
-    private Map<String, String> cryptoCodeToCoinGekoCoinID;
-
-
+    private Map<String, String> cryptoCodeToCoinPaprikaCoinID;
 
     @Autowired
-    public CoinGeckoService(BlockheadConfig blocktestConfig)
+    public CoinPaprikaService(BlockheadConfig blocktestConfig)
     {
         this.blocktestConfig = blocktestConfig;
-        this.cryptoCodeToCoinGekoCoinID = new HashMap<String, String>();
+        this.cryptoCodeToCoinPaprikaCoinID = new HashMap<String, String>();
 
-        this.cryptoCodeToCoinGekoCoinID.put( "ADA", "cardano" );
-        this.cryptoCodeToCoinGekoCoinID.put( "DASH", "dash" );
-        this.cryptoCodeToCoinGekoCoinID.put( "BTC", "bitcoin" );
-        this.cryptoCodeToCoinGekoCoinID.put( "BCH", "bitcoin-cash" );
-        this.cryptoCodeToCoinGekoCoinID.put( "EOS", "eos" );
-        this.cryptoCodeToCoinGekoCoinID.put( "ETH", "ethereum" );
-        this.cryptoCodeToCoinGekoCoinID.put( "IOT", "iota" );
-        this.cryptoCodeToCoinGekoCoinID.put( "LTC", "litecoin" );
-        this.cryptoCodeToCoinGekoCoinID.put( "NEM", "nem" );
-        this.cryptoCodeToCoinGekoCoinID.put( "NEO", "neo" );
-        this.cryptoCodeToCoinGekoCoinID.put( "XMR", "monero" );
-        this.cryptoCodeToCoinGekoCoinID.put( "XLM", "Stellar" );
-        this.cryptoCodeToCoinGekoCoinID.put( "ZEC", "zcash" );
-        this.cryptoCodeToCoinGekoCoinID.put( "LINK", "chainlink" );
-        this.cryptoCodeToCoinGekoCoinID.put( "MKR", "maker" );
+        this.cryptoCodeToCoinPaprikaCoinID.put( "ADA", "cardano" );
+        this.cryptoCodeToCoinPaprikaCoinID.put( "DASH", "dash" );
+        this.cryptoCodeToCoinPaprikaCoinID.put( "BTC", "bitcoin" );
+        this.cryptoCodeToCoinPaprikaCoinID.put( "BCH", "bitcoin-cash" );
+        this.cryptoCodeToCoinPaprikaCoinID.put( "EOS", "eos" );
+        this.cryptoCodeToCoinPaprikaCoinID.put( "ETH", "ethereum" );
+        this.cryptoCodeToCoinPaprikaCoinID.put( "IOT", "iota" );
+        this.cryptoCodeToCoinPaprikaCoinID.put( "LTC", "litecoin" );
+        this.cryptoCodeToCoinPaprikaCoinID.put( "NEM", "nem" );
+        this.cryptoCodeToCoinPaprikaCoinID.put( "NEO", "neo" );
+        this.cryptoCodeToCoinPaprikaCoinID.put( "XMR", "monero" );
+        this.cryptoCodeToCoinPaprikaCoinID.put( "XLM", "Stellar" );
+        this.cryptoCodeToCoinPaprikaCoinID.put( "ZEC", "zcash" );
+        this.cryptoCodeToCoinPaprikaCoinID.put( "LINK", "chainlink" );
+        this.cryptoCodeToCoinPaprikaCoinID.put( "MKR", "maker" );
     }
 
     public List<CoinDTO> getPriceAllCoinsNow() {
         RestTemplate restTemplate = new RestTemplate();
-        String url = "https://api.coingecko.com/api/v3/coins";
+        String url = "http://api.coinpaprika.com/v1/coins";
         String theRawJsonQuotes = restTemplate.getForObject(url, String.class);
 
-        List<CoinDTO> coinDTOList = parseCoingekoPriceDump(theRawJsonQuotes);
+        List<CoinDTO> coinDTOList = parsePaprikaPriceDump(theRawJsonQuotes);
         return coinDTOList;
     }
 
     /**
      * get a price of a ticker at a particular date
-     * @param coinTicker     coin ticker symbol (BTC, BCH, ETH ...)
-     * @param date_ddmmyyyy  date in this format "dd-mm-yyyy"
-     * @return List<Currency>
+     * @param coinTicker
+     * @param date_ddmmyyyy
+     * @return
      */
     public FiatCurrencyList getPriceByCoinAndDate(String coinTicker, String date_ddmmyyyy)
     {
         RestTemplate restTemplate = new RestTemplate();
         String url;
 
-        // convert the coin ticker to a coin geko coinID
-        String coinID = this.cryptoCodeToCoinGekoCoinID.get(coinTicker);
+        // convert the coin ticker to a coin paprika coinID
+        String coinID = this.cryptoCodeToCoinPaprikaCoinID.get(coinTicker);
         if (coinID == null) { // this code is not recoignized so return a blank
-            log.error("Coin (" + coinTicker + ") not recoignized by goin geko service so no currency quote is possible");
+            log.error("Coin (" + coinTicker + ") not recoignized by goin paprika service so no currency quote is possible");
             return new FiatCurrencyList();
         }
 
@@ -110,11 +108,11 @@ public class CoinGeckoService implements PriceServiceInterface
 
         if ( date_ddmmyyyy != null)
         {
-            url = "https://api.coingecko.com/api/v3/coins/" +
+            url = "api.coinpaprika.com/v1/coins/" +
                     coinID.toLowerCase() + "/history?date=" + date_ddmmyyyy;
             log.info("url=" + url);
         } else {
-            url = "https://api.coingecko.com/api/v3/coins/" +
+            url = "api.coinpaprika.com/v1/coins/" +
                     coinID.toLowerCase();
             log.info("url=" + url);
         }
@@ -138,7 +136,8 @@ public class CoinGeckoService implements PriceServiceInterface
 
         return quote;
     }
-    private List<CoinDTO> parseCoingekoPriceDump(String theRawJsonQuotes) {
+
+    private List<CoinDTO> parsePaprikaPriceDump(String theRawJsonQuotes) {
         JSONObject jsonObj;
         List<CoinDTO> coinDTOList = new ArrayList<CoinDTO>();
 
@@ -157,6 +156,7 @@ public class CoinGeckoService implements PriceServiceInterface
                 coinDTO.setFiat_prices(fiatCurrencies);
                 coinDTOList.add(coinDTO);
             }
+
         } catch (Exception e) {
             log.error("missing or bad price and date format coin {} error={}", e.getMessage());
             return coinDTOList;
@@ -189,7 +189,7 @@ public class CoinGeckoService implements PriceServiceInterface
     }
 
     /**
-     * parse the json output from coingeko's raw price quote data.
+     * parse the json output from coinPaprika's raw price quote data.
      * @param coin
      * @param jsonObj
      * @return
@@ -251,6 +251,5 @@ public class CoinGeckoService implements PriceServiceInterface
 
         return returnfloat;
     }
-
 
 }

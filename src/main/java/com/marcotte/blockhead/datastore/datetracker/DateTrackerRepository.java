@@ -1,4 +1,4 @@
-package com.marcotte.blockhead.datastore.datetraker;
+package com.marcotte.blockhead.datastore.datetracker;
 
 import org.springframework.data.repository.CrudRepository;
 

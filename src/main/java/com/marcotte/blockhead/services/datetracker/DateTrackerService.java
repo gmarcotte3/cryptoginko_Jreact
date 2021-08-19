@@ -1,7 +1,7 @@
 package com.marcotte.blockhead.services.datetracker;
 
-import com.marcotte.blockhead.datastore.datetraker.DateTracker;
-import com.marcotte.blockhead.datastore.datetraker.DateTrackerRepository;
+import com.marcotte.blockhead.datastore.datetracker.DateTracker;
+import com.marcotte.blockhead.datastore.datetracker.DateTrackerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

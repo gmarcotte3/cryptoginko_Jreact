@@ -1,6 +1,6 @@
 package com.marcotte.blockhead.datastore;
 
-import com.marcotte.blockhead.datastore.datetraker.DateTracker;
+import com.marcotte.blockhead.datastore.datetracker.DateTracker;
 import org.junit.Test;
 
 import java.time.Instant;
