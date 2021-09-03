@@ -19,6 +19,9 @@ import java.util.List;
 
 /**
  * controller just for coingeko
+ *
+ * This service provides coin pricing data. the data is collected via the web and/or the stored
+ * price information if the on-line data fails. This service uses APIs from coingelp
  */
 @Api(value = "Currency General Rest API", tags = "currency")
 @RestController

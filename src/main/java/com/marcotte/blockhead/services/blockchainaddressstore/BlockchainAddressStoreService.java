@@ -4,6 +4,7 @@ import com.marcotte.blockhead.datastore.blockchainaddressstore.BlockchainAddress
 import com.marcotte.blockhead.datastore.blockchainaddressstore.BlockchainAddressStoreRepository;
 import com.marcotte.blockhead.datastore.blockchainaddressstore.BlockchainAddressstoreComparatorCoin;
 import com.marcotte.blockhead.datastore.blockchainaddressstore.BlockchainAddressstoreComparatorWalletCoin;
+import com.marcotte.blockhead.model.coin.CoinSumDTO;
 import com.marcotte.blockhead.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -145,4 +146,24 @@ public class BlockchainAddressStoreService
     public void deleteAll() {
         blockchainAddressStoreRepository.deleteAll();
     }
+
+
+    public List<BlockchainAddressStore> findAllLatestSumBalanceGroupByWalletTicker() {
+        return  blockchainAddressStoreRepository.findAllLatestSumBalanceGroupByWalletTicker( );
+    }
+
+    /**
+     * find the latest coin balance sums by ticker (sum up by ticker)
+     * @return
+     */
+    public  List<CoinSumDTO> findAllLatestSumBalanceGroupByTicker() {
+        List<Object> rawObjects = blockchainAddressStoreRepository.findAllLatestSumBalanceGroupByTicker( );
+        List<CoinSumDTO> coinSumDTOS = new ArrayList<>();
+        for ( Object rawcolumns : rawObjects ) {
+            CoinSumDTO coin = new CoinSumDTO((Object[]) rawcolumns);
+            coinSumDTOS.add(coin);
+        }
+        return coinSumDTOS;
+    }
+
 }

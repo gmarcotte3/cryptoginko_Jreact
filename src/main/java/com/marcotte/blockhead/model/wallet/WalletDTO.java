@@ -72,6 +72,13 @@ public class WalletDTO {
         return coinDTOs;
     }
 
+    public void addCoinDTO( CoinDTO coinDTO ) {
+        if ( this.coinDTOs == null ) {
+            this.coinDTOs = new ArrayList<CoinDTO>();
+        }
+        this.coinDTOs.add(coinDTO);
+    }
+
     public void setCoinDTOs(List<CoinDTO> coinDTOs) {
         this.coinDTOs = coinDTOs;
     }

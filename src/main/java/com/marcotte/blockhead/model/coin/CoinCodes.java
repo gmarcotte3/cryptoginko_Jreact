@@ -16,4 +16,6 @@ public class CoinCodes {
     public static final String MONERO_TICKER = "XMR";
     public static final String LINK_TICKER = "LINK";
     public static final String MAKER_TICKER = "MKR";
+    public static final String POLKADOT_TICKER = "DOT";
+    public static final String SOLANA_TICKER = "SOL";
 }

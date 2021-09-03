@@ -4,10 +4,7 @@ import com.marcotte.blockhead.datastore.portfolio.PortfolioTracker;
 import com.marcotte.blockhead.datastore.blockchainaddressstore.BlockchainAddressStore;
 import com.marcotte.blockhead.datastore.datetracker.DateTracker;
 import com.marcotte.blockhead.datastore.portfolio.PortfolioValueTracker;
-import com.marcotte.blockhead.model.coin.CoinCodes;
-import com.marcotte.blockhead.model.coin.CoinDTO;
-import com.marcotte.blockhead.model.coin.CoinDTOCompareByFiatBalance;
-import com.marcotte.blockhead.model.coin.CoinList;
+import com.marcotte.blockhead.model.coin.*;
 import com.marcotte.blockhead.model.fiat.FiatCurrency;
 import com.marcotte.blockhead.model.wallet.WalletDTO;
 import com.marcotte.blockhead.model.wallet.WalletDTOCompareByFiatValue;
@@ -108,6 +105,19 @@ public class PortfolioService
         return portfolioByCoinList;
     }
 
+    public List<CoinDTO> portfolioByCoins2()  {
+        List<CoinSumDTO> blockchainAddressStoreList = blockchainAddressStoreService.findAllLatestSumBalanceGroupByTicker();
+        HashMap<String, CoinDTO> coinHashMap = coinService.findAllReturnTickerCoinDTOMap();
+
+        List<CoinDTO> coinDTOList = new ArrayList<CoinDTO>();
+        for ( CoinSumDTO coinSum : blockchainAddressStoreList ) {
+            coinDTOList.add( new CoinDTO(coinSum));
+        }
+        copyFiatPricesAndCalculateValueFromCoinPrices( coinDTOList, coinHashMap);
+        Collections.sort(coinDTOList, Collections.reverseOrder(new CoinDTOCompareByFiatBalance()));
+        return coinDTOList;
+    }
+
     /**
      * go though the list of coins look up the ticker in the hash map that contains the current price for that coin,
      * if found set the current price for the coin, calculate the current value of the coin (price * balance)
@@ -124,6 +134,7 @@ public class PortfolioService
             coinDefault.setTicker(coinDTO.getTicker());
             CoinDTO coinPriceDTO = coinHashMap.getOrDefault(coinDTO.getTicker(),coinDefault);
             coinDTO.setFiat_prices(coinPriceDTO.getFiat_prices());
+            coinDTO.setCoinName(coinPriceDTO.getCoinName());
             coinDTO.calculateCoinValue();
         }
     }
@@ -132,6 +143,7 @@ public class PortfolioService
     /**
      * finds the total fiat value for each wallet and group by the coins of each wallet.
      *
+     * @deprecated
      * @return
      */
     public List<WalletDTO> portfolioByWalletCoins() {
@@ -151,6 +163,43 @@ public class PortfolioService
         // sort wallets by fiat value decending.
         Collections.sort(walletDTOS, Collections.reverseOrder(new WalletDTOCompareByFiatValue()));
         return walletDTOS;
+    }
+
+    /**
+     * service to calculate the fiat value of a multi coin wallet
+     * @return  List<WalletDTO> -- a list of wallets
+     */
+    public List<WalletDTO> portfolioByWallet() {
+        List<WalletDTO> walletDTOs = new ArrayList<WalletDTO>();
+        HashMap<String, CoinDTO> coinHashMap = coinService.findAllReturnTickerCoinDTOMap();
+        List<BlockchainAddressStore> addressStores = blockchainAddressStoreService.findAllLatestSumBalanceGroupByWalletTicker( );
+        WalletDTO currentWalletDTO = null;
+        String CurrentWallet = "";
+
+        for (BlockchainAddressStore addressStore : addressStores) {
+            if ( CurrentWallet.compareToIgnoreCase(addressStore.getWalletName()) != 0) {
+                if (currentWalletDTO != null ) {
+                    // not the first time though
+
+                    // STD calculate fiat value here
+                    walletDTOs.add(currentWalletDTO);
+                }
+                currentWalletDTO = new WalletDTO();
+                CurrentWallet = addressStore.getWalletName();
+            }
+            CoinDTO coinDefault = new CoinDTO();
+            CoinDTO coinDTO = new CoinDTO(addressStore);
+            CoinDTO coinPriceDTO = coinHashMap.getOrDefault(coinDTO.getTicker(),coinDefault);
+            coinDTO.setFiat_prices(coinPriceDTO.getFiat_prices());
+            coinDTO.calculateCoinValue();
+            currentWalletDTO.addCoinDTO(coinDTO);
+        }
+        if ( currentWalletDTO != null) {
+            // add the last record in.
+            // STD calculate fiat value here
+            walletDTOs.add(currentWalletDTO);
+        }
+        return walletDTOs;
     }
 
     /**
@@ -184,6 +233,9 @@ public class PortfolioService
         updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.MONERO_TICKER, refresh);
         updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.LINK_TICKER, refresh);
         updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.MAKER_TICKER, refresh);
+        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.POLKADOT_TICKER, refresh);
+        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.SOLANA_TICKER, refresh); 
+
 
         // save copy of the portflio here
         DateTracker dateTracker = createAndSaveDateTracker();
@@ -308,6 +360,17 @@ public class PortfolioService
             //TODO implement an exporor service call here.
             return;
         }
+        if (coinList.getCoinName().equals(CoinCodes.POLKADOT_TICKER))
+        {
+            //TODO implement an exporor service call here.
+            return;
+        }
+        if (coinList.getCoinName().equals(CoinCodes.SOLANA_TICKER))
+        {
+            //TODO implement an exporor service call here.
+            return;
+        }
+
 
         log.error("unsupported crypto name={}", coinList.getCoinName());
         coinList.addErrorMessage("unsupported crypto name=" + coinList.getCoinName());

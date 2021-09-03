@@ -1,5 +1,6 @@
 package com.marcotte.blockhead.model.coin;
 
+import com.marcotte.blockhead.datastore.blockchainaddressstore.BlockchainAddressStore;
 import com.marcotte.blockhead.datastore.coin.Coin;
 import com.marcotte.blockhead.model.fiat.FiatCurrency;
 import com.marcotte.blockhead.model.fiat.FiatCurrencyList;
@@ -19,16 +20,31 @@ public class CoinDTO {
 
 
     public CoinDTO() {
-        this.coinName = "";
-        this.ticker = "";
-        this.coinBalance = 0.0;
-        this.fiat_prices = new FiatCurrencyList();
-        this.fiat_balances = new FiatCurrencyList();
+        init();
     }
     public CoinDTO(String coinName, String ticker)
     {
+        init();
         this.coinName = coinName;
         this.ticker = ticker;
+    }
+    public CoinDTO(BlockchainAddressStore blockchainAddressStore)
+    {
+        init();
+        this.ticker = blockchainAddressStore.getTicker();
+        this.coinBalance = blockchainAddressStore.getLastBalance();
+    }
+
+    public CoinDTO(CoinSumDTO coinSummyDTO)
+    {
+        init();
+        this.ticker = coinSummyDTO.getTicker();
+        this.coinBalance = coinSummyDTO.getCoinBalance();
+    }
+
+    private void init() {
+        this.coinName = "";
+        this.ticker = "";
         this.coinBalance = 0.0;
         this.fiat_prices = new FiatCurrencyList();
         this.fiat_balances = new FiatCurrencyList();
