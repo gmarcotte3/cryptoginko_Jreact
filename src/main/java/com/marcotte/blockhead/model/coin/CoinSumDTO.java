@@ -21,6 +21,9 @@ public class CoinSumDTO {
     public CoinSumDTO(Object[] columns) {
         this.ticker = (String) columns[0];
         this.coinBalance = (Double) columns[1];
+        if ( columns.length > 2 ) {
+            this.walletName = (String) columns[2];
+        }
     }
 
     public String getTicker() {

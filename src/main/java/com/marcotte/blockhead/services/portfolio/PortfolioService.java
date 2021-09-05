@@ -165,41 +165,128 @@ public class PortfolioService
         return walletDTOS;
     }
 
+//    /**
+//     * service to calculate the fiat value of a multi coin wallet
+//     * @return  List<WalletDTO> -- a list of wallets
+//     * @deprecated
+//     */
+//    public List<WalletDTO> portfolioByWallet() {
+//        List<WalletDTO> walletDTOs = new ArrayList<WalletDTO>();
+//        HashMap<String, CoinDTO> coinHashMap = coinService.findAllReturnTickerCoinDTOMap();
+//        List<BlockchainAddressStore> addressStores = blockchainAddressStoreService.findAllLatestSumBalanceGroupByWalletTicker( );
+//        WalletDTO currentWalletDTO = null;
+//        String CurrentWallet = "";
+//
+//        for (BlockchainAddressStore addressStore : addressStores) {
+//            if ( CurrentWallet.compareToIgnoreCase(addressStore.getWalletName()) != 0) {
+//                if (currentWalletDTO != null ) {
+//                    // not the first time though
+//
+//                    // STD calculate fiat value here
+//                    walletDTOs.add(currentWalletDTO);
+//                }
+//                currentWalletDTO = new WalletDTO();
+//                CurrentWallet = addressStore.getWalletName();
+//            }
+//            CoinDTO coinDefault = new CoinDTO();
+//            CoinDTO coinDTO = new CoinDTO(addressStore);
+//            CoinDTO coinPriceDTO = coinHashMap.getOrDefault(coinDTO.getTicker(),coinDefault);
+//            coinDTO.setFiat_prices(coinPriceDTO.getFiat_prices());
+//            coinDTO.calculateCoinValue();
+//            currentWalletDTO.addCoinDTO(coinDTO);
+//        }
+//        if ( currentWalletDTO != null) {
+//            // add the last record in.
+//            // STD calculate fiat value here
+//            walletDTOs.add(currentWalletDTO);
+//        }
+//        return walletDTOs;
+//    }
+
     /**
      * service to calculate the fiat value of a multi coin wallet
      * @return  List<WalletDTO> -- a list of wallets
+     *
      */
-    public List<WalletDTO> portfolioByWallet() {
-        List<WalletDTO> walletDTOs = new ArrayList<WalletDTO>();
+    public List<WalletDTO> portfolioByWallet2() {
+        List<WalletDTO> walletDTOs = new ArrayList<>();
+        List<CoinSumDTO> coinSumDTOs = blockchainAddressStoreService.findAllLatestSumBalanceGroupByWalletTicker2();
         HashMap<String, CoinDTO> coinHashMap = coinService.findAllReturnTickerCoinDTOMap();
-        List<BlockchainAddressStore> addressStores = blockchainAddressStoreService.findAllLatestSumBalanceGroupByWalletTicker( );
-        WalletDTO currentWalletDTO = null;
-        String CurrentWallet = "";
 
-        for (BlockchainAddressStore addressStore : addressStores) {
-            if ( CurrentWallet.compareToIgnoreCase(addressStore.getWalletName()) != 0) {
-                if (currentWalletDTO != null ) {
-                    // not the first time though
 
-                    // STD calculate fiat value here
-                    walletDTOs.add(currentWalletDTO);
-                }
-                currentWalletDTO = new WalletDTO();
-                CurrentWallet = addressStore.getWalletName();
-            }
-            CoinDTO coinDefault = new CoinDTO();
-            CoinDTO coinDTO = new CoinDTO(addressStore);
-            CoinDTO coinPriceDTO = coinHashMap.getOrDefault(coinDTO.getTicker(),coinDefault);
-            coinDTO.setFiat_prices(coinPriceDTO.getFiat_prices());
-            coinDTO.calculateCoinValue();
-            currentWalletDTO.addCoinDTO(coinDTO);
+        List<CoinDTO> walletcoinDTOList = new ArrayList<CoinDTO>();
+        for ( CoinSumDTO coinSum : coinSumDTOs ) {
+            walletcoinDTOList.add( new CoinDTO(coinSum));
         }
-        if ( currentWalletDTO != null) {
-            // add the last record in.
-            // STD calculate fiat value here
+        copyFiatPricesAndCalculateValueFromCoinPrices( walletcoinDTOList, coinHashMap);
+
+
+        WalletDTO currentWalletDTO = null;
+        List<CoinDTO> coinDTOList = null;
+        for ( CoinDTO coinDTO : walletcoinDTOList ) {
+            if ( currentWalletDTO == null ) {
+                currentWalletDTO = new WalletDTO();
+                currentWalletDTO.setWalletName(coinDTO.getWalletName());
+
+                coinDTOList = new ArrayList<CoinDTO>();
+                currentWalletDTO.setCoinDTOs(coinDTOList);
+                walletDTOs.add(currentWalletDTO);
+            }
+            if ( currentWalletDTO.getWalletName().compareToIgnoreCase(coinDTO.getWalletName()) != 0)    {
+                //copyFiatPricesAndCalculateValueFromCoinPrices( coinDTOList, coinHashMap);
+
+                walletDTOs.add(currentWalletDTO);
+                coinDTOList = new ArrayList<CoinDTO>();
+                currentWalletDTO = new WalletDTO();
+                currentWalletDTO.setWalletName(coinDTO.getWalletName());
+                currentWalletDTO.setCoinDTOs(coinDTOList);
+
+            }
+            if ( coinDTO.getCoinBalance() > 0) {
+                coinDTOList.add(coinDTO);
+            }
+
+        }
+        if ( currentWalletDTO != null ) {
             walletDTOs.add(currentWalletDTO);
         }
-        return walletDTOs;
+
+        List<WalletDTO> calculatedWalletDTOs = calculateWalletListFiatValues(walletDTOs);
+
+        // sort wallets by fiat value decending.
+        Collections.sort(calculatedWalletDTOs, Collections.reverseOrder(new WalletDTOCompareByFiatValue()));
+
+        return calculatedWalletDTOs;
+    }
+
+    /**
+     * go though all the non zero coin balance
+     * @param walletDTOs
+     * @return
+     */
+    private List<WalletDTO> calculateWalletListFiatValues(  List<WalletDTO> walletDTOs) {
+        List<WalletDTO> resultWalletDTOs = new ArrayList<>();
+        for (WalletDTO walletDTO: walletDTOs ) {
+            if ( walletDTO.getCoinDTOs().size() > 0 ) {
+                calculateWalletFiatValue( walletDTO );
+                resultWalletDTOs.add(walletDTO);
+            }
+
+        }
+
+        return resultWalletDTOs;
+    }
+
+    /**
+     * add up all the fiat values for each supported fiat currency, add these to the wallet's fiat currency values
+     * @param walletDTO
+     */
+    private void calculateWalletFiatValue( WalletDTO walletDTO ) {
+        for (CoinDTO coin: walletDTO.getCoinDTOs() ) {
+            for (FiatCurrency fiat : coin.getFiat_balances().getFiat_values()) {
+                walletDTO.addValue( fiat.getCode(), fiat.getValue());
+            }
+        }
     }
 
     /**
@@ -241,7 +328,6 @@ public class PortfolioService
         DateTracker dateTracker = createAndSaveDateTracker();
 
         List<PortfolioTracker> portfollioSummary = calculatePortfolioSummary(portfolioList, dateTracker);
-        //savePortfolioSummary( portfollioSummary);
         return portfollioSummary;
     }
 

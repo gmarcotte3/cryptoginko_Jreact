@@ -63,18 +63,18 @@ public class PortfolioController
     }
 
 
+//    @GetMapping("/byWallet")
+//    public ResponseEntity<List<WalletDTO>> portfolioByWalletAndCoins()
+//    {
+//        List<WalletDTO> portfolioByWalletCoinList = portfolioService.portfolioByWalletCoins();
+//
+//        return new ResponseEntity<List<WalletDTO>>(portfolioByWalletCoinList, HttpStatus.OK);
+//    }
+
     @GetMapping("/byWallet")
-    public ResponseEntity<List<WalletDTO>> portfolioByWalletAndCoins()
-    {
-        List<WalletDTO> portfolioByWalletCoinList = portfolioService.portfolioByWalletCoins();
-
-        return new ResponseEntity<List<WalletDTO>>(portfolioByWalletCoinList, HttpStatus.OK);
-    }
-
-    @GetMapping("/byWallet2")
     public ResponseEntity<List<WalletDTO>> portfolioByWalletAndCoins2()
     {
-        List<WalletDTO> portfolioByWalletCoinList = portfolioService.portfolioByWallet();
+        List<WalletDTO> portfolioByWalletCoinList = portfolioService.portfolioByWallet2();
 
         return new ResponseEntity<List<WalletDTO>>(portfolioByWalletCoinList, HttpStatus.OK);
     }

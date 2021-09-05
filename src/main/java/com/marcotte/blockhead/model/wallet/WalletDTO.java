@@ -1,13 +1,19 @@
 package com.marcotte.blockhead.model.wallet;
 
 import com.marcotte.blockhead.model.coin.CoinDTO;
+import com.marcotte.blockhead.model.coin.CoinSumDTO;
 import com.marcotte.blockhead.model.fiat.FiatCurrency;
 import com.marcotte.blockhead.model.fiat.FiatCurrencyList;
+import com.marcotte.blockhead.services.portfolio.PortfolioService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class WalletDTO {
+    private static final Logger log = LoggerFactory.getLogger(WalletDTO.class);
+
     private String walletName;
     private String description;
     private List<CoinDTO> coinDTOs;
@@ -21,6 +27,16 @@ public class WalletDTO {
 
     public FiatCurrency findFiatValue(String fiatCode ) {
         return fiat_balances.findFiat(fiatCode );
+    }
+
+    public void addValue(String fiatCode, Double moMoney) {
+        try {
+            FiatCurrency fiat = fiat_balances.findFiat(fiatCode);
+            fiat.setValue(fiat.getValue() + moMoney);
+        } catch ( Exception e) {
+            // if we dont support or the fiat code is invalid then we should get a null_pointer  exception
+            log.error("Invalid fiat code  exception=" + e.getMessage());
+        }
     }
 
     // these getters for json ouput
@@ -78,7 +94,6 @@ public class WalletDTO {
         }
         this.coinDTOs.add(coinDTO);
     }
-
     public void setCoinDTOs(List<CoinDTO> coinDTOs) {
         this.coinDTOs = coinDTOs;
     }

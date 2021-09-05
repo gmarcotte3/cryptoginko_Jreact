@@ -14,6 +14,8 @@ public class CoinDTO {
     private String coinName;    // name of the coin ie Bitcoin, Dash, BitcoinCash, Cardano etc.
     private String ticker;      // trading symbol ie BTH, DASH, BCH, ADA etc
     private Double coinBalance; // the coin balance in Satoshis for bitcoin DASH and BitcoinCash etc.
+    private String walletName;
+
 
     private FiatCurrencyList fiat_prices;  // list of all the supported fiat currencies prices.
     private FiatCurrencyList fiat_balances;  // list of all the supported fiat currencies values( price * coinBalance).
@@ -40,9 +42,11 @@ public class CoinDTO {
         init();
         this.ticker = coinSummyDTO.getTicker();
         this.coinBalance = coinSummyDTO.getCoinBalance();
+        this.walletName = coinSummyDTO.getWalletName();
     }
 
     private void init() {
+        this.walletName = "";
         this.coinName = "";
         this.ticker = "";
         this.coinBalance = 0.0;
@@ -171,6 +175,14 @@ public class CoinDTO {
 
     public void setFiat_balances(FiatCurrencyList fiat_balances) {
         this.fiat_balances = fiat_balances;
+    }
+
+    public String getWalletName() {
+        return walletName;
+    }
+
+    public void setWalletName(String walletName) {
+        this.walletName = walletName;
     }
 
 }
