@@ -46,15 +46,6 @@ public class PortfolioController
         return new ResponseEntity<PortfolioValueTrackerDTO>(portfolioValueTrackerDTO, HttpStatus.OK);
     }
 
-
-//    @GetMapping("/bycoins")
-//    public ResponseEntity<List<CoinDTO>> portfolioByCoins()
-//    {
-//        List<CoinDTO> portfolioByCoinList = portfolioService.portfolioByCoins();
-//
-//        return new ResponseEntity<List<CoinDTO>>(portfolioByCoinList, HttpStatus.OK);
-//    }
-
     @GetMapping("/bycoins")
     public ResponseEntity<List<CoinDTO>> portfolioByCoins2()
     {
@@ -62,14 +53,6 @@ public class PortfolioController
         return new ResponseEntity<List<CoinDTO>>(portfolioByCoinList, HttpStatus.OK);
     }
 
-
-//    @GetMapping("/byWallet")
-//    public ResponseEntity<List<WalletDTO>> portfolioByWalletAndCoins()
-//    {
-//        List<WalletDTO> portfolioByWalletCoinList = portfolioService.portfolioByWalletCoins();
-//
-//        return new ResponseEntity<List<WalletDTO>>(portfolioByWalletCoinList, HttpStatus.OK);
-//    }
 
     @GetMapping("/byWallet")
     public ResponseEntity<List<WalletDTO>> portfolioByWalletAndCoins2()

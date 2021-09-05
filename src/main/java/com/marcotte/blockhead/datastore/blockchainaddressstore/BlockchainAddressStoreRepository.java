@@ -18,7 +18,6 @@ public interface BlockchainAddressStoreRepository extends CrudRepository< Blockc
                     "FROM Blockchain_Address_Store bas " +
                     "GROUP BY ticker")
     List<Object> findAllLatestSumBalanceGroupByTicker( );
-    //List<CoinSumDTO> findAllLatestSumBalanceGroupByTicker( );
 
     @Query(nativeQuery = true, value =
             "SELECT  wallet_Name as walletName, ticker, sum(last_Balance) as lastBalance " +

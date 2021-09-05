@@ -165,44 +165,6 @@ public class PortfolioService
         return walletDTOS;
     }
 
-//    /**
-//     * service to calculate the fiat value of a multi coin wallet
-//     * @return  List<WalletDTO> -- a list of wallets
-//     * @deprecated
-//     */
-//    public List<WalletDTO> portfolioByWallet() {
-//        List<WalletDTO> walletDTOs = new ArrayList<WalletDTO>();
-//        HashMap<String, CoinDTO> coinHashMap = coinService.findAllReturnTickerCoinDTOMap();
-//        List<BlockchainAddressStore> addressStores = blockchainAddressStoreService.findAllLatestSumBalanceGroupByWalletTicker( );
-//        WalletDTO currentWalletDTO = null;
-//        String CurrentWallet = "";
-//
-//        for (BlockchainAddressStore addressStore : addressStores) {
-//            if ( CurrentWallet.compareToIgnoreCase(addressStore.getWalletName()) != 0) {
-//                if (currentWalletDTO != null ) {
-//                    // not the first time though
-//
-//                    // STD calculate fiat value here
-//                    walletDTOs.add(currentWalletDTO);
-//                }
-//                currentWalletDTO = new WalletDTO();
-//                CurrentWallet = addressStore.getWalletName();
-//            }
-//            CoinDTO coinDefault = new CoinDTO();
-//            CoinDTO coinDTO = new CoinDTO(addressStore);
-//            CoinDTO coinPriceDTO = coinHashMap.getOrDefault(coinDTO.getTicker(),coinDefault);
-//            coinDTO.setFiat_prices(coinPriceDTO.getFiat_prices());
-//            coinDTO.calculateCoinValue();
-//            currentWalletDTO.addCoinDTO(coinDTO);
-//        }
-//        if ( currentWalletDTO != null) {
-//            // add the last record in.
-//            // STD calculate fiat value here
-//            walletDTOs.add(currentWalletDTO);
-//        }
-//        return walletDTOs;
-//    }
-
     /**
      * service to calculate the fiat value of a multi coin wallet
      * @return  List<WalletDTO> -- a list of wallets
