@@ -13,20 +13,20 @@ import java.awt.event.ActionEvent;
  * application view
  * This contains only the UI logic
  */
-public class ApplicationView extends JFrame implements View {
+public class ApplicationView extends JFrame implements IView {
 
     private static final long serialVersionUID = 2104090919;
 
-    private Presenter presenter;
+    private IPresenter presenter;
     private Action  openAction;
     private Action  notImplementedAction;
 
     @Override
-    public void setPresenter(Presenter presenter) {
+    public void setPresenter(IPresenter presenter) {
         this.presenter = presenter;
     }
 
-    private Presenter getPresenter() {
+    private IPresenter getPresenter() {
         if ( presenter == null ) {
             throw new IllegalStateException("The presentor is not set");
         }

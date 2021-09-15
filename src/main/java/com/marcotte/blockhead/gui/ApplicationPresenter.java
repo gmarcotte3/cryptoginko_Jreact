@@ -7,13 +7,13 @@ import java.io.File;
  * This performs actions from user via the view. The action will call the view
  * to perform UI.
  */
-public class ApplicationPresenter implements Presenter {
+public class ApplicationPresenter implements IPresenter {
 
-    private View view;
+    private IView view;
     private File currentFile;
 
     @Override
-    public void setView(View view) {
+    public void setView(IView view) {
         this.view = view;
     }
 
@@ -22,7 +22,7 @@ public class ApplicationPresenter implements Presenter {
      * (missing the view)
      * @return
      */
-    private View getView() {
+    private IView getView() {
         if ( view == null ) {
             throw new IllegalStateException("View is not set");
         }

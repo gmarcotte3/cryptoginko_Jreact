@@ -1,6 +1,6 @@
 package com.marcotte.blockhead.gui;
 
-public interface Presenter {
-    void setView( View view);
+public interface IPresenter {
+    void setView( IView view);
     //   void onOpen();
 }
