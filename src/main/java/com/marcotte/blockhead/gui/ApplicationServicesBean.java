@@ -4,11 +4,11 @@ import com.marcotte.blockhead.services.explorerServices.pricequote.PriceServiceI
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-//@Service
+@Service
 public class ApplicationServicesBean {
     static private ApplicationServicesBean instance = null;
 
-    //    @Autowired
+    @Autowired
     private PriceServiceInterface coinGeckoService;
 
     public ApplicationServicesBean()

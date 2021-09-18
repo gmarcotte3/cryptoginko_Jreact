@@ -11,6 +11,11 @@ public class ApplicationPresenter implements IPresenter {
 
     private IView view;
     private File currentFile;
+    private ApplicationServicesBean applicationServicesBean;
+
+    public ApplicationPresenter (ApplicationServicesBean applicationServicesBean) {
+        this.applicationServicesBean = applicationServicesBean;
+    }
 
     @Override
     public void setView(IView view) {
