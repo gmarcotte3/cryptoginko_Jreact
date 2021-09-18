@@ -34,6 +34,19 @@ public class ApplicationPresenter implements IPresenter {
         return view;
     }
 
+    public File getCurrentFile() {
+        return currentFile;
+    }
+
+    public void setCurrentFile(File currentFile) {
+        this.currentFile = currentFile;
+    }
+
+    public ApplicationServicesBean getApplicationServicesBean() {
+        return applicationServicesBean;
+    }
+
+
 //    /**
 //     * does the open file logic.
 //     * tells the view to showOpenFileChooser dialog box.
