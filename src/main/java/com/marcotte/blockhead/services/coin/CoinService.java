@@ -116,6 +116,13 @@ public class CoinService {
     }
 
 
+    /**
+     * update coins prices in the database
+     * after getting a list of the current pricess this routine will save the prices back to the coin
+     * storeage for use by the portofolio services.
+     * @param coinDTOS
+     * @return
+     */
     public List<Coin> updateCoins(List<CoinDTO> coinDTOS) {
         List<Coin> coinList = new ArrayList<Coin>();
         for (CoinDTO coinDTO : coinDTOS ) {
@@ -126,7 +133,9 @@ public class CoinService {
                 newCoin.setCoinName( coinDTO.getCoinName());
                 newCoin.setTicker( coinDTO.getTicker());
                 newCoin.setDescription(coinDTO.getCoinName());
+                log.warn(coinDTO.getTicker() + " Not found current Price Old price=" + coinDTO.getPriceUSD());
             } else {
+                log.info(coinDTO.getTicker() + " Price USD=" + foundCoins.get(0).getPriceUSD());
                 newCoin = foundCoins.get(0);
             }
 
