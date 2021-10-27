@@ -13,15 +13,14 @@ public class SwingMainFrame  extends JFrame {
     private ApplicationPresenter applicationPresenter;
     private ApplicationView applicationView;
 
-    public SwingMainFrame(ApplicationPresenter applicationPresenter) throws HeadlessException {
-        this.applicationPresenter = applicationPresenter;
+    public SwingMainFrame() throws HeadlessException {
     }
 
     public  void prepareAndOpenFrame() {
         initUI();
     }
     private void initUI() {
-        applicationView = new ApplicationView();
+        applicationView = new ApplicationView(applicationPresenter);
 
         applicationPresenter.setView( applicationView);
         applicationView.setPresenter(applicationPresenter);

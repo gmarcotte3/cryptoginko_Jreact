@@ -14,7 +14,7 @@ import javax.swing.*;
 @SpringBootApplication(scanBasePackages = { "com.marcotte.blockhead.config" })
 public class BlockheadApplication
 {
-	public static boolean springBoot = true; //false;
+	public static boolean springBoot = false;
 
 	public static void main(String[] args)
 	{
@@ -36,7 +36,8 @@ public class BlockheadApplication
 
 	private static void displayMainFrame(ApplicationServicesBean applicationServicesBean) {
 		ApplicationPresenter applicationPresenter = new ApplicationPresenter(applicationServicesBean);
-		SwingMainFrame swingMainFrame = new SwingMainFrame(applicationPresenter);
+		SwingMainFrame swingMainFrame = new SwingMainFrame();
+		swingMainFrame.setApplicationPresenter(applicationPresenter);
 		SwingUtilities.invokeLater(() -> {
 			swingMainFrame.prepareAndOpenFrame();
 		});

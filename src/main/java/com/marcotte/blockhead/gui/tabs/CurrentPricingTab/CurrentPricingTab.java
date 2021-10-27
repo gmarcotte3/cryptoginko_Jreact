@@ -1,5 +1,6 @@
 package com.marcotte.blockhead.gui.tabs.CurrentPricingTab;
 
+import com.marcotte.blockhead.gui.ApplicationServicesBean;
 import com.marcotte.blockhead.gui.tabs.currentPriceTableDataModel.CurrentPriceTableDataModel;
 import com.marcotte.blockhead.model.coin.CoinDTO;
 
@@ -16,12 +17,14 @@ import java.util.List;
  */
 public class CurrentPricingTab extends JPanel
 {
+    ApplicationServicesBean applicationServicesBean;
     CurrentPriceTableDataModel currentPriceTableDataModel;
-    public CurrentPricingTab() {
+    public CurrentPricingTab(ApplicationServicesBean applicationServicesBean) {
         super();
+        this.applicationServicesBean = applicationServicesBean;
 
-//        List<CoinDTO> coinList = applicationServicesBean.getCoinGeckoService().getPriceAllCoinsNow();
-        List<CoinDTO> coinList = new ArrayList<CoinDTO>();
+        List<CoinDTO> coinList = applicationServicesBean.getCoinGeckoService().getPriceAllCoinsNow();
+//        List<CoinDTO> coinList = new ArrayList<CoinDTO>();
         currentPriceTableDataModel = new CurrentPriceTableDataModel();
         currentPriceTableDataModel.setCoinData( coinList );
         JTable table = new JTable(currentPriceTableDataModel );

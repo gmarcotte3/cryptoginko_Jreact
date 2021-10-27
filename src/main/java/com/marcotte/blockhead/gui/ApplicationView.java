@@ -37,7 +37,8 @@ public class ApplicationView extends JFrame implements IView {
      * Application action setup
      * @throws HeadlessException
      */
-    public ApplicationView() throws HeadlessException {
+    public ApplicationView(ApplicationPresenter applicationPresenter) throws HeadlessException {
+        this.presenter = applicationPresenter;
         initActions();
         initMenu();
         initContentPane();
@@ -154,7 +155,7 @@ public class ApplicationView extends JFrame implements IView {
      */
     private void initContentPane() {
         JTabbedPane tabbedPane = new JTabbedPane();
-        tabbedPane.addTab("Current Prices" , null, new CurrentPricingTab(),"Current Coin Prices");
+        tabbedPane.addTab("Current Prices" , null, new CurrentPricingTab(presenter.getApplicationServicesBean()),"Current Coin Prices");
         //tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
 
         tabbedPane.addTab("Portfolio Value", null, new PortfolioTab(),"Current Portfolio value");
