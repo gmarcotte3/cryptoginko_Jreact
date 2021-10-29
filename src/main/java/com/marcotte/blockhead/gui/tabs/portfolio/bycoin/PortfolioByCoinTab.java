@@ -1,14 +1,20 @@
 package com.marcotte.blockhead.gui.tabs.portfolio.bycoin;
 
 
+import com.marcotte.blockhead.gui.ApplicationServicesBean;
+import com.marcotte.blockhead.model.coin.CoinDTO;
+
 import javax.swing.*;
 import javax.swing.table.TableColumn;
 import java.awt.*;
+import java.util.List;
 
 public class PortfolioByCoinTab extends JPanel{
-    PortfolioByCoinsTableDataModel portfolioByCoinsTableDataModel;
-    public PortfolioByCoinTab() {
+    private ApplicationServicesBean applicationServicesBean;
+    private PortfolioByCoinsTableDataModel portfolioByCoinsTableDataModel;
+    public PortfolioByCoinTab(ApplicationServicesBean applicationServicesBean) {
         super();
+        this.applicationServicesBean = applicationServicesBean;
         portfolioByCoinsTableDataModel = new PortfolioByCoinsTableDataModel();
         JTable table = new JTable(portfolioByCoinsTableDataModel );
         JScrollPane tabkeScrollPane = new JScrollPane(table);
@@ -17,6 +23,10 @@ public class PortfolioByCoinTab extends JPanel{
 
         setLayout( new BorderLayout());
         add( tabkeScrollPane, BorderLayout.CENTER);
+
+
+        List<CoinDTO> coinDTOList = applicationServicesBean.getPortfolioByCoinsService().findAllLatestSumBalanceGroupByCoin();
+        portfolioByCoinsTableDataModel.setModelData( coinDTOList);
     }
 
     /**

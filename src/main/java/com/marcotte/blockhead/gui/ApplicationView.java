@@ -158,7 +158,7 @@ public class ApplicationView extends JFrame implements IView {
         tabbedPane.addTab("Current Prices" , null, new CurrentPricingTab(presenter.getApplicationServicesBean()),"Current Coin Prices");
         //tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
 
-        tabbedPane.addTab("Portfolio Value", null, new PortfolioTab(),"Current Portfolio value");
+        tabbedPane.addTab("Portfolio Value", null, new PortfolioTab(presenter.getApplicationServicesBean()),"Current Portfolio value");
         //tabbedPane.addTab(null, null, new PortfolioTab());
         //tabbedPane.setTabComponentAt(1, new JLabel("Current Portfolio Value"));
         //tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);

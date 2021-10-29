@@ -7,7 +7,7 @@ public class FiatCurrency
 {
     private String symbol;
     private String description;
-    private double value;
+    private Double value;
     private FiatNames fiatType;
 
     public FiatCurrency() {
@@ -74,7 +74,7 @@ public class FiatCurrency
         return this;
     }
 
-    public double getValue() {
+    public Double getValue() {
         return value;
     }
 

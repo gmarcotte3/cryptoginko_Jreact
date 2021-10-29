@@ -1,6 +1,7 @@
 package com.marcotte.blockhead.gui;
 
 import com.marcotte.blockhead.services.explorerServices.pricequote.PriceServiceInterface;
+import com.marcotte.blockhead.services.portfolio.PortfolioByCoinsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,8 @@ public class ApplicationServicesBean {
 
     @Autowired
     private PriceServiceInterface coinGeckoService;
+    @Autowired
+    private PortfolioByCoinsService portfolioByCoinsService;
 
     public ApplicationServicesBean()
     {
@@ -25,5 +28,17 @@ public class ApplicationServicesBean {
 
     public PriceServiceInterface getCoinGeckoService() {
         return coinGeckoService;
+    }
+
+    public void setCoinGeckoService(PriceServiceInterface coinGeckoService) {
+        this.coinGeckoService = coinGeckoService;
+    }
+
+    public PortfolioByCoinsService getPortfolioByCoinsService() {
+        return portfolioByCoinsService;
+    }
+
+    public void setPortfolioByCoinsService(PortfolioByCoinsService portfolioByCoinsService) {
+        this.portfolioByCoinsService = portfolioByCoinsService;
     }
 }

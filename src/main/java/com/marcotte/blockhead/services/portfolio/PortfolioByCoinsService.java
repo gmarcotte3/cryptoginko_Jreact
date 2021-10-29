@@ -53,10 +53,9 @@ public class PortfolioByCoinsService {
                 currentCoin = addr.getTicker();
                 runningBalance = addr.getLastBalance();
             } else if (currentCoin.compareToIgnoreCase(addr.getTicker() )!= 0 ) {
-                CoinDTO newCoinDTO = new CoinDTO();
+                CoinDTO newCoinDTO = getCoinFromTicker(currentCoin,  coinMap); //new CoinDTO();
                 newCoinDTO.setCoinBalance(runningBalance);
-                newCoinDTO.setTicker(currentCoin);
-                newCoinDTO.setCoinName(getCoinNameFromTicker(currentCoin,  coinMap));
+                newCoinDTO.calculateCoinValue();
                 summedByCurrency.add(newCoinDTO);
                 runningBalance = addr.getLastBalance();
                 currentCoin = addr.getTicker();
@@ -65,21 +64,25 @@ public class PortfolioByCoinsService {
             }
         }
         // save the last item
-        CoinDTO newCoinDTO = new CoinDTO();
+        CoinDTO newCoinDTO = getCoinFromTicker(currentCoin,  coinMap); //new CoinDTO();
         newCoinDTO.setCoinBalance(runningBalance);
-        newCoinDTO.setTicker(currentCoin);
-        newCoinDTO.setCoinName(getCoinNameFromTicker(currentCoin,  coinMap));
+ //       newCoinDTO.setTicker(currentCoin);
+        newCoinDTO.calculateCoinValue();
         summedByCurrency.add(newCoinDTO);
 
         return summedByCurrency;
     }
 
-    private String getCoinNameFromTicker(String ticker, HashMap<String, CoinDTO>  coinMap) {
+    private CoinDTO getCoinFromTicker(String ticker, HashMap<String, CoinDTO>  coinMap)
+    {
         CoinDTO coinDTO = coinMap.get(ticker);
         if ( coinDTO != null ) {
-            return coinDTO.getCoinName();
+            return coinDTO;
         } else {
-            return "UknownCoin";
+            coinDTO = new CoinDTO();
+            coinDTO.setTicker(ticker);
+            coinDTO.setCoinName("UknownCoin");
+            return coinDTO;
         }
     }
 }
