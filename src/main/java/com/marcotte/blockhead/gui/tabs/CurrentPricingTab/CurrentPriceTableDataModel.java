@@ -1,7 +1,6 @@
-package com.marcotte.blockhead.gui.tabs.currentPriceTableDataModel;
+package com.marcotte.blockhead.gui.tabs.CurrentPricingTab;
 
 import com.marcotte.blockhead.model.coin.CoinDTO;
-import org.slf4j.Logger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,14 +18,9 @@ public class CurrentPriceTableDataModel extends AbstractTableModel {
     private static final Logger log = LoggerFactory.getLogger(CurrentPriceTableDataModel.class);
 
     // columns
-    private final String[] columnNames = {"Coin", "Icon", "Price", "fiat", "Notes" };
+    private final String[] columnNames = {"Ticker", "Coin Name", "Price", "fiat", "Notes" };
 
-    //    // dummy data.
-//    private Object[][] data = {
-//            {"BTC", "B", "100,000.01",      "USD", "The one coint to rule them all"},
-//            {"ETH", "E", "10,000.05",       "USD", "the Oshirium coin"},
-//            {"ADA", "A", "50.02",           "USD", "the Eth killer"}
-//    };
+
     private List<CoinDTO> coinData = new ArrayList<CoinDTO>();
 
     public void setCoinData( List<CoinDTO> coinList ) {
@@ -53,7 +47,7 @@ public class CurrentPriceTableDataModel extends AbstractTableModel {
                 value = coin.getTicker();
                 break;
             case 1:
-                value = coin.getTicker();
+                value = coin.getCoinName();
                 break;
             case 2:
                 //TODO look up which price we want (use member function or utility for this)
@@ -65,7 +59,7 @@ public class CurrentPriceTableDataModel extends AbstractTableModel {
                 break;
             case 4:
                 // TODO provide notes link to coingeko or some other use full info
-                value = coin.getCoinName();
+                value = "";
                 break;
         }
 

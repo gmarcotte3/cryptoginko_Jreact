@@ -1,21 +1,36 @@
 package com.marcotte.blockhead.gui.tabs.portfolio.bywallet;
 
+import com.marcotte.blockhead.model.coin.CoinDTO;
+import com.marcotte.blockhead.model.wallet.WalletDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.table.AbstractTableModel;
+import java.util.List;
 
 public class PortfolioByWalletTableDataModel extends AbstractTableModel {
     private static final Logger log = LoggerFactory.getLogger(PortfolioByWalletTableDataModel.class);
 
+    private static final int WALLET_NAME_IDX = 0;
+    private static final int WALLET_TOTAL_VALUE_IDX = 1;
+    private static final int WALLET_TOTAL_VLUE_FIAT_TYPE_IDX = 2;
+    private static final int COIN_TICKER_IDX = 3;
+    private static final int COIN_NAME_IDX = 4;
+    private static final int COIN_BAL_IDX = 5;
+    private static final int COIN_PRICE_IDX = 6;
+    private static final int COIN_VALUE_IDX = 7;
+    private static final int COIN_FIAT_IDX = 8;
+
+
     // columns
-    private final String[] columnNames = {"wallet","Coin", "Icon", "Coin Balance", "Price", "TotalValue", "fiat", "notes" };
+    private final String[] columnNames = {"wallet","TotalValue", "fiat" ,"Ticker", "Name", "Coin Balance", "Price", "Coin Value", "fiat"};
+    private final int columnNumber = 9;
 
     // dummy data.
     private Object[][] data = {
-            {"Exodud1", "BTC", "B", "10.01", "$100,000.00", "$10,000,000.10", "USD", "notes"},
-            {"Exodus1","ETH", "E", "100.05", "$10,000.00", "$10,000,000.50", "USD","notes"},
-            {"Daedalus1","ADA", "A", "100,000.02", "$10.00", "$10,000,000.20", "USD","notes"}
+            {"Exodud1", "$110,000,000.0",   "USD", "BTC", "Bitcoin",    "2.0",        "$500,000.00", "1,000,000.00", "USD"},
+            {" ",       " ",                "USD", "ETH", "oshirieum",  "100.0",       "$10,000.00", "1,000,000.00", "USD"},
+            {"Daedalus1","$10,000,000.20",  "USD", "ADA", "Cardano",    "100,000.0",   "$10.00",     "1,000,000.00", "USD"}
     };
 
 
@@ -46,18 +61,41 @@ public class PortfolioByWalletTableDataModel extends AbstractTableModel {
     }
 
 
-//    private void printDebugData() {
-//        int numRows = getRowCount();
-//        int numCols = getColumnCount();
-//
-//        for (int i=0; i < numRows; i++) {
-//            StringBuffer line = new StringBuffer();
-//            line.append("    row " + i + ":");
-//            for (int j=0; j < numCols; j++) {
-//                line.append("  " + data[i][j]);
-//            }
-//            log.debug(line.toString());
-//        }
-//        log.debug("--------------------------");
-//    }
+    public void setModelData(List<WalletDTO> walletDTOList){
+        int row = 0;
+        if (walletDTOList.size() > 0 ) {
+            data = new Object[calculateRowsNeeded( walletDTOList)][columnNumber];
+
+            for (WalletDTO walletcoin: walletDTOList ) {
+                data[row][WALLET_NAME_IDX] = walletcoin.getWalletName();
+                data[row][WALLET_TOTAL_VALUE_IDX] = walletcoin.getFiat_balances().findFiat("NZD").getValue().toString(); // TODO get default
+                data[row][WALLET_TOTAL_VLUE_FIAT_TYPE_IDX] = "NZD"; // TODO get default
+
+                for (CoinDTO coin : walletcoin.getCoinDTOs() ) {
+                    data[row][COIN_TICKER_IDX] = coin.getTicker();
+                    data[row][COIN_NAME_IDX] = coin.getCoinName();
+                    data[row][COIN_BAL_IDX] = coin.getCoinBalance().toString();
+                    data[row][COIN_PRICE_IDX] = coin.getPriceNZD();  //TODO use configuration to find the right fiat
+                    data[row][COIN_VALUE_IDX] = coin.getFiat_balances().findFiat("NZD").getValue().toString();
+                    data[row][COIN_FIAT_IDX] = "NZD";
+
+                    if ( data[row][WALLET_NAME_IDX] == null ) {
+                        data[row][WALLET_NAME_IDX] = " ";
+                        data[row][WALLET_TOTAL_VALUE_IDX] = " ";
+                        data[row][WALLET_TOTAL_VLUE_FIAT_TYPE_IDX] = " ";
+                    }
+                    row++;
+                }
+            }
+        }
+
+    }
+    private int calculateRowsNeeded( List<WalletDTO> walletDTOList) {
+        int rows = 0;
+        for (WalletDTO wallet: walletDTOList ) {
+            rows = rows + wallet.getCoinDTOs().size();
+        }
+        return rows + 1;
+    }
+
 }

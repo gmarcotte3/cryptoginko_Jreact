@@ -1,6 +1,8 @@
 package com.marcotte.blockhead.model.fiat;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 
 public class FiatCurrency
@@ -99,5 +101,34 @@ public class FiatCurrency
 
     public void setFiatType(FiatNames fiatType) {
         this.fiatType = fiatType;
+    }
+
+    public String getValueMoneyFormat() {
+        double money = getValue();
+        Locale locale;
+        switch ( this.getFiatType()) {
+            case NZD:
+                locale = new Locale("en", "NZ");
+                break;
+            case USD:
+                locale = new Locale("en", "US");
+                break;
+            case AUD:
+                locale = new Locale("en", "AU");
+                break;
+            case JPY:
+                locale = new Locale("ja", "JP");
+                break;
+            case JPM:
+                locale = new Locale("ja", "JP");
+                //money = money / 10000.0;
+                break;
+            default:
+                locale = new Locale("en", "US");
+        }
+        NumberFormat numberFormat = NumberFormat.getCurrencyInstance(locale);
+        numberFormat.setMinimumFractionDigits(0);
+
+        return numberFormat.format(money);
     }
 }

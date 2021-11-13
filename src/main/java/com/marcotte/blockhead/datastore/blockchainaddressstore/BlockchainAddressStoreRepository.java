@@ -31,4 +31,7 @@ public interface BlockchainAddressStoreRepository extends CrudRepository< Blockc
                     "GROUP BY wallet_name,ticker " +
                     "Order by Wallet_name, ticker")
     List<Object> findAllLatestSumBalanceGroupByWalletTicker2( );
+
+    @Query(nativeQuery = true, value = "select distinct ticker from blockchain_address_store order by ticker")
+    List<String> findAllTickers();
 }

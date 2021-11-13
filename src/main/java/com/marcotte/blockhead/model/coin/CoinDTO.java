@@ -36,6 +36,11 @@ public class CoinDTO {
         this.ticker = blockchainAddressStore.getTicker();
         this.coinBalance = blockchainAddressStore.getLastBalance();
     }
+    public CoinDTO( Coin coin ) {
+        this.ticker = coin.getTicker();
+        this.coinName = coin.getCoinName();
+        this.coinBalance = 0.0;
+    }
 
     public CoinDTO(CoinSumDTO coinSummyDTO)
     {
@@ -125,6 +130,12 @@ public class CoinDTO {
     }
     public double getPriceKRW() {
         return findFiatPrice("KRW").getValue();
+    }
+    public double getPriceBTC() {
+        return findFiatPrice("BTC").getValue();
+    }
+    public double getPriceETH() {
+        return findFiatPrice("ETH").getValue();
     }
 
     public String getCoinName() {

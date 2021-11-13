@@ -1,14 +1,12 @@
 package com.marcotte.blockhead.gui.tabs.CurrentPricingTab;
 
 import com.marcotte.blockhead.gui.ApplicationServicesBean;
-import com.marcotte.blockhead.gui.tabs.currentPriceTableDataModel.CurrentPriceTableDataModel;
 import com.marcotte.blockhead.model.coin.CoinDTO;
 
 
 import javax.swing.*;
 import javax.swing.table.TableColumn;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,8 +21,7 @@ public class CurrentPricingTab extends JPanel
         super();
         this.applicationServicesBean = applicationServicesBean;
 
-        List<CoinDTO> coinList = applicationServicesBean.getCoinGeckoService().getPriceAllCoinsNow();
-//        List<CoinDTO> coinList = new ArrayList<CoinDTO>();
+        List<CoinDTO> coinList = applicationServicesBean.getCurrentPriceService().getPriceAllTrackedCoinsNow();
         currentPriceTableDataModel = new CurrentPriceTableDataModel();
         currentPriceTableDataModel.setCoinData( coinList );
         JTable table = new JTable(currentPriceTableDataModel );
@@ -49,7 +46,8 @@ public class CurrentPricingTab extends JPanel
         table.getColumnModel().getColumn(0).setPreferredWidth(50);      // ticker
         table.getColumnModel().getColumn(0).setMaxWidth(50);
 
-        table.getColumnModel().getColumn(1).setMaxWidth(100);           // icon
+        table.getColumnModel().getColumn(1).setMaxWidth(200);           // coin name
+        table.getColumnModel().getColumn(1).setPreferredWidth(200);
 
         table.getColumnModel().getColumn(2).setPreferredWidth(100);     // price
         table.getColumnModel().getColumn(2).setMaxWidth(350);

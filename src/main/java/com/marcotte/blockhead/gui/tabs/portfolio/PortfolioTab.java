@@ -3,7 +3,7 @@ package com.marcotte.blockhead.gui.tabs.portfolio;
 
 
 import com.marcotte.blockhead.gui.ApplicationServicesBean;
-import com.marcotte.blockhead.gui.tabs.currentPriceTableDataModel.CurrentPriceTableDataModel;
+import com.marcotte.blockhead.gui.tabs.CurrentPricingTab.CurrentPriceTableDataModel;
 import com.marcotte.blockhead.gui.tabs.portfolio.bycoin.PortfolioByCoinTab;
 import com.marcotte.blockhead.gui.tabs.portfolio.bywallet.PortfolioByWalletTab;
 
@@ -25,7 +25,7 @@ public class PortfolioTab extends JPanel
         JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.LEFT, JTabbedPane.SCROLL_TAB_LAYOUT);
 
         tabbedPane.addTab("By Coins" , null, new PortfolioByCoinTab(applicationServicesBean), "Portfolio value by coin");
-        tabbedPane.addTab("By Wallet" , null, new PortfolioByWalletTab(), "Portfolio value by wallet");
+        tabbedPane.addTab("By Wallet" , null, new PortfolioByWalletTab(applicationServicesBean), "Portfolio value by wallet");
 
         setLayout(new BorderLayout());
         add( tabbedPane, BorderLayout.CENTER);

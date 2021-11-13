@@ -1,5 +1,7 @@
 package com.marcotte.blockhead.datastore.coin;
 
+import com.marcotte.blockhead.model.coin.CoinDTO;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -62,6 +64,24 @@ public class Coin {
         this.priceINR = 0.0;
         this.priceBTC = 0.0;
         this.priceETH = 0.0;
+    }
+
+    public Coin(CoinDTO coinDTO) {
+        this.coinName = coinDTO.getCoinName();
+        this.ticker = coinDTO.getTicker().toUpperCase();
+        this.description = "";
+
+        this.priceUSD = coinDTO.getPriceUSD();
+        this.priceNZD = coinDTO.getPriceNZD();
+        this.priceJPY = coinDTO.getPriceJPY();
+        this.priceJPM = coinDTO.getPriceJPM();
+        this.priceAUD = coinDTO.getPriceAUD();
+        this.priceEUR = coinDTO.getPriceEUR();
+        this.priceGBP = coinDTO.getPriceGBP();
+        this.priceKRW = coinDTO.getPriceKRW();
+        this.priceINR = coinDTO.getPriceINR();
+        this.priceBTC = coinDTO.getPriceBTC();
+        this.priceETH = coinDTO.getPriceETH();
     }
 
     public void setCoin( Coin newCoin) {

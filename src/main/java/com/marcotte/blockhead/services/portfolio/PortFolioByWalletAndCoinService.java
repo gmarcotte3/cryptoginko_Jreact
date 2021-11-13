@@ -78,11 +78,13 @@ public class PortFolioByWalletAndCoinService {
                 runningBalance = addr.getLastBalance();
                 currentWallet = addr.getWalletName();
             } else if (currentCoin.compareToIgnoreCase(addr.getTicker() )!= 0 ) {
-                CoinDTO newCoinDTO = new CoinDTO();
-                newCoinDTO.setCoinBalance(runningBalance);
-                newCoinDTO.setTicker(currentCoin);
-                newCoinDTO.setCoinName(getCoinNameFromTicker(currentCoin,  coinMap));
-                summedByCurrency.add(newCoinDTO);
+                if ( runningBalance > 0.0 ) {
+                    CoinDTO newCoinDTO = new CoinDTO();
+                    newCoinDTO.setCoinBalance(runningBalance);
+                    newCoinDTO.setTicker(currentCoin);
+                    newCoinDTO.setCoinName(getCoinNameFromTicker(currentCoin, coinMap));
+                    summedByCurrency.add(newCoinDTO);
+                }
                 runningBalance = addr.getLastBalance();
                 currentCoin = addr.getTicker();
             } else {
@@ -90,11 +92,13 @@ public class PortFolioByWalletAndCoinService {
             }
         }
         // save the last item
-        CoinDTO newCoinDTO = new CoinDTO();
-        newCoinDTO.setCoinBalance(runningBalance);
-        newCoinDTO.setTicker(currentCoin);
-        newCoinDTO.setCoinName(getCoinNameFromTicker(currentCoin,  coinMap));
-        summedByCurrency.add(newCoinDTO);
+        if ( runningBalance > 0.0 ) {
+            CoinDTO newCoinDTO = new CoinDTO();
+            newCoinDTO.setCoinBalance(runningBalance);
+            newCoinDTO.setTicker(currentCoin);
+            newCoinDTO.setCoinName(getCoinNameFromTicker(currentCoin, coinMap));
+            summedByCurrency.add(newCoinDTO);
+        }
 
         WalletDTO walletDTO = new WalletDTO();
         walletDTO.setWalletName(currentWallet);
