@@ -3,11 +3,14 @@ package com.marcotte.blockhead.gui.tabs.portfolio.bycoin;
 
 import com.marcotte.blockhead.gui.ApplicationServicesBean;
 import com.marcotte.blockhead.model.coin.CoinDTO;
+import com.marcotte.blockhead.model.coin.CoinSortByCoinValue;
 import com.marcotte.blockhead.model.fiat.FiatCurrencyList;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import java.awt.*;
+import java.util.Collections;
 import java.util.List;
 
 public class PortfolioByCoinTab extends JPanel{
@@ -38,6 +41,7 @@ public class PortfolioByCoinTab extends JPanel{
 
 
         List<CoinDTO> coinDTOList = applicationServicesBean.getPortfolioByCoinsService().findAllLatestSumBalanceGroupByCoin();
+        Collections.sort(coinDTOList, (new CoinSortByCoinValue()).reversed());
         portfolioByCoinsTableDataModel.setModelData( coinDTOList);
 
         calculateFiatTotalValues( coinDTOList);
@@ -105,10 +109,15 @@ public class PortfolioByCoinTab extends JPanel{
 
         table.getColumnModel().getColumn(3).setPreferredWidth(100);     // price
         table.getColumnModel().getColumn(3).setMaxWidth(350);
+        table.getColumnModel().getColumn(3).setCellRenderer( rightRenderer );
 
         table.getColumnModel().getColumn(4).setPreferredWidth(150);     // value
         table.getColumnModel().getColumn(4).setMaxWidth(350);
+        table.getColumnModel().getColumn(4).setCellRenderer( rightRenderer );
 
         table.getColumnModel().getColumn(5).setMaxWidth(50);           // fiat currency name
+
+        DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+        rightRenderer.setHorizontalAlignment(DefaultTableCellRenderer.RIGHT);
     }
 }
