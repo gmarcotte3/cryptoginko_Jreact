@@ -10,6 +10,8 @@ import java.util.List;
 public class PortfolioByCoinsTableDataModel extends AbstractTableModel {
     private static final Logger log = LoggerFactory.getLogger(PortfolioByCoinsTableDataModel.class);
 
+    private String defaultCurrency;
+
     // columns
     private final String[] columnNames = {"Coin", "Icon", "Coin Balance", "Price", "TotalValue", "fiat" };
     private final int NUMBER_OF_COLUMNS = 6;
@@ -28,6 +30,10 @@ public class PortfolioByCoinsTableDataModel extends AbstractTableModel {
     public static final int COIN_PRICE_IDX = 3;
     public static final int TOTAL_VALUE_IDX = 4;
     public static final int TOTAL_VLUE_FIAT_TYPE_IDX = 5;
+
+    public PortfolioByCoinsTableDataModel() {
+        this.defaultCurrency = "NZD";   // TODO set by configuration
+    }
 
     public int getColumnCount() {
         return columnNames.length;
@@ -65,9 +71,9 @@ public class PortfolioByCoinsTableDataModel extends AbstractTableModel {
                 data[row][TICKER_IDX] = coin.getTicker();
                 data[row][COIN_NAME_IDX] = coin.getCoinName();
                 data[row][COIN_BAL_IDX] = coin.getCoinBalance().toString();
-                data[row][COIN_PRICE_IDX] = coin.getFiat_prices().findFiat("NZD").getValueMoneyFormat(); //TODO use configuration to find the right fiat
-                data[row][TOTAL_VALUE_IDX] = coin.getFiat_balances().findFiat("NZD").getValueMoneyFormat();
-                data[row][TOTAL_VLUE_FIAT_TYPE_IDX] = "NZD";   //TODO use configuration to find the right fiat
+                data[row][COIN_PRICE_IDX] = coin.getFiat_prices().findFiat(defaultCurrency).getValueMoneyFormat(); //TODO use configuration to find the right fiat
+                data[row][TOTAL_VALUE_IDX] = coin.getFiat_balances().findFiat(defaultCurrency).getValueMoneyFormat();
+                data[row][TOTAL_VLUE_FIAT_TYPE_IDX] = defaultCurrency;   //TODO use configuration to find the right fiat
                 row++;
             }
         }

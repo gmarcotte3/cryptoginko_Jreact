@@ -2,9 +2,12 @@ package com.marcotte.blockhead.services.portfolio;
 
 import com.marcotte.blockhead.datastore.blockchainaddressstore.BlockchainAddressStore;
 import com.marcotte.blockhead.model.coin.CoinDTO;
+import com.marcotte.blockhead.model.fiat.FiatCurrencyList;
 import com.marcotte.blockhead.model.wallet.WalletDTO;
 import com.marcotte.blockhead.services.blockchainaddressstore.BlockchainAddressStoreService;
 import com.marcotte.blockhead.services.coin.CoinService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +17,16 @@ import java.util.List;
 
 @Service
 public class PortFolioByWalletAndCoinService {
-
+    private static final Logger log = LoggerFactory.getLogger(PortFolioByWalletAndCoinService.class);
 
     @Autowired
     private BlockchainAddressStoreService blockchainAddressStoreService;
 
     @Autowired
     private CoinService coinService;
+
+    @Autowired
+    private CurrentPriceService currentPriceService;
 
 
 
@@ -38,75 +44,64 @@ public class PortFolioByWalletAndCoinService {
         return sumByWalletAndCoin(foundLatestOrderedByCurrency);
     }
 
-    private List<WalletDTO> sumByWalletAndCoin(List<BlockchainAddressStore> foundLatestOrderedByCurrency)
-    {
+    private List<WalletDTO> sumByWalletAndCoin(List<BlockchainAddressStore> foundLatestOrderedByCurrency) {
         List<CoinDTO> summedByCurrency = new ArrayList<CoinDTO>();
         List<WalletDTO> summedByWallet = new ArrayList<WalletDTO>();
 
-        HashMap<String, CoinDTO> coinMap = coinService.findAllReturnTickerCoinDTOMap();
-
-
-        // if there are no coins found then return []
-        if ( foundLatestOrderedByCurrency.size() == 0) {
-            return summedByWallet;
-        }
-
-        Double runningBalance = 0.0;
         String currentCoin = "";
         String currentWallet = "";
-        boolean firstPass = true;
+        WalletDTO currentWwalletDTO = null;
+        CoinDTO currentCoinDTO = null;
+
+
         for (BlockchainAddressStore addr : foundLatestOrderedByCurrency ) {
-            if ( firstPass ) {
-                currentWallet = addr.getWalletName();
-                currentCoin = addr.getTicker();
-                firstPass = false;
-            }
-            if ( currentWallet.compareToIgnoreCase(addr.getWalletName()) != 0 ) {
-                CoinDTO newCoinDTO = new CoinDTO();
-                newCoinDTO.setCoinBalance(runningBalance);
-                newCoinDTO.setTicker(currentCoin);
-                newCoinDTO.setCoinName(getCoinNameFromTicker(currentCoin,  coinMap));
-                summedByCurrency.add(newCoinDTO);
-
-                WalletDTO walletDTO = new WalletDTO();
-                walletDTO.setWalletName(currentWallet);
-                walletDTO.setCoinDTOs(summedByCurrency);
-                summedByWallet.add( walletDTO);
-
-                summedByCurrency = new ArrayList<CoinDTO>();
-                currentCoin = addr.getTicker();
-                runningBalance = addr.getLastBalance();
-                currentWallet = addr.getWalletName();
-            } else if (currentCoin.compareToIgnoreCase(addr.getTicker() )!= 0 ) {
-                if ( runningBalance > 0.0 ) {
-                    CoinDTO newCoinDTO = new CoinDTO();
-                    newCoinDTO.setCoinBalance(runningBalance);
-                    newCoinDTO.setTicker(currentCoin);
-                    newCoinDTO.setCoinName(getCoinNameFromTicker(currentCoin, coinMap));
-                    summedByCurrency.add(newCoinDTO);
+            if ( currentWallet.compareToIgnoreCase( addr.getWalletName()) != 0) {
+                if ( currentWwalletDTO != null ) {
+                    summedByWallet.add( currentWwalletDTO);
+                    if ( currentCoinDTO != null ) {
+                        currentWwalletDTO.addCoinDTO(currentCoinDTO);
+                    }
                 }
-                runningBalance = addr.getLastBalance();
-                currentCoin = addr.getTicker();
+                currentWwalletDTO = new WalletDTO();
+                currentWwalletDTO.setWalletName(addr.getWalletName());
+                currentWallet = addr.getWalletName();
+                currentCoinDTO = new CoinDTO();
+                currentCoinDTO.setTicker(addr.getTicker());
+                currentCoinDTO.setCoinBalance(addr.getLastBalance());
             } else {
-                runningBalance += addr.getLastBalance();
+                if ( currentCoinDTO.getTicker().compareToIgnoreCase(addr.getTicker()) != 0)
+                {
+                    currentWwalletDTO.getCoinDTOs().add(currentCoinDTO);
+                    currentCoinDTO = new CoinDTO();
+                    currentCoinDTO.setTicker(addr.getTicker());
+                    currentCoinDTO.setCoinBalance(addr.getLastBalance());
+                } else {
+                    currentCoinDTO.addCoinBalance(addr.getLastBalance());
+                }
             }
         }
-        // save the last item
-        if ( runningBalance > 0.0 ) {
-            CoinDTO newCoinDTO = new CoinDTO();
-            newCoinDTO.setCoinBalance(runningBalance);
-            newCoinDTO.setTicker(currentCoin);
-            newCoinDTO.setCoinName(getCoinNameFromTicker(currentCoin, coinMap));
-            summedByCurrency.add(newCoinDTO);
-        }
 
-        WalletDTO walletDTO = new WalletDTO();
-        walletDTO.setWalletName(currentWallet);
-        walletDTO.setCoinDTOs(summedByCurrency);
-        summedByWallet.add( walletDTO);
+        currentWwalletDTO.getCoinDTOs().add(currentCoinDTO);
+        summedByWallet.add( currentWwalletDTO);
 
+        calculateWalletValue(summedByWallet);
         return summedByWallet;
+    }
 
+    private void calculateWalletValue(List<WalletDTO> walletDTOList) {
+        HashMap<String, CoinDTO> coinPriceMap = currentPriceService.getCoinPriceMap();
+        for (WalletDTO walletDTO :walletDTOList ) {
+            for (CoinDTO coinDTO : walletDTO.getCoinDTOs()) {
+                CoinDTO coinPrice = coinPriceMap.get(coinDTO.getTicker());
+                if ( coinPrice != null ) {
+                    coinDTO.setFiat_prices(coinPrice.getFiat_prices());
+                    coinDTO.calculateCoinValue();
+                } else {
+                    log.warn("Missing price information for Ticker:" + coinDTO.getTicker());
+                }
+                walletDTO.addValues(coinDTO.getFiat_balances());
+            }
+        }
     }
 
 

@@ -161,6 +161,9 @@ public class CoinDTO {
     public void setCoinBalance(Double coinBalance) {
         this.coinBalance = coinBalance;
     }
+    public void addCoinBalance(Double coinBalance) {
+        this.coinBalance += coinBalance;
+    }
 
 
     /**

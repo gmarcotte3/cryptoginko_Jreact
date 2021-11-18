@@ -63,21 +63,22 @@ public class PortfolioByWalletTableDataModel extends AbstractTableModel {
 
     public void setModelData(List<WalletDTO> walletDTOList){
         int row = 0;
+        String defaultFiatTicker = "NZD";  // TODO get the default from configuration
         if (walletDTOList.size() > 0 ) {
             data = new Object[calculateRowsNeeded( walletDTOList)][columnNumber];
 
             for (WalletDTO walletcoin: walletDTOList ) {
                 data[row][WALLET_NAME_IDX] = walletcoin.getWalletName();
-                data[row][WALLET_TOTAL_VALUE_IDX] = walletcoin.getFiat_balances().findFiat("NZD").getValue().toString(); // TODO get default
-                data[row][WALLET_TOTAL_VLUE_FIAT_TYPE_IDX] = "NZD"; // TODO get default
+                data[row][WALLET_TOTAL_VALUE_IDX] = walletcoin.getFiat_balances().findFiat(defaultFiatTicker).getValueMoneyFormat();
+                data[row][WALLET_TOTAL_VLUE_FIAT_TYPE_IDX] = defaultFiatTicker;
 
                 for (CoinDTO coin : walletcoin.getCoinDTOs() ) {
                     data[row][COIN_TICKER_IDX] = coin.getTicker();
                     data[row][COIN_NAME_IDX] = coin.getCoinName();
                     data[row][COIN_BAL_IDX] = coin.getCoinBalance().toString();
-                    data[row][COIN_PRICE_IDX] = coin.getPriceNZD();  //TODO use configuration to find the right fiat
-                    data[row][COIN_VALUE_IDX] = coin.getFiat_balances().findFiat("NZD").getValue().toString();
-                    data[row][COIN_FIAT_IDX] = "NZD";
+                    data[row][COIN_PRICE_IDX] = coin.getFiat_prices().findFiat(defaultFiatTicker).getValueMoneyFormat();
+                    data[row][COIN_VALUE_IDX] = coin.getFiat_balances().findFiat(defaultFiatTicker).getValueMoneyFormat();
+                    data[row][COIN_FIAT_IDX] = defaultFiatTicker;
 
                     if ( data[row][WALLET_NAME_IDX] == null ) {
                         data[row][WALLET_NAME_IDX] = " ";

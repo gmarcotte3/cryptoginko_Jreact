@@ -38,6 +38,9 @@ public class WalletDTO {
             log.error("Invalid fiat code  exception=" + e.getMessage());
         }
     }
+    public void addValues(FiatCurrencyList fiat_values) {
+        fiat_balances.addToFiatList(fiat_values);
+    }
 
     // these getters for json ouput
     public double getValueUSD() {
@@ -66,6 +69,34 @@ public class WalletDTO {
     }
     public double getValueKRW() {
         return findFiatValue("KRW").getValue();
+    }
+
+    public String getValueUSDstring() {
+        return findFiatValue("USD").getValueMoneyFormat();
+    }
+    public String getValueNZDstring() {
+        return findFiatValue("NZD").getValueMoneyFormat();
+    }
+    public String getValueJPYstring() {
+        return findFiatValue("JPY").getValueMoneyFormat();
+    }
+    public String getValueJPMstring() {
+        return findFiatValue("JPM").getValueMoneyFormat();
+    }
+    public String getValueAUDstring() {
+        return findFiatValue("AUD").getValueMoneyFormat();
+    }
+    public String getValueGBPstring() {
+        return findFiatValue("GBP").getValueMoneyFormat();
+    }
+    public String getValueEURstring() {
+        return findFiatValue("EUR").getValueMoneyFormat();
+    }
+    public String getValueINRstring() {
+        return findFiatValue("INR").getValueMoneyFormat();
+    }
+    public String getValueKRWstring() {
+        return findFiatValue("KRW").getValueMoneyFormat();
     }
 
     public String getWalletName() {

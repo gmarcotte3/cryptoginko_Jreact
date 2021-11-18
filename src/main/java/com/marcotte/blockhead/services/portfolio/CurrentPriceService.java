@@ -34,6 +34,8 @@ public class CurrentPriceService {
     @Autowired
     private CoinRepository coinRepository;
 
+    private HashMap<String, CoinDTO> coinPriceMap = null;
+
 
     private List<CoinDTO> currentTrackedCoins;      // cache of the current tracked coin prices.
     private  Timestamp lastUpdated;                 // timestamp of the last cache prices
@@ -53,13 +55,13 @@ public class CurrentPriceService {
         List<String>  tickers = blockchainAddressStoreService.findAllTickers();
 
         // create a map of all the coins from oricle
-        HashMap<String, CoinDTO> coinMap = new HashMap<String, CoinDTO>();
+        this.coinPriceMap = new HashMap<String, CoinDTO>();
         for (CoinDTO coin : coinsFromOnlineOracle ) {
-            coinMap.put( coin.getTicker(), coin);
+            coinPriceMap.put( coin.getTicker(), coin);
         }
 
         for ( String ticker : tickers) {
-            CoinDTO coinDTO = coinMap.get(ticker);
+            CoinDTO coinDTO = coinPriceMap.get(ticker);
             if ( coinDTO != null )  {
                 coinsTracked.add(coinDTO);
             } else {
@@ -69,14 +71,23 @@ public class CurrentPriceService {
                     QuoteGeneric quote = coinGeckoService.getQuote(ticker);
                     if ( quote.getCoinDTO() != null ) {
                         coinDTO = quote.getCoinDTO();
+                        coinService.updateCoins(quote); //save the quote
                     }
                     coinsTracked.add(coinDTO);
+                    coinPriceMap.put( coinDTO.getTicker(), coinDTO); // save coin price data in cache
                 }
             }
         }
 
         setCurrentTrackedCoins(coinsTracked);   // side effect: update the cache
         return coinsTracked;
+    }
+
+    public HashMap<String, CoinDTO> getCoinPriceMap() {
+        if ( this.coinPriceMap == null ) {
+            getPriceAllTrackedCoinsNow();
+        }
+        return coinPriceMap;
     }
 
     private void saveCacheCoinPrices() {

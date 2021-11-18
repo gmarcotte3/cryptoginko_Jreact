@@ -1,5 +1,6 @@
 package com.marcotte.blockhead.gui;
 
+import com.marcotte.blockhead.services.coin.CoinService;
 import com.marcotte.blockhead.services.explorerServices.pricequote.PriceServiceInterface;
 import com.marcotte.blockhead.services.portfolio.CurrentPriceService;
 import com.marcotte.blockhead.services.portfolio.PortFolioByWalletAndCoinService;
@@ -11,14 +12,12 @@ import org.springframework.stereotype.Service;
 public class ApplicationServicesBean {
     static private ApplicationServicesBean instance = null;
 
-//    @Autowired
-//    private PriceServiceInterface coinGeckoService;
     @Autowired
     private PortfolioByCoinsService portfolioByCoinsService;
     @Autowired
     private PortFolioByWalletAndCoinService portFolioByWalletAndCoinService;
     @Autowired
-    private com.marcotte.blockhead.services.portfolio.CurrentPriceService CurrentPriceService;
+    private com.marcotte.blockhead.services.portfolio.CurrentPriceService currentPriceService;
 
     public ApplicationServicesBean()
     {
@@ -46,6 +45,6 @@ public class ApplicationServicesBean {
     }
 
     public CurrentPriceService getCurrentPriceService() {
-        return CurrentPriceService;
+        return currentPriceService;
     }
 }

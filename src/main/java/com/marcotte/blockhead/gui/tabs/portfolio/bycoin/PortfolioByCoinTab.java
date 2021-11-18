@@ -22,9 +22,18 @@ public class PortfolioByCoinTab extends JPanel{
     private JTextField totalValueCurrency2;
     private JTextField totalValueCurrency3;
 
+    private String defaultCurency1;
+    private String defaultCurency2;
+    private String defaultCurency3;
+
     private JPanel portfolioTotals;
     public PortfolioByCoinTab(ApplicationServicesBean applicationServicesBean) {
         super();
+
+        defaultCurency1 = "USD"; // TODO set via configuration
+        defaultCurency2 = "NZD";
+        defaultCurency3 = "JPM";
+
         this.applicationServicesBean = applicationServicesBean;
         portfolioByCoinsTableDataModel = new PortfolioByCoinsTableDataModel();
 
@@ -50,9 +59,9 @@ public class PortfolioByCoinTab extends JPanel{
     }
 
     private void update_FiatValueTotals() {
-        totalValueCurrency1.setText( fiat_balances.findFiat("USD").getValueMoneyFormat());
-        totalValueCurrency2.setText( fiat_balances.findFiat("NZD").getValueMoneyFormat());
-        totalValueCurrency3.setText( fiat_balances.findFiat("JPM").getValueMoneyFormat());
+        totalValueCurrency1.setText( fiat_balances.findFiat(defaultCurency1).getValueMoneyFormat());
+        totalValueCurrency2.setText( fiat_balances.findFiat(defaultCurency2).getValueMoneyFormat());
+        totalValueCurrency3.setText( fiat_balances.findFiat(defaultCurency3).getValueMoneyFormat());
     }
 
     private void calculateFiatTotalValues( List<CoinDTO> coinDTOList) {
@@ -70,9 +79,9 @@ public class PortfolioByCoinTab extends JPanel{
      */
     private JPanel createPortfolioTotals() {
         JPanel totalPanel = new JPanel();
-        JLabel totalValueLabelCurrency1 = new JLabel ("Total USD:");
-        JLabel totalValueLabelCurrency2 = new JLabel ("Total NZD:");
-        JLabel totalValueLabelCurrency3 = new JLabel ("Total JPY:");
+        JLabel totalValueLabelCurrency1 = new JLabel ("Total "  + defaultCurency1 + ":");
+        JLabel totalValueLabelCurrency2 = new JLabel ("Total "  + defaultCurency2 + ":");
+        JLabel totalValueLabelCurrency3 = new JLabel ("Total "  + defaultCurency3 + ":");
 
         totalValueCurrency1 = new JTextField(10);
         totalValueCurrency2 = new JTextField(10);
@@ -99,6 +108,9 @@ public class PortfolioByCoinTab extends JPanel{
         table.setFillsViewportHeight(true);
         TableColumn column = null;
 
+        DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+        rightRenderer.setHorizontalAlignment(DefaultTableCellRenderer.RIGHT);
+
         table.getColumnModel().getColumn(0).setPreferredWidth(50);      // ticker
         table.getColumnModel().getColumn(0).setMaxWidth(50);
 
@@ -117,7 +129,6 @@ public class PortfolioByCoinTab extends JPanel{
 
         table.getColumnModel().getColumn(5).setMaxWidth(50);           // fiat currency name
 
-        DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
-        rightRenderer.setHorizontalAlignment(DefaultTableCellRenderer.RIGHT);
+
     }
 }

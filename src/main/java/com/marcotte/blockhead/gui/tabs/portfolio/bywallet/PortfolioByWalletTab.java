@@ -2,11 +2,16 @@ package com.marcotte.blockhead.gui.tabs.portfolio.bywallet;
 
 import com.marcotte.blockhead.gui.ApplicationServicesBean;
 import com.marcotte.blockhead.model.coin.CoinDTO;
+import com.marcotte.blockhead.model.coin.CoinSortByCoinValue;
 import com.marcotte.blockhead.model.wallet.WalletDTO;
+import com.marcotte.blockhead.model.wallet.WalletDTOCompareByFiatValue;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import java.awt.*;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class PortfolioByWalletTab extends JPanel {
@@ -27,6 +32,7 @@ public class PortfolioByWalletTab extends JPanel {
         add( tabkeScrollPane, BorderLayout.CENTER);
 
         List<WalletDTO> walletDTOList = applicationServicesBean.getPortFolioByWalletAndCoinService().findBlockchainAddressStoreOrderByWalletNameAscCurrencyAsc();
+        Collections.sort(walletDTOList, (new WalletDTOCompareByFiatValue()).reversed());
         portfolioByWalletTableDataModel.setModelData( walletDTOList);
     }
 
@@ -40,11 +46,15 @@ public class PortfolioByWalletTab extends JPanel {
         table.setFillsViewportHeight(true);
         TableColumn column = null;
 
+        DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+        rightRenderer.setHorizontalAlignment(DefaultTableCellRenderer.RIGHT);
+
         table.getColumnModel().getColumn(0).setPreferredWidth(150);      // wallet name
         table.getColumnModel().getColumn(0).setMaxWidth(150);
 
         table.getColumnModel().getColumn(1).setPreferredWidth(150);     // wallet value
         table.getColumnModel().getColumn(1).setMaxWidth(350);
+        table.getColumnModel().getColumn(1).setCellRenderer( rightRenderer );
 
         table.getColumnModel().getColumn(2).setMaxWidth(50);           // fiat currency name
 
@@ -58,9 +68,11 @@ public class PortfolioByWalletTab extends JPanel {
 
         table.getColumnModel().getColumn(6).setPreferredWidth(100);     // price
         table.getColumnModel().getColumn(6).setMaxWidth(350);
+        table.getColumnModel().getColumn(6).setCellRenderer( rightRenderer );
 
         table.getColumnModel().getColumn(7).setPreferredWidth(150);     // value
         table.getColumnModel().getColumn(7).setMaxWidth(350);
+        table.getColumnModel().getColumn(7).setCellRenderer( rightRenderer );
 
         table.getColumnModel().getColumn(8).setMaxWidth(50);           // fiat currency name
     }
