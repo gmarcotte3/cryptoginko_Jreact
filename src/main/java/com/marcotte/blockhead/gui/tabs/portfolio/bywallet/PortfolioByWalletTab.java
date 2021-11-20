@@ -1,8 +1,10 @@
 package com.marcotte.blockhead.gui.tabs.portfolio.bywallet;
 
 import com.marcotte.blockhead.gui.ApplicationServicesBean;
+import com.marcotte.blockhead.gui.tabs.portfolio.TotalValuePanel;
 import com.marcotte.blockhead.model.coin.CoinDTO;
 import com.marcotte.blockhead.model.coin.CoinSortByCoinValue;
+import com.marcotte.blockhead.model.fiat.FiatCurrencyList;
 import com.marcotte.blockhead.model.wallet.WalletDTO;
 import com.marcotte.blockhead.model.wallet.WalletDTOCompareByFiatValue;
 
@@ -19,8 +21,22 @@ public class PortfolioByWalletTab extends JPanel {
     private ApplicationServicesBean applicationServicesBean;
     private PortfolioByWalletTableDataModel portfolioByWalletTableDataModel;
 
+    private String defaultCurency1;
+    private String defaultCurency2;
+    private String defaultCurency3;
+
+    private TotalValuePanel portfolioTotals;
+    private FiatCurrencyList fiat_balances;
+
     public PortfolioByWalletTab(ApplicationServicesBean applicationServicesBean) {
         super();
+
+        defaultCurency1 = "USD"; // TODO set via configuration
+        defaultCurency2 = "NZD";
+        defaultCurency3 = "JPM";
+
+        portfolioTotals = new TotalValuePanel(defaultCurency1, defaultCurency2, defaultCurency3);
+
         this.applicationServicesBean = applicationServicesBean;
         portfolioByWalletTableDataModel = new PortfolioByWalletTableDataModel();
         JTable table = new JTable(portfolioByWalletTableDataModel );
@@ -29,13 +45,24 @@ public class PortfolioByWalletTab extends JPanel {
         configureTableColumns(table);
 
         setLayout( new BorderLayout());
-        add( tabkeScrollPane, BorderLayout.CENTER);
+        add( portfolioTotals, BorderLayout.NORTH );
+        add( tabkeScrollPane, BorderLayout.CENTER );
 
         List<WalletDTO> walletDTOList = applicationServicesBean.getPortFolioByWalletAndCoinService().findBlockchainAddressStoreOrderByWalletNameAscCurrencyAsc();
         Collections.sort(walletDTOList, (new WalletDTOCompareByFiatValue()).reversed());
         portfolioByWalletTableDataModel.setModelData( walletDTOList);
+
+        calculateFiatTotalValues( walletDTOList);
+        portfolioTotals.update_FiatValueTotals(fiat_balances);
     }
 
+    private void calculateFiatTotalValues( List<WalletDTO> walletDTOList) {
+        this.fiat_balances  = new FiatCurrencyList();
+
+        for (WalletDTO walletDTO : walletDTOList ) {
+            fiat_balances.addToFiatList(walletDTO.getFiat_balances());
+        }
+    }
     /**
      * Set the formatting for columns in the table here.
      *{ "wallet","TotalValue", "fiat" ,"Ticker", "Name", "Coin Balance", "Price", "Coin Value", "fiat"};
@@ -75,5 +102,29 @@ public class PortfolioByWalletTab extends JPanel {
         table.getColumnModel().getColumn(7).setCellRenderer( rightRenderer );
 
         table.getColumnModel().getColumn(8).setMaxWidth(50);           // fiat currency name
+    }
+
+    public String getDefaultCurency1() {
+        return defaultCurency1;
+    }
+
+    public void setDefaultCurency1(String defaultCurency1) {
+        this.defaultCurency1 = defaultCurency1;
+    }
+
+    public String getDefaultCurency2() {
+        return defaultCurency2;
+    }
+
+    public void setDefaultCurency2(String defaultCurency2) {
+        this.defaultCurency2 = defaultCurency2;
+    }
+
+    public String getDefaultCurency3() {
+        return defaultCurency3;
+    }
+
+    public void setDefaultCurency3(String defaultCurency3) {
+        this.defaultCurency3 = defaultCurency3;
     }
 }

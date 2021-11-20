@@ -3,6 +3,7 @@ package com.marcotte.blockhead.gui;
 import com.marcotte.blockhead.gui.tabs.CurrentPricingTab.CurrentPricingTab;
 import com.marcotte.blockhead.gui.tabs.ReportTab;
 import com.marcotte.blockhead.gui.tabs.WalletTab;
+import com.marcotte.blockhead.gui.tabs.importcsv.ImportTab;
 import com.marcotte.blockhead.gui.tabs.portfolio.PortfolioTab;
 
 import javax.swing.*;
@@ -136,8 +137,6 @@ public class ApplicationView extends JFrame implements IView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 showWarning(  "Warning", "NO files to open for you");
-//                getPresenter().onOpen();
-//                showOpenFileChooser();
             }
         };
 
@@ -163,6 +162,7 @@ public class ApplicationView extends JFrame implements IView {
         //tabbedPane.setTabComponentAt(1, new JLabel("Current Portfolio Value"));
         //tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
 
+        tabbedPane.addTab("Import", null, new ImportTab(), "Import csv files");
         tabbedPane.addTab("Reports", null, new ReportTab(),"Reports gains loses");
 
         tabbedPane.addTab("Wallets", null, new WalletTab(),"Wallets performance and maintenance");

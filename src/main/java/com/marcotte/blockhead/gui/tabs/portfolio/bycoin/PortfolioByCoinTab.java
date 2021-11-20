@@ -2,6 +2,7 @@ package com.marcotte.blockhead.gui.tabs.portfolio.bycoin;
 
 
 import com.marcotte.blockhead.gui.ApplicationServicesBean;
+import com.marcotte.blockhead.gui.tabs.portfolio.TotalValuePanel;
 import com.marcotte.blockhead.model.coin.CoinDTO;
 import com.marcotte.blockhead.model.coin.CoinSortByCoinValue;
 import com.marcotte.blockhead.model.fiat.FiatCurrencyList;
@@ -16,17 +17,15 @@ import java.util.List;
 public class PortfolioByCoinTab extends JPanel{
     private ApplicationServicesBean applicationServicesBean;
     private PortfolioByCoinsTableDataModel portfolioByCoinsTableDataModel;
-    private FiatCurrencyList fiat_balances;
 
-    private JTextField totalValueCurrency1;
-    private JTextField totalValueCurrency2;
-    private JTextField totalValueCurrency3;
 
     private String defaultCurency1;
     private String defaultCurency2;
     private String defaultCurency3;
 
-    private JPanel portfolioTotals;
+    private TotalValuePanel portfolioTotals;
+    private FiatCurrencyList fiat_balances;
+
     public PortfolioByCoinTab(ApplicationServicesBean applicationServicesBean) {
         super();
 
@@ -37,7 +36,7 @@ public class PortfolioByCoinTab extends JPanel{
         this.applicationServicesBean = applicationServicesBean;
         portfolioByCoinsTableDataModel = new PortfolioByCoinsTableDataModel();
 
-        portfolioTotals = createPortfolioTotals();
+        portfolioTotals = new TotalValuePanel(defaultCurency1, defaultCurency2, defaultCurency3);
         JTable table = new JTable(portfolioByCoinsTableDataModel );
         JScrollPane tabkeScrollPane = new JScrollPane(table);
 
@@ -54,14 +53,7 @@ public class PortfolioByCoinTab extends JPanel{
         portfolioByCoinsTableDataModel.setModelData( coinDTOList);
 
         calculateFiatTotalValues( coinDTOList);
-        update_FiatValueTotals();
-
-    }
-
-    private void update_FiatValueTotals() {
-        totalValueCurrency1.setText( fiat_balances.findFiat(defaultCurency1).getValueMoneyFormat());
-        totalValueCurrency2.setText( fiat_balances.findFiat(defaultCurency2).getValueMoneyFormat());
-        totalValueCurrency3.setText( fiat_balances.findFiat(defaultCurency3).getValueMoneyFormat());
+        portfolioTotals.update_FiatValueTotals(fiat_balances);
     }
 
     private void calculateFiatTotalValues( List<CoinDTO> coinDTOList) {
@@ -72,32 +64,6 @@ public class PortfolioByCoinTab extends JPanel{
         }
     }
 
-    /**
-     * create the total value labels
-     *
-     * @return
-     */
-    private JPanel createPortfolioTotals() {
-        JPanel totalPanel = new JPanel();
-        JLabel totalValueLabelCurrency1 = new JLabel ("Total "  + defaultCurency1 + ":");
-        JLabel totalValueLabelCurrency2 = new JLabel ("Total "  + defaultCurency2 + ":");
-        JLabel totalValueLabelCurrency3 = new JLabel ("Total "  + defaultCurency3 + ":");
-
-        totalValueCurrency1 = new JTextField(10);
-        totalValueCurrency2 = new JTextField(10);
-        totalValueCurrency3 = new JTextField(10);
-
-        totalPanel.add(totalValueLabelCurrency1);
-        totalPanel.add(totalValueCurrency1);
-
-        totalPanel.add(totalValueLabelCurrency2);
-        totalPanel.add(totalValueCurrency2);
-
-        totalPanel.add(totalValueLabelCurrency3);
-        totalPanel.add(totalValueCurrency3);
-
-        return totalPanel;
-    }
     /**
      * Set the formatting for columns in the table here.
      *
@@ -128,7 +94,29 @@ public class PortfolioByCoinTab extends JPanel{
         table.getColumnModel().getColumn(4).setCellRenderer( rightRenderer );
 
         table.getColumnModel().getColumn(5).setMaxWidth(50);           // fiat currency name
+    }
 
+    public String getDefaultCurency1() {
+        return defaultCurency1;
+    }
 
+    public void setDefaultCurency1(String defaultCurency1) {
+        this.defaultCurency1 = defaultCurency1;
+    }
+
+    public String getDefaultCurency2() {
+        return defaultCurency2;
+    }
+
+    public void setDefaultCurency2(String defaultCurency2) {
+        this.defaultCurency2 = defaultCurency2;
+    }
+
+    public String getDefaultCurency3() {
+        return defaultCurency3;
+    }
+
+    public void setDefaultCurency3(String defaultCurency3) {
+        this.defaultCurency3 = defaultCurency3;
     }
 }
