@@ -14,6 +14,10 @@ import java.awt.*;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Portfolio by Coin tab
+ * This tab show portfolio values by coin sorted by most valueble to least.
+ */
 public class PortfolioByCoinTab extends JPanel{
     private ApplicationServicesBean applicationServicesBean;
     private PortfolioByCoinsTableDataModel portfolioByCoinsTableDataModel;
@@ -36,17 +40,19 @@ public class PortfolioByCoinTab extends JPanel{
         this.applicationServicesBean = applicationServicesBean;
         portfolioByCoinsTableDataModel = new PortfolioByCoinsTableDataModel();
 
+        createUI();
+    }
+
+    private void createUI() {
         portfolioTotals = new TotalValuePanel(defaultCurency1, defaultCurency2, defaultCurency3);
         JTable table = new JTable(portfolioByCoinsTableDataModel );
         JScrollPane tabkeScrollPane = new JScrollPane(table);
-
 
         configureTableColumns(table);
 
         setLayout( new BorderLayout());
         add(portfolioTotals, BorderLayout.NORTH);
         add( tabkeScrollPane, BorderLayout.CENTER);
-
 
         List<CoinDTO> coinDTOList = applicationServicesBean.getPortfolioByCoinsService().findAllLatestSumBalanceGroupByCoin();
         Collections.sort(coinDTOList, (new CoinSortByCoinValue()).reversed());
@@ -56,6 +62,10 @@ public class PortfolioByCoinTab extends JPanel{
         portfolioTotals.update_FiatValueTotals(fiat_balances);
     }
 
+    /**
+     * calculate the total fiat value of the wallet from coin list
+     * @param coinDTOList
+     */
     private void calculateFiatTotalValues( List<CoinDTO> coinDTOList) {
         this.fiat_balances  = new FiatCurrencyList();
 
@@ -96,6 +106,9 @@ public class PortfolioByCoinTab extends JPanel{
         table.getColumnModel().getColumn(5).setMaxWidth(50);           // fiat currency name
     }
 
+    // ======================================
+    // getter and setters
+    // ======================================
     public String getDefaultCurency1() {
         return defaultCurency1;
     }

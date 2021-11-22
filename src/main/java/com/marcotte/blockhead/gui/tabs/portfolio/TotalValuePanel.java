@@ -43,11 +43,9 @@ public class TotalValuePanel extends JPanel{
         add(totalValueCurrency3);
     }
 
-
     public void update_FiatValueTotals(FiatCurrencyList fiat_balances) {
         totalValueCurrency1.setText( fiat_balances.findFiat(defaultCurency1).getValueMoneyFormat());
         totalValueCurrency2.setText( fiat_balances.findFiat(defaultCurency2).getValueMoneyFormat());
         totalValueCurrency3.setText( fiat_balances.findFiat(defaultCurency3).getValueMoneyFormat());
     }
-
 }

@@ -16,6 +16,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * sub pannel for protfolio By Wallet tab.
+ * This tab will show values by wallet and then coins in a summary sorted by most valuble to least valuble.
+ */
 public class PortfolioByWalletTab extends JPanel {
 
     private ApplicationServicesBean applicationServicesBean;
@@ -30,14 +34,22 @@ public class PortfolioByWalletTab extends JPanel {
 
     public PortfolioByWalletTab(ApplicationServicesBean applicationServicesBean) {
         super();
+        this.applicationServicesBean = applicationServicesBean;
 
         defaultCurency1 = "USD"; // TODO set via configuration
         defaultCurency2 = "NZD";
         defaultCurency3 = "JPM";
 
+        createUI();
+    }
+
+    /**
+     * UI creation.
+     */
+    private void createUI() {
         portfolioTotals = new TotalValuePanel(defaultCurency1, defaultCurency2, defaultCurency3);
 
-        this.applicationServicesBean = applicationServicesBean;
+
         portfolioByWalletTableDataModel = new PortfolioByWalletTableDataModel();
         JTable table = new JTable(portfolioByWalletTableDataModel );
         JScrollPane tabkeScrollPane = new JScrollPane(table);
@@ -56,6 +68,10 @@ public class PortfolioByWalletTab extends JPanel {
         portfolioTotals.update_FiatValueTotals(fiat_balances);
     }
 
+    /**
+     * calculate the total fiat values from the wallet list.
+     * @param walletDTOList
+     */
     private void calculateFiatTotalValues( List<WalletDTO> walletDTOList) {
         this.fiat_balances  = new FiatCurrencyList();
 
@@ -63,6 +79,7 @@ public class PortfolioByWalletTab extends JPanel {
             fiat_balances.addToFiatList(walletDTO.getFiat_balances());
         }
     }
+
     /**
      * Set the formatting for columns in the table here.
      *{ "wallet","TotalValue", "fiat" ,"Ticker", "Name", "Coin Balance", "Price", "Coin Value", "fiat"};
@@ -103,6 +120,10 @@ public class PortfolioByWalletTab extends JPanel {
 
         table.getColumnModel().getColumn(8).setMaxWidth(50);           // fiat currency name
     }
+
+    // ========================
+    // getters and setters
+    // ========================
 
     public String getDefaultCurency1() {
         return defaultCurency1;

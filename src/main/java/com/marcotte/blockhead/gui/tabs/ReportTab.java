@@ -1,6 +1,8 @@
 package com.marcotte.blockhead.gui.tabs;
 
 
+import com.marcotte.blockhead.gui.ApplicationServicesBean;
+
 import javax.swing.*;
 
 /**
@@ -8,7 +10,10 @@ import javax.swing.*;
  * wallets.
  */
 public class ReportTab extends JPanel {
-    public ReportTab() {
+    private ApplicationServicesBean applicationServicesBean;
+
+    public ReportTab(ApplicationServicesBean applicationServicesBean) {
         super();
+        this.applicationServicesBean = applicationServicesBean;
     }
 }

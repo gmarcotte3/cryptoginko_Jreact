@@ -10,10 +10,22 @@ import com.marcotte.blockhead.gui.tabs.portfolio.bywallet.PortfolioByWalletTab;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * portfolioTab
+ * Overall tab that is devided in to sub tab panels.
+ * Sub Panels:
+ *      portfolio by coin
+ *      portfolio by wallet.
+ */
 public class PortfolioTab extends JPanel
 {
-    private ApplicationServicesBean applicationServicesBean;
-    private CurrentPriceTableDataModel currentPriceTableDataModel;
+    private ApplicationServicesBean applicationServicesBean;            // back-end support
+    private CurrentPriceTableDataModel currentPriceTableDataModel;      // data model.
+
+    /**
+     * constructor.
+     * @param applicationServicesBean
+     */
     public PortfolioTab(ApplicationServicesBean applicationServicesBean) {
         super();
         this.applicationServicesBean = applicationServicesBean;
@@ -21,6 +33,9 @@ public class PortfolioTab extends JPanel
 
     }
 
+    /**
+     * create the UI
+     */
     private void initContentPane() {
         JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.LEFT, JTabbedPane.SCROLL_TAB_LAYOUT);
 

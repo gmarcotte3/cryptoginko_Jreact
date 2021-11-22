@@ -162,10 +162,10 @@ public class ApplicationView extends JFrame implements IView {
         //tabbedPane.setTabComponentAt(1, new JLabel("Current Portfolio Value"));
         //tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
 
-        tabbedPane.addTab("Import", null, new ImportTab(), "Import csv files");
-        tabbedPane.addTab("Reports", null, new ReportTab(),"Reports gains loses");
+        tabbedPane.addTab("Import", null, new ImportTab(presenter.getApplicationServicesBean()), "Import csv files");
+        tabbedPane.addTab("Reports", null, new ReportTab(presenter.getApplicationServicesBean()),"Reports gains loses");
 
-        tabbedPane.addTab("Wallets", null, new WalletTab(),"Wallets performance and maintenance");
+        tabbedPane.addTab("Wallets", null, new WalletTab(presenter.getApplicationServicesBean()),"Wallets performance and maintenance");
 
 
         add( tabbedPane, BorderLayout.CENTER);

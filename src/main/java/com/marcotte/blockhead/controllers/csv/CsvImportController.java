@@ -27,7 +27,9 @@ import java.util.List;
 import static com.marcotte.blockhead.util.ReadCSV.readCsv;
 import static com.marcotte.blockhead.util.ReadCSV.readFileCsv;
 
-
+/**
+ * import csv controller for REST interface
+ */
 @Api(value = "Import CSV file", tags = "Import")
 @RestController
 @RequestMapping("/import")
