@@ -87,6 +87,7 @@ public class PortFolioByWalletAndCoinServiceTest {
         }
         List<WalletDTO> walletDTOS = portFolioByWalletAndCoinService.findBlockchainAddressStoreOrderByWalletNameAscCurrencyAsc();
         assertEquals( 1, walletDTOS.size());
+        assertEquals( "UNKNOWN", walletDTOS.get(0).getWalletName());
         blockchainAddressStoreService.deleteAll();
     }
 

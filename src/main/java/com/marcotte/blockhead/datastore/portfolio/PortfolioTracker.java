@@ -3,7 +3,10 @@ package com.marcotte.blockhead.datastore.portfolio;
 import javax.persistence.*;
 import java.time.Instant;
 
-
+/**
+ * protfollo tracker old design to be replaced by the CoinPriceValueTracker
+ * @deprecated
+ */
 @Entity
 public class PortfolioTracker
 {

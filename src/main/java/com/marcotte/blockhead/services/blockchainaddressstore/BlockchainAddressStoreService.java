@@ -28,12 +28,26 @@ public class BlockchainAddressStoreService
      */
     public void save( BlockchainAddressStore blockchainAddressStore)
     {
+        cleanup( blockchainAddressStore);
         BlockchainAddressStore lastAddressStore = findLatestByAddressAndCurrency( blockchainAddressStore.getAddress(), blockchainAddressStore.getTicker() );
         if ( lastAddressStore != null ) {
             lastAddressStore.setBlockChainAddressStore(blockchainAddressStore);
             blockchainAddressStoreRepository.save(lastAddressStore);
         } else {
             blockchainAddressStoreRepository.save(blockchainAddressStore);
+        }
+    }
+
+    private void cleanup( BlockchainAddressStore blockchainAddressStore) {
+        if ( blockchainAddressStore.getWalletName() == null || blockchainAddressStore.getWalletName().length() == 0 ) {
+            blockchainAddressStore.setWalletName("UNKNOWN");
+        } else {
+            blockchainAddressStore.setWalletName(blockchainAddressStore.getWalletName().toUpperCase());
+        }
+        if ( blockchainAddressStore.getTicker() == null || blockchainAddressStore.getTicker().length() == 0) {
+            blockchainAddressStore.setTicker("SHTCOIN");
+        } else {
+            blockchainAddressStore.setTicker(blockchainAddressStore.getTicker().toUpperCase());
         }
     }
 

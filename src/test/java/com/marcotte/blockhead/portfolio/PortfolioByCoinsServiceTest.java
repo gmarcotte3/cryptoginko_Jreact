@@ -35,6 +35,7 @@ public class PortfolioByCoinsServiceTest {
 
     @Test
     public void sumByCryptoCurrency() {
+        int a = 1234;
     }
 
     /**
