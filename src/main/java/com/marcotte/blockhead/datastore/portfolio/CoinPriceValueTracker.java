@@ -62,7 +62,7 @@ public class CoinPriceValueTracker {
     }
 
     public void setTicker(String ticker) {
-        this.ticker = ticker;
+        this.ticker = ticker.toUpperCase();
     }
 
     public Double getCoinBalance() {
@@ -86,6 +86,6 @@ public class CoinPriceValueTracker {
     }
 
     public void setCoinPriceFiatTicker(String coinPriceFiatTicker) {
-        this.coinPriceFiatTicker = coinPriceFiatTicker;
+        this.coinPriceFiatTicker = coinPriceFiatTicker.toUpperCase();
     }
 }

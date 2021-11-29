@@ -54,11 +54,11 @@ public class PortFolioByWalletAndCoinService {
         CoinDTO currentCoinDTO = null;
 
 
-        for (BlockchainAddressStore addr : foundLatestOrderedByCurrency ) {
-            if ( currentWallet.compareToIgnoreCase( addr.getWalletName()) != 0) {
-                if ( currentWwalletDTO != null ) {
-                    summedByWallet.add( currentWwalletDTO);
-                    if ( currentCoinDTO != null ) {
+        for (BlockchainAddressStore addr : foundLatestOrderedByCurrency) {
+            if (currentWallet.compareToIgnoreCase(addr.getWalletName()) != 0) {
+                if (currentWwalletDTO != null) {
+                    summedByWallet.add(currentWwalletDTO);
+                    if (currentCoinDTO != null) {
                         currentWwalletDTO.addCoinDTO(currentCoinDTO);
                     }
                 }
@@ -69,8 +69,7 @@ public class PortFolioByWalletAndCoinService {
                 currentCoinDTO.setTicker(addr.getTicker());
                 currentCoinDTO.setCoinBalance(addr.getLastBalance());
             } else {
-                if ( currentCoinDTO.getTicker().compareToIgnoreCase(addr.getTicker()) != 0)
-                {
+                if (currentCoinDTO.getTicker().compareToIgnoreCase(addr.getTicker()) != 0) {
                     currentWwalletDTO.getCoinDTOs().add(currentCoinDTO);
                     currentCoinDTO = new CoinDTO();
                     currentCoinDTO.setTicker(addr.getTicker());
@@ -80,11 +79,11 @@ public class PortFolioByWalletAndCoinService {
                 }
             }
         }
-
-        currentWwalletDTO.getCoinDTOs().add(currentCoinDTO);
-        summedByWallet.add( currentWwalletDTO);
-
-        calculateWalletValue(summedByWallet);
+        if (foundLatestOrderedByCurrency.size() > 0) {
+            currentWwalletDTO.getCoinDTOs().add(currentCoinDTO);
+            summedByWallet.add(currentWwalletDTO);
+            calculateWalletValue(summedByWallet);
+        }
         return summedByWallet;
     }
 

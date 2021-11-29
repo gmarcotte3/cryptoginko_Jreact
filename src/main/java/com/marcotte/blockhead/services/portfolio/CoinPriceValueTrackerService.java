@@ -99,4 +99,7 @@ public class CoinPriceValueTrackerService {
         return foundAll;
     }
 
+    public void deleteAll() {
+        coinPriceValueTrackerRepository.deleteAll();
+    }
 }
