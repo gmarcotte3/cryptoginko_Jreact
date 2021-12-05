@@ -55,14 +55,11 @@ public class PortfolioByCoinTab extends JPanel{
         add( tabkeScrollPane, BorderLayout.CENTER);
 
         refreashDataModel();
-//        List<CoinDTO> coinDTOList = applicationServicesBean.getPortfolioByCoinsService().findAllLatestSumBalanceGroupByCoin();
-//        Collections.sort(coinDTOList, (new CoinSortByCoinValue()).reversed());
-//        portfolioByCoinsTableDataModel.setModelData( coinDTOList);
-//
-//        calculateFiatTotalValues( coinDTOList);
-//        portfolioTotals.update_FiatValueTotals(fiat_balances);
     }
 
+    /**
+     * reset the model by calling the service and recalculating the totals.
+     */
     public void refreashDataModel() {
         List<CoinDTO> coinDTOList = applicationServicesBean.getPortfolioByCoinsService().findAllLatestSumBalanceGroupByCoin();
         Collections.sort(coinDTOList, (new CoinSortByCoinValue()).reversed());

@@ -12,6 +12,7 @@ package com.marcotte.blockhead.services.portfolio;
 
 import com.marcotte.blockhead.datastore.portfolio.CoinPriceValueTracker;
 import com.marcotte.blockhead.datastore.portfolio.CoinPriceValueTrackerRepository;
+import com.marcotte.blockhead.model.coin.CoinDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,8 @@ public class CoinPriceValueTrackerService {
     @Autowired
     private CoinPriceValueTrackerRepository coinPriceValueTrackerRepository;
 
+    private String fiatCurrencyDefault = "NZD";  // TODO set by configuration
+
     /**
      * save a single record
      * @param coinPriceValueTracker
@@ -38,10 +41,43 @@ public class CoinPriceValueTrackerService {
         coinPriceValueTrackerRepository.save(coinPriceValueTracker);
     }
 
-//    public void save(List<CoinPriceValueTracker>  coinPriceValueTrackerList)
-//    {
-//        coinPriceValueTrackerRepository.save(coinPriceValueTrackerList);
-//    }
+    /**
+     * save a full list of coins.
+     * @param coinPriceValueTrackerList
+     */
+    public void save(List<CoinPriceValueTracker>  coinPriceValueTrackerList)
+    {
+        for ( CoinPriceValueTracker coin : coinPriceValueTrackerList ) {
+            coinPriceValueTrackerRepository.save(coin);
+        }
+    }
+
+    public void save (CoinDTO coinDTO, LocalDate nowDate ) {
+        CoinPriceValueTracker coinPriceValueTracker;
+        List<CoinPriceValueTracker> foundCoinTrackers = findAllByPriceDateAndTicker(nowDate, coinDTO.getTicker());
+        if ( foundCoinTrackers != null && foundCoinTrackers.size() > 0) {
+            coinPriceValueTracker = foundCoinTrackers.get(0);
+        } else {
+            coinPriceValueTracker = new CoinPriceValueTracker();
+        }
+        coinPriceValueTracker.setTicker(coinDTO.getTicker());
+        coinPriceValueTracker.setCoinPrice(coinDTO.getFiat_prices().findFiat(fiatCurrencyDefault).getValue());
+        coinPriceValueTracker.setCoinPriceFiatTicker(fiatCurrencyDefault);
+        coinPriceValueTracker.setCoinBalance(coinDTO.getCoinBalance());
+        coinPriceValueTracker.setPriceDate(nowDate);
+        save(coinPriceValueTracker);
+    }
+
+    public void saveDTOs(List<CoinDTO>  coinDTOsSummary) {
+        LocalDate nowDate = LocalDate.now();
+        CoinPriceValueTracker coinPriceValueTracker;
+
+        List<CoinPriceValueTracker> coinPriceValueTrackerList = new ArrayList<>();
+        for ( CoinDTO coinDTO : coinDTOsSummary) {
+            save (coinDTO, nowDate );
+        }
+        save(coinPriceValueTrackerList);
+    }
 
     /**
      * find by database primary key
@@ -92,7 +128,7 @@ public class CoinPriceValueTrackerService {
     public List<CoinPriceValueTracker> findAllByPriceDateAndTicker(LocalDate priceDate, String coinTticker)
     {
         List<CoinPriceValueTracker> foundAll = new ArrayList<>();
-        for (CoinPriceValueTracker coinPriceValueTracker : coinPriceValueTrackerRepository.findAllByPriceDateAndTicker(priceDate, coinTticker) )
+        for (CoinPriceValueTracker coinPriceValueTracker : coinPriceValueTrackerRepository.findAllByPriceDateAndTicker(priceDate, coinTticker.toUpperCase()) )
         {
             foundAll.add(coinPriceValueTracker);
         }

@@ -48,6 +48,12 @@ public class CoinPriceValueTrackerServiceTest {
         System.out.println("setupBeforeEach");
     }
 
+    /**
+     * test the save. create a list (has no id set) save it read it  and see the id set see all
+     * the original set values round trip though the database correctly.
+     *
+     * Test making a change to an existing data and see if it was updated (not a new insert)
+     */
     @Test
     public void save() {
         List<CoinPriceValueTracker> coinlist = createCoinValueList();
@@ -61,31 +67,101 @@ public class CoinPriceValueTrackerServiceTest {
         assertEquals( (Long) 100000L, (Long) (savedcoins.get(0).getCoinBalance()).longValue() );
         assertEquals( LocalDate.now(), savedcoins.get(0).getPriceDate());
 
+        savedcoins.get(0).setCoinPrice(10000.0);
+        coinPriceValueTrackerService.save(savedcoins.get(0));
+
+        List<CoinPriceValueTracker> savedcoins2 = coinPriceValueTrackerService.findAll();
+        assertEquals(1, savedcoins2.size());
+        assertEquals("ADA", savedcoins2.get(0).getTicker());
+        assertEquals("USD", savedcoins2.get(0).getCoinPriceFiatTicker());
+        assertEquals( (Long) 10000L, (Long) (savedcoins2.get(0).getCoinPrice()).longValue() );
+        assertEquals( (Long) 100000L, (Long) (savedcoins2.get(0).getCoinBalance()).longValue() );
+        assertEquals( LocalDate.now(), savedcoins2.get(0).getPriceDate());
+
         coinPriceValueTrackerService.deleteAll();
     }
 
     @Test
-    public void testSave() {
-        System.out.println("testSave");
-    }
-
-    @Test
     public void findByID() {
-        System.out.println("findByID");
+        List<CoinPriceValueTracker> coinlist = createCoinValueList2();
+        coinPriceValueTrackerService.save( coinlist);
+        List<CoinPriceValueTracker> savedcoins = coinPriceValueTrackerService.findAll();
+
+        CoinPriceValueTracker foundcoin = coinPriceValueTrackerService.findByID(savedcoins.get(2).getId());
+        assertTrue(foundcoin != null);
+//        assertEquals(savedcoins.get(2), foundcoin);
+        coinPriceValueTrackerService.deleteAll();
     }
 
+    /**
+     * test the find all function.
+     */
     @Test
     public void findAll() {
+        List<CoinPriceValueTracker> coinlist = createCoinValueList2();
+        coinPriceValueTrackerService.save( coinlist);
+
+        List<CoinPriceValueTracker> savedcoins2 = coinPriceValueTrackerService.findAll();
+        assertEquals(4, savedcoins2.size());
+        coinPriceValueTrackerService.deleteAll();
     }
 
+    /**
+     * find a list of cons by date
+     */
     @Test
     public void findAllByPriceDate() {
+        List<CoinPriceValueTracker> coinlist = createCoinValueList2();
+        coinPriceValueTrackerService.save( coinlist);
+
+        List<CoinPriceValueTracker> foundCcoinlist =coinPriceValueTrackerService.findAllByPriceDate(LocalDate.of(2021,6,7));
+
+        //   coinPriceValueTracker = new CoinPriceValueTracker();
+        //   coinPriceValueTracker.setCoinPrice( 200.1);
+        //   coinPriceValueTracker.setCoinBalance(50.00);
+        //   coinPriceValueTracker.setTicker("dash");
+        //   coinPriceValueTracker.setPriceDate(LocalDate.of(2021,6,7));
+        //   coinPriceValueTracker.setCoinPriceFiatTicker("usd");
+
+        assertEquals(2, foundCcoinlist.size());
+        assertEquals("DASH", foundCcoinlist.get(0).getTicker());
+        assertEquals("USD", foundCcoinlist.get(0).getCoinPriceFiatTicker());
+        assertEquals( (Long) 200L, (Long) (foundCcoinlist.get(0).getCoinPrice()).longValue() );
+        assertEquals( (Long) 50L, (Long) (foundCcoinlist.get(0).getCoinBalance()).longValue() );
+        assertEquals( LocalDate.of(2021,6,7), foundCcoinlist.get(0).getPriceDate());
+
+
+        coinPriceValueTrackerService.deleteAll();
     }
 
     @Test
     public void findAllByPriceDateAndTicker() {
+        List<CoinPriceValueTracker> coinlist = createCoinValueList2();
+        coinPriceValueTrackerService.save( coinlist);
+
+        List<CoinPriceValueTracker> foundCcoinlist =coinPriceValueTrackerService.findAllByPriceDateAndTicker(LocalDate.of(2021,6,7), "dash");
+//        coinPriceValueTracker = new CoinPriceValueTracker();
+//        coinPriceValueTracker.setCoinPrice( 200.1);
+//        coinPriceValueTracker.setCoinBalance(50.00);
+//        coinPriceValueTracker.setTicker("dash");
+//        coinPriceValueTracker.setPriceDate(LocalDate.of(2021,6,7));
+//        coinPriceValueTracker.setCoinPriceFiatTicker("usd");
+
+        assertEquals(1, foundCcoinlist.size());
+        assertEquals("DASH", foundCcoinlist.get(0).getTicker());
+        assertEquals("USD", foundCcoinlist.get(0).getCoinPriceFiatTicker());
+        assertEquals( (Long) 200L, (Long) (foundCcoinlist.get(0).getCoinPrice()).longValue() );
+        assertEquals( (Long) 50L, (Long) (foundCcoinlist.get(0).getCoinBalance()).longValue() );
+        assertEquals( LocalDate.of(2021,6,7), foundCcoinlist.get(0).getPriceDate());
+
+
+        coinPriceValueTrackerService.deleteAll();
     }
 
+    /**
+     * create a data list of one coin.
+     * @return
+     */
     private List<CoinPriceValueTracker> createCoinValueList() {
         List<CoinPriceValueTracker>  coinlist = new ArrayList<CoinPriceValueTracker>();
 
@@ -95,6 +171,60 @@ public class CoinPriceValueTrackerServiceTest {
         coinPriceValueTracker.setTicker("ada");
         coinPriceValueTracker.setPriceDate(LocalDate.now());
         coinPriceValueTracker.setCoinPriceFiatTicker("usd");
+
+        coinlist.add(coinPriceValueTracker);
+        return coinlist;
+    }
+
+    /**
+     * create 4 coins with 4 different coins
+     * @return
+     */
+    private List<CoinPriceValueTracker> createCoinValueList2() {
+        List<CoinPriceValueTracker>  coinlist = new ArrayList<CoinPriceValueTracker>();
+
+        CoinPriceValueTracker coinPriceValueTracker = new CoinPriceValueTracker();
+        coinPriceValueTracker.setCoinPrice( 10.2);
+        coinPriceValueTracker.setCoinBalance(123.00);
+        coinPriceValueTracker.setTicker("btc");
+        coinPriceValueTracker.setPriceDate(LocalDate.now());
+        coinPriceValueTracker.setCoinPriceFiatTicker("nzd");
+
+        coinlist.add(coinPriceValueTracker);
+
+        coinPriceValueTracker = new CoinPriceValueTracker();
+        coinPriceValueTracker.setCoinPrice( 10.1);
+        coinPriceValueTracker.setCoinBalance(100000.00);
+        coinPriceValueTracker.setTicker("ada");
+        coinPriceValueTracker.setPriceDate(LocalDate.of(2021, 1, 15));
+        coinPriceValueTracker.setCoinPriceFiatTicker("usd");
+
+        coinlist.add(coinPriceValueTracker);
+
+        coinPriceValueTracker = new CoinPriceValueTracker();
+        coinPriceValueTracker.setCoinPrice( 200.1);
+        coinPriceValueTracker.setCoinBalance(50.00);
+        coinPriceValueTracker.setTicker("dash");
+        coinPriceValueTracker.setPriceDate(LocalDate.of(2021,6,7));
+        coinPriceValueTracker.setCoinPriceFiatTicker("usd");
+
+        coinlist.add(coinPriceValueTracker);
+
+
+        coinPriceValueTracker = new CoinPriceValueTracker();
+        coinPriceValueTracker.setCoinPrice( 54.3);
+        coinPriceValueTracker.setCoinBalance(30.00);
+        coinPriceValueTracker.setTicker("dot");
+        coinPriceValueTracker.setPriceDate(LocalDate.of(2021,9,17));
+        coinPriceValueTracker.setCoinPriceFiatTicker("aud");
+
+
+        coinPriceValueTracker = new CoinPriceValueTracker();
+        coinPriceValueTracker.setCoinPrice( 77.3);
+        coinPriceValueTracker.setCoinBalance(40.00);
+        coinPriceValueTracker.setTicker("dot");
+        coinPriceValueTracker.setPriceDate(LocalDate.of(2021,6,7));
+        coinPriceValueTracker.setCoinPriceFiatTicker("nzd");
 
         coinlist.add(coinPriceValueTracker);
         return coinlist;

@@ -1,12 +1,14 @@
 package com.marcotte.blockhead.services.portfolio;
 
 import com.marcotte.blockhead.datastore.blockchainaddressstore.BlockchainAddressStore;
+import com.marcotte.blockhead.datastore.portfolio.CoinPriceValueTracker;
 import com.marcotte.blockhead.services.blockchainaddressstore.BlockchainAddressStoreService;
 import com.marcotte.blockhead.services.coin.CoinService;
 import com.marcotte.blockhead.model.coin.CoinDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +23,9 @@ public class PortfolioByCoinsService {
     @Autowired
     private CoinService coinService;
 
+    @Autowired
+    CoinPriceValueTrackerService coinPriceValueTrackerService;
+
     /**
      * return a list of crypto currencies that are all the addresses sum over balances grouped by the
      * coin. This gives you a balance of each of the latest coins in the coin address store.
@@ -32,8 +37,14 @@ public class PortfolioByCoinsService {
      */
     public List<CoinDTO> findAllLatestSumBalanceGroupByCoin( )
     {
+        String fiatCurrencyDefault = "NZD";
         List<BlockchainAddressStore> foundLatestOrderedByCurrency = blockchainAddressStoreService.findAllLatestOrderByCoin();
-        return sumByCryptoCurrency( foundLatestOrderedByCurrency);
+        List<CoinDTO>  coinDTOsSummary =  sumByCryptoCurrency( foundLatestOrderedByCurrency);
+
+        LocalDate nowDate = LocalDate.now();
+        coinPriceValueTrackerService.saveDTOs(coinDTOsSummary);
+
+        return coinDTOsSummary;
 
     }
 
