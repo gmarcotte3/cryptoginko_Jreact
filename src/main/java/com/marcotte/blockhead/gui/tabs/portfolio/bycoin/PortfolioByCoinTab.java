@@ -47,15 +47,21 @@ public class PortfolioByCoinTab extends JPanel{
         portfolioTotals = new TotalValuePanel(defaultCurency1, defaultCurency2, defaultCurency3);
         JTable table = new JTable(portfolioByCoinsTableDataModel );
         JScrollPane tabkeScrollPane = new JScrollPane(table);
-
         configureTableColumns(table);
 
+        JPanel detailPanel = new JPanel();
+        detailPanel.setLayout( new BorderLayout());
+        detailPanel.add(portfolioTotals, BorderLayout.NORTH);
+        detailPanel.add( tabkeScrollPane, BorderLayout.CENTER);
+
+
         setLayout( new BorderLayout());
-        add(portfolioTotals, BorderLayout.NORTH);
-        add( tabkeScrollPane, BorderLayout.CENTER);
+        add(detailPanel, BorderLayout.CENTER);
+
 
         refreashDataModel();
     }
+
 
     /**
      * reset the model by calling the service and recalculating the totals.

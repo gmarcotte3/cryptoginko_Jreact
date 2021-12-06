@@ -29,7 +29,7 @@ public class SwingMainFrame  extends JFrame {
         applicationView.pack();
         applicationView.setLocationRelativeTo(null);
         applicationView.setVisible(true);
-        applicationView.setSize(1000,500);
+        applicationView.setSize(1000,1500);
         //this.show();
     }
 
