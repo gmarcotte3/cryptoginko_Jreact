@@ -2,8 +2,7 @@ package com.marcotte.blockhead.gui.tabs.portfolio.bywallet;
 
 import com.marcotte.blockhead.gui.ApplicationServicesBean;
 import com.marcotte.blockhead.gui.tabs.portfolio.TotalValuePanel;
-import com.marcotte.blockhead.model.coin.CoinDTO;
-import com.marcotte.blockhead.model.coin.CoinSortByCoinValue;
+import com.marcotte.blockhead.model.coin.CoinDTOCompareByFiatBalance;
 import com.marcotte.blockhead.model.fiat.FiatCurrencyList;
 import com.marcotte.blockhead.model.wallet.WalletDTO;
 import com.marcotte.blockhead.model.wallet.WalletDTOCompareByFiatValue;
@@ -13,7 +12,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -62,10 +60,21 @@ public class PortfolioByWalletTab extends JPanel {
 
         List<WalletDTO> walletDTOList = applicationServicesBean.getPortFolioByWalletAndCoinService().findBlockchainAddressStoreOrderByWalletNameAscCurrencyAsc();
         Collections.sort(walletDTOList, (new WalletDTOCompareByFiatValue()).reversed());
+        sortWalletCoins (walletDTOList );
         portfolioByWalletTableDataModel.setModelData( walletDTOList);
 
         calculateFiatTotalValues( walletDTOList);
         portfolioTotals.update_FiatValueTotals(fiat_balances);
+    }
+
+    /**
+     * sart the coins in a wallet by reverse fiat value
+     * @param walletDTOList
+     */
+    private void sortWalletCoins( List<WalletDTO> walletDTOList) {
+        for (WalletDTO wallet: walletDTOList) {
+            Collections.sort( wallet.getCoinDTOs(), (new CoinDTOCompareByFiatBalance().reversed()));
+        }
     }
 
     /**

@@ -128,6 +128,7 @@ public class FiatCurrency
         }
         NumberFormat numberFormat = NumberFormat.getCurrencyInstance(locale);
         numberFormat.setMinimumFractionDigits(0);
+        numberFormat.setMaximumFractionDigits(0);
 
         return numberFormat.format(money);
     }

@@ -69,25 +69,28 @@ public class PortfolioByWalletTableDataModel extends AbstractTableModel {
 
             for (WalletDTO walletcoin: walletDTOList ) {
                 data[row][WALLET_NAME_IDX] = walletcoin.getWalletName();
-                data[row][WALLET_TOTAL_VALUE_IDX] = walletcoin.getFiat_balances().findFiat(defaultFiatTicker).getValueMoneyFormat();
-                data[row][WALLET_TOTAL_VLUE_FIAT_TYPE_IDX] = defaultFiatTicker;
+                double walletValue = walletcoin.getFiat_balances().findFiat("USD").getValue();
+                if ( walletValue > (double) 0.0 ) {
+                    data[row][WALLET_TOTAL_VALUE_IDX] = walletcoin.getFiat_balances().findFiat(defaultFiatTicker).getValueMoneyFormat();
+                    data[row][WALLET_TOTAL_VLUE_FIAT_TYPE_IDX] = defaultFiatTicker;
 
-                for (CoinDTO coin : walletcoin.getCoinDTOs() ) {
-                    data[row][COIN_TICKER_IDX] = coin.getTicker();
-                    data[row][COIN_NAME_IDX] = coin.getCoinName();
-                    data[row][COIN_BAL_IDX] = coin.getCoinBalance().toString();
-                    data[row][COIN_PRICE_IDX] = coin.getFiat_prices().findFiat(defaultFiatTicker).getValueMoneyFormat();
-                    data[row][COIN_VALUE_IDX] = coin.getFiat_balances().findFiat(defaultFiatTicker).getValueMoneyFormat();
-                    data[row][COIN_FIAT_IDX] = defaultFiatTicker;
+                    for (CoinDTO coin : walletcoin.getCoinDTOs()) {
+                        data[row][COIN_TICKER_IDX] = coin.getTicker();
+                        data[row][COIN_NAME_IDX] = coin.getCoinName();
+                        data[row][COIN_BAL_IDX] = coin.getCoinBalance().toString();
+                        data[row][COIN_PRICE_IDX] = coin.getFiat_prices().findFiat(defaultFiatTicker).getValueMoneyFormat();
+                        data[row][COIN_VALUE_IDX] = coin.getFiat_balances().findFiat(defaultFiatTicker).getValueMoneyFormat();
+                        data[row][COIN_FIAT_IDX] = defaultFiatTicker;
 
-                    if ( data[row][WALLET_NAME_IDX] == null ) {
-                        data[row][WALLET_NAME_IDX] = " ";
-                        data[row][WALLET_TOTAL_VALUE_IDX] = " ";
-                        data[row][WALLET_TOTAL_VLUE_FIAT_TYPE_IDX] = " ";
-                    }
-                    row++;
-                }
-            }
+                        if (data[row][WALLET_NAME_IDX] == null) {
+                            data[row][WALLET_NAME_IDX] = " ";
+                            data[row][WALLET_TOTAL_VALUE_IDX] = " ";
+                            data[row][WALLET_TOTAL_VLUE_FIAT_TYPE_IDX] = " ";
+                        }
+                        row++;
+                    } // endfor
+                }  // if wallet value > 0
+            } //endfor wallets
         }
 
     }
