@@ -71,8 +71,8 @@ public class PortfolioByCoinsTableDataModel extends AbstractTableModel {
                 data[row][TICKER_IDX] = coin.getTicker();
                 data[row][COIN_NAME_IDX] = coin.getCoinName();
                 data[row][COIN_BAL_IDX] = coin.getCoinBalance().toString();
-                data[row][COIN_PRICE_IDX] = coin.getFiat_prices().findFiat(defaultCurrency).getValueMoneyFormat(); //TODO use configuration to find the right fiat
-                data[row][TOTAL_VALUE_IDX] = coin.getFiat_balances().findFiat(defaultCurrency).getValueMoneyFormat();
+                data[row][COIN_PRICE_IDX] = coin.getFiat_prices().findFiat(defaultCurrency).getValueMoneyFormat(2); //TODO use configuration to find the right fiat
+                data[row][TOTAL_VALUE_IDX] = coin.getFiat_balances().findFiat(defaultCurrency).getValueMoneyFormat(0);
                 data[row][TOTAL_VLUE_FIAT_TYPE_IDX] = defaultCurrency;   //TODO use configuration to find the right fiat
                 row++;
             }

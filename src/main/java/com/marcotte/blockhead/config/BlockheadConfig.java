@@ -31,6 +31,15 @@ public class BlockheadConfig //extends WebMvcConfigurerAdapter
     @Value("${cryptocompare.currency.list}")
     private String cryptoCompareCurrencyList;
 
+    @Value("${fiat.currency.default}")
+    private String fiatCurrencyDefault;
+
+    @Value("${fiat.currency.default2}")
+    private String fiatCurrencyDefault2;
+
+    @Value("${fiat.currency.default3}")
+    private String fiatCurrencyDefault3;
+
     @Value("${restapikeys.etherscan}")
     private String etherscanApiToken;
 
@@ -75,5 +84,17 @@ public class BlockheadConfig //extends WebMvcConfigurerAdapter
 
     public String getBlockCypherApiToken() {
         return blockCypherApiToken;
+    }
+
+    public String getFiatCurrencyDefault() {
+        return fiatCurrencyDefault;
+    }
+
+    public String getFiatCurrencyDefault2() {
+        return fiatCurrencyDefault2;
+    }
+
+    public String getFiatCurrencyDefault3() {
+        return fiatCurrencyDefault3;
     }
 }

@@ -10,6 +10,7 @@
 
 package com.marcotte.blockhead.services.portfolio;
 
+import com.marcotte.blockhead.config.BlockheadConfig;
 import com.marcotte.blockhead.datastore.portfolio.CoinPriceValueTracker;
 import com.marcotte.blockhead.datastore.portfolio.CoinPriceValueTrackerRepository;
 import com.marcotte.blockhead.model.coin.CoinDTO;
@@ -30,7 +31,9 @@ public class CoinPriceValueTrackerService {
     @Autowired
     private CoinPriceValueTrackerRepository coinPriceValueTrackerRepository;
 
-    private String fiatCurrencyDefault = "NZD";  // TODO set by configuration
+    @Autowired
+    private BlockheadConfig blockheadConfig;
+
 
     /**
      * save a single record
@@ -53,6 +56,12 @@ public class CoinPriceValueTrackerService {
     }
 
     public void save (CoinDTO coinDTO, LocalDate nowDate ) {
+
+        String fiatCurrencyDefault = blockheadConfig.getFiatCurrencyDefault();
+        String fiatCurrencyDefault2 = blockheadConfig.getFiatCurrencyDefault2();
+        String fiatCurrencyDefault3 = blockheadConfig.getFiatCurrencyDefault3();
+
+
         CoinPriceValueTracker coinPriceValueTracker;
         List<CoinPriceValueTracker> foundCoinTrackers = findAllByPriceDateAndTicker(nowDate, coinDTO.getTicker());
         if ( foundCoinTrackers != null && foundCoinTrackers.size() > 0) {
@@ -62,7 +71,11 @@ public class CoinPriceValueTrackerService {
         }
         coinPriceValueTracker.setTicker(coinDTO.getTicker());
         coinPriceValueTracker.setCoinPrice(coinDTO.getFiat_prices().findFiat(fiatCurrencyDefault).getValue());
+        coinPriceValueTracker.setCoinPrice2(coinDTO.getFiat_prices().findFiat(fiatCurrencyDefault2).getValue());
+        coinPriceValueTracker.setCoinPrice3(coinDTO.getFiat_prices().findFiat(fiatCurrencyDefault3).getValue());
         coinPriceValueTracker.setCoinPriceFiatTicker(fiatCurrencyDefault);
+        coinPriceValueTracker.setCoinPriceFiatTicker2(fiatCurrencyDefault2);
+        coinPriceValueTracker.setCoinPriceFiatTicker3(fiatCurrencyDefault3);
         coinPriceValueTracker.setCoinBalance(coinDTO.getCoinBalance());
         coinPriceValueTracker.setPriceDate(nowDate);
         save(coinPriceValueTracker);

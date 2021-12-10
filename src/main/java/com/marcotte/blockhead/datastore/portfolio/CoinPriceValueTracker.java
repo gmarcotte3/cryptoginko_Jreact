@@ -27,7 +27,7 @@ public class CoinPriceValueTracker {
     private long id;                                    // primary key
 
     @Column(name = "PriceDate", nullable = false)
-    private LocalDate priceDate;                     // date of the transaction/price data yyyy-mm-dd (no time)
+    private LocalDate priceDate;                        // date of the transaction/price data yyyy-mm-dd (no time)
 
     @Column(name = "Ticker", nullable = false)
     private String ticker;                              // coin ticker
@@ -36,10 +36,23 @@ public class CoinPriceValueTracker {
     private Double coinBalance;                         // coin balance in the coin specific units (ie. satoshis)
 
     @Column(name = "CoinPrice", nullable = false)
-    private Double coinPrice;                           // The price in fiat
+    private Double coinPrice;                           // The price in fiat default
+
+    @Column(name = "CoinPrice2", nullable = true)
+    private Double coinPrice2;                           // The price in fiat second
+
+    @Column(name = "CoinPrice3", nullable = true)
+    private Double coinPrice3;                           // The price in fiat third
 
     @Column(name = "CoinPriceFiatTicker", nullable = false)
     private String coinPriceFiatTicker;                 // the fiat currency ticker that defines what fiat currency is used for the price.
+
+    @Column(name = "CoinPriceFiatTicker2", nullable = true)
+    private String coinPriceFiatTicker2;                 // the fiat currency ticker that defines what fiat currency is used for the price.
+
+    @Column(name = "CoinPriceFiatTicker3", nullable = true)
+    private String coinPriceFiatTicker3;                 // the fiat currency ticker that defines what fiat currency is used for the price.
+
 
     /*
      * getters and setters *****************************8
@@ -81,11 +94,43 @@ public class CoinPriceValueTracker {
         this.coinPrice = coinPrice;
     }
 
+    public Double getCoinPrice2() {
+        return coinPrice2;
+    }
+
+    public void setCoinPrice2(Double coinPrice2) {
+        this.coinPrice2 = coinPrice2;
+    }
+
+    public Double getCoinPrice3() {
+        return coinPrice3;
+    }
+
+    public void setCoinPrice3(Double coinPrice3) {
+        this.coinPrice3 = coinPrice3;
+    }
+
     public String getCoinPriceFiatTicker() {
         return coinPriceFiatTicker;
     }
 
     public void setCoinPriceFiatTicker(String coinPriceFiatTicker) {
         this.coinPriceFiatTicker = coinPriceFiatTicker.toUpperCase();
+    }
+
+    public String getCoinPriceFiatTicker2() {
+        return coinPriceFiatTicker2;
+    }
+
+    public void setCoinPriceFiatTicker2(String coinPriceFiatTicker2) {
+        this.coinPriceFiatTicker2 = coinPriceFiatTicker2;
+    }
+
+    public String getCoinPriceFiatTicker3() {
+        return coinPriceFiatTicker3;
+    }
+
+    public void setCoinPriceFiatTicker3(String coinPriceFiatTicker3) {
+        this.coinPriceFiatTicker3 = coinPriceFiatTicker3;
     }
 }

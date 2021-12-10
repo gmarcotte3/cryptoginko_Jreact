@@ -65,7 +65,7 @@ public class PieChartPanel extends JPanel {
         dataObservableList = FXCollections.observableArrayList();
         for (CoinDTO coinDto : coinDTOList ) {
             Double coinValue = coinDto.getFiat_prices().findFiat(defaultFiat).getValue() * coinDto.getCoinBalance();
-            dataObservableList.add(new PieChart.Data(coinDto.getCoinName(), coinValue   ));
+            dataObservableList.add(new PieChart.Data(coinDto.getCoinName() + "-" + coinValue.longValue(), coinValue   ));
         }
     }
 }

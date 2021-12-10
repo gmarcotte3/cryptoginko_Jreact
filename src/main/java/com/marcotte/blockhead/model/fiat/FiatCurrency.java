@@ -104,6 +104,10 @@ public class FiatCurrency
     }
 
     public String getValueMoneyFormat() {
+       return getValueMoneyFormat(0);
+    }
+
+    public String getValueMoneyFormat(int fracdigit) {
         double money = getValue();
         Locale locale;
         switch ( this.getFiatType()) {
@@ -127,8 +131,8 @@ public class FiatCurrency
                 locale = new Locale("en", "US");
         }
         NumberFormat numberFormat = NumberFormat.getCurrencyInstance(locale);
-        numberFormat.setMinimumFractionDigits(0);
-        numberFormat.setMaximumFractionDigits(0);
+        numberFormat.setMinimumFractionDigits(fracdigit);
+        numberFormat.setMaximumFractionDigits(fracdigit);
 
         return numberFormat.format(money);
     }
