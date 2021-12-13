@@ -1,7 +1,7 @@
 package com.marcotte.blockhead.controllers.portfolio;
 
 
-import com.marcotte.blockhead.datastore.portfolio.PortfolioTracker;
+//import com.marcotte.blockhead.datastore.portfolio.PortfolioTracker;
 import com.marcotte.blockhead.model.coin.CoinDTO;
 import com.marcotte.blockhead.model.PortfolioValueTrackerDTO;
 import com.marcotte.blockhead.model.wallet.WalletDTO;
@@ -33,18 +33,18 @@ public class PortfolioController
      * full node wallets or trusted nodes on the networks.
      * @return
      */
-    @PutMapping("")
-    public ResponseEntity<List<PortfolioTracker>> portfolio()
-    {
-        List<PortfolioTracker> portfolioTrackerList = portfolioService.portfolioCheck(false);
-        return new ResponseEntity<List<PortfolioTracker>>(portfolioTrackerList, HttpStatus.OK);
-    }
+//    @PutMapping("")
+//    public ResponseEntity<List<PortfolioTracker>> portfolio()
+//    {
+//        List<PortfolioTracker> portfolioTrackerList = portfolioService.portfolioCheck(false);
+//        return new ResponseEntity<List<PortfolioTracker>>(portfolioTrackerList, HttpStatus.OK);
+//    }
 
-    @PutMapping("/total")
-    public ResponseEntity<PortfolioValueTrackerDTO> getPortfolioTotal() {
-        PortfolioValueTrackerDTO portfolioValueTrackerDTO = portfolioService.portfolioGetTotalValue();
-        return new ResponseEntity<PortfolioValueTrackerDTO>(portfolioValueTrackerDTO, HttpStatus.OK);
-    }
+//    @PutMapping("/total")
+//    public ResponseEntity<PortfolioValueTrackerDTO> getPortfolioTotal() {
+//        PortfolioValueTrackerDTO portfolioValueTrackerDTO = portfolioService.portfolioGetTotalValue();
+//        return new ResponseEntity<PortfolioValueTrackerDTO>(portfolioValueTrackerDTO, HttpStatus.OK);
+//    }
 
     @GetMapping("/bycoins")
     public ResponseEntity<List<CoinDTO>> portfolioByCoins2()

@@ -1,5 +1,6 @@
 package com.marcotte.blockhead.gui;
 
+import com.marcotte.blockhead.config.BlockheadConfig;
 import com.marcotte.blockhead.services.csv.GinkoCsvService;
 import com.marcotte.blockhead.services.portfolio.CurrentPriceService;
 import com.marcotte.blockhead.services.portfolio.PortFolioByWalletAndCoinService;
@@ -24,6 +25,9 @@ public class ApplicationServicesBean {
 
     @Autowired
     private GinkoCsvService ginkoCsvService;        // CSV services
+
+    @Autowired
+    private BlockheadConfig blockheadConfig;
 
     public ApplicationServicesBean()
     {
@@ -72,5 +76,13 @@ public class ApplicationServicesBean {
 
     public void setGinkoCsvService(GinkoCsvService ginkoCsvService) {
         this.ginkoCsvService = ginkoCsvService;
+    }
+
+    public BlockheadConfig getBlockheadConfig() {
+        return blockheadConfig;
+    }
+
+    public void setBlockheadConfig(BlockheadConfig blockheadConfig) {
+        this.blockheadConfig = blockheadConfig;
     }
 }

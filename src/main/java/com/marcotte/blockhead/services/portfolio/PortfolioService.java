@@ -1,16 +1,16 @@
 package com.marcotte.blockhead.services.portfolio;
 
-import com.marcotte.blockhead.datastore.portfolio.PortfolioTracker;
+//import com.marcotte.blockhead.datastore.portfolio.PortfolioTracker;
 import com.marcotte.blockhead.datastore.blockchainaddressstore.BlockchainAddressStore;
-import com.marcotte.blockhead.datastore.datetracker.DateTracker;
-import com.marcotte.blockhead.datastore.portfolio.PortfolioValueTracker;
+//import com.marcotte.blockhead.datastore.datetracker.DateTracker;
+//import com.marcotte.blockhead.datastore.portfolio.PortfolioValueTracker;
 import com.marcotte.blockhead.model.coin.*;
 import com.marcotte.blockhead.model.fiat.FiatCurrency;
 import com.marcotte.blockhead.model.wallet.WalletDTO;
 import com.marcotte.blockhead.model.wallet.WalletDTOCompareByFiatValue;
 import com.marcotte.blockhead.services.coin.CoinService;
 import com.marcotte.blockhead.services.blockchainaddressstore.BlockchainAddressStoreService;
-import com.marcotte.blockhead.services.datetracker.DateTrackerService;
+//import com.marcotte.blockhead.services.datetracker.DateTrackerService;
 import com.marcotte.blockhead.services.explorerServices.BitcoinCashComExplorerService;
 import com.marcotte.blockhead.services.explorerServices.BitcoinExplorerServices;
 import com.marcotte.blockhead.services.explorerServices.CardanoAdaService;
@@ -58,12 +58,12 @@ public class PortfolioService
     private BlockchainAddressStoreService blockchainAddressStoreService;
     @Autowired
     private PriceServiceInterface coinGeckoService;
-    @Autowired
-    private DateTrackerService dateTrackerService;
-    @Autowired
-    private PortfolioTrackerService portfolioTrackerService;
-    @Autowired
-    private PortfolioValueTrackerService portfolioValueTrackerService;
+//    @Autowired
+//    private DateTrackerService dateTrackerService;
+//    @Autowired
+//    private PortfolioTrackerService portfolioTrackerService;
+//    @Autowired
+//    private PortfolioValueTrackerService portfolioValueTrackerService;
 
     @Autowired
     private CoinService coinService;
@@ -80,17 +80,17 @@ public class PortfolioService
      * TODO  refactor this so we just return one PortfolioTracker with multiple columns for all the major fiat currencies
      * @return
      */
-    public PortfolioValueTrackerDTO portfolioGetTotalValue() {
-        List<CoinDTO> portfolioByCoinList = portfolioByCoinsService.findAllLatestSumBalanceGroupByCoin();
-        HashMap<String, CoinDTO> coinHashMap = coinService.findAllReturnTickerCoinDTOMap();
-        copyFiatPricesAndCalculateValueFromCoinPrices( portfolioByCoinList, coinHashMap);
-
-        DateTracker dateTracker = createAndSaveDateTracker();
-        PortfolioValueTrackerDTO portfollioSummary = calculatePortfolioSummary2(portfolioByCoinList);
-        savePortfolioSummary( portfollioSummary, dateTracker);
-
-        return portfollioSummary;
-    }
+//    public PortfolioValueTrackerDTO portfolioGetTotalValue() {
+//        List<CoinDTO> portfolioByCoinList = portfolioByCoinsService.findAllLatestSumBalanceGroupByCoin();
+//        HashMap<String, CoinDTO> coinHashMap = coinService.findAllReturnTickerCoinDTOMap();
+//        copyFiatPricesAndCalculateValueFromCoinPrices( portfolioByCoinList, coinHashMap);
+//
+//        DateTracker dateTracker = createAndSaveDateTracker();
+//        PortfolioValueTrackerDTO portfollioSummary = calculatePortfolioSummary2(portfolioByCoinList);
+//        savePortfolioSummary( portfollioSummary, dateTracker);
+//
+//        return portfollioSummary;
+//    }
 
     /**
      * returns the portfolio broken down by coin and sorted by value in reverse order.
@@ -146,24 +146,24 @@ public class PortfolioService
      * @deprecated
      * @return
      */
-    public List<WalletDTO> portfolioByWalletCoins() {
-        List<CoinDTO> portfolioByCoinList;
-        List<WalletDTO> walletDTOS = portFolioByWalletAndCoinService.findBlockchainAddressStoreOrderByWalletNameAscCurrencyAsc();
-        HashMap<String, CoinDTO> coinHashMap = coinService.findAllReturnTickerCoinDTOMap();
-
-        // loop though all wallets and calculate balances
-        for (WalletDTO walletDTO : walletDTOS ) {
-            copyFiatPricesAndCalculateValueFromCoinPrices( walletDTO.getCoinDTOs(), coinHashMap);
-            PortfolioValueTrackerDTO walletValueTotal = calculatePortfolioSummary2(walletDTO.getCoinDTOs());
-            walletDTO.setFiat_balances(walletValueTotal.getFiat_balances());
-            // sort coins by fiat value decending.
-            Collections.sort(walletDTO.getCoinDTOs(), Collections.reverseOrder(new CoinDTOCompareByFiatBalance()));
-        }
-
-        // sort wallets by fiat value decending.
-        Collections.sort(walletDTOS, Collections.reverseOrder(new WalletDTOCompareByFiatValue()));
-        return walletDTOS;
-    }
+//    public List<WalletDTO> portfolioByWalletCoins() {
+//        List<CoinDTO> portfolioByCoinList;
+//        List<WalletDTO> walletDTOS = portFolioByWalletAndCoinService.findBlockchainAddressStoreOrderByWalletNameAscCurrencyAsc();
+//        HashMap<String, CoinDTO> coinHashMap = coinService.findAllReturnTickerCoinDTOMap();
+//
+//        // loop though all wallets and calculate balances
+//        for (WalletDTO walletDTO : walletDTOS ) {
+//            copyFiatPricesAndCalculateValueFromCoinPrices( walletDTO.getCoinDTOs(), coinHashMap);
+//            PortfolioValueTrackerDTO walletValueTotal = calculatePortfolioSummary2(walletDTO.getCoinDTOs());
+//            walletDTO.setFiat_balances(walletValueTotal.getFiat_balances());
+//            // sort coins by fiat value decending.
+//            Collections.sort(walletDTO.getCoinDTOs(), Collections.reverseOrder(new CoinDTOCompareByFiatBalance()));
+//        }
+//
+//        // sort wallets by fiat value decending.
+//        Collections.sort(walletDTOS, Collections.reverseOrder(new WalletDTOCompareByFiatValue()));
+//        return walletDTOS;
+//    }
 
     /**
      * service to calculate the fiat value of a multi coin wallet
@@ -268,37 +268,37 @@ public class PortfolioService
      * @param refresh
      * @return
      */
-    public List<PortfolioTracker> portfolioCheck(boolean refresh)
-    {
-        List<CoinList> portfolioList = new ArrayList<>();
-        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.BITCOIN_TICKER, refresh);
-        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.BITCOINCASH_TICKER, refresh);
-        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.DASH_TICKER, refresh);
-        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.ETHEREUM_TICKER, refresh);
-        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.CARDANO_ADA_TICKER, refresh);
-        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.EOS_TICKER, refresh);
-        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.LITE_COIN_TICKER, refresh);
-        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.ZCASH_TICKER, refresh);
-        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.MONERO_TICKER, refresh);
-        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.LINK_TICKER, refresh);
-        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.MAKER_TICKER, refresh);
-        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.POLKADOT_TICKER, refresh);
-        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.SOLANA_TICKER, refresh); 
+//    public List<PortfolioTracker> portfolioCheck(boolean refresh)
+//    {
+//        List<CoinList> portfolioList = new ArrayList<>();
+//        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.BITCOIN_TICKER, refresh);
+//        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.BITCOINCASH_TICKER, refresh);
+//        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.DASH_TICKER, refresh);
+//        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.ETHEREUM_TICKER, refresh);
+//        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.CARDANO_ADA_TICKER, refresh);
+//        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.EOS_TICKER, refresh);
+//        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.LITE_COIN_TICKER, refresh);
+//        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.ZCASH_TICKER, refresh);
+//        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.MONERO_TICKER, refresh);
+//        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.LINK_TICKER, refresh);
+//        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.MAKER_TICKER, refresh);
+//        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.POLKADOT_TICKER, refresh);
+//        updateCoinBalanceCacheCalculateFiatBalance( portfolioList, CoinCodes.SOLANA_TICKER, refresh);
+//
+//
+//        // save copy of the portflio here
+//        DateTracker dateTracker = createAndSaveDateTracker();
+//
+//        List<PortfolioTracker> portfollioSummary = calculatePortfolioSummary(portfolioList, dateTracker);
+//        return portfollioSummary;
+//    }
 
-
-        // save copy of the portflio here
-        DateTracker dateTracker = createAndSaveDateTracker();
-
-        List<PortfolioTracker> portfollioSummary = calculatePortfolioSummary(portfolioList, dateTracker);
-        return portfollioSummary;
-    }
-
-    private DateTracker createAndSaveDateTracker()
-    {
-        DateTracker dateTracker = new DateTracker();
-        dateTrackerService.save(dateTracker);
-        return dateTracker;
-    }
+//    private DateTracker createAndSaveDateTracker()
+//    {
+//        DateTracker dateTracker = new DateTracker();
+//        dateTrackerService.save(dateTracker);
+//        return dateTracker;
+//    }
 
     private void updateCoinBalanceCacheCalculateFiatBalance(List<CoinList> portfolioList, String cryptoName, boolean refresh)
     {
@@ -464,53 +464,53 @@ public class PortfolioService
         zCashExplorerServices.addressInfo(blockchainAddressStores);
     }
 
-    private List<PortfolioTracker> calculatePortfolioSummary(List<CoinList> portfolioList, DateTracker dateTracker  )
-    {
+//    private List<PortfolioTracker> calculatePortfolioSummary(List<CoinList> portfolioList, DateTracker dateTracker  )
+//    {
+//
+//        HashMap<String, PortfolioTracker> portfoiloByFiatCurrency = new HashMap<String, PortfolioTracker>();
+//
+//        for ( CoinList coin : portfolioList )
+//        {
+//            for (FiatCurrency currency : coin.getFiat_balances() )
+//            {
+//                PortfolioTracker portfolioTracker = portfoiloByFiatCurrency.get(currency.getCode());
+//                if ( portfolioTracker == null ) {
+//                    portfolioTracker = new PortfolioTracker();
+//                    portfolioTracker.setDateTrackerID(dateTracker.getId());
+//                    portfolioTracker.setDateUpdated(dateTracker.getDateUpdated());
+//                    portfolioTracker.setFiatCurrency( currency.getCode());
+//
+//                    portfoiloByFiatCurrency.put(portfolioTracker.getFiatCurrency(), portfolioTracker);
+//                }
+//                portfolioTracker.setCoinValue(portfolioTracker.getCoinValue() + currency.getValue());
+//            }
+//
+//        }
+//        return  new ArrayList<PortfolioTracker>(portfoiloByFiatCurrency.values());
+//    }
 
-        HashMap<String, PortfolioTracker> portfoiloByFiatCurrency = new HashMap<String, PortfolioTracker>();
+//    private PortfolioValueTrackerDTO calculatePortfolioSummary2(List<CoinDTO> portfolioList )
+//    {
+//        HashMap<String, PortfolioTracker> portfoiloByFiatCurrency = new HashMap<String, PortfolioTracker>();
+//        PortfolioValueTrackerDTO portfolioValueTrackerDTO = new PortfolioValueTrackerDTO();
+//
+//        for ( CoinDTO coin : portfolioList )
+//        {
+//            for (FiatCurrency currency : coin.getFiat_balances().getFiat_values() )
+//            {
+//                portfolioValueTrackerDTO.getFiat_balances().addToFiat(currency);
+//            }
+//        }
+//        return  portfolioValueTrackerDTO;
+//    }
 
-        for ( CoinList coin : portfolioList )
-        {
-            for (FiatCurrency currency : coin.getFiat_balances() )
-            {
-                PortfolioTracker portfolioTracker = portfoiloByFiatCurrency.get(currency.getCode());
-                if ( portfolioTracker == null ) {
-                    portfolioTracker = new PortfolioTracker();
-                    portfolioTracker.setDateTrackerID(dateTracker.getId());
-                    portfolioTracker.setDateUpdated(dateTracker.getDateUpdated());
-                    portfolioTracker.setFiatCurrency( currency.getCode());
-
-                    portfoiloByFiatCurrency.put(portfolioTracker.getFiatCurrency(), portfolioTracker);
-                }
-                portfolioTracker.setCoinValue(portfolioTracker.getCoinValue() + currency.getValue());
-            }
-
-        }
-        return  new ArrayList<PortfolioTracker>(portfoiloByFiatCurrency.values());
-    }
-
-    private PortfolioValueTrackerDTO calculatePortfolioSummary2(List<CoinDTO> portfolioList )
-    {
-        HashMap<String, PortfolioTracker> portfoiloByFiatCurrency = new HashMap<String, PortfolioTracker>();
-        PortfolioValueTrackerDTO portfolioValueTrackerDTO = new PortfolioValueTrackerDTO();
-
-        for ( CoinDTO coin : portfolioList )
-        {
-            for (FiatCurrency currency : coin.getFiat_balances().getFiat_values() )
-            {
-                portfolioValueTrackerDTO.getFiat_balances().addToFiat(currency);
-            }
-        }
-        return  portfolioValueTrackerDTO;
-    }
-
-    private void savePortfolioSummary(PortfolioValueTrackerDTO portfollioSummaryDTO, DateTracker dateTracker)
-    {
-        PortfolioValueTracker portfolioValueTracker = new PortfolioValueTracker(portfollioSummaryDTO);
-        portfolioValueTracker.setDateTrackerID(dateTracker.getId());
-        portfolioValueTracker.setDateUpdated(dateTracker.getDateUpdated());
-
-        portfolioValueTrackerService.save(portfolioValueTracker);
-
-    }
+//    private void savePortfolioSummary(PortfolioValueTrackerDTO portfollioSummaryDTO, DateTracker dateTracker)
+//    {
+//        PortfolioValueTracker portfolioValueTracker = new PortfolioValueTracker(portfollioSummaryDTO);
+//        portfolioValueTracker.setDateTrackerID(dateTracker.getId());
+//        portfolioValueTracker.setDateUpdated(dateTracker.getDateUpdated());
+//
+//        portfolioValueTrackerService.save(portfolioValueTracker);
+//
+//    }
 }

@@ -109,8 +109,16 @@ public class FiatCurrency
 
     public String getValueMoneyFormat(int fracdigit) {
         double money = getValue();
+
+
+        FiatNames fiat = this.getFiatType();
+        return getValueMoneyFormat(money, fiat, fracdigit);
+    }
+
+    public static String getValueMoneyFormat(double money, FiatNames fiat, int fracdigit) {
+
         Locale locale;
-        switch ( this.getFiatType()) {
+        switch ( fiat) {
             case NZD:
                 locale = new Locale("en", "NZ");
                 break;

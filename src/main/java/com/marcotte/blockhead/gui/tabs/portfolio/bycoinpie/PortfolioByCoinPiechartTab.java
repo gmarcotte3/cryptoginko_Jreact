@@ -11,8 +11,6 @@
 package com.marcotte.blockhead.gui.tabs.portfolio.bycoinpie;
 
 import com.marcotte.blockhead.gui.ApplicationServicesBean;
-import com.marcotte.blockhead.gui.tabs.portfolio.TotalValuePanel;
-import com.marcotte.blockhead.gui.tabs.portfolio.bycoin.PortfolioByCoinsTableDataModel;
 import com.marcotte.blockhead.model.coin.CoinDTO;
 import com.marcotte.blockhead.model.coin.CoinSortByCoinValue;
 
@@ -24,18 +22,11 @@ import java.util.List;
 public class PortfolioByCoinPiechartTab extends JPanel
 {
     private ApplicationServicesBean applicationServicesBean;
-    private String defaultCurency1;
-    private String defaultCurency2;
-    private String defaultCurency3;
 
     private PieChartPanel piechartPanel;
 
     public PortfolioByCoinPiechartTab(ApplicationServicesBean applicationServicesBean) {
         super();
-
-        defaultCurency1 = "USD"; // TODO set via configuration
-        defaultCurency2 = "NZD";
-        defaultCurency3 = "JPM";
 
         this.applicationServicesBean = applicationServicesBean;
         createUI();
@@ -45,7 +36,8 @@ public class PortfolioByCoinPiechartTab extends JPanel
         List<CoinDTO> coinDTOList = applicationServicesBean.getPortfolioByCoinsService().findAllLatestSumBalanceGroupByCoin();
         Collections.sort(coinDTOList, (new CoinSortByCoinValue()).reversed());
 
-        piechartPanel = new PieChartPanel(coinDTOList);
+        String defaultFiatCurrency = applicationServicesBean.getBlockheadConfig().getFiatCurrencyDefault();
+        piechartPanel = new PieChartPanel(coinDTOList, defaultFiatCurrency);
         setLayout( new BorderLayout());
         add(piechartPanel, BorderLayout.CENTER);
     }

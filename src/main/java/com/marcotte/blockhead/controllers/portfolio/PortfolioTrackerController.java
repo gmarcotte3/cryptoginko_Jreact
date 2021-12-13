@@ -1,7 +1,7 @@
 package com.marcotte.blockhead.controllers.portfolio;
 
-import com.marcotte.blockhead.datastore.portfolio.PortfolioTracker;
-import com.marcotte.blockhead.services.portfolio.PortfolioTrackerService;
+//import com.marcotte.blockhead.datastore.portfolio.PortfolioTracker;
+//import com.marcotte.blockhead.services.portfolio.PortfolioTrackerService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,22 +19,22 @@ import java.util.List;
 @RequestMapping("/portfolio/history")
 public class PortfolioTrackerController
 {
-    @Autowired
-    private PortfolioTrackerService portfolioTrackerService;
+//    @Autowired
+//    private PortfolioTrackerService portfolioTrackerService;
 
 
-    @GetMapping("")
-    public ResponseEntity<List<PortfolioTracker>> getAllPortfolioSummary()
-    {
-        List<PortfolioTracker> portfoliosummary = portfolioTrackerService.findAll();
-        return new ResponseEntity<List<PortfolioTracker>>(portfoliosummary, HttpStatus.OK);
-    }
+//    @GetMapping("")
+//    public ResponseEntity<List<PortfolioTracker>> getAllPortfolioSummary()
+//    {
+//        List<PortfolioTracker> portfoliosummary = portfolioTrackerService.findAll();
+//        return new ResponseEntity<List<PortfolioTracker>>(portfoliosummary, HttpStatus.OK);
+//    }
 
 
-    @GetMapping("/{currency}")
-    public ResponseEntity<List<PortfolioTracker>> getAllPortfolioSummaryByCurrency(@PathVariable String currency)
-    {
-        List<PortfolioTracker> portfoliosummary = portfolioTrackerService.findAllByCurrency(currency);
-        return new ResponseEntity<List<PortfolioTracker>>(portfoliosummary, HttpStatus.OK);
-    }
+//    @GetMapping("/{currency}")
+//    public ResponseEntity<List<PortfolioTracker>> getAllPortfolioSummaryByCurrency(@PathVariable String currency)
+//    {
+//        List<PortfolioTracker> portfoliosummary = portfolioTrackerService.findAllByCurrency(currency);
+//        return new ResponseEntity<List<PortfolioTracker>>(portfoliosummary, HttpStatus.OK);
+//    }
 }

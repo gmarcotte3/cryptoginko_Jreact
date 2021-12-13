@@ -11,6 +11,8 @@
 package com.marcotte.blockhead.gui.tabs.portfolio.bycoinpie;
 
 import com.marcotte.blockhead.model.coin.CoinDTO;
+import com.marcotte.blockhead.model.fiat.FiatCurrency;
+import com.marcotte.blockhead.model.fiat.FiatNames;
 import javafx.collections.FXCollections;
 import javafx.embed.swing.JFXPanel;
 import javafx.geometry.Side;
@@ -35,9 +37,10 @@ public class PieChartPanel extends JPanel {
 
     private String defaultFiat;
 
-    public PieChartPanel(List<CoinDTO> coinDTOList ) {
+
+    public PieChartPanel(List<CoinDTO> coinDTOList, String defaultFiat ) {
         super();
-        defaultFiat = "NZD";  // TODO
+        this.defaultFiat = defaultFiat;  // TODO use configuration
         updateDataModel( coinDTOList);
         initGui();
     }
@@ -65,7 +68,10 @@ public class PieChartPanel extends JPanel {
         dataObservableList = FXCollections.observableArrayList();
         for (CoinDTO coinDto : coinDTOList ) {
             Double coinValue = coinDto.getFiat_prices().findFiat(defaultFiat).getValue() * coinDto.getCoinBalance();
-            dataObservableList.add(new PieChart.Data(coinDto.getCoinName() + "-" + coinValue.longValue(), coinValue   ));
+            String coinValueFormatted = FiatCurrency.getValueMoneyFormat(coinValue, FiatNames.valueOfCode(defaultFiat), 0);
+            dataObservableList.add(new PieChart.Data(coinDto.getCoinName() + "-" + coinValueFormatted, coinValue   ));
         }
     }
+
+
 }

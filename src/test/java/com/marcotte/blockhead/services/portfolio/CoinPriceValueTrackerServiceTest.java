@@ -158,6 +158,10 @@ public class CoinPriceValueTrackerServiceTest {
         coinPriceValueTrackerService.deleteAll();
     }
 
+    //==================================================================================================================
+    // test utilities
+    //==================================================================================================================
+
     /**
      * create a data list of one coin.
      * @return
