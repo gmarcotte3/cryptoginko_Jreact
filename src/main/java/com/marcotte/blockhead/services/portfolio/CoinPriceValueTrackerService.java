@@ -41,7 +41,24 @@ public class CoinPriceValueTrackerService {
      */
     public void save(CoinPriceValueTracker coinPriceValueTracker)
     {
-        coinPriceValueTrackerRepository.save(coinPriceValueTracker);
+        List<CoinPriceValueTracker>  foundCoins = coinPriceValueTrackerRepository.findAllByPriceDateAndTicker(coinPriceValueTracker.getPriceDate(), coinPriceValueTracker.getTicker());
+        if ( foundCoins.size() > 0 ) {
+            CoinPriceValueTracker foundCoin = foundCoins.get(0);
+
+            foundCoin.setCoinPrice(coinPriceValueTracker.getCoinPrice());
+            foundCoin.setCoinPrice2(coinPriceValueTracker.getCoinPrice2());
+            foundCoin.setCoinPrice3(coinPriceValueTracker.getCoinPrice3());
+
+            foundCoin.setCoinBalance(coinPriceValueTracker.getCoinBalance());
+
+            foundCoin.setCoinPriceFiatTicker(coinPriceValueTracker.getCoinPriceFiatTicker());
+            foundCoin.setCoinPriceFiatTicker2(coinPriceValueTracker.getCoinPriceFiatTicker2());
+            foundCoin.setCoinPriceFiatTicker3(coinPriceValueTracker.getCoinPriceFiatTicker3());
+
+            coinPriceValueTrackerRepository.save(foundCoin);
+        } else {
+            coinPriceValueTrackerRepository.save(coinPriceValueTracker);
+        }
     }
 
     /**
@@ -51,7 +68,7 @@ public class CoinPriceValueTrackerService {
     public void save(List<CoinPriceValueTracker>  coinPriceValueTrackerList)
     {
         for ( CoinPriceValueTracker coin : coinPriceValueTrackerList ) {
-            coinPriceValueTrackerRepository.save(coin);
+            save(coin);
         }
     }
 
@@ -147,6 +164,10 @@ public class CoinPriceValueTrackerService {
         }
         return foundAll;
     }
+
+//    public List<CoinPriceValueTracker> findAllOrderByPriceDateAndTicker() {
+//        return coinPriceValueTrackerRepository.findAllOrderByPriceDateAndTicker();
+//    }
 
     public void deleteAll() {
         coinPriceValueTrackerRepository.deleteAll();

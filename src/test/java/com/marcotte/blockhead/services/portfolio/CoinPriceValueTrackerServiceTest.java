@@ -158,6 +158,22 @@ public class CoinPriceValueTrackerServiceTest {
         coinPriceValueTrackerService.deleteAll();
     }
 
+    @Test
+    public void findAll_multiple_entries_and_mixed_up() {
+        List<CoinPriceValueTracker> coinlist = createCoinValueList3();
+        assertEquals(7, coinlist.size());
+
+        coinPriceValueTrackerService.save( coinlist);
+        List<CoinPriceValueTracker> foundCcoinlist =coinPriceValueTrackerService.findAll();
+
+        assertEquals(6, foundCcoinlist.size());
+
+//        List<CoinPriceValueTracker>  foundAllSorted = coinPriceValueTrackerService.findAllOrderByPriceDateAndTicker();
+//        assertEquals(6, foundAllSorted.size());
+
+        coinPriceValueTrackerService.deleteAll();
+    }
+
     //==================================================================================================================
     // test utilities
     //==================================================================================================================
@@ -231,6 +247,82 @@ public class CoinPriceValueTrackerServiceTest {
         coinPriceValueTracker.setCoinPriceFiatTicker("nzd");
 
         coinlist.add(coinPriceValueTracker);
+        return coinlist;
+    }
+
+
+    /**
+     * testing multiple dates out of order, multiple events for each date
+     * @return
+     */
+    private List<CoinPriceValueTracker> createCoinValueList3() {
+        List<CoinPriceValueTracker>  coinlist = new ArrayList<CoinPriceValueTracker>();
+
+        // now ----------------------------------------------------
+        // three events two coins BTC and ADA, BTC done twice should take the second one
+        LocalDate priceDateNow = LocalDate.now();
+        CoinPriceValueTracker coinPriceValueTracker = new CoinPriceValueTracker();
+        coinPriceValueTracker.setCoinPrice( 78000.1);
+        coinPriceValueTracker.setCoinBalance(10.00);
+        coinPriceValueTracker.setTicker("btc");                 // bitcoin
+        coinPriceValueTracker.setPriceDate(priceDateNow);
+        coinPriceValueTracker.setCoinPriceFiatTicker("nzd");
+        coinlist.add(coinPriceValueTracker);
+
+        coinPriceValueTracker = new CoinPriceValueTracker();
+        coinPriceValueTracker.setCoinPrice( 1.95);
+        coinPriceValueTracker.setCoinBalance(100000.00);
+        coinPriceValueTracker.setTicker("ada");                 // cardano ada
+        coinPriceValueTracker.setPriceDate(priceDateNow);
+        coinPriceValueTracker.setCoinPriceFiatTicker("nzd");
+        coinlist.add(coinPriceValueTracker);
+
+        coinPriceValueTracker = new CoinPriceValueTracker();
+        coinPriceValueTracker.setCoinPrice( 90000.1);
+        coinPriceValueTracker.setCoinBalance(10.00);
+        coinPriceValueTracker.setTicker("btc");                 // bitcoin
+        coinPriceValueTracker.setPriceDate(priceDateNow);
+        coinPriceValueTracker.setCoinPriceFiatTicker("nzd");
+        coinlist.add(coinPriceValueTracker);
+
+        // 2021-JAN-15 -------------------------------------------------------------------------------------------------
+        LocalDate priceDate2021_01_15 = LocalDate.of(2021, 1, 15);
+        coinPriceValueTracker = new CoinPriceValueTracker();
+        coinPriceValueTracker.setCoinPrice( 10.1);
+        coinPriceValueTracker.setCoinBalance(50000.00);
+        coinPriceValueTracker.setTicker("ada");                         // Cardano ADA
+        coinPriceValueTracker.setPriceDate(priceDate2021_01_15);
+        coinPriceValueTracker.setCoinPriceFiatTicker("usd");
+        coinlist.add(coinPriceValueTracker);
+
+        // 2021-JUNE-07 ------------------------------------------------------------------------------------------------
+        coinPriceValueTracker = new CoinPriceValueTracker();
+        coinPriceValueTracker.setCoinPrice( 200.1);
+        coinPriceValueTracker.setCoinBalance(50.00);
+        coinPriceValueTracker.setTicker("dash");
+        coinPriceValueTracker.setPriceDate(LocalDate.of(2021,6,7));
+        coinPriceValueTracker.setCoinPriceFiatTicker("usd");
+        coinlist.add(coinPriceValueTracker);
+
+        // 2021-SEP 17 -------------------------------------------------------------------------------------------------
+        coinPriceValueTracker = new CoinPriceValueTracker();
+        coinPriceValueTracker.setCoinPrice( 54.3);
+        coinPriceValueTracker.setCoinBalance(30.00);
+        coinPriceValueTracker.setTicker("dot");
+        coinPriceValueTracker.setPriceDate(LocalDate.of(2021,9,17));
+        coinPriceValueTracker.setCoinPriceFiatTicker("aud");
+        coinlist.add(coinPriceValueTracker);
+
+
+        // 2021-JUNE-07 --- again --------------------------------------------------------------------------------------
+        coinPriceValueTracker = new CoinPriceValueTracker();
+        coinPriceValueTracker.setCoinPrice( 77.3);
+        coinPriceValueTracker.setCoinBalance(40.00);
+        coinPriceValueTracker.setTicker("dot");
+        coinPriceValueTracker.setPriceDate(LocalDate.of(2021,6,7));
+        coinPriceValueTracker.setCoinPriceFiatTicker("nzd");
+        coinlist.add(coinPriceValueTracker);
+
         return coinlist;
     }
 }
