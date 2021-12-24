@@ -24,6 +24,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * This service provides historical portfolio tracking by date and coin ticker
+ */
 @Service
 public class CoinPriceValueTrackerService {
     private static final Logger log = LoggerFactory.getLogger(CoinPriceValueTrackerService.class);
@@ -32,7 +35,7 @@ public class CoinPriceValueTrackerService {
     private CoinPriceValueTrackerRepository coinPriceValueTrackerRepository;
 
     @Autowired
-    private BlockheadConfig blockheadConfig;
+    private BlockheadConfig blockheadConfig;            // global configuration
 
 
     /**
@@ -72,6 +75,14 @@ public class CoinPriceValueTrackerService {
         }
     }
 
+    /**
+     * base save function. given a coinDTO we check for existing coin and update that if we find one else
+     * we create a new record.  The input coinDTO is converted to an CoinPriceTracker record that will
+     * track the price/value history of this coin.
+     *
+     * @param coinDTO
+     * @param nowDate
+     */
     public void save (CoinDTO coinDTO, LocalDate nowDate ) {
 
         String fiatCurrencyDefault = blockheadConfig.getFiatCurrencyDefault();
@@ -79,6 +90,7 @@ public class CoinPriceValueTrackerService {
         String fiatCurrencyDefault3 = blockheadConfig.getFiatCurrencyDefault3();
 
 
+        // check for existing value if exist then we update else we insert new record.
         CoinPriceValueTracker coinPriceValueTracker;
         List<CoinPriceValueTracker> foundCoinTrackers = findAllByPriceDateAndTicker(nowDate, coinDTO.getTicker());
         if ( foundCoinTrackers != null && foundCoinTrackers.size() > 0) {
@@ -86,6 +98,8 @@ public class CoinPriceValueTrackerService {
         } else {
             coinPriceValueTracker = new CoinPriceValueTracker();
         }
+
+        // set values to save from input/and existing record.
         coinPriceValueTracker.setTicker(coinDTO.getTicker());
         coinPriceValueTracker.setCoinPrice(coinDTO.getFiat_prices().findFiat(fiatCurrencyDefault).getValue());
         coinPriceValueTracker.setCoinPrice2(coinDTO.getFiat_prices().findFiat(fiatCurrencyDefault2).getValue());
@@ -98,6 +112,10 @@ public class CoinPriceValueTrackerService {
         save(coinPriceValueTracker);
     }
 
+    /**
+     * save a list of coinDTO with todays date
+     * @param coinDTOsSummary
+     */
     public void saveDTOs(List<CoinDTO>  coinDTOsSummary) {
         LocalDate nowDate = LocalDate.now();
         CoinPriceValueTracker coinPriceValueTracker;
@@ -165,10 +183,17 @@ public class CoinPriceValueTrackerService {
         return foundAll;
     }
 
-//    public List<CoinPriceValueTracker> findAllOrderByPriceDateAndTicker() {
-//        return coinPriceValueTrackerRepository.findAllOrderByPriceDateAndTicker();
-//    }
+    /**
+     * find all but sorted by priceDate and ticker
+     * @return
+     */
+    public List<CoinPriceValueTracker> findAllOrderByPriceDateAndTicker() {
+        return coinPriceValueTrackerRepository.findAllOrderByPriceDateAndTicker();
+    }
 
+    /**
+     * clear the table. this is used for testing or for wiping history data completely.
+     */
     public void deleteAll() {
         coinPriceValueTrackerRepository.deleteAll();
     }

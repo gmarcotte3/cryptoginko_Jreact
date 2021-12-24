@@ -158,6 +158,12 @@ public class CoinPriceValueTrackerServiceTest {
         coinPriceValueTrackerService.deleteAll();
     }
 
+    /**
+     * when saving coinPriceValue data the priceDate + ticker should be unique So a double transaction on the same day with the same coin
+     * the value should end up with the last transaction.
+     *
+     * We are also tesing the findAllSorted function so the order will be priceDate + Ticker.
+     */
     @Test
     public void findAll_multiple_entries_and_mixed_up() {
         List<CoinPriceValueTracker> coinlist = createCoinValueList3();
@@ -167,9 +173,12 @@ public class CoinPriceValueTrackerServiceTest {
         List<CoinPriceValueTracker> foundCcoinlist =coinPriceValueTrackerService.findAll();
 
         assertEquals(6, foundCcoinlist.size());
+        assertEquals(coinlist.get(2).getTicker(), foundCcoinlist.get(0).getTicker());
+        assertEquals(coinlist.get(2).getPriceDate(), foundCcoinlist.get(0).getPriceDate());
+        assertEquals(coinlist.get(2).getCoinPrice(), foundCcoinlist.get(0).getCoinPrice());
 
-//        List<CoinPriceValueTracker>  foundAllSorted = coinPriceValueTrackerService.findAllOrderByPriceDateAndTicker();
-//        assertEquals(6, foundAllSorted.size());
+        List<CoinPriceValueTracker>  foundAllSorted = coinPriceValueTrackerService.findAllOrderByPriceDateAndTicker();
+        assertEquals(6, foundAllSorted.size());
 
         coinPriceValueTrackerService.deleteAll();
     }
