@@ -7,6 +7,7 @@ import com.marcotte.blockhead.gui.tabs.CurrentPricingTab.CurrentPriceTableDataMo
 import com.marcotte.blockhead.gui.tabs.portfolio.bycoin.PortfolioByCoinTab;
 import com.marcotte.blockhead.gui.tabs.portfolio.bycoinpie.PortfolioByCoinPiechartTab;
 import com.marcotte.blockhead.gui.tabs.portfolio.bywallet.PortfolioByWalletTab;
+import com.marcotte.blockhead.gui.tabs.portfolio.history.PortfolioHistoryTab;
 
 import javax.swing.*;
 import java.awt.*;
@@ -42,6 +43,7 @@ public class PortfolioTab extends JPanel
         tabbedPane.addTab("By CoinPie" , null, new PortfolioByCoinPiechartTab(applicationServicesBean), "Portfolio value by Coin piechart");
         tabbedPane.addTab("By Coins" , null, new PortfolioByCoinTab(applicationServicesBean), "Portfolio value by coin");
         tabbedPane.addTab("By Wallet" , null, new PortfolioByWalletTab(applicationServicesBean), "Portfolio value by wallet");
+        tabbedPane.addTab("History" , null, new PortfolioHistoryTab(applicationServicesBean), "Portfolio History");
 
         setLayout(new BorderLayout());
         add( tabbedPane, BorderLayout.CENTER);

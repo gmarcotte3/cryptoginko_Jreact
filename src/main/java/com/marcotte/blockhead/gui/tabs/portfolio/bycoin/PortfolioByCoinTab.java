@@ -33,11 +33,15 @@ public class PortfolioByCoinTab extends JPanel{
     public PortfolioByCoinTab(ApplicationServicesBean applicationServicesBean) {
         super();
 
-        defaultCurency1 = "USD"; // TODO set via configuration
-        defaultCurency2 = "NZD";
-        defaultCurency3 = "JPM";
+//        defaultCurency1 = "USD"; // TODO set via configuration
+//        defaultCurency2 = "NZD";
+//        defaultCurency3 = "JPM";
 
         this.applicationServicesBean = applicationServicesBean;
+        defaultCurency1 = applicationServicesBean.getBlockheadConfig().getFiatCurrencyDefault();
+        defaultCurency2 = applicationServicesBean.getBlockheadConfig().getFiatCurrencyDefault2();
+        defaultCurency3 = applicationServicesBean.getBlockheadConfig().getFiatCurrencyDefault3();
+
         portfolioByCoinsTableDataModel = new PortfolioByCoinsTableDataModel();
 
         createUI();

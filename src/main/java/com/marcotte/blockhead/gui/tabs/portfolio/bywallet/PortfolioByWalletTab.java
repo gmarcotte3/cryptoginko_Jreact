@@ -34,9 +34,9 @@ public class PortfolioByWalletTab extends JPanel {
         super();
         this.applicationServicesBean = applicationServicesBean;
 
-        defaultCurency1 = "USD"; // TODO set via configuration
-        defaultCurency2 = "NZD";
-        defaultCurency3 = "JPM";
+        defaultCurency1 = applicationServicesBean.getBlockheadConfig().getFiatCurrencyDefault();
+        defaultCurency2 =  applicationServicesBean.getBlockheadConfig().getFiatCurrencyDefault2();
+        defaultCurency3 =  applicationServicesBean.getBlockheadConfig().getFiatCurrencyDefault3();
 
         createUI();
     }

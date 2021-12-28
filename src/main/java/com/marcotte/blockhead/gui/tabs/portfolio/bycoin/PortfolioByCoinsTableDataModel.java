@@ -79,4 +79,12 @@ public class PortfolioByCoinsTableDataModel extends AbstractTableModel {
         }
 
     }
+
+    public String getDefaultCurrency() {
+        return defaultCurrency;
+    }
+
+    public void setDefaultCurrency(String defaultCurrency) {
+        this.defaultCurrency = defaultCurrency;
+    }
 }

@@ -14,6 +14,7 @@ import com.marcotte.blockhead.config.BlockheadConfig;
 import com.marcotte.blockhead.datastore.portfolio.CoinPriceValueTracker;
 import com.marcotte.blockhead.datastore.portfolio.CoinPriceValueTrackerRepository;
 import com.marcotte.blockhead.model.coin.CoinDTO;
+import com.marcotte.blockhead.model.portfolio.CoinPriceValueTrackerDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -189,6 +190,16 @@ public class CoinPriceValueTrackerService {
      */
     public List<CoinPriceValueTracker> findAllOrderByPriceDateAndTicker() {
         return coinPriceValueTrackerRepository.findAllOrderByPriceDateAndTicker();
+    }
+
+    public List<CoinPriceValueTrackerDTO> findAllHistoricalDTOList() {
+        List<CoinPriceValueTrackerDTO> foundDTOList = new ArrayList<>();
+        List<CoinPriceValueTracker> foundList = coinPriceValueTrackerRepository.findAllOrderByPriceDateAndTicker();
+
+        for (CoinPriceValueTracker coinPriceValueTracker: foundList ) {
+            foundDTOList.add( new CoinPriceValueTrackerDTO(coinPriceValueTracker));
+        }
+        return foundDTOList;
     }
 
     /**

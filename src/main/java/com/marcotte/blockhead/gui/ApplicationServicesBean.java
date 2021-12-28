@@ -2,6 +2,7 @@ package com.marcotte.blockhead.gui;
 
 import com.marcotte.blockhead.config.BlockheadConfig;
 import com.marcotte.blockhead.services.csv.GinkoCsvService;
+import com.marcotte.blockhead.services.portfolio.CoinPriceValueTrackerService;
 import com.marcotte.blockhead.services.portfolio.CurrentPriceService;
 import com.marcotte.blockhead.services.portfolio.PortFolioByWalletAndCoinService;
 import com.marcotte.blockhead.services.portfolio.PortfolioByCoinsService;
@@ -25,6 +26,9 @@ public class ApplicationServicesBean {
 
     @Autowired
     private GinkoCsvService ginkoCsvService;        // CSV services
+
+    @Autowired
+    private CoinPriceValueTrackerService coinPriceValueTrackerService;
 
     @Autowired
     private BlockheadConfig blockheadConfig;
@@ -84,5 +88,13 @@ public class ApplicationServicesBean {
 
     public void setBlockheadConfig(BlockheadConfig blockheadConfig) {
         this.blockheadConfig = blockheadConfig;
+    }
+
+    public CoinPriceValueTrackerService getCoinPriceValueTrackerService() {
+        return coinPriceValueTrackerService;
+    }
+
+    public void setCoinPriceValueTrackerService(CoinPriceValueTrackerService coinPriceValueTrackerService) {
+        this.coinPriceValueTrackerService = coinPriceValueTrackerService;
     }
 }
