@@ -67,8 +67,6 @@ public class HistoryDetailTab extends JPanel {
     public void refreashDataModel() {
         List<CoinPriceValueTrackerDTO> foundCoinValueDTOs = applicationServicesBean.getCoinPriceValueTrackerService().findAllHistoricalDTOList();
         historyDetailTabModel.setModelData(foundCoinValueDTOs);
-//        portfolioByCoinsTableDataModel.setModelData( coinDTOList);
-
     }
 
 
