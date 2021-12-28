@@ -80,7 +80,11 @@ public class HistorySummaryTab  extends JPanel {
         table.getColumnModel().getColumn(1).setPreferredWidth(150);     // value
         table.getColumnModel().getColumn(1).setMaxWidth(150);
 
-        table.getColumnModel().getColumn(2).setMaxWidth(50);           // fiat currency name
-        table.getColumnModel().getColumn(2).setCellRenderer( rightRenderer );
+        table.getColumnModel().getColumn(2).setPreferredWidth(150);     // value
+        table.getColumnModel().getColumn(2).setMaxWidth(150);
+
+        table.getColumnModel().getColumn(3).setPreferredWidth(150);     // value
+        table.getColumnModel().getColumn(3).setMaxWidth(150);
+
     }
 }

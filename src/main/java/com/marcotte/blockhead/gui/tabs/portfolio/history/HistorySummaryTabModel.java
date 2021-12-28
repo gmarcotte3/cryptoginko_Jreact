@@ -28,22 +28,19 @@ public class HistorySummaryTabModel extends AbstractTableModel {
     private String defaultCurrency3;
 
     // columns
-    private final String[] columnNames = {"Date", "TotalValue", "fiat", "Value Price2", "fiat",  "Value Price3", "fiat" };
-    private final int NUMBER_OF_COLUMNS = 3;
+    private final String[] columnNames = {"Date", "TotalValue", "TotalValue2",  "TotalValue3" };
+    private final int NUMBER_OF_COLUMNS = 4;
 
     protected class Row {
-        public Object arow[] = {"","","", "", "", "",""};
+        public Object arow[] = {"","","", "" };
     }
 
     private List<HistorySummaryTabModel.Row> datas;
 
     public static final int DATE_IDX = 0;
     public static final int TOTAL_VALUE_IDX = 1;
-    public static final int TOTAL_VLUE_FIAT_TYPE_IDX = 2;
-    public static final int TOTAL_VALUE2_IDX = 3;
-    public static final int TOTAL_VLUE_FIAT_TYPE2_IDX = 4;
-    public static final int TOTAL_VALUE3_IDX = 5;
-    public static final int TOTAL_VLUE_FIAT_TYPE3_IDX = 6;
+    public static final int TOTAL_VALUE2_IDX = 2;
+    public static final int TOTAL_VALUE3_IDX = 3;
 
     public HistorySummaryTabModel() {
         this.defaultCurrency = "NZD";   // TODO set by configuration
@@ -94,16 +91,9 @@ public class HistorySummaryTabModel extends AbstractTableModel {
                             datas.add(row_i);
 
                             datas.get(irow).arow[DATE_IDX] = dateStr;
-                            datas.get(irow).arow[TOTAL_VALUE_IDX] = FiatCurrency.getValueMoneyFormat(dayTotalValue, FiatNames.valueOf(defaultCurrency), 0);
-                            datas.get(irow).arow[TOTAL_VLUE_FIAT_TYPE_IDX] = defaultCurrency;
-
-                            datas.get(irow).arow[TOTAL_VALUE2_IDX] = FiatCurrency.getValueMoneyFormat(dayTotalValue2, FiatNames.valueOf(defaultCurrency2), 0);
-                            datas.get(irow).arow[TOTAL_VLUE_FIAT_TYPE2_IDX] = defaultCurrency2;
-
-                            datas.get(irow).arow[TOTAL_VALUE3_IDX] = FiatCurrency.getValueMoneyFormat(dayTotalValue3, FiatNames.valueOf(defaultCurrency3), 0);
-                            datas.get(irow).arow[TOTAL_VLUE_FIAT_TYPE3_IDX] = defaultCurrency3;
-
-
+                            datas.get(irow).arow[TOTAL_VALUE_IDX] = FiatCurrency.getValueMoneyFormat(dayTotalValue, FiatNames.valueOf(defaultCurrency) , 0) + " " + defaultCurrency;
+                            datas.get(irow).arow[TOTAL_VALUE2_IDX] = FiatCurrency.getValueMoneyFormat(dayTotalValue2, FiatNames.valueOf(defaultCurrency2), 0) + " " + defaultCurrency2;
+                            datas.get(irow).arow[TOTAL_VALUE3_IDX] = FiatCurrency.getValueMoneyFormat(dayTotalValue3, FiatNames.valueOf(defaultCurrency3), 0) + " " + defaultCurrency3;
                             irow++;
 
                             row_i = new HistorySummaryTabModel.Row();
@@ -126,14 +116,9 @@ public class HistorySummaryTabModel extends AbstractTableModel {
             if ( dayTotalValue > 0.0 ) {
                 datas.add(row_i);
                 datas.get(irow).arow[DATE_IDX] = dateStr;
-                datas.get(irow).arow[TOTAL_VALUE_IDX] = FiatCurrency.getValueMoneyFormat(dayTotalValue, FiatNames.valueOf(defaultCurrency), 0);
-                datas.get(irow).arow[TOTAL_VLUE_FIAT_TYPE_IDX] = defaultCurrency;
-
-                datas.get(irow).arow[TOTAL_VALUE2_IDX] = FiatCurrency.getValueMoneyFormat(dayTotalValue2, FiatNames.valueOf(defaultCurrency2), 0);
-                datas.get(irow).arow[TOTAL_VLUE_FIAT_TYPE2_IDX] = defaultCurrency2;
-
-                datas.get(irow).arow[TOTAL_VALUE3_IDX] = FiatCurrency.getValueMoneyFormat(dayTotalValue3, FiatNames.valueOf(defaultCurrency3), 0);
-                datas.get(irow).arow[TOTAL_VLUE_FIAT_TYPE3_IDX] = defaultCurrency3;
+                datas.get(irow).arow[TOTAL_VALUE_IDX] = FiatCurrency.getValueMoneyFormat(dayTotalValue, FiatNames.valueOf(defaultCurrency), 0)  + " " + defaultCurrency;
+                datas.get(irow).arow[TOTAL_VALUE2_IDX] = FiatCurrency.getValueMoneyFormat(dayTotalValue2, FiatNames.valueOf(defaultCurrency2), 0) + " " + defaultCurrency2;
+                datas.get(irow).arow[TOTAL_VALUE3_IDX] = FiatCurrency.getValueMoneyFormat(dayTotalValue3, FiatNames.valueOf(defaultCurrency3) , 0) + " " + defaultCurrency3;
             }
         }
     }
