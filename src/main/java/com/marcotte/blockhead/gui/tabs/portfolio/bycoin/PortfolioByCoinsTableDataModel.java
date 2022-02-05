@@ -46,6 +46,9 @@ public class PortfolioByCoinsTableDataModel extends AbstractTableModel {
     public String getColumnName(int col) {
         return columnNames[col];
     }
+    public String[] getColumnNames() {
+        return columnNames;
+    }
 
     public Object getValueAt(int row, int col) {
         return data[row][col];
@@ -63,18 +66,18 @@ public class PortfolioByCoinsTableDataModel extends AbstractTableModel {
 
 
     public void setModelData(List<CoinDTO> coinDTOList){
-        int row = 0;
+        int numberOfRows = 0;
         if (coinDTOList.size() > 0 ) {
             data = new Object[coinDTOList.size()][NUMBER_OF_COLUMNS];
 
             for (CoinDTO coin: coinDTOList ) {
-                data[row][TICKER_IDX] = coin.getTicker();
-                data[row][COIN_NAME_IDX] = coin.getCoinName();
-                data[row][COIN_BAL_IDX] = coin.getCoinBalance().toString();
-                data[row][COIN_PRICE_IDX] = coin.getFiat_prices().findFiat(defaultCurrency).getValueMoneyFormat(2); //TODO use configuration to find the right fiat
-                data[row][TOTAL_VALUE_IDX] = coin.getFiat_balances().findFiat(defaultCurrency).getValueMoneyFormat(0);
-                data[row][TOTAL_VLUE_FIAT_TYPE_IDX] = defaultCurrency;   //TODO use configuration to find the right fiat
-                row++;
+                data[numberOfRows][TICKER_IDX] = coin.getTicker();
+                data[numberOfRows][COIN_NAME_IDX] = coin.getCoinName();
+                data[numberOfRows][COIN_BAL_IDX] = coin.getCoinBalance().toString();
+                data[numberOfRows][COIN_PRICE_IDX] = coin.getFiat_prices().findFiat(defaultCurrency).getValueMoneyFormat(2); //TODO use configuration to find the right fiat
+                data[numberOfRows][TOTAL_VALUE_IDX] = coin.getFiat_balances().findFiat(defaultCurrency).getValueMoneyFormat(0);
+                data[numberOfRows][TOTAL_VLUE_FIAT_TYPE_IDX] = defaultCurrency;   //TODO use configuration to find the right fiat
+                numberOfRows++;
             }
         }
 

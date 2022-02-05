@@ -24,7 +24,20 @@ public class Utils
 
     public static String timestampToDateStr_mmddyyyy( Timestamp timestamp) {
         LocalDateTime localDateTime = timestamp.toLocalDateTime();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+        return  localDateTime.format(formatter);
+    }
+
+    public static String timestampToDateStr_ddmmyyyy( Timestamp timestamp) {
+        LocalDateTime localDateTime = timestamp.toLocalDateTime();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        return  localDateTime.format(formatter);
+    }
+
+
+    public static String timestampToDateStr_yyyymmdd( Timestamp timestamp) {
+        LocalDateTime localDateTime = timestamp.toLocalDateTime();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return  localDateTime.format(formatter);
     }
 }

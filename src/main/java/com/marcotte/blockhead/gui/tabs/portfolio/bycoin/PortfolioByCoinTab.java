@@ -6,11 +6,20 @@ import com.marcotte.blockhead.gui.tabs.portfolio.TotalValuePanel;
 import com.marcotte.blockhead.model.coin.CoinDTO;
 import com.marcotte.blockhead.model.coin.CoinSortByCoinValue;
 import com.marcotte.blockhead.model.fiat.FiatCurrencyList;
+import com.marcotte.blockhead.util.Utils;
+import com.opencsv.CSVWriter;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.List;
 
@@ -18,9 +27,10 @@ import java.util.List;
  * Portfolio by Coin tab
  * This tab show portfolio values by coin sorted by most valueble to least.
  */
-public class PortfolioByCoinTab extends JPanel{
+public class PortfolioByCoinTab extends JPanel  implements ActionListener {
     private ApplicationServicesBean applicationServicesBean;
     private PortfolioByCoinsTableDataModel portfolioByCoinsTableDataModel;
+    private List<CoinDTO> coinDTOList;
 
 
     private String defaultCurency1;
@@ -30,12 +40,17 @@ public class PortfolioByCoinTab extends JPanel{
     private TotalValuePanel portfolioTotals;
     private FiatCurrencyList fiat_balances;
 
+    // export data controles here ------------
+    private JButton exportCsvButton;
+    private JFileChooser fileCooser;
+    private File csvFile;
+    private JTextField filename;
+    private JPanel exportPanel;
+
+
+
     public PortfolioByCoinTab(ApplicationServicesBean applicationServicesBean) {
         super();
-
-//        defaultCurency1 = "USD"; // TODO set via configuration
-//        defaultCurency2 = "NZD";
-//        defaultCurency3 = "JPM";
 
         this.applicationServicesBean = applicationServicesBean;
         defaultCurency1 = applicationServicesBean.getBlockheadConfig().getFiatCurrencyDefault();
@@ -47,6 +62,9 @@ public class PortfolioByCoinTab extends JPanel{
         createUI();
     }
 
+    /**
+     * create the main UI panel
+     */
     private void createUI() {
         portfolioTotals = new TotalValuePanel(defaultCurency1, defaultCurency2, defaultCurency3);
         JTable table = new JTable(portfolioByCoinsTableDataModel );
@@ -58,20 +76,50 @@ public class PortfolioByCoinTab extends JPanel{
         detailPanel.add(portfolioTotals, BorderLayout.NORTH);
         detailPanel.add( tabkeScrollPane, BorderLayout.CENTER);
 
+        exportPanel = createExportCSVPanel("export portfolio by coin to csv file");
 
         setLayout( new BorderLayout());
+        add(exportPanel, BorderLayout.NORTH);
         add(detailPanel, BorderLayout.CENTER);
 
 
         refreashDataModel();
     }
 
+    /**
+     * create the CSV export panel
+     * @param myTitle
+     * @return
+     */
+    private JPanel createExportCSVPanel(String myTitle) {
+        fileCooser = new JFileChooser();
+
+        JPanel componentPanel = new JPanel();
+        componentPanel.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createTitledBorder(myTitle),
+                BorderFactory.createEmptyBorder(5,5,5,5)));
+
+        BoxLayout boxLayout = new BoxLayout(componentPanel, BoxLayout.X_AXIS);
+        componentPanel.setLayout(boxLayout);
+
+        JLabel label = new JLabel("Filename: ");
+        componentPanel.add(label);
+
+        filename = new JTextField(20);
+        filename.setEnabled(false);
+        componentPanel.add(filename);
+
+        exportCsvButton = new JButton("Select csv file");
+        exportCsvButton.addActionListener(this);
+        componentPanel.add(exportCsvButton);
+        return componentPanel;
+    }
 
     /**
      * reset the model by calling the service and recalculating the totals.
      */
     public void refreashDataModel() {
-        List<CoinDTO> coinDTOList = applicationServicesBean.getPortfolioByCoinsService().findAllLatestSumBalanceGroupByCoin();
+        coinDTOList = applicationServicesBean.getPortfolioByCoinsService().findAllLatestSumBalanceGroupByCoin();
         Collections.sort(coinDTOList, (new CoinSortByCoinValue()).reversed());
         portfolioByCoinsTableDataModel.setModelData( coinDTOList);
 
@@ -122,6 +170,74 @@ public class PortfolioByCoinTab extends JPanel{
 
         table.getColumnModel().getColumn(5).setMaxWidth(50);           // fiat currency name
     }
+
+    /**
+     * actions performed here when button clicks are done on this tab pannel.
+     * Actions:  1] export the portfolio by coins to a csv file
+     *
+     *
+     * @param e
+     */
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == exportCsvButton) {
+
+            fileCooser = new JFileChooser();
+            fileCooser.setSelectedFile(new File("~/portfolioByCoins-" + Utils.timestampToDateStr_yyyymmdd(new Timestamp())) + ".csv"));
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV files (*csv)", "csv");
+            fileCooser.setFileFilter(filter);
+
+            int returnVal = fileCooser.showSaveDialog(this);
+            if ( returnVal == JFileChooser.APPROVE_OPTION) {
+                File csvExportFile = fileCooser.getSelectedFile();
+                String fullPathCsvExportFileName = csvExportFile.getAbsolutePath();
+                writeDataLineByLine(csvExportFile, coinDTOList);
+
+            }
+        }
+
+    }
+
+    /**
+     * write the by coin portfolio as a csv file line by line here. The first line is the header, data rows follow
+     * @param exportFile
+     * @param byCoinDTOList
+     */
+    public void writeDataLineByLine(File exportFile, List<CoinDTO> byCoinDTOList)
+    {
+        // first create file object for file placed at location
+        // specified by filepath
+
+        try {
+            // create FileWriter object with file as parameter
+            FileWriter outputfile = new FileWriter(exportFile);
+
+            // create CSVWriter object filewriter object as parameter
+            CSVWriter writer = new CSVWriter(outputfile);
+
+            // adding header to csv
+            String[] header = portfolioByCoinsTableDataModel.getColumnNames();
+            writer.writeNext(header);
+
+            for (CoinDTO coin: coinDTOList ) {
+                String[] rowdata = new String[portfolioByCoinsTableDataModel.getColumnCount()];
+                rowdata[portfolioByCoinsTableDataModel.TICKER_IDX] = coin.getTicker();
+                rowdata[portfolioByCoinsTableDataModel.COIN_NAME_IDX] = coin.getCoinName();
+                rowdata[portfolioByCoinsTableDataModel.COIN_BAL_IDX] = coin.getCoinBalance().toString();
+                rowdata[portfolioByCoinsTableDataModel.COIN_PRICE_IDX] = coin.getFiat_prices().findFiat(portfolioByCoinsTableDataModel.getDefaultCurrency()).getValueMoneyFormat(2);
+                rowdata[portfolioByCoinsTableDataModel.TOTAL_VALUE_IDX] = coin.getFiat_balances().findFiat(portfolioByCoinsTableDataModel.getDefaultCurrency()).getValueMoneyFormat(0);
+                rowdata[portfolioByCoinsTableDataModel.TOTAL_VLUE_FIAT_TYPE_IDX] = portfolioByCoinsTableDataModel.getDefaultCurrency();
+                writer.writeNext(rowdata);
+            }
+
+            // closing writer connection
+            writer.close();
+        }
+        catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
 
     // ======================================
     // getter and setters
