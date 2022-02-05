@@ -182,7 +182,7 @@ public class PortfolioByCoinTab extends JPanel  implements ActionListener {
         if (e.getSource() == exportCsvButton) {
 
             fileCooser = new JFileChooser();
-            fileCooser.setSelectedFile(new File("~/portfolioByCoins-" + Utils.timestampToDateStr_yyyymmdd(new Timestamp())) + ".csv"));
+            fileCooser.setSelectedFile(new File("~/portfolioByCoins-" + Utils.timestampToDateStr_yyyymmdd(new Timestamp(System.currentTimeMillis())) + ".csv"));
             FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV files (*csv)", "csv");
             fileCooser.setFileFilter(filter);
 

@@ -11,16 +11,18 @@ import java.util.List;
 public class PortfolioByWalletTableDataModel extends AbstractTableModel {
     private static final Logger log = LoggerFactory.getLogger(PortfolioByWalletTableDataModel.class);
 
-    private static final int WALLET_NAME_IDX = 0;
-    private static final int WALLET_TOTAL_VALUE_IDX = 1;
-    private static final int WALLET_TOTAL_VLUE_FIAT_TYPE_IDX = 2;
-    private static final int COIN_TICKER_IDX = 3;
-    private static final int COIN_NAME_IDX = 4;
-    private static final int COIN_BAL_IDX = 5;
-    private static final int COIN_PRICE_IDX = 6;
-    private static final int COIN_VALUE_IDX = 7;
-    private static final int COIN_FIAT_IDX = 8;
+    public static final int WALLET_NAME_IDX = 0;
+    public static final int WALLET_TOTAL_VALUE_IDX = 1;
+    public static final int WALLET_TOTAL_VLUE_FIAT_TYPE_IDX = 2;
+    public static final int COIN_TICKER_IDX = 3;
+    public static final int COIN_NAME_IDX = 4;
+    public static final int COIN_BAL_IDX = 5;
+    public static final int COIN_PRICE_IDX = 6;
+    public static final int COIN_VALUE_IDX = 7;
+    public static final int COIN_FIAT_IDX = 8;
 
+
+    private String defaultCurrency;
 
     // columns
     private final String[] columnNames = {"wallet","TotalValue", "fiat" ,"Ticker", "Name", "Coin Balance", "Price", "Coin Value", "fiat"};
@@ -34,6 +36,10 @@ public class PortfolioByWalletTableDataModel extends AbstractTableModel {
     };
 
 
+    public PortfolioByWalletTableDataModel() {
+        this.defaultCurrency = "NZD";   // TODO set by configuration
+    }
+
     public int getColumnCount() {
         return columnNames.length;
     }
@@ -44,6 +50,9 @@ public class PortfolioByWalletTableDataModel extends AbstractTableModel {
 
     public String getColumnName(int col) {
         return columnNames[col];
+    }
+    public String[] getColumnNames() {
+        return columnNames;
     }
 
     public Object getValueAt(int row, int col) {
@@ -61,7 +70,8 @@ public class PortfolioByWalletTableDataModel extends AbstractTableModel {
     }
 
 
-    public void setModelData(List<WalletDTO> walletDTOList){
+    public void
+    setModelData(List<WalletDTO> walletDTOList){
         int row = 0;
         String defaultFiatTicker = "NZD";  // TODO get the default from configuration
         if (walletDTOList.size() > 0 ) {
@@ -102,4 +112,11 @@ public class PortfolioByWalletTableDataModel extends AbstractTableModel {
         return rows + 1;
     }
 
+    public String getDefaultCurrency() {
+        return defaultCurrency;
+    }
+
+    public void setDefaultCurrency(String defaultCurrency) {
+        this.defaultCurrency = defaultCurrency;
+    }
 }

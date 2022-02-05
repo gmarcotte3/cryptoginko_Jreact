@@ -13,12 +13,12 @@ public class PortfolioByCoinsTableDataModel extends AbstractTableModel {
     private String defaultCurrency;
 
     // columns
-    private final String[] columnNames = {"Coin", "Icon", "Coin Balance", "Price", "TotalValue", "fiat" };
+    private final String[] columnNames = {"Coin", "Icon", "Coin Balance", "Price", "TotalValue", "fiat"};
     private final int NUMBER_OF_COLUMNS = 6;
 
     // dummy data.
     private Object[][] data
-    = {
+            = {
             {"BTC", "B", "10.01", "$100,000.00", "$10,000,000.10", "USD"},
             {"ETH", "E", "100.05", "$10,000.00", "$10,000,000.50", "USD"},
             {"ADA", "A", "100,000.02", "$10.00", "$10,000,000.20", "USD"}
@@ -35,17 +35,13 @@ public class PortfolioByCoinsTableDataModel extends AbstractTableModel {
         this.defaultCurrency = "NZD";   // TODO set by configuration
     }
 
-    public int getColumnCount() {
-        return columnNames.length;
-    }
 
-    public int getRowCount() {
-        return data.length;
-    }
-
+    // --------------------------------------------------
+    // AbstractTableModel getters
     public String getColumnName(int col) {
         return columnNames[col];
     }
+
     public String[] getColumnNames() {
         return columnNames;
     }
@@ -65,12 +61,12 @@ public class PortfolioByCoinsTableDataModel extends AbstractTableModel {
     }
 
 
-    public void setModelData(List<CoinDTO> coinDTOList){
+    public void setModelData(List<CoinDTO> coinDTOList) {
         int numberOfRows = 0;
-        if (coinDTOList.size() > 0 ) {
+        if (coinDTOList.size() > 0) {
             data = new Object[coinDTOList.size()][NUMBER_OF_COLUMNS];
 
-            for (CoinDTO coin: coinDTOList ) {
+            for (CoinDTO coin : coinDTOList) {
                 data[numberOfRows][TICKER_IDX] = coin.getTicker();
                 data[numberOfRows][COIN_NAME_IDX] = coin.getCoinName();
                 data[numberOfRows][COIN_BAL_IDX] = coin.getCoinBalance().toString();
@@ -82,6 +78,18 @@ public class PortfolioByCoinsTableDataModel extends AbstractTableModel {
         }
 
     }
+
+    //------------------------
+    // Getter and setters
+    //------------------------
+    public int getColumnCount() {
+        return columnNames.length;
+    }
+
+    public int getRowCount() {
+        return data.length;
+    }
+
 
     public String getDefaultCurrency() {
         return defaultCurrency;
